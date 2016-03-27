@@ -18,6 +18,7 @@ function invalid(string) {
 
 module.exports = class PitchClass {
   constructor(value, name) {
+    this['@type'] = 'PitchClass';
     this.value = mod(value, 12);
     if (name) this.name = name;
   }

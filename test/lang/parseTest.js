@@ -5,6 +5,10 @@ const Intensity = require('../../src/model/intensity');
 const PitchClass = require('../../src/model/pitch-class');
 
 describe('parse', () => {
+  before(() => {
+    expect(new Duration(1)).to.not.deep.equal(new Intensity(1));
+  });
+
   it('parses pitch classes', () => {
     expect(parse('C')).to.deep.equal(PitchClass.fromName('C'));
   });
@@ -23,5 +27,13 @@ describe('parse', () => {
 
   it('parses intensities', () => {
     expect( parse('++') ).to.deep.equal( Intensity.fromName('++') );
+  });
+
+  it('parses notes', () => {
+    expect( parse('{D 1/2 -}') ).to.deep.equal([
+      PitchClass.fromName('D'),
+      new Duration(1/2),
+      Intensity.fromName('-')
+    ]);
   });
 });

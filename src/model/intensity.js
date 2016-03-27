@@ -14,6 +14,7 @@ const INTENSITY_VALUE = {
 
 module.exports = class Intensity {
   constructor(value) {
+    this['@type'] = 'Intensity';
     this.value = clamp(value, 0, 1);
   }
 

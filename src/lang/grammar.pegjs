@@ -6,7 +6,13 @@
 }
 
 start
-  = pitchClass / duration / intensity
+  = note / note_property
+
+note
+  = _ "{" props:note_property+ "}" _ { return props; }
+
+note_property
+  = _ value:(pitchClass / duration / intensity) _ { return value; }
 
 pitchClass
   = name:([A-Ga-g][#b]?) { return PitchClass.fromName(name.join('')); }
@@ -23,3 +29,5 @@ rational
 integer
   = digits:[0-9]+ { return parseInt(digits.join(''), 10); }
 
+_ "whitespace"
+  = [ \t\n]*
