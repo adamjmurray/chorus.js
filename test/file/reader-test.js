@@ -1,8 +1,8 @@
 const expect = require('chai').expect;
-const midifs = require('../../src/file');
-const readMIDIFile = midifs.readMIDIFile;
+const midifile = require('../../src/file');
+const readMIDIFile = midifile.readMIDIFile;
 
-describe('file', () => {
+describe('file reader', () => {
   it('parses pitch classes', () => {
     return readMIDIFile(`${__dirname}/../assets/test1.mid`)
       .then(data => {

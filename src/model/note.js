@@ -5,10 +5,10 @@ const Intensity = require('./intensity');
 
 module.exports = class Note {
   constructor(pitchClass, octave, duration, intensity) {
-    this.pitchClass = pitchClass || 0;
+    this.pitchClass = pitchClass != null ? pitchClass : new PitchClass(0, 'C');
     this.octave = octave != null ? octave : 4;
-    this.duration = duration != null ? duration : 1;
-    this.intensity = intensity != null ? intensity : 0.7;
+    this.duration = duration != null ? duration : new Duration(1);
+    this.intensity = intensity != null ? intensity : new Intensity(0.7);
   }
 
   // TODO: this probably needs to be extracted into an interpreter class
@@ -25,5 +25,16 @@ module.exports = class Note {
       // TODO: other notes
     }
     return pitchClasses.map(pc => new Note(pc, octaves.shift(), durations.shift(), intensities.shift()));
+  }
+
+  midiJSON() {
+    return {
+      type: 'note',
+      pitch: 12 * (this.octave + 2) + this.pitchClass.value,
+      velocity: this.intensity.value * 127,
+      duration: this.duration.value,
+      release: 100,
+      channel: 1
+    }
   }
 };

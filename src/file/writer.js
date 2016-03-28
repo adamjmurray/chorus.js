@@ -45,7 +45,7 @@ module.exports = class MIDIFileWriter {
     this.writeInt32(bytes, MIDI.HEADER_CHUNK_ID);
     this.writeInt32(bytes, 6);
     this.writeInt16(bytes, header.format);
-    this.writeInt16(bytes, 0); // TODO
+    this.writeInt16(bytes, header.ntracks);
     this.writeInt16(bytes, header.division);
     console.log('header bytes', bytes.length);
     return bytes;
