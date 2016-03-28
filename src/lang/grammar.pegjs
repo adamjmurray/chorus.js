@@ -1,15 +1,16 @@
 {
   const src = '../../../src';
-  const PitchClass = require(`${src}/model/pitch-class`);
   const Duration = require(`${src}/model/duration`);
   const Intensity = require(`${src}/model/intensity`);
+  const Note = require(`${src}/model/note`);
+  const PitchClass = require(`${src}/model/pitch-class`);
 }
 
 start
   = note / note_property
 
 note
-  = _ "{" props:note_property+ "}" _ { return props; }
+  = _ "{" props:note_property+ "}" _ { return Note.fromProperties(props); }
 
 note_property
   = _ value:(pitchClass / duration / intensity) _ { return value; }

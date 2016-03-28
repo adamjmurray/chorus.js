@@ -23,4 +23,4 @@ module.exports = class Intensity {
     if (value == null) throw new Error(`Invalid Intensity String: ${string}`)
     return new Intensity(value);
   }
-}
+};

@@ -31,9 +31,22 @@ describe('parse', () => {
 
   it('parses notes', () => {
     expect( parse('{D 1/2 -}') ).to.deep.equal([
-      PitchClass.fromName('D'),
-      new Duration(1/2),
-      Intensity.fromName('-')
+      {
+        "duration": {
+          "@type": "Duration",
+          "value": 0.5,
+        },
+        "intensity": {
+          "@type": "Intensity",
+          "value": 0.6,
+        },
+        "octave": 4,
+        "pitchClass": {
+          "@type": "PitchClass",
+          "name": "D",
+          "value": 2,
+        }
+      }
     ]);
   });
 });
