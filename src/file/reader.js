@@ -79,7 +79,8 @@ module.exports = class MIDIFileReader {
 
     const endByte = this.byteOffset + trackSize;
     while (this.byteOffset < endByte) {
-      this.timeInTicks += this.readVariableLengthQuantity();
+      const deltaTimeInTicks = this.readVariableLengthQuantity();
+      this.timeInTicks += deltaTimeInTicks;
 
       const event = this.readEvent();
       // console.log(`at ${timeInTicks}, got ${JSON.stringify(event)}`);

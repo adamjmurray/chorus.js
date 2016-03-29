@@ -31,6 +31,7 @@ module.exports = Object.freeze({
 
   MICROSECONDS_PER_MINUTE: 60000000,
 
+  // TODO: append _BYTE to names for consistency with below
   META_EVENT: 0xFF,
   SYSEX_EVENT: 0xF0,
   SYSEX_CHUNK: 0xF7, // a continuation of a normal SysEx event
@@ -69,7 +70,9 @@ module.exports = Object.freeze({
 
   // Channel event (message) types
   NOTE: 'note',
+  NOTE_OFF: 'note-off',
   NOTE_OFF_BYTE: 0x80,
+  NOTE_ON: 'note-on',
   NOTE_ON_BYTE: 0x90,
   NOTE_AFTERTOUCH: 'note-aftertouch',
   NOTE_AFTERTOUCH_BYTE: 0xA0,

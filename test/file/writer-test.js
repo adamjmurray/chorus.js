@@ -61,6 +61,6 @@ describe('file writer', () => {
         }
       ]
     }).then(() => readMIDIFile(`${__dirname}/../../tmp/write-test.mid`))
-      .then(json => console.log(json));
+      .then(json => console.log(JSON.stringify(json, null, 2)));
   });
 });
