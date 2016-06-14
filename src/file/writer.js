@@ -1,7 +1,6 @@
-'use strict';
 const MIDI = require('./constants');
 
-module.exports = class MIDIFileWriter {
+class MIDIFileWriter {
 
   constructor(midiJSON) {
     this.midiJSON = midiJSON;
@@ -149,4 +148,6 @@ module.exports = class MIDIFileWriter {
         throw `Event type ${event.type} not supported yet`
     }
   }
-};
+}
+
+module.exports = MIDIFileWriter;

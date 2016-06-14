@@ -1,7 +1,3 @@
-'use strict';
-
-const clamp = require('../utils').clamp;
-
 const INTENSITY_VALUE = {
   '+++': 1,
   '++': 0.9,
@@ -14,7 +10,7 @@ const INTENSITY_VALUE = {
 
 module.exports = class Intensity {
   constructor(value) {
-    this.value = clamp(value, 0, 1);  // TODO: do we really want to clamp here 
+    this.value = value;
   }
 
   static fromName(string) {

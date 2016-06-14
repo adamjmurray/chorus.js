@@ -1,7 +1,4 @@
-const expect = require('chai').expect;
-const midifile = require('../../src/file');
-const writeMIDIFile = midifile.writeMIDIFile;
-const readMIDIFile = midifile.readMIDIFile;
+const { writeMIDIFile, readMIDIFile } = require('../../src/file');
 
 describe('file writer', () => {
   it('parses pitch classes', () => {

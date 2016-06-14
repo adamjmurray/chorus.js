@@ -1,4 +1,4 @@
-const expect = require('chai').expect;
+const assert = require('assert');
 const parse = require('../../src/lang/parse');
 const Duration = require('../../src/model/duration');
 const Intensity = require('../../src/model/intensity');
@@ -6,27 +6,27 @@ const PitchClass = require('../../src/model/pitch-class');
 
 describe('parse', () => {
   it('parses pitch classes', () => {
-    expect(parse('C')).to.deep.equal(PitchClass.fromName('C'));
+    assert.deepEqual(parse('C'), PitchClass.fromName('C'));
   });
 
   it('parses pitch classes with flats', () => {
-    expect( parse('Gb') ).to.deep.equal( PitchClass.fromName('Gb') );
+    assert.deepEqual( parse('Gb'), PitchClass.fromName('Gb') );
   });
 
   it('parses pitch classes with sharps', () => {
-    expect( parse('a#') ).to.deep.equal( PitchClass.fromName('a#') );
+    assert.deepEqual( parse('a#'), PitchClass.fromName('a#') );
   });
 
   it('parses durations', () => {
-    expect( parse('1/3') ).to.deep.equal( new Duration(1/3) );
+    assert.deepEqual( parse('1/3'), new Duration(1/3) );
   });
 
   it('parses intensities', () => {
-    expect( parse('++') ).to.deep.equal( Intensity.fromName('++') );
+    assert.deepEqual( parse('++'), Intensity.fromName('++') );
   });
 
   it('parses notes', () => {
-    expect( parse('{D 1/2 -}') ).to.deep.equal([
+    assert.deepEqual( parse('{D 1/2 -}'), [
       {
         duration: {
           value: 1/2,

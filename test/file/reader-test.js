@@ -1,12 +1,11 @@
-const expect = require('chai').expect;
-const midifile = require('../../src/file');
-const readMIDIFile = midifile.readMIDIFile;
+const assert = require('assert');
+const { readMIDIFile } = require('../../src/file');
 
 describe('file reader', () => {
   it('parses pitch classes', () => {
     return readMIDIFile(`${__dirname}/../assets/test1.mid`)
       .then(data => {
-        expect(data).to.deep.equal({
+        assert.deepEqual(data, {
           "header": {
             "format": 0,
             "ntracks": 1,

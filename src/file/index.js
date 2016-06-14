@@ -1,4 +1,3 @@
-'use strict';
 const fs = require('fs');
 const MIDIFileReader = require('./reader');
 const MIDIFileWriter = require('./writer');

@@ -1,6 +1,4 @@
-'use strict';
-
-const mod = require('../utils').mod;
+const { mod } = require('../utils');
 
 const PITCH_CLASS_VALUE = {
   C: 0,

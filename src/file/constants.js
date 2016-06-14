@@ -1,4 +1,3 @@
-'use strict';
 const KEY_NAMES_BY_VALUE = Object.freeze({
   0: 'C',
   1: 'G',

@@ -1,7 +1,7 @@
-'use strict';
 const PitchClass = require('./pitch-class');
 const Duration = require('./duration');
 const Intensity = require('./intensity');
+const { clamp } = require('../utils');
 
 module.exports = class Note {
   constructor(pitchClass, octave, duration, intensity) {
@@ -28,11 +28,10 @@ module.exports = class Note {
 
   midiJSON() {
     return {
-      // TODO: clamp here instead of constructors?
       type: 'note',
-      pitch: 12 * (this.octave + 2) + this.pitchClass.value,
-      velocity: this.intensity.value * 127,
-      duration: this.duration.value,
+      pitch: clamp(12 * (this.octave + 2) + this.pitchClass.value, 0, 127),
+      velocity: clamp(this.intensity.value * 127, 0, 127),
+      duration: clamp(this.duration.value, 0),
       release: 100,
       channel: 1
     }

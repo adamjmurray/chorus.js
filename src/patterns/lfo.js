@@ -1,4 +1,3 @@
-'use strict';
 const Pattern = require('./pattern');
 
 class LFO extends Pattern {

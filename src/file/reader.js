@@ -1,7 +1,6 @@
-'use strict';
 const MIDI = require('./constants');
 
-module.exports = class MIDIFileReader {
+class MIDIFileReader {
 
   constructor(arrayBuffer) {
     this.arrayBuffer = arrayBuffer;
@@ -358,4 +357,6 @@ module.exports = class MIDIFileReader {
     }
     return (data << 7) + (byte & 0x7F);
   };
-};
+}
+
+module.exports = MIDIFileReader;
