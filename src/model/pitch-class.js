@@ -19,7 +19,7 @@ function invalid(string) {
 module.exports = class PitchClass {
   constructor(value, name) {
     this.value = mod(value, 12);
-    if (name) this.name = name;
+    this.name = name;
   }
 
   static fromName(string) {

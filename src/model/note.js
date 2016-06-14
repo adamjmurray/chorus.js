@@ -11,7 +11,6 @@ module.exports = class Note {
     this.intensity = intensity != null ? intensity : new Intensity(0.7);
   }
 
-  // TODO: this probably needs to be extracted into an interpreter class
   static fromProperties(props) {
     const pitchClasses = [];
     const octaves = [];
@@ -22,13 +21,14 @@ module.exports = class Note {
       // TODO octaves
       else if (prop instanceof Duration) durations.push(prop);
       else if (prop instanceof Intensity) intensities.push(prop);
-      // TODO: other notes
+      // TODO: other Notes
     }
     return pitchClasses.map(pc => new Note(pc, octaves.shift(), durations.shift(), intensities.shift()));
   }
 
   midiJSON() {
     return {
+      // TODO: clamp here instead of constructors?
       type: 'note',
       pitch: 12 * (this.octave + 2) + this.pitchClass.value,
       velocity: this.intensity.value * 127,

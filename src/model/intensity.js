@@ -14,7 +14,7 @@ const INTENSITY_VALUE = {
 
 module.exports = class Intensity {
   constructor(value) {
-    this.value = clamp(value, 0, 1);
+    this.value = clamp(value, 0, 1);  // TODO: do we really want to clamp here 
   }
 
   static fromName(string) {

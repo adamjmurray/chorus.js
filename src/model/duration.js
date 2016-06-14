@@ -4,6 +4,6 @@ const clamp = require('../utils').clamp;
 
 module.exports = class Duration {
   constructor(value) {
-    this.value = clamp(value, 0);
+    this.value = clamp(value, 0); // TODO: do we really want to clamp here
   }
 };
