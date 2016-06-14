@@ -8,14 +8,17 @@ const INTENSITY_VALUE = {
   '---': 0.4,
 };
 
-module.exports = class Intensity {
-  constructor(value) {
-    this.value = value;
+class Intensity {
+  constructor(nameOrValue) {
+    if (typeof nameOrValue === 'number') {
+      this.value = nameOrValue;
+    }
+    else {
+      const string = nameOrValue.toString();
+      this.value = INTENSITY_VALUE[string];
+      if (this.value == null) throw new Error(`Invalid Intensity String: ${string}`)
+    }
   }
+}
 
-  static fromName(string) {
-    let value = INTENSITY_VALUE[string];
-    if (value == null) throw new Error(`Invalid Intensity String: ${string}`)
-    return new Intensity(value);
-  }
-};
+module.exports = Intensity;

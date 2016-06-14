@@ -3,14 +3,19 @@ const Duration = require('./duration');
 const Intensity = require('./intensity');
 const { clamp } = require('../utils');
 
-module.exports = class Note {
-  constructor(pitchClass, octave, duration, intensity) {
-    this.pitchClass = pitchClass != null ? pitchClass : new PitchClass(0, 'C');
-    this.octave = octave != null ? octave : 4;
-    this.duration = duration != null ? duration : new Duration(1);
-    this.intensity = intensity != null ? intensity : new Intensity(0.7);
+class Note {
+  constructor(
+    { pitchClass = new PitchClass(0),
+      octave = 4,
+      duration = new Duration(1),
+      intensity = new Intensity(0.7) } = {}) {
+    this.pitchClass = pitchClass;
+    this.octave = octave;
+    this.duration = duration;
+    this.intensity = intensity;
   }
 
+  // TODO: this should become the constructor for Chords?
   static fromProperties(props) {
     const pitchClasses = [];
     const octaves = [];
@@ -23,7 +28,12 @@ module.exports = class Note {
       else if (prop instanceof Intensity) intensities.push(prop);
       // TODO: other Notes
     }
-    return pitchClasses.map(pc => new Note(pc, octaves.shift(), durations.shift(), intensities.shift()));
+    return pitchClasses.map(pitchClass => new Note({
+      pitchClass,
+      octave: octaves.shift(),
+      duration: durations.shift(),
+      intensity: intensities.shift()
+    }));
   }
 
   midiJSON() {
@@ -36,4 +46,6 @@ module.exports = class Note {
       channel: 1
     }
   }
-};
+}
+
+module.exports = Note;

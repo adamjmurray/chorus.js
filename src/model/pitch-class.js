@@ -1,6 +1,6 @@
 const { mod } = require('../utils');
 
-const PITCH_CLASS_VALUE = {
+const PITCH_CLASS_VALUE = Object.freeze({
   C: 0,
   D: 2,
   E: 4,
@@ -8,31 +8,39 @@ const PITCH_CLASS_VALUE = {
   G: 7,
   A: 9,
   B: 11,
-};
+});
+const PITCH_CLASS_NAME = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
 
 function invalid(string) {
-  throw new Error(`Invalid PitchClass String: ${string}`)
+  throw new Error(`Invalid PitchClass name: ${string}`)
 }
 
-module.exports = class PitchClass {
-  constructor(value, name) {
-    this.value = mod(value, 12);
+class PitchClass {
+  constructor(nameOrValue) {
+    let value;
+    let name;
+    if (typeof nameOrValue === 'number') {
+      value = mod(Math.round(nameOrValue), 12);
+      name = PITCH_CLASS_NAME[value];
+    }
+    else {
+      const string = nameOrValue.toString();
+      if (string.length > 3) invalid(string);
+      name = string[0].toUpperCase();
+      value = PITCH_CLASS_VALUE[name];
+      if (value == null) invalid(string);
+      for (let i = 1; i < string.length; i++) {
+        switch (string[i]) {
+          case 'b': value--; break;
+          case '#': value++; break;
+          default: invalid(string);
+        }
+        name += string[i];
+      }
+    }
+    this.value = value;
     this.name = name;
   }
+}
 
-  static fromName(string) {
-    if (string.length > 2) invalid(string);
-    let name = string[0].toUpperCase();
-    let value = PITCH_CLASS_VALUE[name];
-    if (value == null) invalid(string);
-    if (string.length == 2) {
-      switch (string[1]) {
-        case 'b': value--; break;
-        case '#': value++; break;
-        default: invalid(string);
-      }
-      name += string[1];
-    }
-    return new PitchClass(value, name);
-  }
-};
+module.exports = PitchClass;

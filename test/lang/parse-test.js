@@ -6,15 +6,15 @@ const PitchClass = require('../../src/model/pitch-class');
 
 describe('parse', () => {
   it('parses pitch classes', () => {
-    assert.deepEqual(parse('C'), PitchClass.fromName('C'));
+    assert.deepEqual(parse('C'), new PitchClass('C'));
   });
 
   it('parses pitch classes with flats', () => {
-    assert.deepEqual( parse('Gb'), PitchClass.fromName('Gb') );
+    assert.deepEqual( parse('Gb'), new PitchClass('Gb') );
   });
 
   it('parses pitch classes with sharps', () => {
-    assert.deepEqual( parse('a#'), PitchClass.fromName('a#') );
+    assert.deepEqual( parse('a#'), new PitchClass('a#') );
   });
 
   it('parses durations', () => {
@@ -22,10 +22,10 @@ describe('parse', () => {
   });
 
   it('parses intensities', () => {
-    assert.deepEqual( parse('++'), Intensity.fromName('++') );
+    assert.deepEqual( parse('++'), new Intensity('++') );
   });
 
-  it('parses notes', () => {
+  it.only('parses notes', () => {
     assert.deepEqual( parse('{D 1/2 -}'), [
       {
         duration: {

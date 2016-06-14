@@ -16,13 +16,13 @@ note_property
   = _ value:(pitchClass / duration / intensity) _ { return value; }
 
 pitchClass
-  = name:([A-Ga-g][#b]?) { return PitchClass.fromName(name.join('')); }
+  = name:([A-Ga-g][#b]?) { return new PitchClass(name.join('')); }
 
 duration
   = value:(rational / integer) { return new Duration(value); }
 
 intensity
-  = name:("+++" / "++" / "+" / "---" / "--" / "-") { return Intensity.fromName(name); }
+  = name:("+++" / "++" / "+" / "---" / "--" / "-") { return new Intensity(name); }
 
 rational
   = numerator:integer "/" denominator:integer { return numerator/denominator; }
