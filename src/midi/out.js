@@ -82,7 +82,7 @@ class MIDIOut {
     this.send(NOTE_OFF | channel, pitch, velocity);
   }
 
-  note(pitch, velocity=70, duration=1000, channel=0) {
+  note(pitch, velocity=70, duration=500, channel=0) {
     this.noteOn(pitch, velocity, channel);
     setTimeout(() => this.noteOff(pitch, velocity, channel), duration)
   }

@@ -4,8 +4,8 @@ const out = new MIDIOut();
 out.open();
 
 const s = new Scheduler();
-s.clear();
-s.at(0, (() => out.note(60)));
-s.at(1000, (() => out.note(62)));
-s.at(2000, (() => out.note(64)));
+s.at(   0, () => out.note(60));
+s.at( 500, () => out.note(64));
+s.at(1000, () => out.note(67));
+s.at(1500, () => out.note(72));
 s.start();

@@ -22,7 +22,7 @@ class Scheduler {
   }
 
   start() {
-    this.times = [...this.schedule.keys()].sort();
+    this.times = [...this.schedule.keys()].sort((a,b) => a-b);
     this.startTime = new Date().getTime();
     this.tick();
   }
