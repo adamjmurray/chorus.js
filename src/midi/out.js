@@ -84,6 +84,7 @@ class MIDIOut {
   }
 
   note(pitch, velocity=70, duration=this.duration, channel=0) {
+    if (pitch.midiValue) pitch = pitch.midiValue;
     this.noteOn(pitch, velocity, channel);
     setTimeout(() => this.noteOff(pitch, velocity, channel), duration)
   }

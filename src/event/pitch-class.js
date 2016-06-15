@@ -9,7 +9,7 @@ const PITCH_CLASS_VALUE = Object.freeze({
   A: 9,
   B: 11,
 });
-const PITCH_CLASS_NAME = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+const PITCH_CLASS_NAME = Object.freeze(['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']);
 
 function invalid(string) {
   throw new Error(`Invalid PitchClass name: ${string}`)
@@ -40,6 +40,10 @@ class PitchClass {
     }
     this.value = value;
     this.name = name;
+  }
+
+  static names() {
+    return PITCH_CLASS_NAME;
   }
 }
 
