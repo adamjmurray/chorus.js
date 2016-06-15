@@ -237,7 +237,6 @@ class MIDIFileReader {
     return data;
   };
 
-
   readMessage(eventType) {
     let type;
     let channel;

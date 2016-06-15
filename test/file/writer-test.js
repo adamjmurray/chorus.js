@@ -1,8 +1,9 @@
 const { writeMIDIFile, readMIDIFile } = require('../../src/file');
+const assert = require('assert');
 
 describe('file writer', () => {
   it('parses pitch classes', () => {
-    return writeMIDIFile(`${__dirname}/../../tmp/write-test.mid`, {
+    const json =  {
       "header": {
         "format": 0,
         "ntracks": 1,
@@ -57,7 +58,9 @@ describe('file writer', () => {
           ]
         }
       ]
-    }).then(() => readMIDIFile(`${__dirname}/../../tmp/write-test.mid`))
-      .then(json => console.log(JSON.stringify(json, null, 2)));
+    };
+    return writeMIDIFile(`${__dirname}/../../tmp/write-test.mid`, json)
+    .then(() => readMIDIFile(`${__dirname}/../../tmp/write-test.mid`))
+    .then(reloadedJson => assert.deepEqual(reloadedJson, json));
   });
 });

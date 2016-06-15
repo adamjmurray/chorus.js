@@ -25,7 +25,7 @@ describe('parse', () => {
     assert.deepEqual( parse('++'), new Intensity('++') );
   });
 
-  it.only('parses notes', () => {
+  it('parses notes', () => {
     assert.deepEqual( parse('{D 1/2 -}'), [
       {
         duration: {
