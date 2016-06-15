@@ -3,9 +3,10 @@ const { NOTE_ON, NOTE_OFF } = require('./constants');
 
 class MIDIOut {
 
-  constructor() {
+  constructor(options = {}) {
     this.output = new midi.output();
     this.isOpen = false;
+    this.duration = options.duration || 500;
     process.on('exit', () => {
       this.allNotesOff();
       this.close()
@@ -82,7 +83,7 @@ class MIDIOut {
     this.send(NOTE_OFF | channel, pitch, velocity);
   }
 
-  note(pitch, velocity=70, duration=500, channel=0) {
+  note(pitch, velocity=70, duration=this.duration, channel=0) {
     this.noteOn(pitch, velocity, channel);
     setTimeout(() => this.noteOff(pitch, velocity, channel), duration)
   }
