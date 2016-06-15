@@ -6,7 +6,10 @@ class MIDIOut {
   constructor() {
     this.output = new midi.output();
     this.isOpen = false;
-    process.on('exit', () => this.close());
+    process.on('exit', () => {
+      this.allNotesOff();
+      this.close()
+    });
   }
 
   ports() {
