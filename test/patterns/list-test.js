@@ -1,5 +1,5 @@
 const assert = require('assert');
-const List = require('../../src/patterns/list');
+const List = require('../../src/pattern/list');
 
 describe('List', () => {
   let values;

@@ -1,8 +1,8 @@
 const assert = require('assert');
 const parse = require('../../src/lang/parse');
-const Duration = require('../../src/model/duration');
-const Intensity = require('../../src/model/intensity');
-const PitchClass = require('../../src/model/pitch-class');
+const Duration = require('../../src/event/duration');
+const Intensity = require('../../src/event/intensity');
+const PitchClass = require('../../src/event/pitch-class');
 
 describe('parse', () => {
   it('parses pitch classes', () => {

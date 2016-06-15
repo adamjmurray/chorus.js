@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Feedback = require('../../src/patterns/feedback');
+const Feedback = require('../../src/pattern/feedback');
 
 describe('Feedback', () => {
   let initial;

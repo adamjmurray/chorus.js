@@ -1,5 +1,5 @@
 const assert = require('assert');
-const LFO = require('../../src/patterns/lfo');
+const LFO = require('../../src/pattern/lfo');
 
 describe('LFO', () => {
   let lfo;

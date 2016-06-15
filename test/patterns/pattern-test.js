@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Pattern = require('../../src/patterns/pattern');
+const Pattern = require('../../src/pattern/pattern');
 
 describe('Pattern', () => {
   let values;

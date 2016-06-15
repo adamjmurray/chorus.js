@@ -1,9 +1,9 @@
 {
   const src = '../../../src';
-  const Duration = require(`${src}/model/duration`);
-  const Intensity = require(`${src}/model/intensity`);
-  const Note = require(`${src}/model/note`);
-  const PitchClass = require(`${src}/model/pitch-class`);
+  const Duration = require(`${src}/event/duration`);
+  const Intensity = require(`${src}/event/intensity`);
+  const Note = require(`${src}/event/note`);
+  const PitchClass = require(`${src}/event/pitch-class`);
 }
 
 start
