@@ -9,7 +9,7 @@ class Cycle extends Pattern {
   constructor(values, options = {}) {
     super(values, options);
     this.max = options.max;
-    if (this.max == null) this.max = Infinity;
+    if (this.max == null) this.max = values.length * 4;
   }
 
   *[Symbol.iterator]() {

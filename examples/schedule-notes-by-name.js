@@ -1,7 +1,7 @@
 require('../src/globals');
 const Scheduler = require('../src/time/scheduler');
 const { MIDIOut } = require('../src/midi');
-const out = new MIDIOut({ duration: 250 });
+const out = new MIDIOut({ defaultDuration: 200 });
 out.open();
 const note = out.note.bind(out);
 

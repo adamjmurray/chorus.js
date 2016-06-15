@@ -21,9 +21,9 @@ describe('Cycle', () => {
       assert.equal(cycle.max, max);
     });
 
-    it('should default the "max" option to Infinity', () => {
+    it('should default the "max" option to 4 * cycle length', () => {
       cycle = new Cycle(values);
-      assert.equal(cycle.max, Infinity);
+      assert.equal(cycle.max, 4 * values.length);
     });
   });
 
