@@ -1,4 +1,4 @@
-const { writeMIDIFile, readMIDIFile } = require('../../src/file');
+const MIDIFile = require('../../src/midi/file');
 const assert = require('assert');
 
 describe('file writer', () => {
@@ -59,8 +59,9 @@ describe('file writer', () => {
         }
       ]
     };
-    return writeMIDIFile(`${__dirname}/../../tmp/write-test.mid`, json)
-    .then(() => readMIDIFile(`${__dirname}/../../tmp/write-test.mid`))
-    .then(reloadedJson => assert.deepEqual(reloadedJson, json));
+    const midiFile = new MIDIFile(`${__dirname}/../../tmp/write-test.mid`);
+    return midiFile.write(json)
+      .then(() => midiFile.read())
+      .then(reloadedJson => assert.deepEqual(reloadedJson, json));
   });
 });

@@ -1,7 +1,7 @@
 const MIDI = require('./constants');
 const ByteArray = require('./byte-array');
 
-class MIDIFileWriter {
+class MIDIFileSerializer {
 
   constructor(midiJSON) {
     this.midiJSON = midiJSON;
@@ -128,4 +128,4 @@ class MIDIFileWriter {
 
 }
 
-module.exports = MIDIFileWriter;
+module.exports = MIDIFileSerializer;
