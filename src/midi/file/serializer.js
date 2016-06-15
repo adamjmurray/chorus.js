@@ -1,4 +1,4 @@
-const MIDI = require('./constants');
+const MIDIFILE = require('./constants');
 const ByteArray = require('./byte-array');
 
 class MIDIFileSerializer {
@@ -8,7 +8,7 @@ class MIDIFileSerializer {
   }
 
   toUint8Array() {
-    const header = Object.assign({format: 1, division: MIDI.DEFAULT_DIVISION}, this.midiJSON.header);
+    const header = Object.assign({format: 1, division: MIDIFILE.DEFAULT_DIVISION}, this.midiJSON.header);
     const tracks = this.midiJSON.tracks;
     this.ticksPerBeat = header.division;
     header.ntracks = tracks.length;
@@ -22,7 +22,7 @@ class MIDIFileSerializer {
 
   toHeaderBytes(header) {
     const bytes = new ByteArray();
-    bytes.writeInt32(MIDI.HEADER_CHUNK_ID);
+    bytes.writeInt32(MIDIFILE.HEADER_CHUNK_ID);
     bytes.writeInt32(6);
     bytes.writeInt16(header.format);
     bytes.writeInt16(header.ntracks);
@@ -55,21 +55,21 @@ class MIDIFileSerializer {
         // console.log('writing event', event);
         const channelByte = (event.channel - 1) & 0x0F;
         switch (event.type) {
-          case MIDI.NOTE_ON:
-            bytes.writeInt8(MIDI.NOTE_ON_BYTE | channelByte);
+          case MIDIFILE.NOTE_ON:
+            bytes.writeInt8(MIDIFILE.NOTE_ON_BYTE | channelByte);
             // TODO: I think we need a writeInt7 that does & 0x7F, for safety
             // Maybe we should clamp to 0,127 and/or issue a warning when value is out of range
             bytes.writeInt8(event.pitch);
             bytes.writeInt8(event.velocity);
             break;
-          case MIDI.NOTE_OFF:
-            bytes.writeInt8(MIDI.NOTE_OFF_BYTE | channelByte);
+          case MIDIFILE.NOTE_OFF:
+            bytes.writeInt8(MIDIFILE.NOTE_OFF_BYTE | channelByte);
             bytes.writeInt8(event.pitch);
             bytes.writeInt8(event.velocity);
             break;
-          case MIDI.TRACK_END:
-            bytes.writeInt8(MIDI.META_EVENT);
-            bytes.writeInt8(MIDI.TRACK_END_BYTE);
+          case MIDIFILE.TRACK_END:
+            bytes.writeInt8(MIDIFILE.META_EVENT);
+            bytes.writeInt8(MIDIFILE.TRACK_END_BYTE);
             bytes.writeVariableLengthQuantity(0);
             break;
           default:
@@ -79,7 +79,7 @@ class MIDIFileSerializer {
     }
 
     const trackHeadBytes = new ByteArray();
-    trackHeadBytes.writeInt32(MIDI.TRACK_CHUNK_ID);
+    trackHeadBytes.writeInt32(MIDIFILE.TRACK_CHUNK_ID);
     trackHeadBytes.writeInt32(bytes.length);
     return trackHeadBytes.concat(bytes);
   }
@@ -93,9 +93,9 @@ class MIDIFileSerializer {
       const events = track[time];
       time = parseFloat(time);
       events.forEach((event, index) => {
-        if (event.type === MIDI.NOTE) {
+        if (event.type === MIDIFILE.NOTE) {
           events[index] = {
-            type: MIDI.NOTE_ON,
+            type: MIDIFILE.NOTE_ON,
             pitch: event.pitch,
             velocity: event.velocity,
             channel: event.channel,
@@ -103,14 +103,14 @@ class MIDIFileSerializer {
           let noteOff;
           if (event.release != null) {
             noteOff = {
-              type: MIDI.NOTE_OFF,
+              type: MIDIFILE.NOTE_OFF,
               pitch: event.pitch,
               velocity: event.release,
               channel: event.channel,
             }
           } else {
             noteOff = {
-              type: MIDI.NOTE_ON,
+              type: MIDIFILE.NOTE_ON,
               pitch: event.pitch,
               velocity: 0,
               channel: event.channel,
