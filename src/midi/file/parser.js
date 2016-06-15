@@ -1,4 +1,5 @@
 const MIDI = require('./constants');
+const ByteScanner = require('./byte-scanner');
 
 class MIDIFileParser {
 
@@ -7,9 +8,7 @@ class MIDIFileParser {
   }
 
   toJSON() {
-    this.dataView = new DataView(this.arrayBuffer);
-    this.byteOffset = 0;
-
+    this.next = new ByteScanner(this.arrayBuffer);
     const header = this.readHeader();
     if (header.division & 0x8000) throw 'SMPTE time division format not supported';
     this.ticksPerBeat = header.division;
@@ -26,39 +25,17 @@ class MIDIFileParser {
     }
   }
 
-  nextUInt32() {
-    const int32 = this.dataView.getUint32(this.byteOffset);
-    this.byteOffset += 4;
-    return int32;
-  }
-
-  nextUInt16() {
-    const int16 = this.dataView.getUint16(this.byteOffset);
-    this.byteOffset += 2;
-    return int16;
-  }
-
-  nextUInt8() {
-    const int8 = this.dataView.getUint8(this.byteOffset);
-    this.byteOffset += 1;
-    return int8;
-  }
-
-  backTrack(bytes) {
-    this.byteOffset -= bytes;
-  }
-
   readHeader() {
-    if (this.nextUInt32() !== MIDI.HEADER_CHUNK_ID) throw 'MIDI format error: Invalid header chuck ID';
-    const headerSize = this.nextUInt32();
+    if (this.next.uInt32() !== MIDI.HEADER_CHUNK_ID) throw 'MIDI format error: Invalid header chuck ID';
+    const headerSize = this.next.uInt32();
     if (headerSize < 6) throw 'Invalid MIDI file: header must be at least 6 bytes';
 
-    const format = this.nextUInt16();
-    const ntracks = this.nextUInt16(); // number of tracks
-    const division = this.nextUInt16();
+    const format = this.next.uInt16();
+    const ntracks = this.next.uInt16(); // number of tracks
+    const division = this.next.uInt16();
 
     // ignore extra header bytes
-    for (let i=6; i<headerSize; i++) this.nextUInt8();
+    for (let i=6; i<headerSize; i++) this.next.uInt8();
 
     return {
       format,
@@ -68,17 +45,16 @@ class MIDIFileParser {
   }
 
   readTrack() {
-    if (this.nextUInt32() !== MIDI.TRACK_CHUNK_ID) throw 'MIDI format error: Invalid track chuck ID';
+    if (this.next.uInt32() !== MIDI.TRACK_CHUNK_ID) throw 'MIDI format error: Invalid track chuck ID';
 
-    const trackSize = this.nextUInt32();
-
+    const trackSize = this.next.uInt32();
     const track = {};
     this.timeInTicks = 0;
     this.notes = {};
 
-    const endByte = this.byteOffset + trackSize;
-    while (this.byteOffset < endByte) {
-      const deltaTimeInTicks = this.readVariableLengthQuantity();
+    const end = this.next.position + trackSize;
+    while (this.next.position < end) {
+      const deltaTimeInTicks = this.next.variableLengthQuantity();
       this.timeInTicks += deltaTimeInTicks;
 
       const event = this.readEvent();
@@ -104,7 +80,7 @@ class MIDIFileParser {
   }
 
   readEvent() {
-    const eventType = this.nextUInt8();
+    const eventType = this.next.uInt8();
     switch (eventType) {
       case MIDI.META_EVENT:
         return this.readMetaEvent();
@@ -117,7 +93,7 @@ class MIDIFileParser {
   }
 
   readMetaEvent() {
-    const type = this.nextUInt8();
+    const type = this.next.uInt8();
     let metaData;
     switch (type) {
       case MIDI.SEQUENCE_NUMBER_BYTE:
@@ -216,10 +192,10 @@ class MIDIFileParser {
   }
 
   readMetaValue() {
-    const length = this.readVariableLengthQuantity();
+    const length = this.next.variableLengthQuantity();
     let value = 0;
     for (let i=0; i<length; i++) {
-      value = (value << 8) + this.nextUInt8();
+      value = (value << 8) + this.next.uInt8();
     }
     return value;
   }
@@ -229,10 +205,10 @@ class MIDIFileParser {
   };
 
   readMetaData() {
-    const length = this.readVariableLengthQuantity();
+    const length = this.next.variableLengthQuantity();
     const data = [];
     for (let i=0; i<length; i++) {
-      data.push(this.nextUInt8());
+      data.push(this.next.uInt8());
     }
     return data;
   };
@@ -241,15 +217,15 @@ class MIDIFileParser {
     let type;
     let channel;
     if (eventType & 0x80) {
-      this.messageType = type = eventType & 0xF0;
-      this.channel = channel = (eventType & 0x0F) + 1;
+      type = this.messageType = eventType & 0xF0;
+      channel = this.channel = (eventType & 0x0F) + 1;
     }
     else {
       // This is a running status byte, reuse type and channel from last message:
       type = this.messageType;
       channel = this.channel;
       // And the byte we thought was eventType is really the next data byte, so backtrack
-      this.backTrack(1);
+      this.next.backtrack(1);
     }
 
     let event;
@@ -263,33 +239,33 @@ class MIDIFileParser {
       case MIDI.NOTE_AFTERTOUCH_BYTE:
         event = {
           type: MIDI.NOTE_AFTERTOUCH,
-          pitch: this.nextUInt8(),
-          value: this.nextUInt8(),
+          pitch: this.next.uInt8(),
+          value: this.next.uInt8(),
         };
         break;
       case MIDI.CONTROLLER_BYTE:
         event = {
           type: MIDI.CONTROLLER,
-          number: this.nextUInt8(),
-          value: this.nextUInt8(),
+          number: this.next.uInt8(),
+          value: this.next.uInt8(),
         };
         break;
       case MIDI.PROGRAM_CHANGE_BYTE:
         event = {
           type: MIDI.PROGRAM_CHANGE,
-          number: this.nextUInt8(),
+          number: this.next.uInt8(),
         };
         break;
       case MIDI.CHANNEL_AFTERTOUCH_BYTE:
         event = {
           type: MIDI.CHANNEL_AFTERTOUCH,
-          value: this.nextUInt8(),
+          value: this.next.uInt8(),
         };
         break;
       case MIDI.PITCH_BEND_BYTE:
         event = {
           type: MIDI.PITCH_BEND,
-          value: (this.nextUInt8() << 7) + this.nextUInt8(),
+          value: (this.next.uInt8() << 7) + this.next.uInt8(),
         };
         break;
       default:
@@ -303,8 +279,8 @@ class MIDIFileParser {
   }
 
   readNoteOn() {
-    const pitch = this.nextUInt8();
-    const velocity = this.nextUInt8();
+    const pitch = this.next.uInt8();
+    const velocity = this.next.uInt8();
     if (velocity === 0) {
       // handle as a note off without an off velocity
       this.readNoteOff(pitch);
@@ -324,8 +300,8 @@ class MIDIFileParser {
   readNoteOff(pitch) {
     let release;
     if (pitch == null) {
-      pitch = this.nextUInt8();
-      release = this.nextUInt8(); // AKA off velocity
+      pitch = this.next.uInt8();
+      release = this.next.uInt8(); // AKA off velocity
     } // else pitch was passed in from readNoteOn() when a velocity of 0 was encountered
 
     if (this.notes[pitch]) {
@@ -347,15 +323,6 @@ class MIDIFileParser {
     else console.log(`Warning: ignoring unmatched note off event on track ${this.trackNumber} for pitch ${pitch}`);
   }
 
-  readVariableLengthQuantity() {
-    let data = 0;
-    let byte = this.nextUInt8();
-    while (byte & 0x80) {
-      data = (data << 7) + (byte & 0x7F);
-      byte = this.nextUInt8();
-    }
-    return (data << 7) + (byte & 0x7F);
-  };
 }
 
 module.exports = MIDIFileParser;
