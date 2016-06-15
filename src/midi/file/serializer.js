@@ -12,25 +12,21 @@ class MIDIFileSerializer {
     const tracks = this.midiJSON.tracks;
     this.ticksPerBeat = header.division;
     header.ntracks = tracks.length;
+    let bytes = new ByteArray();
 
-    let bytes = this.toHeaderBytes(header);
-    tracks.forEach(track => {
-      bytes = bytes.concat(this.toTrackBytes(track));
-    });
-    return new Uint8Array(bytes);
-  }
-
-  toHeaderBytes(header) {
-    const bytes = new ByteArray();
     bytes.writeInt32(MIDIFILE.HEADER_CHUNK_ID);
     bytes.writeInt32(6);
     bytes.writeInt16(header.format);
     bytes.writeInt16(header.ntracks);
     bytes.writeInt16(header.division);
-    return bytes;
+
+    for (const track of tracks) {
+      bytes = bytes.concat(this.trackBytes(track));
+    }
+    return new Uint8Array(bytes);
   }
 
-  toTrackBytes(rawTrack) {
+  trackBytes(rawTrack) {
     const track = this.normalizeNoteEvents(rawTrack);
     const bytes = new ByteArray();
     const times = Object
