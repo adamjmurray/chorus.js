@@ -1,5 +1,5 @@
-const PitchClass = require('./event/pitch-class');
-const Pitch = require('./event/pitch');
+const PitchClass = require('./model/pitch-class');
+const Pitch = require('./model/pitch');
 
 // TODO: but how do I import them
 function symbolFor(midiPitch) {
