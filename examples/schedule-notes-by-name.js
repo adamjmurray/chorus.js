@@ -1,4 +1,4 @@
-require('../src/globals');
+require('../src/model').inject(global);
 const { Scheduler } = require('../src/time');
 const { MIDIOut } = require('../src/midi');
 

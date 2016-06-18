@@ -17,6 +17,11 @@ class Pitch {
   get midiValue() {
     return (this.octave + 1) * 12 + this.pitchClass.value;
   }
+
+  freeze() {
+    this.pitchClass.freeze();
+    return Object.freeze(this);
+  }
 }
 
 module.exports = Pitch;

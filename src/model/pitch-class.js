@@ -16,6 +16,10 @@ function invalid(string) {
 }
 
 class PitchClass {
+  static names() {
+    return PITCH_CLASS_NAME;
+  }
+
   constructor(nameOrValue) {
     let value;
     let name;
@@ -42,8 +46,8 @@ class PitchClass {
     this.name = name;
   }
 
-  static names() {
-    return PITCH_CLASS_NAME;
+  freeze() {
+    return Object.freeze(this);
   }
 }
 
