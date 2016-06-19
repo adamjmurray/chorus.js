@@ -1,8 +1,7 @@
-require('../src/model').into(global);
+require('../src/names').into(global);
 const { Scheduler } = require('../src/time');
 const { MIDIOut } = require('../src/midi');
-const Scale = require('../src/model/scale');
-const Chord = require('../src/model/chord');
+const { Scale, Chord } = require('../src/model');
 
 const scheduler = new Scheduler();
 const output = new MIDIOut({ defaultDuration: 200 });

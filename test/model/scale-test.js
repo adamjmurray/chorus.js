@@ -2,7 +2,7 @@ const assert = require('assert');
 const Scale = require('../../src/model/scale');
 
 describe('Scale', () => {
-  with(require('../../src/model').into(this)) {
+  with(require('../../src/names').into(this)) {
     let scale;
     beforeEach(() => {
       scale = new Scale(D, DORIAN);

@@ -16,7 +16,7 @@ function invalid(string) {
 }
 
 class PitchClass {
-  static names() {
+  static get NAMES() {
     return PITCH_CLASS_NAME;
   }
 

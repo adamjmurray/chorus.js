@@ -1,6 +1,10 @@
 const PitchClass = require('./pitch-class');
 
 class Pitch {
+  static get MAX_VALUE() {
+    return 128;
+  }
+
   constructor(pitchClass, octave = 4) {
     if (typeof pitchClass === 'number') {
       const midiValue = pitchClass;
