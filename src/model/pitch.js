@@ -14,8 +14,16 @@ class Pitch {
     }
   }
 
-  get midiValue() {
+  get value() {
     return (this.octave + 1) * 12 + this.pitchClass.value;
+  }
+
+  get midiValue() {
+    return this.value;
+  }
+
+  add(semitones) {
+    return new Pitch(this.value + semitones);
   }
 
   freeze() {

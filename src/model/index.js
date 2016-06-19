@@ -1,6 +1,7 @@
 const PitchClass = require('./pitch-class');
 const Pitch = require('./pitch');
 const pitchClassNames = PitchClass.names();
+const Chord = require('./chord');
 
 function nameForMidiPitch(midiPitch) {
   const pitchClassName = pitchClassNames[midiPitch % 12];
@@ -41,11 +42,29 @@ SCALE.MINOR = SCALE.NATURAL_MINOR = SCALE.AEOLIAN;
 Object.keys(SCALE).forEach(name => Object.freeze(SCALE[name]));
 Object.freeze(SCALE);
 
+const CHORD = {
+  TRIAD: [0,2,4],
+  INV1:  [0,2,5],
+  INV2:  [0,3,5],
+  SUS2:  [0,1,4],
+  SUS4:  [0,2,3],
+  FOURFIVE: [0,3,4],
+  SEVENTH: [0,2,4,6],
+  SEVENTH_INV1: [0,2,4,5],
+  SEVENTH_INV2: [0,2,3,5],
+  SEVENTH_INV3: [0,1,3,5],
+};
+Object.keys(CHORD).forEach(name => {
+  CHORD[name] = new Chord(CHORD[name]).freeze();
+});
+Object.freeze(CHORD);
+
 module.exports = {
   PITCH_CLASS,
   PITCH,
   SCALE,
+  CHORD,
   into(namespace) {
-    return Object.assign(namespace, PITCH_CLASS, PITCH, SCALE);
+    return Object.assign(namespace, PITCH_CLASS, PITCH, SCALE, CHORD);
   }
 };
