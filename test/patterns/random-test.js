@@ -1,6 +1,6 @@
 const assert = require('assert');
-const Random = require('../../src/pattern/random');
-const List = require('../../src/pattern/list');
+const Random = require('../../src/patterns/random');
+const List = require('../../src/patterns/list');
 
 describe('Random', () => {
   let values;
