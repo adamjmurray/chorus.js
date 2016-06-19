@@ -30,7 +30,10 @@ class Pitch {
    */
   constructor(value, octave = 4) {
     if (typeof value === 'number') {
-      /** @member {number} */
+      /**
+       * The MIDI pitch number
+       * @member {number}
+       */
       this.value = value;
     }
     else {
@@ -67,11 +70,6 @@ class Pitch {
    */
   get octave() {
     return Math.floor(this.value / 12) - 1;
-  }
-
-  // TODO: deprecated
-  get midiValue() {
-    return this.value;
   }
 
   /**
