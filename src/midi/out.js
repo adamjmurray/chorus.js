@@ -11,6 +11,10 @@ class MIDIOut {
       this.allNotesOff();
       this.close()
     });
+    process.on('SIGINT', () => {
+      // trigger on exit behavior
+      process.exit(130);
+    });
   }
 
   ports() {
@@ -84,7 +88,7 @@ class MIDIOut {
   }
 
   note(pitch, velocity=70, duration=this.defaultDuration, channel=0) {
-    if (pitch.midiValue) pitch = pitch.midiValue;
+    if (pitch.value) pitch = pitch.value;
     this.noteOn(pitch, velocity, channel);
     setTimeout(() => this.noteOff(pitch, velocity, channel), duration)
   }

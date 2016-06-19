@@ -6,6 +6,10 @@ class MIDIIn {
     this.input = new midi.input();
     this.isOpen = false;
     process.on('exit', () => this.close());
+    process.on('SIGINT', () => {
+      // trigger on exit behavior
+      process.exit(130);
+    });
   }
 
   ports() {
