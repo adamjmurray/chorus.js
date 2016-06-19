@@ -26,7 +26,7 @@ for (let i=0; i < 128; i++) {
 }
 Object.freeze(PITCH);
 
-const SCALE = {
+const SCALE_TYPE = {
   IONIAN:     [2,2,1,2,2,2,1],
   DORIAN:     [2,1,2,2,2,1,2],
   PHRYGIAN:   [1,2,2,2,1,2,2],
@@ -37,12 +37,12 @@ const SCALE = {
 
   HARMONIC_MINOR: [2,1,2,2,1,3,1]
 };
-SCALE.MAJOR = SCALE.IONIAN;
-SCALE.MINOR = SCALE.NATURAL_MINOR = SCALE.AEOLIAN;
-Object.keys(SCALE).forEach(name => Object.freeze(SCALE[name]));
-Object.freeze(SCALE);
+SCALE_TYPE.MAJOR = SCALE_TYPE.IONIAN;
+SCALE_TYPE.MINOR = SCALE_TYPE.NATURAL_MINOR = SCALE_TYPE.AEOLIAN;
+Object.keys(SCALE_TYPE).forEach(name => Object.freeze(SCALE_TYPE[name]));
+Object.freeze(SCALE_TYPE);
 
-const CHORD = {
+const CHORD_TYPE = {
   TRIAD: [0,2,4],
   INV1:  [0,2,5],
   INV2:  [0,3,5],
@@ -54,17 +54,15 @@ const CHORD = {
   SEVENTH_INV2: [0,2,3,5],
   SEVENTH_INV3: [0,1,3,5],
 };
-Object.keys(CHORD).forEach(name => {
-  CHORD[name] = new Chord(CHORD[name]).freeze();
-});
-Object.freeze(CHORD);
+Object.keys(CHORD_TYPE).forEach(name => Object.freeze(CHORD_TYPE[name]));
+Object.freeze(CHORD_TYPE);
 
 module.exports = {
   PITCH_CLASS,
   PITCH,
-  SCALE,
-  CHORD,
+  SCALE_TYPE,
+  CHORD_TYPE,
   into(namespace) {
-    return Object.assign(namespace, PITCH_CLASS, PITCH, SCALE, CHORD);
+    return Object.assign(namespace, PITCH_CLASS, PITCH, SCALE_TYPE, CHORD_TYPE);
   }
 };

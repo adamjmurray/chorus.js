@@ -21,6 +21,11 @@ class Scale {
     return this.intervals.length;
   }
 
+  /**
+   * The size of the scale in semitones (keys on a piano keyboard).
+   * For most scales, this value will be 12, which means the scale repeats every octave.
+   * In other words, when this is 12, if the scale starts on a C, it will end on the next higher C.
+   */
   get semitones() {
     return this.intervals.reduce((a,b) => a + b, 0);
   }

@@ -39,7 +39,7 @@ class Scheduler {
       const callbacks = this.schedule.get(this.nextSchedule) || [];
       this.nextSchedule = null;
       this.nextTime = null;
-      callbacks.forEach(callback => callback.call());
+      callbacks.forEach(callback => callback.call(this.nextSchedule));
     }
     this.timeout = setTimeout(() => this.tick(), 1);
   }

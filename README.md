@@ -1,3 +1,3 @@
 TODO:
-Scales, Chords, Arpeggios
+Relative time scheduler. Time patterns / triggers.
 Euclidean Sequencer
