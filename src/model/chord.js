@@ -1,18 +1,38 @@
 const utils = require('../utils');
 
+/**
+ *
+ */
 class Chord {
 
+  /**
+   *
+   * @param scale
+   * @param root
+   * @param offsets
+   */
   constructor(scale, root, offsets) { // TODO: option for "borrowed" notes from the chromatic scale
     this.scale = scale;
     this.root = root; // the scale degree of the root of the chord
     this.offsets = offsets; // the list of scale degrees relative to the chord
   }
 
+  /**
+   *
+   * @param relativeOctave
+   * @returns {Array|*|{}}
+   */
   pitches(relativeOctave = 0) {
     return this.offsets.map(offset =>
       this.scale.pitch(this.root + offset, relativeOctave));
   }
 
+  /**
+   *
+   * @param position
+   * @param relativeOctave
+   * @returns {*}
+   */
   pitch(position, relativeOctave = 0) {
     const pitches = this.pitches(relativeOctave);
     const pitch = pitches[utils.mod(position, pitches.length)];

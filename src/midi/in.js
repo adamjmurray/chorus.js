@@ -1,6 +1,9 @@
 const midi = require('midi');
 const { NOTE_ON, NOTE_OFF } = require('./constants');
 
+/**
+ * Realtime MIDI input.
+ */
 class MIDIIn {
   constructor() {
     this.input = new midi.input();

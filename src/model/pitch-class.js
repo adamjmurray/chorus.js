@@ -75,6 +75,8 @@ class PitchClass {
     }
     /**
      * The number of semitones above C. Used to compute {@link Pitch#value MIDI pitch values}.
+     * This is always the canonical value in the range 0-11 (inclusive). Assigning this property will convert to the
+     * equivalent canonical value.
      * @member {Number}
      */
     this.value = value;

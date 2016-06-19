@@ -1,5 +1,8 @@
 const Pattern = require('./pattern');
 
+/**
+ * A Pattern that outputs the results of a function called on a time value that changes at the given speed rate.
+ */
 class LFO extends Pattern {
 
   constructor(func, options) {

@@ -1,5 +1,8 @@
 const Pattern = require('./pattern');
 
+/**
+ * A pattern that randomly yields a random value from a list of values.
+ */
 class Random extends Pattern {
 
   *[Symbol.iterator]() {

@@ -1,5 +1,6 @@
 /**
  * A pattern of values, provided in a sequence via an iterator.
+ * The generic superclass of all other patterns.
  */
 class Pattern {
 

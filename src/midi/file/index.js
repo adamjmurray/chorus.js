@@ -2,11 +2,22 @@ const fs = require('fs');
 const MIDIFileParser = require('./parser');
 const MIDIFileSerializer = require('./serializer');
 
+/**
+ * Read and write MIDI files.
+ */
 class MIDIFile {
+  /**
+   *
+   * @param filepath
+   */
   constructor(filepath) {
     this.filepath = filepath;
   }
 
+  /**
+   *
+   * @returns {Promise}
+   */
   read() {
     return new Promise((resolve, reject) => {
       fs.readFile(this.filepath, (error, buffer) => {
@@ -18,6 +29,11 @@ class MIDIFile {
     });
   }
 
+  /**
+   *
+   * @param midiJSON
+   * @returns {Promise}
+   */
   write(midiJSON) {
     const uint8Array = new MIDIFileSerializer(midiJSON).toUint8Array();
     var buffer = new Buffer(uint8Array);
