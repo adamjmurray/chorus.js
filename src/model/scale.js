@@ -2,6 +2,8 @@ const PitchClass = require('./pitch-class');
 const Pitch = require('./pitch');
 const utils = require('../utils');
 
+const DEFAULT_OCTAVE = 4;
+
 /**
  * A list of pitch classes, which can be converted to pitches
  */
@@ -16,8 +18,7 @@ class Scale {
     this.length = intervals.length;
   }
 
-  step(index, baseOctave) {
-    const wantsPitchClass = baseOctave == null;
+  step(index, relativeOctave = 0) {
     let pitchClassValue = this.root.value; // pitch class value
     for (let i = 0; i < index; i++) {
       pitchClassValue += this.intervals[i % this.length];
@@ -26,8 +27,7 @@ class Scale {
       pitchClassValue -= this.intervals[utils.mod(i, this.length)];
     }
     const pitchClass = new PitchClass(pitchClassValue);
-    if (wantsPitchClass) return pitchClass;
-    const octave = baseOctave + Math.floor(pitchClassValue / 12);
+    const octave = DEFAULT_OCTAVE + relativeOctave + Math.floor(pitchClassValue / 12);
     return new Pitch(pitchClass, octave);
   }
 }
