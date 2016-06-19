@@ -6,6 +6,8 @@ const DEFAULT_OCTAVE = 4;
 
 /**
  * A list of pitch classes, which can be converted to pitches
+ * 
+ * @see https://en.wikipedia.org/wiki/Scale_(music)
  */
 class Scale {
 
