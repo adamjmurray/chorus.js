@@ -1,19 +1,19 @@
 {
   const src = '../../../src';
-  const Duration = require(`${src}/model/duration`);
-  const Intensity = require(`${src}/model/intensity`);
-  const Note = require(`${src}/model/note`);
-  const PitchClass = require(`${src}/model/pitch-class`);
+  const { Chord, Duration, Intensity, Note, Pitch, PitchClass, Scale } = require(`${src}/model`);
 }
 
 start
-  = note / note_property
+  = note / note_property / pitchClass
 
 note
   = _ "{" props:note_property+ "}" _ { return Note.fromProperties(props); }
 
 note_property
-  = _ value:(pitchClass / duration / intensity) _ { return value; }
+  = _ value:(pitch / duration / intensity) _ { return value; }
+
+pitch
+  = pitchClass:pitchClass octave:integer { return new Pitch(pitchClass, octave); }
 
 pitchClass
   = name:([A-Ga-g][#b]?) { return new PitchClass(name.join('')); }

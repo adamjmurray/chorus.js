@@ -2,6 +2,7 @@ const Pitch = require('../model/pitch');
 const MAX_VALUE = Pitch.MAX_VALUE;
 const PITCH_CLASS_NAMES = require('../model/pitch-class').NAMES;
 
+// TODO: rework this into Pitch.toString() or pitch.name
 function nameForMidiPitch(midiPitch) {
   const pitchClassName = PITCH_CLASS_NAMES[midiPitch % 12];
   let octave = Math.floor(midiPitch / 12) - 1;
@@ -14,7 +15,7 @@ function nameForMidiPitch(midiPitch) {
 }
 
 const PITCHES = {};
-for (let i = 0; i < MAX_VALUE; i++) {
+for (let i = 0; i <= MAX_VALUE; i++) {
   PITCHES[nameForMidiPitch(i)] = new Pitch(i).freeze();
 }
 
