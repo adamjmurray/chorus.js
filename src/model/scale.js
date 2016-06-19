@@ -8,6 +8,8 @@ const utils = require('../utils');
 class Scale {
 
   constructor(root, intervals) {
+    if (!(root instanceof PitchClass)) throw new TypeError('Scale root must be a PitchClass');
+    if (!(intervals instanceof Array)) throw new TypeError('Scale intervals must be an Array');
     this.root = root; // a pitch class
     this.intervals = intervals; // list of integers for the interval distance between consecutive notes of the scale.
     // intervals sum is 12 for octave-repeating scales.
@@ -16,7 +18,6 @@ class Scale {
 
   step(index, baseOctave) {
     const wantsPitchClass = baseOctave == null;
-    // const idx = utils.mod(index, this.length);
     let pitchClassValue = this.root.value; // pitch class value
     for (let i = 0; i < index; i++) {
       pitchClassValue += this.intervals[i % this.length];

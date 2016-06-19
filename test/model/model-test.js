@@ -1,19 +1,19 @@
 const assert = require('assert');
-const model = require('../../src/model');
+const Model = require('../../src/model');
 
 describe('Model', () => {
 
-  describe('pitches', () => {
+  describe('PITCH', () => {
     it('has immutable keys', () => {
-      model.pitches.newPitch = true;
-      assert.equal(model.pitches.newPitch, null);
+      Model.PITCH.newPitch = true;
+      assert.equal(Model.PITCH.newPitch, null);
     });
 
     it('has immutable properties', () => {
-      model.pitches.C4.octave = 0;
-      assert.equal(model.pitches.C4.octave, 4);
-      model.pitches.C4.pitchClass.name = 'D';
-      assert.equal(model.pitches.C4.pitchClass.name, 'C');
+      Model.PITCH.C4.octave = 0;
+      assert.equal(Model.PITCH.C4.octave, 4);
+      Model.PITCH.C4.pitchClass.name = 'D';
+      assert.equal(Model.PITCH.C4.pitchClass.name, 'C');
     });
   });
 });
