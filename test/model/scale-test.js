@@ -5,7 +5,7 @@ describe('Scale', () => {
   with(require('../../src/names').into(this)) {
     let scale;
     beforeEach(() => {
-      scale = new Scale(D, DORIAN);
+      scale = new Scale(DORIAN.intervals, { root: D });
     });
 
     describe('step()', () => {
@@ -19,14 +19,14 @@ describe('Scale', () => {
         assert.deepEqual(scale.pitch(6), C5);
       });
 
-      it("allows octave shifts via an optional second argument", () => {
-        assert.deepEqual(scale.pitch(0, 0), D4);
-        assert.deepEqual(scale.pitch(1, 1), E5);
-        assert.deepEqual(scale.pitch(2, 2), F6);
-        assert.deepEqual(scale.pitch(3, 3), G7);
-        assert.deepEqual(scale.pitch(4, -1), A3);
-        assert.deepEqual(scale.pitch(5, -2), B2);
-        assert.deepEqual(scale.pitch(6, -3), C2);
+      it("allows octave shifts via a option", () => {
+        assert.deepEqual(scale.pitch(0, { octave: 4 }), D4);
+        assert.deepEqual(scale.pitch(1, { octave: 5 }), E5);
+        assert.deepEqual(scale.pitch(2, { octave: 6 }), F6);
+        assert.deepEqual(scale.pitch(3, { octave: 7 }), G7);
+        assert.deepEqual(scale.pitch(4, { octave: 3 }), A3);
+        assert.deepEqual(scale.pitch(5, { octave: 2 }), B2);
+        assert.deepEqual(scale.pitch(6, { octave: 1 }), C2);
       });
 
       it("adds to the octave when wrapping around in the positive direction, ", () => {

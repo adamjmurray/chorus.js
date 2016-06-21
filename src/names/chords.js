@@ -1,3 +1,5 @@
+const Chord = require('../model/chord');
+
 const CHORD_TYPES = {
   TRIAD: [0,2,4],
   TRIAD_INV1:  [0,2,5],
@@ -11,6 +13,7 @@ const CHORD_TYPES = {
   SEVENTH_INV2: [0,2,3,5],
   SEVENTH_INV3: [0,1,3,5],
 };
-Object.keys(CHORD_TYPES).forEach(name => Object.freeze(CHORD_TYPES[name]));
+const CHORDS = {};
+Object.keys(CHORD_TYPES).forEach(name => CHORDS[name] = new Chord(CHORD_TYPES[name]).freeze());
 
-module.exports = Object.freeze(CHORD_TYPES);
+module.exports = Object.freeze(CHORDS);

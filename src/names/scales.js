@@ -1,3 +1,5 @@
+const Scale = require('../model/scale');
+
 const SCALE_TYPES = {
   IONIAN:     [2,2,1,2,2,2,1],
   DORIAN:     [2,1,2,2,2,1,2],
@@ -12,6 +14,7 @@ const SCALE_TYPES = {
 SCALE_TYPES.MAJOR = SCALE_TYPES.IONIAN;
 SCALE_TYPES.MINOR = SCALE_TYPES.NATURAL_MINOR = SCALE_TYPES.AEOLIAN;
 
-Object.keys(SCALE_TYPES).forEach(name => Object.freeze(SCALE_TYPES[name]));
+const SCALES = {};
+Object.keys(SCALE_TYPES).forEach(name => SCALES[name] = new Scale(SCALE_TYPES[name]).freeze());
 
-module.exports = Object.freeze(SCALE_TYPES);
+module.exports = Object.freeze(SCALES);

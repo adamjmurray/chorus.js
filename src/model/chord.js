@@ -11,10 +11,12 @@ class Chord {
    * @param root
    * @param offsets
    */
-  constructor(offsets, root, scale) { // TODO: option for "borrowed" notes from the chromatic scale
-    this.offsets = offsets; // the list of scale degrees relative to the chord
-    this.root = root; // the scale degree of the root of the chord
+  constructor(offsets, { scale, degree = 0, octave = 4 } = {}) { // TODO: option for "borrowed" notes from the chromatic scale
+    this.offsets = offsets; // scale degrees relative to the given degree
+    this.degree = degree; // the scale degree of the root of the chord
     this.scale = scale;
+    this.degree = degree;
+    this.octave = octave;
   }
 
   /**
@@ -22,9 +24,9 @@ class Chord {
    * @param relativeOctave
    * @returns {Array|*|{}}
    */
-  pitches(relativeOctave = 0) {
+  pitches({ scale = this.scale, degree = this.degree, octave = this.octave } = {}) { // TODO: option for inversion number?
     return this.offsets.map(offset =>
-      this.scale.pitch(this.root + offset, relativeOctave));
+      scale.pitch(degree + offset, octave));
   }
 
   /**
@@ -33,26 +35,32 @@ class Chord {
    * @param relativeOctave
    * @returns {*}
    */
-  pitch(position, relativeOctave = 0) {
-    const pitches = this.pitches(relativeOctave);
+  pitch(position, { scale = this.scale, degree = this.degree, octave = this.octave } = {}) { // TODO: option for inversion number?
+    const pitches = this.pitches({ scale, degree, octave });
     const pitch = pitches[utils.mod(position, pitches.length)];
     const offset = Math.floor(position / pitches.length);
     if (offset !== 0) {
-      return pitch.add(offset * this.scale.semitones);
+      return pitch.add(offset * scale.semitones);
     }
     return pitch;
   }
 
   // TODO: test coverage for this
-  inversion(number) {
+  inversion(number, { scale = this.scale, degree = this.degree, octave = this.octave } = {}) {
     const offsets = this.offsets.slice(); // make a copy
-    const scaleLength = this.scale.length;
-    for (let i =  1; i <= number; i++) offsets.push(degrees.shift() + scaleLength);
-    for (let i = -1; i >= number; i--) offsets.unshift(degrees.pop() - scaleLength);
-    return new Chord(offsets, this.root, this.scale);
+    const scaleLength = scale.length;
+    for (let i =  1; i <= number; i++) offsets.push(offsets.shift() + scaleLength);
+    for (let i = -1; i >= number; i--) offsets.unshift(offsets.pop() - scaleLength);
+    return new Chord(offsets, { scale, degree, octave });
+  }
+
+  at(degree) {
+    return new Chord(this.offsets.slice(), { degree, scale: this.scale, octave: this.octave });
   }
 
   freeze() {
+    Object.freeze(this.offsets);
+    if (this.scale) this.scale.freeze();
     return Object.freeze(this);
   }
 }

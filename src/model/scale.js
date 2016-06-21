@@ -2,21 +2,19 @@ const PitchClass = require('./pitch-class');
 const Pitch = require('./pitch');
 const utils = require('../utils');
 
-const DEFAULT_OCTAVE = 4;
-
 /**
  * A list of pitch classes, which can be converted to pitches
- * 
+ *
  * @see https://en.wikipedia.org/wiki/Scale_(music)
  */
 class Scale {
 
-  constructor(root, intervals) {
-    if (!(root instanceof PitchClass)) throw new TypeError('Scale root must be a PitchClass');
+  constructor(intervals, { root = new PitchClass(0) } = {}) {
     if (!(intervals instanceof Array)) throw new TypeError('Scale intervals must be an Array');
-    this.root = root; // a pitch class
+    if (!(root instanceof PitchClass)) throw new TypeError('Scale root must be a PitchClass');
     this.intervals = intervals; // list of integers for the interval distance between consecutive notes of the scale.
     // intervals sum is 12 for octave-repeating scales.
+    this.root = root; // a pitch class
   }
 
   get length() {
@@ -32,13 +30,22 @@ class Scale {
     return this.intervals.reduce((a,b) => a + b, 0);
   }
 
-  pitch(scaleDegree, relativeOctave = 0) {
+  pitch(degree, { root = this.root, octave = 4 } = {}) {
     let pitchClassValue = this.root.value; // pitch class value
-    for (let i = 0;  i < scaleDegree;  i++) pitchClassValue += this.intervals[i % this.length];
-    for (let i = -1; i >= scaleDegree; i--) pitchClassValue -= this.intervals[utils.mod(i, this.length)];
+    for (let i = 0;  i < degree;  i++) pitchClassValue += this.intervals[i % this.length];
+    for (let i = -1; i >= degree; i--) pitchClassValue -= this.intervals[utils.mod(i, this.length)];
     const pitchClass = new PitchClass(pitchClassValue);
-    const octave = DEFAULT_OCTAVE + relativeOctave + Math.floor(pitchClassValue / 12);
-    return new Pitch(pitchClass, octave);
+    return new Pitch(pitchClass, octave + Math.floor(pitchClassValue / 12));
+  }
+  
+  at(root) {
+    return new Scale(this.intervals.slice(), { root });
+  }
+  
+  freeze() {
+    Object.freeze(this.intervals);
+    if (this.root) this.root.freeze();
+    return Object.freeze(this);
   }
 }
 

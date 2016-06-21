@@ -1,7 +1,7 @@
-const CHORD_TYPES = require('./chord-types');
+const CHORDS = require('./chords');
 const PITCH_CLASSES = require('./pitch-classes');
 const PITCHES = require('./pitches');
-const SCALE_TYPES = require('./scale-types');
+const SCALES = require('./scales');
 
 /**
  * Predefined constants for common musical objects and properties.
@@ -52,7 +52,7 @@ module.exports = {
    * @see https://en.wikipedia.org/wiki/Seventh_chord
    * @see https://en.wikipedia.org/wiki/Inversion_(music)#Chords
    */
-  CHORD_TYPES,
+  CHORDS,
 
   /**
    * The 12 {@link PitchClass PitchClasses}:
@@ -104,13 +104,13 @@ module.exports = {
    * @see https://en.wikipedia.org/wiki/Mode_(music)#Modern
    * @see https://en.wikipedia.org/wiki/List_of_musical_scales_and_modes
    */
-  SCALE_TYPES,
+  SCALES,
 
   /**
    * Inject all predefined names into the given Object.
    * @param namespace {Object} the object whose properties will be destructively modified to set all name/values defined here
    */
   into(object) {
-    return Object.assign(object, CHORD_TYPES, PITCH_CLASSES, PITCHES, SCALE_TYPES);
+    return Object.assign(object, CHORDS, PITCH_CLASSES, PITCHES, SCALES);
   },
 };
