@@ -145,6 +145,10 @@ class MIDIOut {
       }
     }
   }
+
+  play(song) {
+    song.play(this);
+  }
 }
 
 module.exports = MIDIOut;

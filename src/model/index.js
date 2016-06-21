@@ -5,6 +5,7 @@ const Note = require('./note');
 const Pitch = require('./pitch');
 const PitchClass = require('./pitch-class');
 const Scale = require('./scale');
+const Song = require('./song');
 
 /**
  * @module Model
@@ -31,4 +32,6 @@ module.exports = {
 
   /** @member {Scale} Scale the Scale class */
   Scale,
+
+  Song,
 };

@@ -14,7 +14,7 @@ const scale = new Scale(C, MAJOR);
   [SEVENTH_INV2, 1],
 ]
 .forEach(([chordType, scaleDegree], chordIndex) => {
-  const chord = new Chord(scale, scaleDegree, chordType);
+  const chord = new Chord(chordType, scaleDegree, scale);
   [0,1,2,3,2,1].forEach((arpPosition, arpIndex, arpPattern) => {
     const count = arpIndex + arpPattern.length * chordIndex; // increments by 1 every loop
     // schedule one note every half beat:

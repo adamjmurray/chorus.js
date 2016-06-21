@@ -42,10 +42,10 @@ module.exports = {
    * const { TRIAD, SEVENTH } = CHORD_TYPES;
    * const { Scale } = require('midikit/model');
    * const cMajorScale = new Scale(C, MAJOR);
-   * const I_CHORD  = new Chord(cMajorScale, 0, TRIAD); // C major triad
-   * const IV_CHORD = new Chord(cMajorScale, 3, TRIAD); // F major triad
-   * const V_CHORD  = new Chord(cMajorScale, 4, SEVENTH); // G major dominant 7th chord
-   * const vi_CHORD = new Chord(cMajorScale, 5, TRIAD); // a minor triad
+   * const I_CHORD  = new Chord(TRIAD, 0, cMajorScale); // C major triad
+   * const IV_CHORD = new Chord(TRIAD, 3, cMajorScale); // F major triad
+   * const V7_CHORD = new Chord(SEVENTH, 4, cMajorScale); // G major dominant 7th chord
+   * const vi_CHORD = new Chord(TRIAD, 5, cMajorScale); // a minor triad
    * @see https://en.wikipedia.org/wiki/Triad_(music)
    * @see https://en.wikipedia.org/wiki/Suspended_chord
    * @see https://en.wikipedia.org/wiki/Quartal_and_quintal_harmony

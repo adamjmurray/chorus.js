@@ -11,10 +11,10 @@ class Chord {
    * @param root
    * @param offsets
    */
-  constructor(scale, root, offsets) { // TODO: option for "borrowed" notes from the chromatic scale
-    this.scale = scale;
-    this.root = root; // the scale degree of the root of the chord
+  constructor(offsets, root, scale) { // TODO: option for "borrowed" notes from the chromatic scale
     this.offsets = offsets; // the list of scale degrees relative to the chord
+    this.root = root; // the scale degree of the root of the chord
+    this.scale = scale;
   }
 
   /**
@@ -49,7 +49,7 @@ class Chord {
     const scaleLength = this.scale.length;
     for (let i =  1; i <= number; i++) offsets.push(degrees.shift() + scaleLength);
     for (let i = -1; i >= number; i--) offsets.unshift(degrees.pop() - scaleLength);
-    return new Chord(this.scale, this.root, offsets);
+    return new Chord(offsets, this.root, this.scale);
   }
 
   freeze() {
