@@ -4,8 +4,9 @@
  */
 class Scheduler {
 
-  constructor() {
+  constructor({ bpm } = {}) {
     this.schedule = new Map();
+    this.bpm = bpm;
   }
 
   /**
@@ -24,10 +25,14 @@ class Scheduler {
   at(time, callback) {
     if (typeof time !== 'number') throw new TypeError('time must be a number');
     if (typeof callback !== 'function') throw new TypeError('callback must be a function');
-    let callbacks = this.schedule.get(time);
+    let timeInMs = time;
+    if (this.bpm) { // time is in beats, not milliseconds (TODO: update docs)
+      timeInMs = time * 60000/this.bpm;
+    }
+    let callbacks = this.schedule.get(timeInMs);
     if (!callbacks) {
       callbacks = [];
-      this.schedule.set(time, callbacks);
+      this.schedule.set(timeInMs, callbacks);
     }
     callbacks.push(callback);
   }
