@@ -1,4 +1,5 @@
 TODO:
+- Convert Songs to MIDI files
 - Enhance Section behavior
   - Needs to set a length.
   - Tracks should have an option to loop or do a "one shot"
@@ -14,10 +15,47 @@ TODO:
 - Euclidean Sequencer / Pattern
   - In general, provide pluggable "strategies" for sequencing in a Song
 - Support melodic sequencers, where the same relative pitch patterns are repeated by starting at different scale (or chord?) degrees
+- It kind of sucks midiJSON keys get converted to strings, and don't necessarily maintain their order correctly when printing
+  Maybe we should do something like:
+
+      "tracks": [
+        [
+          {
+            "time": 0,
+            "events": [
+              {
+                "type": "note",
+                ...
+              }
+            ]
+          },
+          {
+            "time": 0.5,
+            "events": [...]
+          }
+        ],
+        [ ... track 2 ... ]
+      ]
+
+  Alternately:
+
+      "tracks": [
+        [ // each event listed individually and with it's time
+          {
+            "time": 0,
+            "type": "note",
+            ...
+          },
+          {
+            "time": 0,
+            "type": "note",
+            ...
+          }
+        ],
+        [ ... track 2 ... ]
+      ]
 
 Refactoring:
-- The Song class should not take a generator. Instead it should be an Iterator (and/or have a toJSON() -> to MIDI JSON)
-  and work with both the realtime MIDI playback and the MIDI file output
 - For chord names, I want to do TRIAD[0] instead of TRIAD.at(0).
 - For chord names, I want to do TRIAD[4].inv(-1) to invert it. We need "lazy" inversions because
   we have not yet assigned a scale.

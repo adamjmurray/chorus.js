@@ -33,7 +33,7 @@ class MIDIFileSerializer {
       .keys(track)
       .map(parseFloat)
       .filter(number => !isNaN(number))
-      .sort();
+      .sort((a,b) => a-b);
 
     // console.log('got timeOffsets', times);
     let timeInTicks = 0;
@@ -56,7 +56,7 @@ class MIDIFileSerializer {
             // TODO: I think we need a writeInt7 that does & 0x7F, for safety
             // Maybe we should clamp to 0,127 and/or issue a warning when value is out of range
             bytes.writeInt8(event.pitch);
-            bytes.writeInt8(event.velocity);
+            bytes.writeInt8(event.velocity); // TODO: might want to do Math.round here?
             break;
           case MIDIFILE.NOTE_OFF:
             bytes.writeInt8(MIDIFILE.NOTE_OFF_BYTE | channelByte);

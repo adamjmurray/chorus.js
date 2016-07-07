@@ -53,7 +53,7 @@ class Note {
     return {
       type: 'note',
       pitch: clamp(pitch, 0, 127),
-      velocity: clamp(intensity * 127, 0, 127),
+      velocity: Math.round(clamp(intensity * 127, 0, 127)),
       duration: clamp(duration, 0),
       release: 100,
       channel: clamp(channel, 1, 16),

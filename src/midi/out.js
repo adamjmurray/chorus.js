@@ -1,5 +1,6 @@
 const midi = require('midi');
 const { NOTE_ON, NOTE_OFF } = require('./constants');
+const Scheduler = require('../time/scheduler');
 
 /**
  * Realtime MIDI output.
@@ -146,8 +147,45 @@ class MIDIOut {
     }
   }
 
-  play(song) {
-    song.play(this);
+  play(songOrJSON) {
+    const scheduler = new Scheduler();
+    if (songOrJSON[Symbol.iterator]) {
+      let bpm = 120; // TODO: make this default a constant? We are using it in a few places
+      // it's a Song, iterate over all its events
+      for (const event of songOrJSON) {
+        if (event.type === 'bpm') {
+          bpm = scheduler.bpm = event.value;
+        } // TODO: we could look for the time property and schedule tempo changes
+        else if (event.type === 'note') {
+          scheduler.at(event.time, () => {
+            this.note(event.pitch, event.velocity, event.duration * 60000/bpm, event.channel);
+          })
+        }
+      }
+    }
+    else {
+      // it's midiJSON
+      const { bpm, tracks } = songOrJSON;
+      scheduler.bpm = bpm;
+      for (const track of tracks) {
+        const times = Object
+          .keys(track)
+          .map(parseFloat)
+          .filter(number => !isNaN(number))
+          .sort((a, b) => a - b);
+        for (const time of times) {
+          for (const event of track[time]) {
+            if (event.type === 'note') {
+              scheduler.at(time, () => {
+                this.note(event.pitch, event.velocity, event.duration * 60000 / bpm, event.channel);
+              })
+            }
+          }
+        }
+      }
+    }
+    scheduler.start();
+    return scheduler; // so the caller can stop it if desired
   }
 }
 

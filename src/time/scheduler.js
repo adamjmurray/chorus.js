@@ -4,7 +4,7 @@
  */
 class Scheduler {
 
-  constructor({ bpm } = {}) {
+  constructor({ bpm=120 } = {}) {
     this.schedule = new Map();
     this.bpm = bpm;
   }
@@ -26,7 +26,7 @@ class Scheduler {
     if (typeof time !== 'number') throw new TypeError('time must be a number');
     if (typeof callback !== 'function') throw new TypeError('callback must be a function');
     let timeInMs = time;
-    if (this.bpm) { // time is in beats, not milliseconds (TODO: update docs)
+    if (this.bpm) { // time is in beats, not milliseconds (TODO: update docs) - and now we pretty much always use beats though...
       timeInMs = time * 60000/this.bpm;
     }
     let callbacks = this.schedule.get(timeInMs);
