@@ -19,15 +19,17 @@ class Note {
   constructor(
     { pitch = new Pitch(60),
       duration = new Duration(1),
-      intensity = new Intensity(0.7) } = {}) {
-    console.log('in note constructor', pitch);
+      intensity = new Intensity(0.7),
+      channel} = {}) {
+    // console.log('in note constructor', pitch);
     this.pitch = pitch;
     this.duration = duration;
     this.intensity = intensity;
+    if (channel) this.channel = channel;
   }
 
   static fromProperties(property) {
-    console.log('in note from properties', property);
+    // console.log('in note from properties', property);
     const pitches = [];
     const durations = [];
     const intensities = [];
@@ -43,14 +45,18 @@ class Note {
     }));
   }
 
-  midiJSON() {
+  toJSON() {
+    let {pitch, duration, intensity, channel} = this;
+    if (pitch.value) pitch = pitch.value;
+    if (duration.value) duration = duration.value;
+    if (intensity.value) intensity = intensity.value;
     return {
       type: 'note',
-      pitch: clamp(this.pitch.value, 0, 127),
-      velocity: clamp(this.intensity.value * 127, 0, 127),
-      duration: clamp(this.duration.value, 0),
+      pitch: clamp(pitch, 0, 127),
+      velocity: clamp(intensity * 127, 0, 127),
+      duration: clamp(duration, 0),
       release: 100,
-      channel: 1
+      channel: clamp(channel, 1, 16),
     }
   }
 }

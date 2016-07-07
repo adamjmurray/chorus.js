@@ -7,6 +7,7 @@ module.exports = {
   },
 
   clamp(value, min, max) {
+    if (value == null) value = min;
     if (value < min) value = min;
     if (value > max) value = max;
     return value;
