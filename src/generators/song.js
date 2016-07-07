@@ -29,11 +29,13 @@ class Song {
     // console.log('harmony:', harmony);
     for (const track of this.tracks) {
       for (const event of track) {
+        // console.log(event);
         const time = event.time;
         let i = 0;
         let h = harmony[i];
-        while (h && h.time < time) h = harmony[++i];
+        while (h && (h.time <= time)) h = harmony[++i];
         const chord = harmony[(i || 1) - 1].chord;
+        // console.log(chord);
         scheduler.at(event.time, () => {
           output.note(chord.pitch(event.pitch), event.intensity * 127, event.duration * 60000/this.bpm);
         })

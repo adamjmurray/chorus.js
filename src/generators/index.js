@@ -1,5 +1,6 @@
+const Harmony = require('./harmony');
+const Melody = require('./melody');
 const Rhythm = require('./rhythm');
-const Sequencer = require('./sequencer');
 const Song = require('./song');
 const Track = require('./track');
 
@@ -8,11 +9,14 @@ const Track = require('./track');
  */
 module.exports = {
 
+  /** @member {Harmony} Harmony the Harmony class */
+  Harmony,
+
+  /** @member {Melody} Melody the Sequencer class */
+  Melody,
+
   /** @member {Rhythm} Rhythm the Rhythm class */
   Rhythm,
-
-  /** @member {Sequencer} Sequencer the Sequencer class */
-  Sequencer,
 
   /** @member {Song} Song the Song class */
   Song,

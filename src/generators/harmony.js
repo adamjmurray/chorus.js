@@ -5,13 +5,14 @@ const Rhythm = require('./rhythm');
  */
 class Harmony {
 
-  constructor({scale, chords, rhythm, rate=1} = {}) {
+  constructor({scale, chords, rhythm, rate=1}={}) {
     this.scale = scale;
     chords.forEach(chord => chord.scale = scale);
     this.chords = chords;
     if (rhythm) {
       this.rhythm = rhythm instanceof Rhythm ? rhythm : new Rhythm(rhythm, { rate });
     } else {
+      // TODO: maybe instead of this, the Section length can control how long the rhythm goes (it can be [1] by default, and loop)
       rhythm = new Array(chords.length);
       rhythm.fill(1);
       this.rhythm = new Rhythm(rhythm, { rate });
@@ -19,9 +20,10 @@ class Harmony {
   }
 
   *[Symbol.iterator]() {
+    const {chords, rhythm} = this;
     let index = 0;
-    for (const event of this.rhythm) {
-      const chord = this.chords[index++ % this.chords.length];
+    for (const event of rhythm) {
+      const chord = chords[index++ % chords.length];
       yield {time: event.time, chord};
     }
   }
