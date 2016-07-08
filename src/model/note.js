@@ -1,5 +1,5 @@
 const Pitch = require('./pitch');
-const { clamp } = require('../utils');
+const { clamp, clampInt } = require('../utils');
 
 /**
  * A musical event defined in terms of {@link Pitch}, {@link Duration}, and {@link Intensity}.
@@ -45,11 +45,10 @@ class Note {
 
   toJSON() {
     let {pitch, duration, intensity, channel} = this;
-    if (pitch.value) pitch = pitch.value;
     return {
       type: 'note',
-      pitch: clamp(pitch, 0, 127),
-      velocity: Math.round(clamp(intensity * 127, 0, 127)),
+      pitch: clampInt(pitch, 0, 127),
+      velocity: clampInt(intensity*127, 0, 127),
       duration: clamp(duration, 0),
       release: 100,
       channel: clamp(channel, 1, 16),

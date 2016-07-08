@@ -81,6 +81,10 @@ class Pitch {
     return new Pitch(this.value + value);
   }
 
+  valueOf() {
+    return this.value;
+  }
+
   /**
    * Prevent changes to this Pitch's value
    * @returns {Pitch} this Pitch
