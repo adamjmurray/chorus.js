@@ -14,8 +14,7 @@ TODO:
 - Maybe Rhythm (and Melody?) should supoort Iterables for times, pitches, durations, intensities, so we can use
   the Pattern classes for this stuff! They would need to detect end-of-iteration and restart though (potentially depending on other options).
   - Maybe introduce a LoopingIterable helper class?
-- Euclidean Sequencer / Pattern
-  - In general, provide pluggable "strategies" for sequencing in a Song
+- Euclidean Pattern
 - Support melodic sequencers, where the same relative pitch patterns are repeated by starting at different scale (or chord?) degrees
 - It kind of sucks midiJSON keys get converted to strings, and don't necessarily maintain their order correctly when printing
 

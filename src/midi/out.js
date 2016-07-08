@@ -1,6 +1,6 @@
 const midi = require('midi');
 const { NOTE_ON, NOTE_OFF } = require('./constants');
-const Scheduler = require('../time/scheduler');
+const Scheduler = require('./scheduler');
 
 /**
  * Realtime MIDI output.

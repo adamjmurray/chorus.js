@@ -1,6 +1,5 @@
 require('../src/names').into(global);
-const { Scheduler } = require('../src/time');
-const { MIDIOut } = require('../src/midi');
+const { Scheduler, MIDIOut } = require('../src/midi');
 
 const scheduler = new Scheduler({ bpm: 120 });
 const output = new MIDIOut({ defaultDuration: 200 });

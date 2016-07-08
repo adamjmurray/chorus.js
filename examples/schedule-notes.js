@@ -1,5 +1,4 @@
-const { Scheduler } = require('../src/time');
-const { MIDIOut } = require('../src/midi');
+const { Scheduler, MIDIOut } = require('../src/midi');
 
 const output = new MIDIOut({ defaultDuration: 400 });
 const note = output.note.bind(output);
