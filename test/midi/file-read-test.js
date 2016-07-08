@@ -1,7 +1,7 @@
 const assert = require('assert');
 const MIDIFile = require('../../src/midi/file');
 
-describe('file reader', () => {
+describe('MIDIFile.read()', () => {
   it('parses pitch classes', () => {
     return new MIDIFile(`${__dirname}/../assets/test1.mid`)
       .read()

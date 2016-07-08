@@ -2,7 +2,7 @@ const assert = require('assert');
 const Note = require('../../src/model/note');
 const Pitch = require('../../src/model/pitch');
 
-describe.only('Note', () => {
+describe('Note', () => {
   describe('toJSON()', () => {
     it('works with pitch Numbers', () => {
       const note = new Note({ pitch: 60 });

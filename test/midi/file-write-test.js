@@ -1,7 +1,7 @@
 const MIDIFile = require('../../src/midi/file');
 const assert = require('assert');
 
-describe('file writer', () => {
+describe('MIDIFile.write()', () => {
   it('parses pitch classes', () => {
     const json =  {
       "header": {

@@ -2,7 +2,7 @@ TODO:
 - Different track follow modes: scale, chords, harmony (all notes in chords), chromatic...
 - Drum tracks should be able to specify a single pitch to use
   - Just set the pitches property to something like [C4]? Melodies should work with pitches and not just Numbers...
-- Octave settings for tracks
+- Octave settings for tracks (microtonal support? lazy evaluate based on scale length!)
 - For chord names, I want to do TRIAD[4].inv(-1) to invert it. We need "lazy" inversions because
   we have not yet assigned a scale.
 - Enhance Section behavior
@@ -18,28 +18,8 @@ TODO:
   - In general, provide pluggable "strategies" for sequencing in a Song
 - Support melodic sequencers, where the same relative pitch patterns are repeated by starting at different scale (or chord?) degrees
 - It kind of sucks midiJSON keys get converted to strings, and don't necessarily maintain their order correctly when printing
-  Maybe we should do something like:
 
-      "tracks": [
-        [
-          {
-            "time": 0,
-            "events": [
-              {
-                "type": "note",
-                ...
-              }
-            ]
-          },
-          {
-            "time": 0.5,
-            "events": [...]
-          }
-        ],
-        [ ... track 2 ... ]
-      ]
-
-  Alternately (I think I like this better):
+  Let's do this:
 
       "tracks": [
         [ // each event listed individually and with it's time
