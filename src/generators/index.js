@@ -5,7 +5,10 @@ const Song = require('./song');
 const Track = require('./track');
 
 /**
- * @module Model
+ * @module Generators
+ * @description
+ * #### Classes that produce musical patterns which can be played or saved to a MIDI file
+ * <br>
  */
 module.exports = {
 
