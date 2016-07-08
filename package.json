@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "node_modules/.bin/mocha 'test/**/*.js'",
     "doc": "node_modules/.bin/jsdoc src --configure ./jsdoc.json --recurse --destination doc --readme docs-home.md",
-    "test": "node_modules/.bin/mocha 'test/**/*.js'"
+    "doc-watch": "watch 'npm run doc' src/ --wait=1"
   },
   "author": "Adam Murray",
   "license": "MIT",

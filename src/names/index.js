@@ -17,19 +17,18 @@ module.exports = {
 
   /**
    * Common {@link Chord} types defined in terms of scale degree offsets (the third argument to the Chord constructor)
-   * <ul>
-   *   <li><code>TRIAD</code></li>
-   *   <li><code>TRIAD_INV1</code></li>
-   *   <li><code>TRIAD_INV2</code></li>
-   *   <li><code>TRIAD_SUS2</code></li>
-   *   <li><code>TRIAD_SUS4</code></li>
-   *   <li><code>QUARTAL</code></li>
-   *   <li><code>QUINTAL</code></li>
-   *   <li><code>SEVENTH</code></li>
-   *   <li><code>SEVENTH_INV1</code></li>
-   *   <li><code>SEVENTH_INV2</code></li>
-   *   <li><code>SEVENTH_INV3</code></li>
-   * </ul>
+   * - `TRIAD`
+   * - `TRIAD_INV1`
+   * - `TRIAD_INV2`
+   * - `TRIAD_SUS2`
+   * - `TRIAD_SUS4`
+   * - `QUARTAL`
+   * - `QUINTAL`
+   * - `SEVENTH`
+   * - `SEVENTH_INV1`
+   * - `SEVENTH_INV2`
+   * - `SEVENTH_INV3`
+   *
    * Note: whether a chord such as a triad is major, minor, diminished, or augmented depends on the scale and the root
    * of the chord. This is because chords in midikit are defined in terms of scale degrees, so you don't have to worry
    * about accidentally using notes that aren't part of the scale. If you don't know music theory, don't worry about it!
@@ -56,42 +55,35 @@ module.exports = {
 
   /**
    * The 12 {@link PitchClass PitchClasses}:
-   * <br><br>
-   * <code>C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B</code>
+   *
+   * `C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B`
    */
   PITCH_CLASSES,
 
   /**
    * The 128 {@link Pitch Pitches}:
-   * <br><br>
-   * <code>C_1, Db_1, D_1, Eb_1, E_1, F_1, Gb_1, G_1, Ab_1, A_1, Bb_1, B_1, C0, Db0, D0, ..., Ab8, B8, C9, Cb9, D9, Db9, E9, F9, Gb9, G9</code>
-   * <br><br>
-   * <code>C_1</code> is the minimum Pitch value of 0 (<code>"_1"</code> means -1 octave number).<br>
-   * <code>G9</code> the is maximum Pitch value of 127.
+   *
+   * `C_1, Db_1, D_1, Eb_1, E_1, F_1, Gb_1, G_1, Ab_1, A_1, Bb_1, B_1, C0, Db0, D0, ..., Ab8, B8, C9, Cb9, D9, Db9, E9, F9, Gb9, G9`
+   *
+   * `C_1` is the minimum Pitch value of 0 (`"_1"` means -1 octave number).
+   *
+   * `G9` the is maximum Pitch value of 127.
    */
   PITCHES,
 
   /**
    * Common {@link Scale Scale} types defined in terms of intervals (the second argument to the Scale constructor):
-   * <ul>
-   *   <li><code>IONIAN</code>, also known as:
-   *     <ul>
-   *       <li><code>MAJOR</code></li>
-   *     </ul>
-   *   </li>
-   *   <li><code>DORIAN</code></li>
-   *   <li><code>PHRYGIAN</code></li>
-   *   <li><code>LYDIAN</code></li>
-   *   <li><code>MIXOLYDIAN</code></li>
-   *   <li><code>AEOLIAN</code>, also known as:
-   *     <ul>
-   *       <li><code>MINOR</code></li>
-   *       <li><code>NATURAL_MINOR</code></li>
-   *     </ul>
-   *   </li>
-   *   <li><code>LOCRIAN</code></li>
-   *   <li><code>HARMONIC_MINOR</code></li>
-   * </ul>
+   * - `IONIAN`, also known as:
+   *   - `MAJOR`
+   * - `DORIAN`
+   * - `PHRYGIAN`
+   * - `LYDIAN`
+   * - `MIXOLYDIAN`
+   * - `AEOLIAN`, also known as:
+   *   - `MINOR`
+   *   - `NATURAL_MINOR`
+   * - `LOCRIAN`
+   * - `HARMONIC_MINOR`
    *
    * @example
    * const { PITCH_CLASSES, SCALE_TYPES } = require('midikit/names');
