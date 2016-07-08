@@ -1,6 +1,4 @@
 const Pitch = require('./pitch');
-const Duration = require('./duration');
-const Intensity = require('./intensity');
 const { clamp } = require('../utils');
 
 /**
@@ -18,8 +16,8 @@ class Note {
    */
   constructor(
     { pitch = new Pitch(60),
-      duration = new Duration(1),
-      intensity = new Intensity(0.7),
+      duration = 1,
+      intensity = 0.7,
       channel} = {}) {
     // console.log('in note constructor', pitch);
     this.pitch = pitch;
@@ -48,8 +46,6 @@ class Note {
   toJSON() {
     let {pitch, duration, intensity, channel} = this;
     if (pitch.value) pitch = pitch.value;
-    if (duration.value) duration = duration.value;
-    if (intensity.value) intensity = intensity.value;
     return {
       type: 'note',
       pitch: clamp(pitch, 0, 127),

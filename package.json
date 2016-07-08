@@ -11,9 +11,7 @@
   "author": "Adam Murray",
   "license": "MIT",
   "optionalDependencies": {
-    "midi": "^0.9.5",
-    "pegjs": "^0.9.0",
-    "pegjs-backtrace": "^0.1.1"
+    "midi": "^0.9.5"
   },
   "devDependencies": {
     "jsdoc": "^3.4.0",

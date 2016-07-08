@@ -1,6 +1,4 @@
 const Chord = require('./chord');
-const Duration = require('./duration');
-const Intensity = require('./intensity');
 const Note = require('./note');
 const Pitch = require('./pitch');
 const PitchClass = require('./pitch-class');
@@ -13,12 +11,6 @@ module.exports = {
 
   /** @member {Chord} Chord the Chord class */
   Chord,
-
-  /** @member {Duration} Duration the Duration class */
-  Duration,
-
-  /** @member {Intensity} Intensity the Intensity class */
-  Intensity,
 
   /** @member {Note} Note the Note class */
   Note,

@@ -59,13 +59,3 @@ TODO:
 
 Maybe?
 - Automatic voice leading, esp for chord progressions, maybe for bass/lead too (prefer intervals less than a tritone)?
-
-Focus:
-Before going crazy deleting stuff, put it in a branch?
-- Defer working on the custom syntax until the core system can product a whole song.
-Maybe that should be a separate project.
-- Potentially strip down the core model too. Not sure we need an intensity or duration class? The important thing
-is it's easy to use realtime midi or generate midi files.
-- Not sure about keeping the patterns, although they may be useful as Song constructs? See feature idea above about
- pluggable "strategies" for sequencing
-
