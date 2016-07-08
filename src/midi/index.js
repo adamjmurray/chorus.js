@@ -2,20 +2,12 @@ const MIDIFile = require('./file');
 const MIDIIn = require('./in');
 const MIDIOut = require('./out');
 const Scheduler = require('./scheduler');
-
 /**
+ * #### Classes for MIDI input and output, in realtime and via files.
+ * - {@link MIDIFile}
+ * - {@link MIDIIn}
+ * - {@link MIDIOut}
+ * - {@link Scheduler}
  * @module MIDI
  */
-module.exports = {
-  /** @member {MIDIFile} MIDIFile the MIDIFile class */
-  MIDIFile,
-
-  /** @member {MIDIIn} MIDIIn the MIDIIn class */
-  MIDIIn,
-
-  /** @member {MIDIOut} MIDIOut the MIDIOut class */
-  MIDIOut,
-
-  /** @member {Scheduler} Scheduler the Scheduler class */
-  Scheduler,
-};
+module.exports = { MIDIFile, MIDIIn, MIDIOut, Scheduler };
