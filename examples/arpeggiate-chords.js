@@ -4,9 +4,9 @@ const { MIDIOut } = require('../src/midi');
 
 const scheduler = new Scheduler({ bpm: 120 });
 const output = new MIDIOut({ defaultDuration: 200 });
-const scale = MAJOR.at(C);
+const scale = MAJOR.C;
 
-[TRIAD.at(0), TRIAD_INV1.at(0), TRIAD_INV2.at(0), SEVENTH_INV2.at(1)]
+[TRIAD[0], TRIAD_INV1[0], TRIAD_INV2[0], SEVENTH_INV2[1]]
 .forEach((chord, chordIndex) => {
   [0,1,2,3,2,1].forEach((arpPosition, arpIndex, arpPattern) => {
     const count = arpIndex + arpPattern.length * chordIndex; // increments by 1 every loop

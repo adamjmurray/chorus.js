@@ -1,13 +1,15 @@
 TODO:
-- Convert Songs to MIDI files
+- Different track follow modes: scale, chords, harmony (all notes in chords), chromatic...
+- Drum tracks should be able to specify a single pitch to use
+  - Just set the pitches property to something like [C4]? Melodies should work with pitches and not just Numbers...
+- Octave settings for tracks
+- For chord names, I want to do TRIAD[4].inv(-1) to invert it. We need "lazy" inversions because
+  we have not yet assigned a scale.
 - Enhance Section behavior
   - Needs to set a length.
   - Tracks should have an option to loop or do a "one shot"
   - Tracks should have a start time offset option
   - Harmony should have an option to loop or do a "one shot" (last chord continues until the end of the section)
-- Different track follow modes: scale, chords, harmony (all notes in chords), chromatic...
-- Drum tracks should be able to specify a single pitch to use
-  - Just set the pitches property to something like [C4]? Melodies should work with pitches and not just Numbers...
 - Melody might need defaultDuration, defaultIntensity options? Or event durations/intensities Arrays?
 - Maybe Rhythm (and Melody?) should supoort Iterables for times, pitches, durations, intensities, so we can use
   the Pattern classes for this stuff! They would need to detect end-of-iteration and restart though (potentially depending on other options).
@@ -37,7 +39,7 @@ TODO:
         [ ... track 2 ... ]
       ]
 
-  Alternately:
+  Alternately (I think I like this better):
 
       "tracks": [
         [ // each event listed individually and with it's time
@@ -54,15 +56,6 @@ TODO:
         ],
         [ ... track 2 ... ]
       ]
-
-Refactoring:
-- For chord names, I want to do TRIAD[0] instead of TRIAD.at(0).
-- For chord names, I want to do TRIAD[4].inv(-1) to invert it. We need "lazy" inversions because
-  we have not yet assigned a scale.
-- For scale names, I want to do HARMONIC_MINOR[C] or HARMONIC_MINOR.C
-- I don't like how we have to set chord.scale in Harmony.
-  Let's have the containing class (Song, or Section whenever we introduce that) hold the scale
-  and apply it when evaluating the pitch.
 
 Maybe?
 - Automatic voice leading, esp for chord progressions, maybe for bass/lead too (prefer intervals less than a tritone)?

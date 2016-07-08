@@ -8,6 +8,7 @@ const Note = require('../model/note');
 class Section {
 
   constructor({scale, harmony, tracks=[], duration} = {}) {
+    this.scale = scale;
     this.harmony = harmony instanceof Harmony ? harmony : new Harmony(harmony);
     this.tracks = tracks.map(t => t instanceof Track ? t : new Track(t));
     this.duration = duration;
@@ -23,6 +24,7 @@ class Section {
      })
      }
      */
+    const { scale } = this;
     const harmony = [...this.harmony];
     // console.log('harmony:', harmony);
     let trackIdx = -1;
@@ -35,8 +37,7 @@ class Section {
         while (h && (h.time <= time)) h = harmony[++i];
         const chord = harmony[(i || 1) - 1].chord;
         // console.log(chord);
-        // TODO: don't change chord.scale in Harmony, evaluate scale here
-        const pitch = chord.pitch(event.pitch); // TODO: only do this if it's a number
+        const pitch = chord.pitch(event.pitch, { scale }); // TODO: only do this if it's a number
         const channel = track.channel || trackIdx;
         const note = new Note({pitch, duration, intensity, channel});
         yield {time, track: trackIdx, note};

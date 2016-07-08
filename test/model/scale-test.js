@@ -1,11 +1,12 @@
 const assert = require('assert');
 const Scale = require('../../src/model/scale');
+const names = require('../../src/names');
 
 describe('Scale', () => {
-  with(require('../../src/names').into(this)) {
+  with(names.into(this)) {
     let scale;
     beforeEach(() => {
-      scale = new Scale(DORIAN.intervals, { root: D });
+      scale = new Scale(names.SCALE_TYPES.DORIAN, { root: D });
     });
 
     describe('step()', () => {

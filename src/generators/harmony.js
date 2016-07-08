@@ -5,9 +5,7 @@ const Rhythm = require('./rhythm');
  */
 class Harmony {
 
-  constructor({scale, chords, rhythm, rate=1}={}) {
-    this.scale = scale;
-    chords.forEach(chord => chord.scale = scale);
+  constructor({chords, rhythm, rate=1}={}) {
     this.chords = chords;
     if (rhythm) {
       this.rhythm = rhythm instanceof Rhythm ? rhythm : new Rhythm(rhythm, { rate });

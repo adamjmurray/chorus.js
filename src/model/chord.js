@@ -54,6 +54,7 @@ class Chord {
     return new Chord(offsets, { scale, degree, octave });
   }
 
+  // TODO: rename to atDegree()?
   at(degree) {
     return new Chord(this.offsets.slice(), { degree, scale: this.scale, octave: this.octave });
   }
