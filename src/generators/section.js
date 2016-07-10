@@ -59,6 +59,10 @@ class Section {
                 yield { time, track: trackIdx, note };
               }
               pitch = null;
+              break;
+            case 'scale':
+              pitch = scale.pitch(pitch);
+              break;
           }
         }
         if (pitch) {
