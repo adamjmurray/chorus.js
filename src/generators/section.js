@@ -63,6 +63,9 @@ class Section {
             case 'scale':
               pitch = scale.pitch(pitch);
               break;
+            case 'chromatic':
+              pitch = scale.pitch(0).add(pitch);
+              break;
           }
         }
         if (pitch) {
