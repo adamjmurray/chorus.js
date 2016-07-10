@@ -1,6 +1,6 @@
 const Track = require('./track');
 const Harmony = require('./harmony');
-const Note = require('../model/note');
+const {Pitch, Note} = require('../model');
 
 /**
  * A Song section
@@ -31,14 +31,17 @@ class Section {
     for (const track of this.tracks) {
       trackIdx++;
       for (const event of track) {
+        const channel = track.channel || (trackIdx + 1);
         const {time, duration, intensity} = event;
-        let i = 0;
-        let h = harmony[i];
-        while (h && (h.time <= time)) h = harmony[++i];
-        const chord = harmony[(i || 1) - 1].chord;
-        // console.log(chord);
-        const pitch = chord.pitch(event.pitch, { scale }); // TODO: only do this if it's a number
-        const channel = track.channel || trackIdx;
+        let pitch = event.pitch;
+        if (typeof pitch === 'number') {
+          let i = 0;
+          let h = harmony[i];
+          while (h && (h.time <= time)) h = harmony[++i];
+          const chord = harmony[(i || 1) - 1].chord;
+          // console.log(chord);
+          pitch = chord.pitch(pitch, { scale });
+        }
         const note = new Note({pitch, duration, intensity, channel});
         yield {time, track: trackIdx, note};
       }

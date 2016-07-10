@@ -109,8 +109,8 @@ class MIDIOut {
    * @param velocity
    * @param channel
    */
-  noteOn(pitch, velocity=70, channel=0) {
-    this.send(NOTE_ON | channel, pitch, velocity);
+  noteOn(pitch, velocity=70, channel=1) {
+    this.send(NOTE_ON | (channel-1), pitch, velocity);
   }
 
   /**
@@ -119,8 +119,8 @@ class MIDIOut {
    * @param velocity
    * @param channel
    */
-  noteOff(pitch, velocity=70, channel=0) {
-    this.send(NOTE_OFF | channel, pitch, velocity);
+  noteOff(pitch, velocity=70, channel=1) {
+    this.send(NOTE_OFF | (channel-1), pitch, velocity);
   }
 
   /**
@@ -130,7 +130,7 @@ class MIDIOut {
    * @param duration
    * @param channel
    */
-  note(pitch, velocity=70, duration=this.defaultDuration, channel=0) {
+  note(pitch, velocity=70, duration=this.defaultDuration, channel=1) {
     if (pitch.value) pitch = pitch.value;
     this.noteOn(pitch, velocity, channel);
     setTimeout(() => this.noteOff(pitch, velocity, channel), duration)
@@ -140,7 +140,7 @@ class MIDIOut {
    * Turn off all notes. Can fix "stuck" notes. Called automatically when Node.js exits.
    */
   allNotesOff() {
-    for (let channel=0; channel < 16; channel++) {
+    for (let channel=1; channel <= 16; channel++) {
       for (let pitch=0; pitch < 128; pitch++) {
         this.noteOff(pitch, 0, channel);
       }
