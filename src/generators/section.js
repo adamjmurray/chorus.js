@@ -58,6 +58,7 @@ class Section {
                 const note = new Note({ pitch: p, duration, intensity, channel });
                 yield { time, track: trackIdx, note };
               }
+              pitch = null;
           }
         }
         if (pitch) {
