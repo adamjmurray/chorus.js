@@ -47,6 +47,7 @@ class Chord {
 
   // TODO: test coverage for this
   inversion(number, { scale = this.scale, degree = this.degree, octave = this.octave } = {}) {
+    if (!number) return this; // 0 means no inversion, treat other falsey values the same
     const offsets = this.offsets.slice(); // make a copy
     const scaleLength = scale.length;
     for (let i =  1; i <= number; i++) offsets.push(offsets.shift() + scaleLength);

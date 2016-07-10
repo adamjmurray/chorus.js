@@ -2,6 +2,14 @@ const Track = require('./track');
 const Harmony = require('./harmony');
 const {Pitch, Note} = require('../model');
 
+function chordAt(harmonySequence, time) {
+  let i = 0;
+  let h = harmonySequence[i];
+  while (h && (h.time <= time)) h = harmonySequence[++i];
+  const chord = harmonySequence[(i || 1) - 1].chord;
+  return chord;
+}
+
 /**
  * A Song section
  */
@@ -25,25 +33,37 @@ class Section {
      }
      */
     const { scale } = this;
-    const harmony = [...this.harmony];
+    const harmonySequence = [...this.harmony];
     // console.log('harmony:', harmony);
     let trackIdx = -1;
     for (const track of this.tracks) {
       trackIdx++;
       for (const event of track) {
         const channel = track.channel || (trackIdx + 1);
+        const mode = track.mode;
         const {time, duration, intensity} = event;
         let pitch = event.pitch;
         if (typeof pitch === 'number') {
-          let i = 0;
-          let h = harmony[i];
-          while (h && (h.time <= time)) h = harmony[++i];
-          const chord = harmony[(i || 1) - 1].chord;
-          // console.log(chord);
-          pitch = chord.pitch(pitch, { scale });
+          let chord;
+          switch (mode) {
+            case 'arpeggio':
+              chord = chordAt(harmonySequence, time); // only need to do this for arpeggio and chord modes
+              pitch = chord.pitch(pitch, { scale });
+              break;
+            case 'chord':
+              chord = chordAt(harmonySequence, time); // only need to do this for arpeggio and chord modes
+              chord = chord.inversion(pitch, { scale });
+              const pitches = chord.pitches({ scale });
+              for (const p of pitches) {
+                const note = new Note({ pitch: p, duration, intensity, channel });
+                yield { time, track: trackIdx, note };
+              }
+          }
         }
-        const note = new Note({pitch, duration, intensity, channel});
-        yield {time, track: trackIdx, note};
+        if (pitch) {
+          const note = new Note({ pitch, duration, intensity, channel });
+          yield { time, track: trackIdx, note };
+        }
       }
     }
   }

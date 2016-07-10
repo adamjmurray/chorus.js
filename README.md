@@ -1,10 +1,7 @@
 TODO:
-- Different track modes:
-  - arpeggio
-  - chord: all notes in chords, different numbers control inversions
+- Track modes:
   - scale
   - chromatic
-  - null/default: numbers for pitches gives an error. Only absolute Pitches allowed (i.e. drum tracks)
 - Octave settings for tracks (microtonal support? lazy evaluate based on scale length! is there a better term for this than octave?)
 - For chord names, I want to do TRIAD[4].inv(-1) to invert it. We need "lazy" inversions because
   we have not yet assigned a scale.

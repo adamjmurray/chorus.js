@@ -6,9 +6,9 @@ const Melody = require('./melody');
  */
 class Track {
 
-  constructor({channel, follow, pitches, rhythm, rate} = {}) {
+  constructor({channel, mode, pitches, rhythm, rate} = {}) {
     this.channel = channel;
-    this.follow = follow;
+    this.mode = mode;
     this.pitches = pitches; // NOTE: these are relative, depends on scale/chords and follow settings
     this.rhythm = rhythm instanceof Rhythm ? rhythm : new Rhythm(rhythm, {rate});
     this.sequencer = new Melody({ pitches, rhythm: this.rhythm });
