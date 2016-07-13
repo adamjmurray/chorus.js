@@ -42,29 +42,33 @@ class Section {
         const channel = track.channel || (trackIdx + 1);
         const mode = track.mode;
         const {time, duration, intensity} = event;
-        let pitch = event.pitch;
-        if (typeof pitch === 'number') {
+        let pitch;
+        if (event.pitch instanceof Pitch) {
+          pitch = event.pitch;
+        }
+        else if (typeof event.pitch === 'number') {
+          const number = event.pitch;
           let chord;
           switch (mode) {
             case 'arpeggio':
               chord = chordAt(harmonySequence, time); // only need to do this for arpeggio and chord modes
-              pitch = chord.pitch(pitch, { scale });
+              pitch = chord.pitch(number, { scale });
               break;
             case 'chord':
+              pitch = null;
               chord = chordAt(harmonySequence, time); // only need to do this for arpeggio and chord modes
-              chord = chord.inversion(pitch, { scale });
+              chord = chord.inversion(number, { scale });
               const pitches = chord.pitches({ scale });
               for (const p of pitches) {
                 const note = new Note({ pitch: p, duration, intensity, channel });
                 yield { time, track: trackIdx, note };
               }
-              pitch = null;
               break;
             case 'scale':
-              pitch = scale.pitch(pitch);
+              pitch = scale.pitch(number);
               break;
             case 'chromatic':
-              pitch = scale.pitch(0).add(pitch);
+              pitch = scale.pitch(0).add(number);
               break;
           }
         }

@@ -14,7 +14,7 @@ const song = new Song({
       channel: 1, // this is the default, but it's best to be explicit with multiple tracks
       rate: 1/2,
       rhythm: 'X.x.x.x.|X.x.x..x|X.x.x.x.|X...xxxx|X',
-      pitches: [C4], // TODO: make this the default if no pitches are given? support pitch (singular) property?
+      pitches: [C2],
     }, {
       channel: 2, // this is the default, but it's best to be explicit with multiple tracks
       mode: 'arpeggio',

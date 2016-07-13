@@ -8,7 +8,7 @@ const song = new Song({
     tracks: [{
       rate: 1/2,
       rhythm: 'X.x.x.x.|X.x.x..x|X.x.x.x.|X...xxxx|X',
-      pitches: [C4], // TODO: make this the default if no pitches are given? support pitch (singular) property?
+      pitches: [C2], // TODO: make this the default if no pitches are given? support pitch (singular) property?
     }]
   }]
 });

@@ -1,5 +1,7 @@
 TODO:
-- Octave settings for tracks (microtonal support? lazy evaluate based on scale length! is there a better term for this than octave?)
+- Octave settings for tracks
+  (microtonal support? lazy evaluate based on scale length! is there a better term for this than octave?
+   See chord.pitch() for example of proper microtonal support)
 - For chord names, I want to do TRIAD[4].inv(-1) to invert it. We need "lazy" inversions because
   we have not yet assigned a scale.
 - Enhance Section behavior
