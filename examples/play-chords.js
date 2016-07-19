@@ -8,7 +8,7 @@ const song = new Song({
     scale: MAJOR.C,
     harmony: {
       rate: 4,
-      chords: [TRIAD[0], TRIAD[5], TRIAD[3], TRIAD[4], TRIAD_PLUS_8[0]] },
+      chords: [TRIAD(0), TRIAD(5), TRIAD(3), TRIAD(4), TRIAD_PLUS_8(0)] },
     tracks: [{
       mode: 'chord',
       rate: 1/4,

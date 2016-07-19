@@ -1,4 +1,3 @@
-const CHORD_TYPES = require('./chord-types');
 const CHORDS = require('./chords');
 const PITCH_CLASSES = require('./pitch-classes');
 const PITCHES = require('./pitches');
@@ -53,9 +52,7 @@ module.exports = {
    * @see https://en.wikipedia.org/wiki/Seventh_chord
    * @see https://en.wikipedia.org/wiki/Inversion_(music)#Chords
    */
-  CHORD_TYPES,
-
-  CHORDS, // TODO: document
+  CHORDS, // TODO: document properly
 
   /**
    * The 12 {@link PitchClass PitchClasses}:
@@ -109,6 +106,6 @@ module.exports = {
    * @param namespace {Object} the object whose properties will be destructively modified to set all name/values defined here
    */
   into(object) {
-    return Object.assign(object, CHORDS, PITCH_CLASSES, PITCHES, SCALES, { SCALE_TYPES, CHORD_TYPES });
+    return Object.assign(object, CHORDS, PITCH_CLASSES, PITCHES, SCALES, { SCALE_TYPES });
   },
 };

@@ -1,5 +1,4 @@
 TODO:
-- See the FIXME comment in Chord
 - Octave settings for tracks
   (microtonal support? lazy evaluate based on scale length! See chord.pitch() for example of proper microtonal support)
 - Better console.log() behavior for Pitch and PitchClass
@@ -14,9 +13,8 @@ TODO:
     This starts getting into the territory of wanting to control the spacing/openess of the chord
     At some point the user probably just needs to construct a custom chord?
 - All notes off doesn't work for higher channels. It seems like it should. I wonder if we are overloading the MIDI port with too many messages? Try adding a MIDI monitor to Ableton Live to verify
-- Melody might need defaultDuration, defaultIntensity options? Or event durations/intensities Arrays?
-- Melodies should work with Pitches/PitchClasses and not just Numbers (for chromatic embellishments)
-- Maybe Rhythm (and Melody?) should supoort Iterables for times, pitches, durations, intensities, so we can use
+- Track might need defaultDuration, defaultIntensity options? Or event durations/intensities Arrays?
+- Maybe Rhythm should support Iterables for times, pitches, durations, intensities, so we can use
   the Pattern classes for this stuff! They would need to detect end-of-iteration and restart though (potentially depending on other options).
   - Maybe introduce a LoopingIterable helper class?
 - Improve MIDI file support (lots of little features are missing, plus error handling for semi-malformed input files could be improved / see MIDI specs)
