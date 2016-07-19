@@ -38,10 +38,6 @@ class Scale {
     return new Pitch(pitchClass, octave + Math.floor(pitchClassValue / 12));
   }
 
-  at(root) {
-    return new Scale(this.intervals.slice(), { root });
-  }
-
   freeze() {
     Object.freeze(this.intervals);
     if (this.root) this.root.freeze();
