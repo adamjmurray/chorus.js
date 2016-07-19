@@ -1,6 +1,6 @@
 const PitchClass = require('./pitch-class');
 const Pitch = require('./pitch');
-const utils = require('../utils');
+const { mod } = require('../utils');
 
 /**
  * A list of pitch classes, which can be converted to pitches
@@ -31,17 +31,17 @@ class Scale {
   }
 
   pitch(degree, { root = this.root, octave = 4 } = {}) {
-    let pitchClassValue = this.root.value; // pitch class value
-    for (let i = 0;  i < degree;  i++) pitchClassValue += this.intervals[i % this.length];
-    for (let i = -1; i >= degree; i--) pitchClassValue -= this.intervals[utils.mod(i, this.length)];
+    let pitchClassValue = root.value; // pitch class value
+    for (let i =  0; i < degree;  i++) pitchClassValue += this.intervals[i % this.length];
+    for (let i = -1; i >= degree; i--) pitchClassValue -= this.intervals[mod(i, this.length)];
     const pitchClass = new PitchClass(pitchClassValue);
     return new Pitch(pitchClass, octave + Math.floor(pitchClassValue / 12));
   }
-  
+
   at(root) {
     return new Scale(this.intervals.slice(), { root });
   }
-  
+
   freeze() {
     Object.freeze(this.intervals);
     if (this.root) this.root.freeze();

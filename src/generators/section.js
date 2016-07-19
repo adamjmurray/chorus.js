@@ -57,8 +57,7 @@ class Section {
             case 'chord':
               pitch = null;
               chord = chordAt(harmonySequence, time); // only need to do this for arpeggio and chord modes
-              chord = chord.inversion(number, { scale });
-              const pitches = chord.pitches({ scale });
+              const pitches = chord.pitches({ scale, inversion: number });
               for (const p of pitches) {
                 const note = new Note({ pitch: p, duration, intensity, channel });
                 yield { time, track: trackIdx, note };

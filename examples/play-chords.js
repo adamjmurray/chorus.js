@@ -8,7 +8,6 @@ const song = new Song({
     scale: MAJOR.C,
     harmony: {
       rate: 4,
-      // TODO: support lazy inversions without applying the scale
       chords: [TRIAD[0], TRIAD[5], TRIAD[3], TRIAD[4], TRIAD_PLUS_8[0]] },
     tracks: [{
       mode: 'chord',
@@ -21,5 +20,4 @@ const song = new Song({
 
 const output = new MIDIOut();
 output.open();
-// output.play(song.toJSON()); // this works too!
 output.play(song);

@@ -1,14 +1,19 @@
 TODO:
+- See the FIXME comment in Chord
 - Octave settings for tracks
-  (microtonal support? lazy evaluate based on scale length! is there a better term for this than octave?
-   See chord.pitch() for example of proper microtonal support)
-- For chord names, I want to do TRIAD[4].inv(-1) to invert it. We need "lazy" inversions because
-  we have not yet assigned a scale.
+  (microtonal support? lazy evaluate based on scale length! See chord.pitch() for example of proper microtonal support)
+- Better console.log() behavior for Pitch and PitchClass
+- Merge Melody into Track?
 - Enhance Section behavior
   - Needs to set a length.
   - Tracks should have an option to loop or do a "one shot"
   - Tracks should have a start time offset option
   - Harmony should have an option to loop or do a "one shot" (last chord continues until the end of the section)
+- Chord features:
+  - Add a bass note below the chord.
+    So for example, TRIAD[5].bass(C) could result in C,E,A or maybe C,A,C(,E?).
+    This starts getting into the territory of wanting to control the spacing/openess of the chord
+    At some point the user probably just needs to construct a custom chord?
 - All notes off doesn't work for higher channels. It seems like it should. I wonder if we are overloading the MIDI port with too many messages? Try adding a MIDI monitor to Ableton Live to verify
 - Melody might need defaultDuration, defaultIntensity options? Or event durations/intensities Arrays?
 - Melodies should work with Pitches/PitchClasses and not just Numbers (for chromatic embellishments)
