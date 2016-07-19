@@ -3,7 +3,6 @@ TODO:
 - Octave settings for tracks
   (microtonal support? lazy evaluate based on scale length! See chord.pitch() for example of proper microtonal support)
 - Better console.log() behavior for Pitch and PitchClass
-- Merge Melody into Track?
 - Enhance Section behavior
   - Needs to set a length.
   - Tracks should have an option to loop or do a "one shot"
