@@ -14,6 +14,7 @@ const song = new Song({
       rate: 1/4,
       rhythm: 'X=.x=.x.X=.x=.x.|X=.x==x.X=xX.xX.|X=.x=.x.X=.x=.x.|X=.x==x.x=X.x.x.|X=======', // X: accented, x: normal, =: tie, .: rest
       pitches: [0, 1, 2, -1, 0, 2, 1, 0, -1, 1, 0, 2, -1, 0],
+      octave: 3,
     }]
   }]
 });

@@ -24,20 +24,12 @@ class Section {
   }
 
   *[Symbol.iterator]() {
-    /*
-     // Play the chord progression: TODO: a track type/mode to support this
-     for (const event of this.harmony) {
-     scheduler.at(event.time, () => {
-     event.chord.pitches().forEach(pitch => output.note(pitch));
-     })
-     }
-     */
     const { scale } = this;
     const harmonySequence = [...this.harmony];
-    // console.log('harmony:', harmony);
     let trackIdx = -1;
     for (const track of this.tracks) {
       trackIdx++;
+      const octave = track.octave;
       for (const event of track) {
         const channel = track.channel || (trackIdx + 1);
         const mode = track.mode;
@@ -52,22 +44,22 @@ class Section {
           switch (mode) {
             case 'arpeggio':
               chord = chordAt(harmonySequence, time); // only need to do this for arpeggio and chord modes
-              pitch = chord.pitch(number, { scale });
+              pitch = chord.pitch(number, { scale, octave });
               break;
             case 'chord':
               pitch = null;
               chord = chordAt(harmonySequence, time); // only need to do this for arpeggio and chord modes
-              const pitches = chord.pitches({ scale, inversion: number });
+              const pitches = chord.pitches({ scale, octave, inversion: number });
               for (const p of pitches) {
                 const note = new Note({ pitch: p, duration, intensity, channel });
                 yield { time, track: trackIdx, note };
               }
               break;
             case 'scale':
-              pitch = scale.pitch(number);
+              pitch = scale.pitch(number, { octave });
               break;
             case 'chromatic':
-              pitch = scale.pitch(0).add(number);
+              pitch = scale.pitch(0, { octave }).add(number);
               break;
           }
         }

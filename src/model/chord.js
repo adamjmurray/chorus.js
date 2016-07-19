@@ -28,7 +28,7 @@ class Chord {
     inversion += this.inversion; // TODO: maybe rename to relative inversion?
     const offsets = this.offsetsForInversion({ inversion, scale });
     return offsets.map(offset =>
-      scale.pitch(root + offset, octave));
+      scale.pitch(root + offset, { octave }));
   }
 
   /**

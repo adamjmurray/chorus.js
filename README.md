@@ -1,12 +1,14 @@
 TODO:
-- Octave settings for tracks
-  (microtonal support? lazy evaluate based on scale length! See chord.pitch() for example of proper microtonal support)
 - Better console.log() behavior for Pitch and PitchClass
 - Enhance Section behavior
   - Needs to set a length.
   - Tracks should have an option to loop or do a "one shot"
   - Tracks should have a start time offset option
   - Harmony should have an option to loop or do a "one shot" (last chord continues until the end of the section)
+- New track mode 'chord-root' (better name?). Ignores inversion or is somehow relative to the root of the chord.
+  - In this mode, we might want the pitch numbers to follow the scale vs the chord. This could be different modes. 
+    I am wondering if track.type should be split into different options, though, like "follow" and "constraint" (or keep "type" but add "follow")?
+  - Meh, these ideas are probably too complicated. Maybe just add track mode 'bass', which follows the chord roots and is constrained to the scale.
 - Chord features:
   - Add a bass note below the chord.
     So for example, in C MAJOR, TRIAD(5,{bass:C}) could result in C,E,A or maybe C,A,C(,E?)

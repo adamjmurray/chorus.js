@@ -31,8 +31,6 @@ class Song {
         const trackIdx = event.track; // this will be needed for MIDI file output or toJSON()
         let trackJSON = tracksJSON[trackIdx];
         if (!trackJSON) trackJSON = tracksJSON[trackIdx] = [];
-        //let eventsJSON = trackJSON[event.time];
-        //if (!eventsJSON) eventsJSON = trackJSON[event.time] = [];
         trackJSON.push(Object.assign({ time: event.time }, event.note.toJSON()));
       }
     }
