@@ -29,48 +29,36 @@ class MIDIFileSerializer {
   trackBytes(rawTrack) {
     const track = this.normalizeNoteEvents(rawTrack);
     const bytes = new ByteArray();
-    const times = Object
-      .keys(track)
-      .map(parseFloat)
-      .filter(number => !isNaN(number))
-      .sort((a,b) => a-b);
-
-    // console.log('got timeOffsets', times);
     let timeInTicks = 0;
     let nextTimeInTicks;
     let deltaTimeInTicks;
-    for (const timeInBeats of times) {
-      nextTimeInTicks = Math.round(timeInBeats * this.ticksPerBeat);
+    for (const event of track) {
+      nextTimeInTicks = Math.round(event.time * this.ticksPerBeat);
       deltaTimeInTicks = nextTimeInTicks - timeInTicks;
       timeInTicks = nextTimeInTicks;
-
-      for (const event of track[timeInBeats]) {
-        bytes.writeVariableLengthQuantity(deltaTimeInTicks);
-        deltaTimeInTicks = 0;
-
-        // console.log('writing event', event);
-        const channelByte = (event.channel - 1) & 0x0F;
-        switch (event.type) {
-          case MIDIFILE.NOTE_ON:
-            bytes.writeInt8(MIDIFILE.NOTE_ON_BYTE | channelByte);
-            // TODO: I think we need a writeInt7 that does & 0x7F, for safety
-            // Maybe we should clamp to 0,127 and/or issue a warning when value is out of range
-            bytes.writeInt8(event.pitch);
-            bytes.writeInt8(event.velocity); // TODO: might want to do Math.round here?
-            break;
-          case MIDIFILE.NOTE_OFF:
-            bytes.writeInt8(MIDIFILE.NOTE_OFF_BYTE | channelByte);
-            bytes.writeInt8(event.pitch);
-            bytes.writeInt8(event.velocity);
-            break;
-          case MIDIFILE.TRACK_END:
-            bytes.writeInt8(MIDIFILE.META_EVENT);
-            bytes.writeInt8(MIDIFILE.TRACK_END_BYTE);
-            bytes.writeVariableLengthQuantity(0);
-            break;
-          default:
-            throw `Event type ${event.type} not supported yet`
-        }
+      bytes.writeVariableLengthQuantity(deltaTimeInTicks);
+      // console.log('writing event', event);
+      const channelByte = (event.channel - 1) & 0x0F;
+      switch (event.type) {
+        case MIDIFILE.NOTE_ON:
+          bytes.writeInt8(MIDIFILE.NOTE_ON_BYTE | channelByte);
+          // TODO: I think we need a writeInt7 that does & 0x7F, for safety
+          // Maybe we should clamp to 0,127 and/or issue a warning when value is out of range
+          bytes.writeInt8(event.pitch);
+          bytes.writeInt8(event.velocity); // TODO: might want to do Math.round here?
+          break;
+        case MIDIFILE.NOTE_OFF:
+          bytes.writeInt8(MIDIFILE.NOTE_OFF_BYTE | channelByte);
+          bytes.writeInt8(event.pitch);
+          bytes.writeInt8(event.velocity);
+          break;
+        case MIDIFILE.TRACK_END:
+          bytes.writeInt8(MIDIFILE.META_EVENT);
+          bytes.writeInt8(MIDIFILE.TRACK_END_BYTE);
+          bytes.writeVariableLengthQuantity(0);
+          break;
+        default:
+          throw `Event type ${event.type} not supported yet`
       }
     }
 
@@ -82,44 +70,27 @@ class MIDIFileSerializer {
 
   // split note events into note on and note off events
   normalizeNoteEvents(rawTrack) {
-    const track = JSON.parse(JSON.stringify(rawTrack)); // deep clone
-    // console.log('track', JSON.stringify(track, null, 2));
-
-    for (let time of Object.keys(track)) {
-      const events = track[time];
-      time = parseFloat(time);
-      events.forEach((event, index) => {
-        if (event.type === MIDIFILE.NOTE) {
-          events[index] = {
-            type: MIDIFILE.NOTE_ON,
-            pitch: event.pitch,
-            velocity: event.velocity,
-            channel: event.channel,
-          };
-          let noteOff;
-          if (event.release != null) {
-            noteOff = {
-              type: MIDIFILE.NOTE_OFF,
-              pitch: event.pitch,
-              velocity: event.release,
-              channel: event.channel,
-            }
-          } else {
-            noteOff = {
-              type: MIDIFILE.NOTE_ON,
-              pitch: event.pitch,
-              velocity: 0,
-              channel: event.channel,
-            }
-          }
-          const offTime = time + event.duration;
-          if (!track[offTime]) track[offTime] = [];
-          track[offTime].unshift(noteOff); // ensure we come before track-end
-        }
-      });
+    const track = [];
+    for (const event of rawTrack) {
+      if (event.type === MIDIFILE.NOTE) {
+        track.push({
+          time: event.time,
+          type: MIDIFILE.NOTE_ON,
+          pitch: event.pitch,
+          velocity: event.velocity,
+          channel: event.channel,
+        });
+        track.push({
+          time: event.time + event.duration,
+          type: MIDIFILE.NOTE_OFF,
+          pitch: event.pitch,
+          velocity: event.release || 0,
+          channel: event.channel,
+        });
+      }
+      else track.push(event);
     }
-    // console.log('processed track', JSON.stringify(track, null, 2));
-    return track;
+    return track.sort((a, b) => a.time - b.time);
   }
 
 }

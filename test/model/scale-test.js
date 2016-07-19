@@ -6,7 +6,7 @@ describe('Scale', () => {
   with(names.into(this)) {
     let scale;
     beforeEach(() => {
-      scale = new Scale(names.SCALE_TYPES.DORIAN, { root: D });
+      scale = names.SCALES.DORIAN.D;
     });
 
     describe('step()', () => {

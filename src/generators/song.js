@@ -30,34 +30,15 @@ class Song {
       for (const event of section) {
         const trackIdx = event.track; // this will be needed for MIDI file output or toJSON()
         let trackJSON = tracksJSON[trackIdx];
-        if (!trackJSON) trackJSON = tracksJSON[trackIdx] = {};
-        let eventsJSON = trackJSON[event.time];
-        if (!eventsJSON) eventsJSON = trackJSON[event.time] = [];
-        eventsJSON.push(event.note.toJSON());
+        if (!trackJSON) trackJSON = tracksJSON[trackIdx] = [];
+        //let eventsJSON = trackJSON[event.time];
+        //if (!eventsJSON) eventsJSON = trackJSON[event.time] = [];
+        trackJSON.push(Object.assign({ time: event.time }, event.note.toJSON()));
       }
     }
     // TODO: make this bpm be compatible with serializer (which doesn't even output a tempo event yet...)
     return { bpm, tracks: tracksJSON };
   }
-
-  // play(output) {
-  //   const {bpm, sections} = this;
-  //   var scheduler = new Scheduler({bpm});
-  //   // TODO: rework this into a generator function. Make the scheduler be able to play the Song iterator
-  //   // and/or provide a toJSON(). Make it work with MIDI file output!
-  //   for (const section of sections) {
-  //     for (const event of section) {
-  //       const trackIdx = event.track; // this will be needed for MIDI file output or toJSON()
-  //       const note = event.note;
-  //       const noteJSON = note.toJSON();
-  //       scheduler.at(event.time, () => {
-  //         output.note(noteJSON.pitch, noteJSON.velocity, noteJSON.duration * 60000/bpm, noteJSON.channel);
-  //       })
-  //     }
-  //   }
-  //   scheduler.start();
-  //   return scheduler; // so the caller can stop it if desired
-  // }
 }
 
 module.exports = Song;

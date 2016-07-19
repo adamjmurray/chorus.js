@@ -20,5 +20,6 @@ const song = new Song({
 
 const output = new MIDIOut();
 output.open();
+// console.log(JSON.stringify(song, null, 2));
 // output.play(song.toJSON()); // this works too!
 output.play(song);

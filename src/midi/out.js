@@ -168,18 +168,11 @@ class MIDIOut {
       const { bpm, tracks } = songOrJSON;
       scheduler.bpm = bpm;
       for (const track of tracks) {
-        const times = Object
-          .keys(track)
-          .map(parseFloat)
-          .filter(number => !isNaN(number))
-          .sort((a, b) => a - b);
-        for (const time of times) {
-          for (const event of track[time]) {
-            if (event.type === 'note') {
-              scheduler.at(time, () => {
-                this.note(event.pitch, event.velocity, event.duration * 60000 / bpm, event.channel);
-              })
-            }
+        for (const event of track) {
+          if (event.type === 'note') {
+            scheduler.at(event.time, () => {
+              this.note(event.pitch, event.velocity, event.duration * 60000 / bpm, event.channel);
+            })
           }
         }
       }

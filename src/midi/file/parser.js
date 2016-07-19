@@ -48,7 +48,7 @@ class MIDIFileParser {
     if (this.next.uInt32() !== MIDIFILE.TRACK_CHUNK_ID) throw 'MIDI format error: Invalid track chuck ID';
 
     const trackSize = this.next.uInt32();
-    const track = {};
+    const track = [];
     this.timeInTicks = 0;
     this.notes = {};
 
@@ -58,7 +58,7 @@ class MIDIFileParser {
       this.timeInTicks += deltaTimeInTicks;
 
       const event = this.readEvent();
-      // console.log(`at ${timeInTicks}, got ${JSON.stringify(event)}`);
+      // console.log(`at ${this.timeInTicks}, got ${JSON.stringify(event)}`);
       if (event) {
         let timeInTicks;
         if (event.timeInTicks == null) {
@@ -68,15 +68,15 @@ class MIDIFileParser {
           timeInTicks = event.timeInTicks;
           delete event.timeInTicks;
         }
-        const timeInBeats = timeInTicks / this.ticksPerBeat;
-        if (!track[timeInBeats]) track[timeInBeats] = [];
-        track[timeInBeats].push(event);
+        event.time = timeInTicks / this.ticksPerBeat;
+        track.push(event);
       }
     }
 
     // TODO: warn about held notes (if DEBUG for this lib is enabled?)
 
-    return track;
+    // Note events get inserted when we see their note off event, so note durations can lead to out-of-order-events:
+    return track.sort((a, b) => a.time - b.time);
   }
 
   readEvent() {

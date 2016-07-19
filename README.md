@@ -9,9 +9,10 @@ TODO:
   - Harmony should have an option to loop or do a "one shot" (last chord continues until the end of the section)
 - Chord features:
   - Add a bass note below the chord.
-    So for example, TRIAD[5].bass(C) could result in C,E,A or maybe C,A,C(,E?).
+    So for example, in C MAJOR, TRIAD(5,{bass:C}) could result in C,E,A or maybe C,A,C(,E?)
     This starts getting into the territory of wanting to control the spacing/openess of the chord
     At some point the user probably just needs to construct a custom chord?
+    Another idea is a more generic {add:[offsets]} option that can add some addition offsets (probably only supported in the CHORDS functions)
 - All notes off doesn't work for higher channels. It seems like it should. I wonder if we are overloading the MIDI port with too many messages? Try adding a MIDI monitor to Ableton Live to verify
 - Track might need defaultDuration, defaultIntensity options? Or event durations/intensities Arrays?
 - Maybe Rhythm should support Iterables for times, pitches, durations, intensities, so we can use
@@ -20,25 +21,4 @@ TODO:
 - Improve MIDI file support (lots of little features are missing, plus error handling for semi-malformed input files could be improved / see MIDI specs)
 - Euclidean Pattern
 - Support melodic sequences (as in the music theory kind of sequence), where the same relative pitch patterns are repeated by starting at different scale (or chord?) degrees
-- It kind of sucks midiJSON keys get converted to strings, and don't necessarily maintain their order correctly when printing
-
-  Let's do this:
-
-      "tracks": [
-        [ // each event listed individually and with it's time
-          {
-            "time": 0,
-            "type": "note",
-            ...
-          },
-          {
-            "time": 0,
-            "type": "note",
-            ...
-          }
-        ],
-        [ ... track 2 ... ]
-      ]
-
-Maybe?
 - Automatic voice leading, esp for chord progressions, maybe for bass/lead too (prefer intervals less than a tritone)?
