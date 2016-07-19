@@ -15,6 +15,7 @@ class Scale {
     this.intervals = intervals; // list of integers for the interval distance between consecutive notes of the scale.
     // intervals sum is 12 for octave-repeating scales.
     this.root = root; // a pitch class
+    Object.freeze(this);
   }
 
   get length() {
@@ -31,17 +32,11 @@ class Scale {
   }
 
   pitch(degree, { root = this.root, octave = 4 } = {}) {
-    let pitchClassValue = root.value; // pitch class value
+    let pitchClassValue = root + 0; // coerce to a Number using PitchClass.valueOf()
     for (let i =  0; i < degree;  i++) pitchClassValue += this.intervals[i % this.length];
     for (let i = -1; i >= degree; i--) pitchClassValue -= this.intervals[mod(i, this.length)];
     const pitchClass = new PitchClass(pitchClassValue);
     return new Pitch(pitchClass, octave + Math.floor(pitchClassValue / 12));
-  }
-
-  freeze() {
-    Object.freeze(this.intervals);
-    if (this.root) this.root.freeze();
-    return Object.freeze(this);
   }
 }
 

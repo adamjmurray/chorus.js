@@ -54,22 +54,21 @@ class Pitch {
       }
       this.value = pitchClass.value + 12 * (octave + 1);
     }
+    this.octave = Math.floor(this.value / 12) - 1;
+    this.pitchClass = new PitchClass(mod(Math.round(this.value), 12));
+    Object.freeze(this);
   }
 
-  /**
-   * @member {PitchClass}
-   * @readonly
-   */
-  get pitchClass() {
-    return new PitchClass(mod(Math.round(this.value), 12));
+  valueOf() {
+    return this.value;
   }
 
-  /**
-   * @member {number}
-   * @readonly
-   */
-  get octave() {
-    return Math.floor(this.value / 12) - 1;
+  inspect() {
+    return this.name;
+  }
+
+  get name() {
+    return `${this.pitchClass.name}${this.octave.toString().replace('-', '_')}`;
   }
 
   /**
@@ -79,19 +78,6 @@ class Pitch {
    */
   add(value) {
     return new Pitch(this.value + value);
-  }
-
-  valueOf() {
-    return this.value;
-  }
-
-  /**
-   * Prevent changes to this Pitch's value
-   * @returns {Pitch} this Pitch
-   */
-  freeze() {
-    this.pitchClass.freeze();
-    return Object.freeze(this);
   }
 }
 

@@ -6,8 +6,6 @@ const { clamp, clampInt } = require('../utils');
  */
 class Note {
 
-  // TODO: define in terms of pitch, not pichclass + octave
-
   /**
    * @param {Object} properties
    * @param {Pitch} [properties.pitch=new Pitch('C4')]

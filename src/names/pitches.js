@@ -16,7 +16,7 @@ function nameForMidiPitch(midiPitch) {
 
 const PITCHES = {};
 for (let i = 0; i <= MAX_VALUE; i++) {
-  PITCHES[nameForMidiPitch(i)] = new Pitch(i).freeze();
+  PITCHES[nameForMidiPitch(i)] = new Pitch(i);
 }
 
 module.exports = Object.freeze(PITCHES);

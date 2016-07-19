@@ -79,15 +79,16 @@ class PitchClass {
      * equivalent canonical value.
      * @member {Number}
      */
-    this.value = value;
+    this.value = mod(Math.round(value), 12);
+    Object.freeze(this);
   }
 
-  set value(v) {
-    this._value = mod(Math.round(v), 12);
+  valueOf() {
+    return this.value;
   }
 
-  get value() {
-    return this._value;
+  inspect() {
+    return this.name;
   }
 
   /**
@@ -95,15 +96,11 @@ class PitchClass {
    * @readonly
    */
   get name() {
-    return PitchClass.NAMES[this._value];
+    return PitchClass.NAMES[this.value];
   }
 
-  /**
-   * Prevent changes to this PitchClass's value
-   * @returns {PitchClass} this PitchClass
-   */
-  freeze() {
-    return Object.freeze(this);
+  add(value) {
+    return new PitchClass(this.value + value);
   }
 }
 

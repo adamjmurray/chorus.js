@@ -131,9 +131,9 @@ class MIDIOut {
    * @param channel
    */
   note(pitch, velocity=70, duration=this.defaultDuration, channel=1) {
-    if (pitch.value) pitch = pitch.value;
-    this.noteOn(pitch, velocity, channel);
-    setTimeout(() => this.noteOff(pitch, velocity, channel), duration)
+    const pitchValue = pitch + 0; // coerce to a Number if needed (using Pitch.valueOf())
+    this.noteOn(pitchValue, velocity, channel);
+    setTimeout(() => this.noteOff(pitchValue, velocity, channel), duration)
   }
 
   /**

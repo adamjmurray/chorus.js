@@ -17,6 +17,7 @@ class Chord {
     this.root = root; // the scale degree of the root of the chord
     this.octave = octave;
     this.inversion = inversion;
+    Object.freeze(this);
   }
 
   /**
@@ -66,11 +67,6 @@ class Chord {
   //   return new Chord(offsets, { scale, root, octave });
   // }
 
-  freeze() {
-    Object.freeze(this.offsets);
-    if (this.scale) this.scale.freeze();
-    return Object.freeze(this);
-  }
 }
 
 module.exports = Chord;

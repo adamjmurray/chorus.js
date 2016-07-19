@@ -20,7 +20,7 @@ Object.keys(SCALE_TYPES).forEach(type => {
   const scalesOfType = {};
   for (const name of PitchClass.NAMES) {
     const root = PITCH_CLASSES[name];
-    const scale = new Scale(SCALE_TYPES[type], { root }).freeze();
+    const scale = new Scale(SCALE_TYPES[type], { root });
     scalesOfType[root] = scale;
     scalesOfType[root.name] = scale;
   }

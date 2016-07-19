@@ -1,5 +1,4 @@
 TODO:
-- Better console.log() behavior for Pitch and PitchClass
 - Enhance Section behavior
   - Needs to set a length.
   - Tracks should have an option to loop or do a "one shot"
