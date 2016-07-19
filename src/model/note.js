@@ -12,12 +12,7 @@ class Note {
    * @param {Duration} [properties.duration=new Duration(1)]
    * @param {Intensity} [properties.intensity=new Intensity(0.7)]
    */
-  constructor(
-    { pitch = new Pitch(60),
-      duration = 1,
-      intensity = 0.7,
-      channel} = {}) {
-    // console.log('in note constructor', pitch);
+  constructor({ pitch=new Pitch(60), duration=1, intensity=0.7, channel } = {}) {
     this.pitch = pitch;
     this.duration = duration;
     this.intensity = intensity;

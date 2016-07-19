@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha 'test/**/*.js'",
+    "test": "node_modules/.bin/mocha test/**/*.js",
+    "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- test/**/*.js",
     "doc": "node_modules/.bin/jsdoc src --configure ./jsdoc.json --recurse --destination doc --readme docs-home.md",
     "doc-watch": "watch 'npm run doc' src/ --wait=1"
   },
@@ -14,6 +15,7 @@
     "midi": "^0.9.5"
   },
   "devDependencies": {
+    "istanbul": "gotwarlost/istanbul#v1",
     "jsdoc": "^3.4.0",
     "mocha": "^2.5.3"
   }

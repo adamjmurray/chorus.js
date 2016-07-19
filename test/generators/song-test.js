@@ -1,7 +1,7 @@
 const assert = require('assert');
-const Chord = require('../../src/model/chord');
+const { Song } = require('../../src/generators');
 
-describe('Chord', () => {
+describe('Song', () => {
   it.skip('needs tests', () => {
 
   });
