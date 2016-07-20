@@ -40,10 +40,10 @@ class Pitch {
       }
       else {
         const string = value.toString();
-        const matches = /(.*)(-?[0-9]+)$/.exec(string);
+        const matches = /([A-Ga-g][b#]*)([-_]1|[0-9])$/.exec(string);
         if (matches) {
           pitchClass = new PitchClass(matches[1]);
-          octave = Number(matches[2]);
+          octave = Number(matches[2].replace('_','-'));
         }
         else {
           pitchClass = new PitchClass(string);
