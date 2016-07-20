@@ -44,5 +44,9 @@ describe('Chord', () => {
       const chord = new Chord([0,2,4], { scale: SCALES.MAJOR.C, root: 3 }); // F MAJ chord
       assert.deepEqual(chord.offsetsForInversion(-1), [-3,0,2]);
     });
+    it('uses the inversion constructed with if none is given', () => {
+      const chord = new Chord([0,2,4], { scale: SCALES.MAJOR.C, root: 3, inversion: 1 }); // F MAJ chord first inversion
+      assert.deepEqual(chord.offsetsForInversion(), [2,4,7]);
+    });
   });
 });
