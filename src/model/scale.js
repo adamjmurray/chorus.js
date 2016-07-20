@@ -32,7 +32,7 @@ class Scale {
   }
 
   pitch(degree, { root = this.root, octave = 4 } = {}) {
-    let pitchClassValue = root + 0; // coerce to a Number using PitchClass.valueOf()
+    let pitchClassValue = root.valueOf();
     for (let i =  0; i < degree;  i++) pitchClassValue += this.intervals[i % this.length];
     for (let i = -1; i >= degree; i--) pitchClassValue -= this.intervals[mod(i, this.length)];
     const pitchClass = new PitchClass(pitchClassValue);

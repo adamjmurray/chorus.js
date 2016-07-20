@@ -2,9 +2,9 @@ const PitchClass = require('./pitch-class');
 const { mod } = require('../utils');
 
 /**
- * A Pitch represents a MIDI pitch value in the range 0 to 127 (inclusive).
- * Every Pitch has a {@link PitchClass} and an octave number.
- * A {@link Note}'s Pitch determines the frequency of the note.
+ * A Pitch is an immutable representation of the frequency of a musical note.
+ * It consists of a {@link PitchClass} and an octave number.
+ * It has an underlying value for MIDI pitch, which supports the range 0 to 127 (inclusive).
  *
  * @example
  * // The following are equivalent:
@@ -29,15 +29,12 @@ class Pitch {
    * @param {number} [octave=4] - The octave to use when the first argument is a PitchClass or a string without the octave. The octave should be in the range -1 to 9 (inclusive) to avoid invalid pitch values.
    */
   constructor(value, octave = 4) {
+    let pitchClass;
     if (typeof value === 'number') {
-      /**
-       * The MIDI pitch number
-       * @member {number}
-       */
-      this.value = value;
+      pitchClass = new PitchClass( mod(Math.round(value), 12) );
+      octave = Math.floor(value / 12) - 1;
     }
     else {
-      let pitchClass;
       if (value instanceof PitchClass) {
         pitchClass = value;
       }
@@ -52,10 +49,26 @@ class Pitch {
           pitchClass = new PitchClass(string);
         }
       }
-      this.value = pitchClass.value + 12 * (octave + 1);
+      value = pitchClass.value + 12 * (octave + 1);
     }
-    this.octave = Math.floor(this.value / 12) - 1;
-    this.pitchClass = new PitchClass(mod(Math.round(this.value), 12));
+    /**
+     * @member {PitchClass}
+     * @readonly */
+    this.pitchClass = pitchClass;
+    /**
+     * @member {number}
+     * @readonly */
+    this.octave = octave;
+    /**
+     * The MIDI pitch value. Should be in the range 0 to 127 (inclusive).
+     * @member {number}
+     * @readonly */
+    this.value = value;
+    /**
+     * The [canonical name]{@link module:Names.PITCHES} for this Pitch.
+     * @member {string}
+     * @readonly */
+    this.name = `${pitchClass.name}${octave.toString().replace('-', '_')}`;
     Object.freeze(this);
   }
 
@@ -65,10 +78,6 @@ class Pitch {
 
   inspect() {
     return this.name;
-  }
-
-  get name() {
-    return `${this.pitchClass.name}${this.octave.toString().replace('-', '_')}`;
   }
 
   /**

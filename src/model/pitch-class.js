@@ -73,13 +73,19 @@ class PitchClass {
         }
       }
     }
+    value = mod(Math.round(value), 12);
+    /**
+     * The canonical name of this PitchClass. See {@link PitchClass.NAMES}
+     * @member {PitchClass}
+     * @readonly */
+    this.name = PitchClass.NAMES[value];
     /**
      * The number of semitones above C. Used to compute {@link Pitch#value MIDI pitch values}.
      * This is always the canonical value in the range 0-11 (inclusive). Assigning this property will convert to the
      * equivalent canonical value.
      * @member {Number}
-     */
-    this.value = mod(Math.round(value), 12);
+     * @readonly */
+    this.value = value;
     Object.freeze(this);
   }
 
@@ -89,14 +95,6 @@ class PitchClass {
 
   inspect() {
     return this.name;
-  }
-
-  /**
-   * The canonical name of this PitchClass. See {@link PitchClass.NAMES}
-   * @readonly
-   */
-  get name() {
-    return PitchClass.NAMES[this.value];
   }
 
   add(value) {
