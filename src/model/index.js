@@ -1,5 +1,4 @@
 const Chord = require('./chord');
-const Note = require('./note');
 const Pitch = require('./pitch');
 const PitchClass = require('./pitch-class');
 const Scale = require('./scale');
@@ -12,4 +11,4 @@ const Scale = require('./scale');
  * - {@link Scale}
  * @module Model
  */
-module.exports = { Chord, Note, Pitch, PitchClass, Scale };
+module.exports = { Chord, Pitch, PitchClass, Scale };

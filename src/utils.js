@@ -16,4 +16,17 @@ function clampInt(value, min, max) {
   return Math.round(clamp(value, min, max));
 }
 
-module.exports = {mod, clamp, clampInt};
+function noteJSON(noteEvent) {
+  const note = noteEvent.note;
+  return {
+    time: noteEvent.time,
+    type: 'note',
+    pitch: clampInt(note.pitch+0, 0, 127), // + 0 coerces to an int
+    velocity: clampInt(note.intensity*127, 0, 127),
+    duration: clamp(note.duration, 0),
+    release: 100,
+    channel: clamp(note.channel, 1, 16),
+  }
+}
+
+module.exports = { mod, clamp, clampInt, noteJSON };

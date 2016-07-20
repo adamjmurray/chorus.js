@@ -1,4 +1,5 @@
 const Section = require('./section');
+const { clamp, clampInt, noteJSON } = require('../utils');
 
 /**
  * A Song
@@ -15,10 +16,7 @@ class Song {
     yield {type: 'bpm', value: bpm};
     for (const section of sections) {
       for (const event of section) {
-        const {time, note} = event;
-        const data = note.toJSON();
-        data.time = time;
-        yield data;
+        yield noteJSON(event);
       }
     }
   }
@@ -31,7 +29,7 @@ class Song {
         const trackIdx = event.track; // this will be needed for MIDI file output or toJSON()
         let trackJSON = tracksJSON[trackIdx];
         if (!trackJSON) trackJSON = tracksJSON[trackIdx] = [];
-        trackJSON.push(Object.assign({ time: event.time }, event.note.toJSON()));
+        trackJSON.push(noteJSON(event));
       }
     }
     // TODO: make this bpm be compatible with serializer (which doesn't even output a tempo event yet...)

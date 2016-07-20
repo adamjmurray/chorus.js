@@ -1,6 +1,7 @@
 *.log
 *.tmp
-/*.mid
+*.mid
 coverage
 doc
+node_modules
 tmp
