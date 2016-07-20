@@ -27,6 +27,7 @@ Features
 
 Bugs
 - All notes off doesn't work for higher channels. It seems like it should. I wonder if we are overloading the MIDI port with too many messages? Try adding a MIDI monitor to Ableton Live to verify
+- The models with array properties aren't immutable. Try testing push()ing something onto scale/chord
 
 Maybe
 - Support melodic sequences (as in the music theory kind of sequence), where the same relative pitch patterns are repeated by starting at different scale (or chord?) degrees

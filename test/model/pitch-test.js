@@ -46,6 +46,17 @@ describe('PitchClass', () => {
       assert.equal(pitch.octave, -1);
       assert.equal(pitch.value, 6);
     });
+    it("produces an immutable object", () => {
+      const pitch = new Pitch(PITCH_CLASSES.C, 3);
+      pitch.pitchClass = PITCH_CLASSES.D;
+      pitch.octave = 4;
+      pitch.value = 1;
+      pitch.name = 'D';
+      assert.deepEqual(pitch.pitchClass, PITCH_CLASSES.C);
+      assert.equal(pitch.octave, 3);
+      assert.equal(pitch.value, 48);
+      assert.equal(pitch.name, 'C3');
+    });
     it("throws an error if the string argument is invalid", () => {
       assert.throws(() => new Pitch('H4'));
     });

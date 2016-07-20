@@ -16,6 +16,13 @@ describe('Scale', () => {
       assert.deepEqual(scale.intervals, [2,2,2,2,2,2]);
       assert.deepEqual(scale.root, PITCH_CLASSES.C);
     });
+    it("produces an immutable object", () => {
+      const scale = new Scale([2,2,2,2,2,2], { root: PITCH_CLASSES.C });
+      scale.intervals = [1,1,1,1,1,1];
+      scale.root = PITCH_CLASSES.D;
+      assert.deepEqual(scale.intervals, [2,2,2,2,2,2]);
+      assert.deepEqual(scale.root, PITCH_CLASSES.C);
+    });
   });
 
   describe('.length', () => {
@@ -25,7 +32,7 @@ describe('Scale', () => {
     });
   });
 
-  describe('.length', () => {
+  describe('.semitones', () => {
     it("is the sum of the intervals", () => {
       const scale = new Scale([2,2,2,2,2,2], { root: PITCH_CLASSES.C });
       assert.equal(scale.semitones, 12);
