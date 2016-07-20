@@ -4,7 +4,13 @@
   "description": "A harmony-based music composition toolkit with MIDI I/O",
   "author": "Adam Murray <adam@compusition.com>",
   "license": "MIT",
-  "repository": "adamjmurray/npm-chorus",
+  "engines": {
+    "node" : ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adamjmurray/npm-chorus"
+  },
   "keywords": [
     "music",
     "midi",
