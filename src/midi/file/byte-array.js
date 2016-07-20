@@ -23,11 +23,13 @@ class ByteArray extends Array {
       throw new Error(`Cannot write variable length quantity ${value} because it exceeds the maximum ${0x0FFFFFFF}`);
     }
     const buffer = [value & 0x7F];
-    while (value >>= 7) buffer.push((value & 0x7f) | 0x80);
+    while (value >>= 7) { // eslint-disable-line no-cond-assign
+      buffer.push((value & 0x7f) | 0x80);
+    }
     for (let i = buffer.length - 1; i >= 0; i--) {
       this.push(buffer[i] & 0xFF)
     }
-  };
+  }
 }
 
 module.exports = ByteArray;

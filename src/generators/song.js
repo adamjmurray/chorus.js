@@ -1,5 +1,5 @@
 const Section = require('./section');
-const { clamp, clampInt, noteJSON } = require('../utils');
+const { noteJSON } = require('../utils');
 
 /**
  * A Song

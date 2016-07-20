@@ -79,7 +79,7 @@ describe('PitchClass', () => {
   });
 
   describe('inspect()', () => {
-    const pitchClass = new PitchClass(3)
+    const pitchClass = new PitchClass(3);
     it("returns the canonical pitch name", () => {
       assert.equal(pitchClass.inspect(), 'Eb');
     });

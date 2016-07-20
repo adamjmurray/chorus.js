@@ -1,6 +1,6 @@
 const Track = require('./track');
 const Harmony = require('./harmony');
-const {Pitch, Note} = require('../model');
+const { Pitch } = require('../model');
 
 function chordAt(harmonySequence, time) {
   let i = 0;
@@ -42,11 +42,12 @@ class Section {
           const number = event.pitch;
           let chord;
           switch (mode) {
-            case 'arpeggio':
+            case 'arpeggio': {
               chord = chordAt(harmonySequence, time); // only need to do this for arpeggio and chord modes
               pitch = chord.pitch(number, { scale, octave });
               break;
-            case 'chord':
+            }
+            case 'chord': {
               pitch = null;
               chord = chordAt(harmonySequence, time); // only need to do this for arpeggio and chord modes
               const pitches = chord.pitches({ scale, octave, inversion: number });
@@ -55,12 +56,15 @@ class Section {
                 yield { time, track: trackIdx, note };
               }
               break;
-            case 'scale':
+            }
+            case 'scale': {
               pitch = scale.pitch(number, { octave });
               break;
-            case 'chromatic':
+            }
+            case 'chromatic': {
               pitch = scale.pitch(0, { octave }).add(number);
               break;
+            }
           }
         }
         if (pitch) {

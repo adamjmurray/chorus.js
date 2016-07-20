@@ -5,7 +5,7 @@
   "author": "Adam Murray <adam@compusition.com>",
   "license": "MIT",
   "engines": {
-    "node" : ">=6.0.0"
+    "node": ">=6.0.0"
   },
   "repository": {
     "type": "git",
@@ -22,8 +22,10 @@
   ],
   "main": "./src/index.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha test/**/*.js",
-    "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- test/**/*.js",
+    "test": "npm run lint && npm run mocha",
+    "lint": "node_modules/.bin/eslint src test",
+    "mocha": "node_modules/.bin/mocha test/**/*.js",
+    "cover": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- test/**/*.js",
     "doc": "node_modules/.bin/jsdoc src --configure ./jsdoc.json --recurse --destination doc --readme docs-home.md",
     "doc-watch": "watch 'npm run doc' src/ --wait=1"
   },
@@ -31,6 +33,7 @@
     "midi": "^0.9.5"
   },
   "devDependencies": {
+    "eslint": "^3.1.1",
     "istanbul": "gotwarlost/istanbul#v1",
     "jsdoc": "^3.4.0",
     "mocha": "^2.5.3"

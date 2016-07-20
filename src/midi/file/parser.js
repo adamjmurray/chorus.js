@@ -156,7 +156,7 @@ class MIDIFileParser {
           type: MIDIFILE.SMPTE_OFFSET,
           data: this.readMetaData(),
         };
-      case MIDIFILE.TIME_SIGNATURE_BYTE:
+      case MIDIFILE.TIME_SIGNATURE_BYTE: {
         // const [numerator, denominatorPower] = this.readMetaData();
         metaData = this.readMetaData();
         const numerator = metaData[0];
@@ -166,7 +166,8 @@ class MIDIFileParser {
           numerator: numerator,
           denominator: Math.pow(2, denominatorPower)
         };
-      case MIDIFILE.KEY_SIGNATURE_BYTE:
+      }
+      case MIDIFILE.KEY_SIGNATURE_BYTE: {
         // const [keyValue, scaleValue] = this.readMetaData();
         metaData = this.readMetaData();
         const keyValue = metaData[0];
@@ -178,6 +179,7 @@ class MIDIFileParser {
           key: key,
           scale: scale,
         };
+      }
       case MIDIFILE.SEQUENCE_SPECIFIC_BYTE:
         return {
           type: MIDIFILE.SEQUENCE_SPECIFIC,
@@ -202,7 +204,7 @@ class MIDIFileParser {
 
   readMetaText() {
     return String.fromCharCode(...this.readMetaData());
-  };
+  }
 
   readMetaData() {
     const length = this.next.variableLengthQuantity();
@@ -211,7 +213,7 @@ class MIDIFileParser {
       data.push(this.next.uInt8());
     }
     return data;
-  };
+  }
 
   readMessage(eventType) {
     let type;
