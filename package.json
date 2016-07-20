@@ -1,16 +1,26 @@
 {
-  "name": "midikit",
-  "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "chorus",
+  "version": "0.0.1",
+  "description": "A harmony-based music composition toolkit with MIDI I/O",
+  "author": "Adam Murray <adam@compusition.com>",
+  "license": "MIT",
+  "repository": "adamjmurray/npm-chorus",
+  "keywords": [
+    "music",
+    "midi",
+    "harmony",
+    "composition",
+    "scales",
+    "chords",
+    "rhythm"
+  ],
+  "main": "./src/index.js",
   "scripts": {
     "test": "node_modules/.bin/mocha test/**/*.js",
     "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- test/**/*.js",
     "doc": "node_modules/.bin/jsdoc src --configure ./jsdoc.json --recurse --destination doc --readme docs-home.md",
     "doc-watch": "watch 'npm run doc' src/ --wait=1"
   },
-  "author": "Adam Murray",
-  "license": "MIT",
   "optionalDependencies": {
     "midi": "^0.9.5"
   },

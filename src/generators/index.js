@@ -1,5 +1,6 @@
 const Harmony = require('./harmony');
 const Rhythm = require('./rhythm');
+const Section = require('./section');
 const Song = require('./song');
 const Track = require('./track');
 /**
@@ -10,4 +11,4 @@ const Track = require('./track');
  * - {@link Track}
  * @module Generators
  */
-module.exports = { Harmony, Rhythm, Song, Track };
+module.exports = { Harmony, Rhythm, Section, Song, Track };
