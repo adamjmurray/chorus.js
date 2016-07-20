@@ -1,7 +1,9 @@
 Features
 - Additional Rhythm behaviors
-  - Euclidean Pattern - could just be a function that returns a list of numbers
   - Negative numbers for rests?
+  - It would be nice to have constants (names module) for things like KICK, SNARE, which would
+    be the "standard" drum kit pitches (like C2 for kick). Problem is, I don't know how standardized this is (it's probably not very standardized),
+    so it probably needs to be customizable.
 - Enhance Section behavior
   - Needs to set a length.
   - Tracks should have an option to loop or do a "one shot"
@@ -13,6 +15,8 @@ Features
   - In this mode, we might want the pitch numbers to follow the scale vs the chord. This could be different modes. 
     I am wondering if track.type should be split into different options, though, like "follow" and "constraint" (or keep "type" but add "follow")?
   - Meh, these ideas are probably too complicated. Maybe just add track mode 'bass', which follows the chord roots and is constrained to the scale.
+- More scales
+- More chords
 - Chord features:
   - Add a bass note below the chord.
     So for example, in C MAJOR, TRIAD(5,{bass:C}) could result in C,E,A or maybe C,A,C(,E?)
@@ -23,7 +27,6 @@ Features
     Note: we'll need to know the scale root. Maybe Section can see if a Chord has a scale set and not overwrite it, but set the root...
   - Once we figure out "chromatic chords", try microtonal tunings like 19-TET
 - Improve MIDI file support (lots of little features are missing, plus error handling for semi-malformed input files could be improved / see MIDI specs)
-- Good test coverage
 
 Bugs
 - All notes off doesn't work for higher channels. It seems like it should. I wonder if we are overloading the MIDI port with too many messages? Try adding a MIDI monitor to Ableton Live to verify

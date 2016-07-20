@@ -26,6 +26,7 @@ class Rhythm {
   constructor(rhythm, { rate=1/4, intensities, durations, durationMod=0.99 } = {}) {
     const times = [];
     if (typeof rhythm === 'string') {
+      this.string = rhythm;
       intensities = [];
       durations = [];
       let duration = null;
@@ -70,6 +71,72 @@ class Rhythm {
     this.intensities = intensities || [];
     this.durations = durations || [];
     this.durationMod = durationMod;
+  }
+
+  /**
+   * Generates a Rhythm using a Euclidean algorithm. It evenly distributes the given number of pulses into the given
+   * total number of time units.
+   * @param pulses {number}
+   * @param total {number}
+   * @param options accepts the same options as the constructor, plus a rotation option
+   * @see https://en.wikipedia.org/wiki/Euclidean_rhythm
+   * @see https://charlesrthompson.com/2015/02/25/using-euclidean-rhythms-to-create-new-beat-patterns/
+   */
+  static euclidean(pulses, total, options) {
+    if (!(pulses < total)) throw new Error('pulses must be less than total');
+    // This isn't actually the euclidean algorithm (see below for a "real" one), but I believe
+    // this simpler Math.floor-based alternative gives the same results (potentially rotated)
+    const rhythm = [];
+    let count = 0;
+    let nextPulse = Math.floor(++count/pulses * total);
+    for (let i=1; i<=total; i++) {
+      if (i < nextPulse) {
+        rhythm.push('.'); // rest
+      } else {
+        rhythm.push('x'); // pulse
+        nextPulse = Math.floor(++count/pulses * total);
+      }
+    }
+    let rhythmString = rhythm.reverse().join('');
+    if (options.rotation) {
+      const rotation = options.rotation;
+      for (let i =  1; i <= rotation; i++) {
+        const nextX = rhythmString.indexOf('x', 1);
+        if (nextX > 0) rhythmString = rhythmString.slice(nextX) + rhythmString.slice(0, nextX);
+        else break;
+      }
+      for (let i = -1; i >= rotation; i--) {
+        const prevX = rhythmString.lastIndexOf('x');
+        if (prevX > 0) rhythmString = rhythmString.slice(prevX) + rhythmString.slice(0, prevX);
+        else break;
+      }
+    }
+    return new Rhythm(rhythmString, options);
+
+    // I think this is a "proper" euclidean rhythm algorithm, as explained here:
+    // http://cgm.cs.mcgill.ca/~godfried/publications/banff.pdf
+    // and here:
+    // https://charlesrthompson.com/2015/02/25/using-euclidean-rhythms-to-create-new-beat-patterns/
+    // But it does a lot of array concats so it doesn't seem very efficient.
+    /*
+    const rhythm = new Array(total);
+    for (let i=0; i<total; i++) {
+      rhythm[i] = [i < pulses ? 'x' : '.'];
+    }
+    let rests = total - pulses;
+    let prev = Math.max(pulses, rests);
+    let remainder = Math.min(pulses, rests);
+    console.log('init', rhythm);
+    while (remainder > 0) {
+      console.log([prev, remainder]);
+      for (let i=0; i < remainder; i++) {
+        rhythm[i] = rhythm[i].concat(rhythm.pop());
+      }
+      console.log('after pass', rhythm);
+      [prev, remainder] = [remainder, prev - remainder];
+    }
+    console.log('euclidean rhythm', rhythm[0].join(''));
+    */
   }
 
   *[Symbol.iterator]() {
