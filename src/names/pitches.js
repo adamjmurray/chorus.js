@@ -1,6 +1,6 @@
-const Pitch = require('../model/pitch');
+const Pitch = require('../models/pitch');
 const MAX_VALUE = Pitch.MAX_VALUE;
-const PITCH_CLASS_NAMES = require('../model/pitch-class').NAMES;
+const PITCH_CLASS_NAMES = require('../models/pitch-class').NAMES;
 
 // TODO: rework this into Pitch.toString() or pitch.name
 function nameForMidiPitch(midiPitch) {

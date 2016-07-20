@@ -148,6 +148,11 @@ class MIDIOut {
     }
   }
 
+  /**
+   * Play a {@link Song} or MIDI JSON
+   * @param songOrJSON {Song|object} a Song or MIDI JSON
+   * @returns {Scheduler} A Scheduler that has already been started. It's returned so you can stop it early if desired.
+   */
   play(songOrJSON) {
     const scheduler = new Scheduler();
     if (songOrJSON[Symbol.iterator]) {

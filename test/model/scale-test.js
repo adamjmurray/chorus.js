@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Scale = require('../../src/model/scale');
+const Scale = require('../../src/models/scale');
 const { PITCH_CLASSES, PITCHES, SCALES } = require('../../src/names');
 
 describe('Scale', () => {

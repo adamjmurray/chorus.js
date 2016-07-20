@@ -18,16 +18,9 @@ module.exports = {
   /**
    * Common {@link Chord} types defined in terms of scale degree offsets (the third argument to the Chord constructor)
    * - `TRIAD`
-   * - `TRIAD_INV1`
-   * - `TRIAD_INV2`
-   * - `TRIAD_SUS2`
-   * - `TRIAD_SUS4`
    * - `QUARTAL`
    * - `QUINTAL`
    * - `SEVENTH`
-   * - `SEVENTH_INV1`
-   * - `SEVENTH_INV2`
-   * - `SEVENTH_INV3`
    *
    * Note: whether a chord such as a triad is major, minor, diminished, or augmented depends on the scale and the root
    * of the chord. This is because chords in midikit are defined in terms of scale degrees, so you don't have to worry
@@ -35,11 +28,11 @@ module.exports = {
    * When using scales and chords in midikit, things will tend to sound good by default.
    *
    * @example
-   * const { PITCH_CLASSES, SCALE_TYPES, CHORD_TYPES } = require('midikit/names');
+   * const { PITCH_CLASSES, SCALE_TYPES, CHORD_TYPES } = require('chorus');
    * const { C } = PITCH_CLASSES;
    * const { MAJOR } = SCALE_TYPES;
    * const { TRIAD, SEVENTH } = CHORD_TYPES;
-   * const { Scale } = require('midikit/model');
+   * const { Scale } = require('chorus');
    * const cMajorScale = new Scale(C, MAJOR);
    * const I_CHORD  = new Chord(TRIAD, 0, cMajorScale); // C major triad
    * const IV_CHORD = new Chord(TRIAD, 3, cMajorScale); // F major triad
@@ -51,7 +44,7 @@ module.exports = {
    * @see https://en.wikipedia.org/wiki/Seventh_chord
    * @see https://en.wikipedia.org/wiki/Inversion_(music)#Chords
    */
-  CHORDS, // TODO: document properly
+  CHORDS, // TODO: document properly, this is out of date!
 
   /**
    * The 12 {@link PitchClass PitchClasses}:
@@ -89,7 +82,7 @@ module.exports = {
    * const { PITCH_CLASSES, SCALE_TYPES } = require('midikit/names');
    * const { C } = PITCH_CLASSES;
    * const { MAJOR } = SCALE_TYPES;
-   * const { Scale } = require('midikit/model');
+   * const { Scale } = require('chorus');
    * const cMajorScale = new Scale(C, MAJOR);
    *
    * @see https://en.wikipedia.org/wiki/Scale_(music)

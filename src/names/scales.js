@@ -1,5 +1,5 @@
-const Scale = require('../model/scale');
-const PitchClass = require('../model/pitch-class');
+const Scale = require('../models/scale');
+const PitchClass = require('../models/pitch-class');
 const PITCH_CLASSES = require('./pitch-classes');
 
 const SCALE_TYPES = {

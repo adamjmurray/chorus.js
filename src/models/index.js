@@ -3,12 +3,11 @@ const Pitch = require('./pitch');
 const PitchClass = require('./pitch-class');
 const Scale = require('./scale');
 /**
- * #### Core models
+ * #### Core models used to build melodies, bass lines, and harmonic patterns.
  * - {@link Chord}
- * - {@link Note}
  * - {@link Pitch}
  * - {@link PitchClass}
  * - {@link Scale}
- * @module Model
+ * @module Models
  */
 module.exports = { Chord, Pitch, PitchClass, Scale };

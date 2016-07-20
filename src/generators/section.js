@@ -1,6 +1,6 @@
 const Track = require('./track');
 const Harmony = require('./harmony');
-const { Pitch } = require('../model');
+const { Pitch } = require('../models');
 
 function chordAt(harmonySequence, time) {
   let i = 0;

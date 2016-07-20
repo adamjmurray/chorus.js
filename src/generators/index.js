@@ -7,6 +7,7 @@ const Track = require('./track');
  * #### Iterators that produce musical patterns which can be played or saved to a MIDI file
  * - {@link Harmony}
  * - {@link Rhythm}
+ * - {@link Section}
  * - {@link Song}
  * - {@link Track}
  * @module Generators
