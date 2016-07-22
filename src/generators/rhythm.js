@@ -82,7 +82,7 @@ class Rhythm {
    * @see https://en.wikipedia.org/wiki/Euclidean_rhythm
    * @see https://charlesrthompson.com/2015/02/25/using-euclidean-rhythms-to-create-new-beat-patterns/
    */
-  static euclidean(pulses, total, options) {
+  static distribute(pulses, total, options={}) {
     if (!(pulses < total)) throw new Error('pulses must be less than total');
     // This isn't actually the euclidean algorithm (see below for a "real" one), but I believe
     // this simpler Math.floor-based alternative gives the same results (potentially rotated)
@@ -111,7 +111,8 @@ class Rhythm {
         else break;
       }
     }
-    return new Rhythm(rhythmString, options);
+    return rhythmString;
+    // return new Rhythm(rhythmString, options);
 
     // I think this is a "proper" euclidean rhythm algorithm, as explained here:
     // http://cgm.cs.mcgill.ca/~godfried/publications/banff.pdf
