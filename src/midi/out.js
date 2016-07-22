@@ -11,10 +11,10 @@ class MIDIOut {
    *
    * @param options TODO
    */
-  constructor(options = {}) {
+  constructor({ defaultDuration=500 }={}) {
     this.output = new midi.output();
     this.isOpen = false;
-    this.defaultDuration = options.defaultDuration || 500;
+    this.defaultDuration = defaultDuration;
     process.on('exit', () => {
       this.allNotesOff();
       this.close()

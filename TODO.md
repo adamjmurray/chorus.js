@@ -1,5 +1,6 @@
 Features
 - MIDI out selector behavior for examples (command-line arg to list ports / select a port)
+  - DONE: examples/select-output, but needs to be incorporated into existing examples
 - Additional Rhythm behaviors
   - Negative numbers for rests?
   - It would be nice to have constants (names module) for things like KICK, SNARE, which would
