@@ -1,5 +1,5 @@
 require('../src/names').into(global);
-const { MIDIOut } = require('../src/midi');
+const selectOutput = require('./helpers/select-output');
 const { Song } = require('../src');
 
 const song = new Song({
@@ -18,8 +18,8 @@ const song = new Song({
   }]
 });
 
-const output = new MIDIOut();
-output.open();
-// console.log(JSON.stringify(song, null, 2));
-// output.play(song.toJSON()); // this works too!
-output.play(song);
+selectOutput().then(output => {
+  // console.log(JSON.stringify(song, null, 2));
+  // output.play(song.toJSON()); // this works too!
+  output.play(song);
+});
