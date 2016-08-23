@@ -1,15 +1,17 @@
 # chorus.js
-## A music composition toolkit for JavaScript
+
+A music composition toolkit for JavaScript
 
 
-### Features
+
+## Features
 
 - Generate multi-track songs with intuitive support for harmony-based compusition ("Western music").
 - Realtime and file-based MIDI I/O
 
 
 
-### Status
+## Status
 
 Early alpha version, not ready for general usage. 
 
@@ -23,7 +25,7 @@ Check the github page for the latest info.
 
 
 
-### Installation
+## Installation
 
       npm install chorus
 
@@ -48,7 +50,7 @@ you can still work with MIDI file I/O, which is implemented in pure JavaScript.
 
 
 
-### Usage
+## Usage
 
 Chorus.js uses MIDI to communicate with compatible apps that can produce sound. 
 It can send MIDI messages in realtime to another app, or write to a MIDI file. 
@@ -56,7 +58,7 @@ It can send MIDI messages in realtime to another app, or write to a MIDI file.
 Remember to set your volume to a moderate level.
 
 
-#### Realtime MIDI I/O Quick Start
+### Realtime MIDI I/O Quick Start
 
 **OS X**
 
@@ -64,17 +66,17 @@ Remember to set your volume to a moderate level.
 2. Select `MIDI Source: SimpleSynth virtual input` 
 3. Run the Chorus examples and select `simplesynth` as the port.
 
-       node node_modules/chorus/examples/play-song -p simplesynth
+        node node_modules/chorus/examples/play-song -p simplesynth
 
 
 **Windows**
 
 1. Run the Chorus.js examples and select `Microsoft GS Wavetable Synth` as the port.
  
-       node node_modules/chorus/examples/play-song -p wavetable
+        node node_modules/chorus/examples/play-song -p wavetable
         
 
-#### Realtime MIDI I/O Advanced Setup with a DAW
+### Realtime MIDI I/O Advanced Setup with a DAW
 
 We'll walk through the setup with [Bitwig Studio](http://bitwig.com) because it's cross-platform and has a free trial. Setup for other DAWs should be similar.  
  
@@ -94,7 +96,7 @@ We'll walk through the setup with [Bitwig Studio](http://bitwig.com) because it'
 4. Add a software instrument track with an instrument (such as Polysynth)
 5. Run the Chorus examples and select the IAC Driver port you setup. For example, if you named it "iac":
 
-       node node_modules/chorus/examples/play-song -p iac
+        node node_modules/chorus/examples/play-song -p iac
 
 
 **Windows**
@@ -109,7 +111,7 @@ We'll walk through the setup with [Bitwig Studio](http://bitwig.com) because it'
 4. Add a software instrument track with an instrument (such as Polysynth)
 5. Run the Chorus examples and select the loopMIDI port you setup:
 
-       node node_modules/chorus/examples/play-song -p loopmidi
+        node node_modules/chorus/examples/play-song -p loopmidi
 
 
 **Linux**
@@ -117,7 +119,7 @@ We'll walk through the setup with [Bitwig Studio](http://bitwig.com) because it'
 Similar to above. To setup a virtual / inter-app MIDI port, try the [JACK Audio Connection Kit](http://jackaudio.org/).   
 
 
-#### MIDI File I/O
+### MIDI File I/O
 
 Again, we'll demonstrate the setup with [Bitwig Studio](http://bitwig.com). Other DAWs should be similar.
 
@@ -132,7 +134,7 @@ Again, we'll demonstrate the setup with [Bitwig Studio](http://bitwig.com). Othe
 
 
 
-#### Troubleshooting
+### Troubleshooting
 
 One small mistake can prevent MIDI I/O from working. If you can't hear anything, double check every aspect of your setup carefully.
 
