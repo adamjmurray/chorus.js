@@ -1,10 +1,12 @@
 # chorus.js
 ## A music composition toolkit for JavaScript
 
+
 ### Features
 
 - Generate multi-track songs with intuitive support for harmony-based compusition ("Western music").
 - Realtime and file-based MIDI I/O
+
 
 
 ### Status
@@ -20,6 +22,7 @@ For now, I recommend installing [the latest source code](https://github.com/adam
 Check the github page for the latest info.
 
 
+
 ### Installation
 
       npm install chorus
@@ -28,10 +31,12 @@ Realtime MIDI I/O (via the [midi package](https://www.npmjs.com/package/midi)) r
 See [node-gyp](https://www.npmjs.com/package/node-gyp) for details. Here's how I did it:
 
 **OS X**
+
 1. Install Xcode from the App Store 
 2. Install Xcode Command Line Tools (in the app's menu: Xcode &rarr; Preferences &rarr; Downloads)
 
 **Windows**
+
 1. Install Python 2.7.x
 2. Install Visual Studio 2015 Community Edition 
    * Customize the install to include the "Visual C++" programming language 
@@ -40,6 +45,7 @@ See [node-gyp](https://www.npmjs.com/package/node-gyp) for details. Here's how I
 
 NOTE: Realtime MIDI I/O is optional. If you have problems installing the optional [midi package](https://www.npmjs.com/package/midi)
 you can still work with MIDI file I/O, which is implemented in pure JavaScript. 
+
 
 
 ### Usage
@@ -53,6 +59,7 @@ Remember to set your volume to a moderate level.
 #### Realtime MIDI I/O Quick Start
 
 **OS X**
+
 1. Download [SimpleSynth](http://notahat.com/simplesynth/) and launch it
 2. Select `MIDI Source: SimpleSynth virtual input` 
 3. Run the Chorus examples and select `simplesynth` as the port.
@@ -61,6 +68,7 @@ Remember to set your volume to a moderate level.
 
 
 **Windows**
+
 1. Run the Chorus.js examples and select `Microsoft GS Wavetable Synth` as the port.
  
        node node_modules/chorus/examples/play-song -p wavetable
@@ -71,6 +79,7 @@ Remember to set your volume to a moderate level.
 We'll walk through the setup with [Bitwig Studio](http://bitwig.com) because it's cross-platform and has a free trial. Setup for other DAWs should be similar.  
  
 **OS X**
+
 1. Create an IAC (Inter-Application Communication) MIDI port:
    * Open OS X's `Audio MIDI Setup` application
    * Go to the `MIDI Studio` window (menu: `Window -> Show MIDI Studio`)
@@ -89,6 +98,7 @@ We'll walk through the setup with [Bitwig Studio](http://bitwig.com) because it'
 
 
 **Windows**
+
 1. Create a virtual MIDI port:
    * Install [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html)
    * Run loopMIDI and click `+` to add a virtual MIDI port
