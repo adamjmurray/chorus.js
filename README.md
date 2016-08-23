@@ -1,4 +1,4 @@
-# chorus
+# chorus.js
 ## A music composition toolkit for JavaScript
 
 ### Features
@@ -22,103 +22,108 @@ Check the github page for the latest info.
 
 ### Installation
 
-Realtime MIDI I/O requires native code from the [midi package](https://www.npmjs.com/package/midi).
-See [node-gyp](https://www.npmjs.com/package/node-gyp) for more info on how to install native Node.js code on your platform.
+      npm install chorus
+
+Realtime MIDI I/O (via the [midi package](https://www.npmjs.com/package/midi)) requires native code to be compiled during installation.
+See [node-gyp](https://www.npmjs.com/package/node-gyp) for details. Here's how I did it:
+
+**OS X**
+1. Install Xcode from the App Store 
+2. Install Xcode Command Line Tools (in the app's menu: Xcode &rarr; Preferences &rarr; Downloads)
+
+**Windows**
+1. Install Python 2.7.x
+2. Install Visual Studio 2015 Community Edition 
+   * Customize the install to include the "Visual C++" programming language 
+3. Launch the "Developer Command Prompt for VS2015"
+4. Run npm install -g npm@latest (to avoid [this issue](https://github.com/nodejs/node-gyp/issues/972))  
 
 NOTE: Realtime MIDI I/O is optional. If you have problems installing the optional [midi package](https://www.npmjs.com/package/midi)
 you can still work with MIDI file I/O, which is implemented in pure JavaScript. 
-See the song-to-file.js example for how to generate MIDI files.
 
 
-### How to hear something
+### Usage
 
-Regardless of the approach you use, remember to set your volume to a moderate level.
+Chorus.js uses MIDI to communicate with compatible apps that can produce sound. 
+It can send MIDI messages in realtime to another app, or write to a MIDI file. 
 
-#### Realtime MIDI I/O
- 
-You need two things:
+Remember to set your volume to a moderate level.
 
-1. A MIDI instrument, such as:
-   * A stand-alone instrument application, like [SimpleSynth](http://notahat.com/simplesynth/) or [Helm](http://tytel.org/helm/)   
-   * Or a software instrument inside a DAW application, like [GarageBand](https://www.apple.com/mac/garageband/) or [Ableton Live](https://www.ableton.com/en/live/)
-   * Or a hardware synthesizer + a hardware MIDI interface   
-2. A MIDI port to route MIDI messages from Chorus to the MIDI instrument.
 
-The exact setup depends on your platform and the MIDI instrument. 
-The possibilities are endless. I suggest some options below.
-
-Once you're setup, the realtime MIDI I/O examples use an interactive prompt to select a MIDI port. As a shortcut, you can do:
-   
-        node node_modules/chorus/examples/play-song -p portname
+#### Realtime MIDI I/O Quick Start
 
 **OS X**
-
-Quick start:
-
 1. Download [SimpleSynth](http://notahat.com/simplesynth/) and launch it
 2. Select `MIDI Source: SimpleSynth virtual input` 
 3. Run the Chorus examples and select `simplesynth` as the port.
 
-Using DAWs or stand-along instrument applications:
-
-1. Create an IAC (Inter-Application Communication) MIDI port (one-time setup):
-   * Open OS X's `Audio MIDI Setup` application
-   * Go to the "MIDI Studio" window (see `Window -> Show MIDI Studio` in the menu)
-   * Double click `IAC Driver` (the Inter-Application Communication Driver for MIDI) to open the `IAC Driver Properties` window 
-   * Make sure "Device is online is checked" 
-   * If needed, click `More information` to expand the `IAC Driver Properties` window   
-   * Click `+` to add a port and name it whatever you want.
-2. Launch GarageBand and start a new project
-3. Add a software instrument track
-4. Run the Chorus examples and select the IAC Driver port you setup.
-
-With other applications, you may need to configure it to use the IAC Driver port as input. 
+       node node_modules/chorus/examples/play-song -p simplesynth
 
 
 **Windows**
+1. Run the Chorus.js examples and select `Microsoft GS Wavetable Synth` as the port.
  
-Quick start: I think Windows has a built-in "General MIDI" port + instrument. TODO: Double check this and document here. 
+       node node_modules/chorus/examples/play-song -p wavetable
+        
 
-Free software instrument suggestions:
-* [Presonus Studio One Prime](https://shop.presonus.com/products/studio-one-prods/Studio-One-3-Prime) 
-* [Cakewalk SONAR](https://www.cakewalk.com/Products/SONAR) (unlimited trial, saving and exporting disabled)
-* [Bitwig Studio](http://bitwig.com) (unlimited trial, saving and exporting disabled)
+#### Realtime MIDI I/O Advanced Setup with a DAW
 
-MIDI port suggestions to route MIDI to a DAW or standalone instrument app:
-* [LoopBe1](http://www.nerds.de/en/loopbe1.html)     
-* [JACK Audio Connection Kit](http://jackaudio.org/)
-  
-TODO: document setup with Studio One Prime or one of the other free options  
+We'll walk through the setup with [Bitwig Studio](http://bitwig.com) because it's cross-platform and has a free trial. Setup for other DAWs should be similar.  
+ 
+**OS X**
+1. Create an IAC (Inter-Application Communication) MIDI port:
+   * Open OS X's `Audio MIDI Setup` application
+   * Go to the `MIDI Studio` window (menu: `Window -> Show MIDI Studio`)
+   * Double click `IAC Driver` to open the `IAC Driver Properties` window 
+   * Make sure `Device is online` is checked 
+   * Click `More information` to expand the `IAC Driver Properties` window   
+   * Click `+` to add a port and name it whatever you want.
+2. Launch Bitwig Studio and start a new project
+3. Add a generic MIDI Controller:
+   * Bitwig preferences &rarr; Controllers &rarr; Add Controller Manually &rarr; Generic &rarr; MIDI Keyboard
+   * Choose the IAC port
+4. Add a software instrument track with an instrument (such as Polysynth)
+5. Run the Chorus examples and select the IAC Driver port you setup. For example, if you named it "iac":
+
+       node node_modules/chorus/examples/play-song -p iac
+
+
+**Windows**
+1. Create a virtual MIDI port:
+   * Install [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html)
+   * Run loopMIDI and click `+` to add a virtual MIDI port
+2. Launch Bitwig Studio and start a new project
+3. Add a generic MIDI Controller:
+   * Bitwig preferences &rarr; Controllers &rarr; Add Controller Manually &rarr; Generic &rarr; MIDI Keyboard
+   * Choose the loopMIDI port
+4. Add a software instrument track with an instrument (such as Polysynth)
+5. Run the Chorus examples and select the loopMIDI port you setup:
+
+       node node_modules/chorus/examples/play-song -p loopmidi
 
 
 **Linux**
 
-Software instrument suggestions:
-* [Bitwig Studio](http://bitwig.com)
-* [Ardour](http://ardour.org) with [plugins](http://ardour.org/features.html#plugins)
-
-MIDI port suggestions:
-* Create an ALSA MIDI virtual port with the [amidi command](http://linuxcommand.org/man_pages/amidi1.html):
-
-      amidi -p virtual -d
-      
-* [JACK Audio Connection Kit](http://jackaudio.org/)   
+Similar to above. To setup a virtual / inter-app MIDI port, try the [JACK Audio Connection Kit](http://jackaudio.org/).   
 
 
 #### MIDI File I/O
 
-You'll need a MIDI instrument, just like for realtime MIDI I/O. You also need a way to play back the MIDI file and route it to the instrument. 
+Again, we'll demonstrate the setup with [Bitwig Studio](http://bitwig.com). Other DAWs should be similar.
 
-The easiest way to do this is with a DAW application. For example:
+1. Generate a MIDI file with Chorus:
 
-1. Open GarageBand or the DAW of your choice
-2. Create a software instrument track
-3. Drag a MIDI file that Chorus generated onto the track (see the `song-to-file.js` example).
-4. Press play
+        node node_modules/chorus/examples/song-to-file.js 
+
+2. Launch Bitwig Studio and start a new project
+3. Add a software instrument track with an instrument (such as Polysynth)
+4. Drag a MIDI file that Chorus generated onto the track
+5. Press Bitwig's play button
+
 
 
 #### Troubleshooting
 
 One small mistake can prevent MIDI I/O from working. If you can't hear anything, double check every aspect of your setup carefully.
 
-Try testing your setup another way: If you have a MIDI input device, like a MIDI piano keyboard, test that you can play your software instrument with it.
+If you have a MIDI input device, like a MIDI piano keyboard, test that you can play your software instrument with it.
