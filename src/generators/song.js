@@ -14,13 +14,17 @@ class Song {
   *[Symbol.iterator]() {
     const {bpm, sections} = this;
     yield {type: 'bpm', value: bpm};
+    let timeOffset = 0;
     for (const section of sections) {
       for (const event of section) {
+        event.time += timeOffset;
         yield noteJSON(event);
       }
+      timeOffset += section.duration;
     }
   }
 
+  // TODO: this won't work with multi-section songs, need timeOffset logic. Refactor?
   toJSON() {
     const {bpm, sections} = this;
     const tracksJSON = [];

@@ -1,14 +1,14 @@
 Features
+- Enhance Section behavior
+  - Calculate section duration automatically if not given
+  - Tracks should have an option to loop or do a "one shot"
+  - Tracks should have a start time offset option
+  - Harmony should have an option to loop or do a "one shot" (last chord continues until the end of the section)
 - Additional Rhythm behaviors
   - Negative numbers for rests?
   - It would be nice to have constants (names module) for things like KICK, SNARE, which would
     be the "standard" drum kit pitches (like C2 for kick). Problem is, I don't know how standardized this is (it's probably not very standardized),
     so it probably needs to be customizable.
-- Enhance Section behavior
-  - Needs to set a length.
-  - Tracks should have an option to loop or do a "one shot"
-  - Tracks should have a start time offset option
-  - Harmony should have an option to loop or do a "one shot" (last chord continues until the end of the section)
 - Track might need defaultDuration, defaultIntensity options? Or event durations/intensities Arrays?
   - Rhythm class already seems to support durations/intensities Arrays
 - New track mode 'chord-root' (better name?). Ignores inversion or is somehow relative to the root of the chord.
@@ -29,7 +29,9 @@ Features
 - Improve MIDI file support (lots of little features are missing, plus error handling for semi-malformed input files could be improved / see MIDI specs)
 
 Bugs
+- TODO above song.js toJSON()
 - All notes off doesn't work for higher channels. It seems like it should. I wonder if we are overloading the MIDI port with too many messages? Try adding a MIDI monitor to Ableton Live to verify
+  - Also having problems with this in Bitwig. Could be a MIDI rate-limiting issue? Maybe just try sending the "all notes off" CC message?
 - The models with array properties aren't immutable. Try testing push()ing something onto scale/chord
 
 Maybe

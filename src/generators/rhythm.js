@@ -23,12 +23,13 @@ class Rhythm {
    * @param {Number} [options.duration] duration the duration of all notes
    * @param {Number} [options.relativeDuration=0.99] relativeDuration makes the duration relative to the time-delta's between notes. The default 0.99 is nearly legato.
    */
-  constructor(rhythm, { rate=1/4, intensities, durations, durationMod=0.99 } = {}) {
+  constructor(rhythm, { rate=1/4, durationMod=0.99 } = {}) {
     const times = [];
+    const durations = [];
+    let intensities;
     if (typeof rhythm === 'string') {
       this.string = rhythm;
       intensities = [];
-      durations = [];
       let duration = null;
       let count = 0;
       for (const char of rhythm) {
@@ -62,14 +63,18 @@ class Rhythm {
       if (duration) durations.push(duration);
     } else {
       let time = 0;
+      let nextTime;
       for (const value of rhythm) {
+        nextTime = time + (rate * value);
         times.push(time);
-        time += rate * value;
+        durations.push(nextTime - time);
+        time = nextTime;
       }
+      intensities = new Array(8).fill(0.7);
     }
     this.times = times;
     this.intensities = intensities || [];
-    this.durations = durations || [];
+    this.durations = durations;
     this.durationMod = durationMod;
   }
 
