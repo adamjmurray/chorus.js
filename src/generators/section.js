@@ -20,7 +20,6 @@ class Section {
     this.harmony = harmony instanceof Harmony ? harmony : new Harmony(harmony);
     this.tracks = tracks.map(t => t instanceof Track ? t : new Track(t));
     this.duration = duration;
-    // TODO: option to have the harmony and tracks loop or be "one-shot"
   }
 
   *[Symbol.iterator]() {
@@ -34,10 +33,12 @@ class Section {
         const channel = track.channel || (trackIdx + 1);
         const mode = track.mode;
         const {time, duration, intensity} = event;
+        if (time >= this.duration) break; // exceeded section duration (we're assuming monotonically increasing times)
         let pitch;
         if (event.pitch instanceof Pitch) {
           pitch = event.pitch;
         }
+        // TODO: support pitch class?
         else if (typeof event.pitch === 'number') {
           const number = event.pitch;
           let chord;

@@ -15,8 +15,8 @@ const song = new Song({
     {
       duration: 8,
       tracks: [{
-        rhythm: [1, 1, 1, 1, 1, 1, 1, 1],
-        pitches: [G4, F4, D4, B3, C4, A3, G3, B3],
+        rhythm: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        pitches: [G4, F4, D4, B3, C4, A3, G3, B3, C2, C6], // last 2 are ignored because it exceeds the section duration
       }]
     },
     {
