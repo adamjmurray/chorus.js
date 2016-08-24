@@ -11,15 +11,35 @@ class Track {
     this.pitches = pitches; // NOTE: these are relative, depends on scale/chords and follow settings
     this.rhythm = rhythm instanceof Rhythm ? rhythm : new Rhythm(rhythm, {rate});
     this.octave = octave;
-    this.duration = looped ? Infinity : this.rhythm.duration;
-    // TODO: support looping
+    this.loopDuration = this.rhythm.duration;
+    this.duration = looped ? Infinity : this.loopDuration;
+    this.looped = looped;
   }
 
   *[Symbol.iterator]() {
-    const {pitches, rhythm} = this;
-    let index = 0;
-    for (const event of rhythm) {
-      event.pitch = pitches[index++ % pitches.length];
+    let pitchDone = false;
+    let rhythmDone = false;
+    let pitchIter = this.pitches[Symbol.iterator]();
+    let rhythmIter = this.rhythm[Symbol.iterator]();
+    let timeOffset = 0;
+    while (true) { // eslint-disable-line no-constant-condition
+      let pitchNext = pitchIter.next();
+      let rhythmNext = rhythmIter.next();
+      if (pitchNext.done) {
+        pitchDone = true;
+        pitchIter = this.pitches[Symbol.iterator]();
+        pitchNext = pitchIter.next();
+      }
+      if (rhythmNext.done) {
+        rhythmDone = true;
+        rhythmIter = this.rhythm[Symbol.iterator]();
+        rhythmNext = rhythmIter.next();
+        timeOffset += this.loopDuration;
+      }
+      if (pitchDone && rhythmDone && !this.looped) break;
+      const event = rhythmNext.value;
+      event.pitch = pitchNext.value;
+      event.time += timeOffset;
       yield event;
     }
   }

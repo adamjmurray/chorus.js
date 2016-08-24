@@ -1,7 +1,8 @@
 Features
 - Enhance Section behavior
   - Tracks should have an option to loop or do a "one shot"
-  - Tracks should have a start time offset option
+    - Mostly done, but if the section duration is longer than the track duration, I'm not sure that works.
+  - Tracks should have a start time offset option -- or, introduce concept of rests.
   - Harmony should have an option to loop or do a "one shot" (last chord continues until the end of the section)
 - Additional Rhythm behaviors
   - Negative numbers for rests?

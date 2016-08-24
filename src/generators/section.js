@@ -36,7 +36,11 @@ class Section {
         const channel = track.channel || (trackIdx + 1);
         const mode = track.mode;
         const {time, duration, intensity} = event;
-        if (time >= this.duration) break; // exceeded section duration (we're assuming monotonically increasing times)
+        if (time >= this.duration) {
+          // exceeded section duration (we're assuming monotonically increasing times)
+          break;
+        }
+
         let pitch;
         if (event.pitch instanceof Pitch) {
           pitch = event.pitch;
