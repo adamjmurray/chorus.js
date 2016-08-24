@@ -75,7 +75,7 @@ class Rhythm {
     this.times = times;
     this.intensities = intensities || [];
     this.durations = durations;
-    this.duration = durations.reduce((a,b) => a + b, 0);
+    this.duration = times[times.length-1] + durations[durations.length-1];
     this.durationMod = durationMod;
   }
 
