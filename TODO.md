@@ -1,6 +1,5 @@
 Features
 - Enhance Section behavior
-  - Calculate section duration automatically if not given
   - Tracks should have an option to loop or do a "one shot"
   - Tracks should have a start time offset option
   - Harmony should have an option to loop or do a "one shot" (last chord continues until the end of the section)

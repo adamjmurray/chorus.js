@@ -19,12 +19,15 @@ class Section {
     this.scale = scale;
     this.harmony = harmony instanceof Harmony ? harmony : new Harmony(harmony);
     this.tracks = tracks.map(t => t instanceof Track ? t : new Track(t));
-    this.duration = duration;
+    this.duration = duration || Math
+                                .max(...this.tracks
+                                  .map(t => t.duration)
+                                  .filter(dur => isFinite(dur)));
   }
 
   *[Symbol.iterator]() {
     const { scale } = this;
-    const harmonySequence = [...this.harmony];
+    const harmonySequence = [...this.harmony]; // TODO: this won't work with looped harmonies
     let trackIdx = -1;
     for (const track of this.tracks) {
       trackIdx++;

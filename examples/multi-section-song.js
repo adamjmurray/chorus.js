@@ -6,7 +6,7 @@ const song = new Song({
   bpm: 120,
   sections: [
     {
-      duration: 8,
+      // duration: 8, // determined automatically
       tracks: [{
         rhythm: [1, 1, 1, 1, 1, 1, 1, 1],
         pitches: [C4, D4, E4, G4, F4, D4, A3, D4],
