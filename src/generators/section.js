@@ -27,11 +27,14 @@ class Section {
 
   *[Symbol.iterator]() {
     const { scale } = this;
-    const harmonySequence = [...this.harmony]; // TODO: this won't work with looped harmonies
+    // const harmonySequence = [...this.harmony]; // TODO: this won't work with looped harmonies
     let trackIdx = -1;
     for (const track of this.tracks) {
       trackIdx++;
       const octave = track.octave;
+      let harmonyIter = this.harmony[Symbol.iterator]();
+      let harmonyCurr = harmonyIter.next();
+      let harmonyNext = harmonyIter.next();
       for (const event of track) {
         const channel = track.channel || (trackIdx + 1);
         const mode = track.mode;
@@ -40,7 +43,11 @@ class Section {
           // exceeded section duration (we're assuming monotonically increasing times)
           break;
         }
-
+        while (harmonyNext && harmonyNext.value && harmonyNext.value.time <= time) {
+          harmonyCurr = harmonyNext;
+          harmonyNext = harmonyIter.next();
+        }
+        let chord = harmonyCurr && harmonyCurr.value && harmonyCurr.value.chord;
         let pitch;
         if (event.pitch instanceof Pitch) {
           pitch = event.pitch;
@@ -48,16 +55,16 @@ class Section {
         // TODO: support pitch class?
         else if (typeof event.pitch === 'number') {
           const number = event.pitch;
-          let chord;
+          // let chord;
           switch (mode) {
             case 'arpeggio': {
-              chord = chordAt(harmonySequence, time); // only need to do this for arpeggio and chord modes
+              // chord = chordAt(harmonySequence, time); // only need to do this for arpeggio and chord modes
               pitch = chord.pitch(number, { scale, octave });
               break;
             }
             case 'chord': {
               pitch = null;
-              chord = chordAt(harmonySequence, time); // only need to do this for arpeggio and chord modes
+              // chord = chordAt(harmonySequence, time); // only need to do this for arpeggio and chord modes
               const pitches = chord.pitches({ scale, octave, inversion: number });
               for (const p of pitches) {
                 const note = { pitch: p, duration, intensity, channel };

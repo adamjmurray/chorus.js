@@ -1,9 +1,12 @@
 Features
+- Song should have default sectionDuration?
 - Enhance Section behavior
-  - Tracks should have an option to loop or do a "one shot"
-    - Mostly done, but if the section duration is longer than the track duration, I'm not sure that works.
-  - Tracks should have a start time offset option -- or, introduce concept of rests.
+  - Ability to loop harmonies
+  - If pitches/rhythm are not the same length, loop to use up all the values?
+    - The ability to loop rhythm, pitches, etc independently... sorta solved by the parent bullet pt
+    - But we may need the idea of "hold this last value forever" (or just stop looping)? Nah... Later... 
   - Harmony should have an option to loop or do a "one shot" (last chord continues until the end of the section)
+  - Tracks should have a start time offset option -- or, introduce concept of rests.
 - Additional Rhythm behaviors
   - Negative numbers for rests?
   - It would be nice to have constants (names module) for things like KICK, SNARE, which would
@@ -11,7 +14,7 @@ Features
     so it probably needs to be customizable.
 - Track might need defaultDuration, defaultIntensity options? Or event durations/intensities Arrays?
   - Rhythm class already seems to support durations/intensities Arrays
-- New track mode 'chord-root' (better name?). Ignores inversion or is somehow relative to the root of the chord.
+- New track mode 'chord-root' (better name? just root). Ignores inversion or is somehow relative to the root of the chord.
   - In this mode, we might want the pitch numbers to follow the scale vs the chord. This could be different modes. 
     I am wondering if track.type should be split into different options, though, like "follow" and "constraint" (or keep "type" but add "follow")?
   - Meh, these ideas are probably too complicated. Maybe just add track mode 'bass', which follows the chord roots and is constrained to the scale.
