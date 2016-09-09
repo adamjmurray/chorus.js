@@ -19,15 +19,6 @@ class Harmony {
     this.duration = looped ? Infinity : this.loopDuration;
   }
 
-  // *[Symbol.iterator]() {
-  //   const {chords, rhythm} = this;
-  //   let index = 0;
-  //   for (const event of rhythm) {
-  //     const chord = chords[index++ % chords.length];
-  //     yield {time: event.time, chord};
-  //   }
-  // }
-
   *[Symbol.iterator]() {
     let chordDone = false;
     let rhythmDone = false;
