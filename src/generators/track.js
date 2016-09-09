@@ -37,10 +37,10 @@ class Track {
         timeOffset += this.loopDuration;
       }
       if (pitchDone && rhythmDone && !this.looped) break;
-      const event = rhythmNext.value;
-      event.pitch = pitchNext.value;
-      event.time += timeOffset;
-      yield event;
+      let { time, duration, intensity } = rhythmNext.value;
+      let pitch = pitchNext.value;
+      time += timeOffset;
+      yield { time, pitch, duration, intensity };
     }
   }
 }

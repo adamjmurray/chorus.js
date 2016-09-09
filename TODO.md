@@ -1,11 +1,10 @@
 Features
-- Song should have default sectionDuration?
+- Song options to set default section options:
+  - sectionDuration
+  - scale  
 - Enhance Section behavior
-  - Ability to loop harmonies
   - If pitches/rhythm are not the same length, loop to use up all the values?
-    - The ability to loop rhythm, pitches, etc independently... sorta solved by the parent bullet pt
-    - But we may need the idea of "hold this last value forever" (or just stop looping)? Nah... Later... 
-  - Harmony should have an option to loop or do a "one shot" (last chord continues until the end of the section)
+    - If we do this, it's not as easy to determine the track length, so maybe we should require sections have lengths. 
   - Tracks should have a start time offset option -- or, introduce concept of rests.
 - Additional Rhythm behaviors
   - Negative numbers for rests?
@@ -29,7 +28,13 @@ Features
   - "Chromatic chords", like MAJ, MIN, that can be used to borrow chords from other scales.
     Note: we'll need to know the scale root. Maybe Section can see if a Chord has a scale set and not overwrite it, but set the root...
   - Once we figure out "chromatic chords", try microtonal tunings like 19-TET
-- Improve MIDI file support (lots of little features are missing, plus error handling for semi-malformed input files could be improved / see MIDI specs)
+- Improve MIDI file support 
+  - lots of little features are missing, plus error handling for semi-malformed input files could be improved / see MIDI specs
+  - Multiple tracks/parts that use the same channel (for example when doing polyrhythms) should render to the same MIDI file track
+
+Refactoring
+- Stop using Rhythm in Harmony, since it doesn't need intensities or durations.
+- Rename Track to Part? Especially since multiple "Tracks" may send to a single DAW track or MIDI file track.
 
 Bugs
 - TODO above song.js toJSON()
