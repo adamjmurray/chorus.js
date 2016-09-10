@@ -28,13 +28,13 @@ class Chord {
    * @param root
    * @param octave
    * @param inversion
+   * @param offset
    * @returns {Array|*|{}}
    */
-  pitches({ scale = this.scale, root = this.root, octave = this.octave, inversion = 0 } = {}) {
-    inversion += this.inversion; // TODO: maybe rename to relative inversion?
+  pitches({ scale = this.scale, root = this.root, octave = this.octave, inversion = this.inversion, offset = 0 } = {}) {
     const offsets = this.offsetsForInversion(inversion, { scale });
-    return offsets.map(offset =>
-      scale.pitch(root + offset, { octave }));
+    return offsets.map(chordPitchOffset =>
+      scale.pitch(root + chordPitchOffset + offset, { octave }));
   }
 
   /**
@@ -44,10 +44,11 @@ class Chord {
    * @param root
    * @param octave
    * @param inversion
+   * @param offset
    * @returns {*}
    */
-  pitch(position, { scale = this.scale, root = this.root, octave = this.octave, inversion = 0 } = {}) {
-    const pitches = this.pitches({ scale, root, octave, inversion });
+  pitch(position, { scale = this.scale, root = this.root, octave = this.octave, inversion = this.inversion, offset = 0 } = {}) {
+    const pitches = this.pitches({ scale, root, octave, inversion, offset });
     const pitch = pitches[mod(position, pitches.length)];
     const octaveOffset = Math.floor(position / pitches.length);
     if (octaveOffset !== 0) {
@@ -65,15 +66,10 @@ class Chord {
     return offsets;
   }
 
-  // Something like this might still be useful? Call into offsetForInversion...
-  // inversion(number, { scale = this.scale, root = this.root, octave = this.octave } = {}) {
-  //   if (!number) return this; // 0 means no inversion, treat other falsey values the same
-  //   const offsets = this.offsets.slice(); // make a copy
-  //   const scaleLength = scale.length;
-  //   for (let i =  1; i <= number; i++) offsets.push(offsets.shift() + scaleLength);
-  //   for (let i = -1; i >= number; i--) offsets.unshift(offsets.pop() - scaleLength);
-  //   return new Chord(offsets, { scale, root, octave });
-  // }
+  inv(inversion) {
+    if (!inversion) return this;
+    return new Chord(this.offsets, { scale: this.scale, root: this.root, octave: this.octave, inversion: inversion });
+  }
 
 }
 

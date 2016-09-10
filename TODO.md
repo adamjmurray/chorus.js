@@ -1,25 +1,21 @@
 Features
-- Song options to set default section options:
-  - sectionDuration
-  - scale  
-- Enhance Section behavior
-  - If pitches/rhythm are not the same length, loop to use up all the values?
-    - If we do this, it's not as easy to determine the track length, so maybe we should require sections have lengths. 
-  - Tracks should have a start time offset option -- or, introduce concept of rests.
-- Additional Rhythm behaviors
-  - Negative numbers for rests?
-  - It would be nice to have constants (names module) for things like KICK, SNARE, which would
-    be the "standard" drum kit pitches (like C2 for kick). Problem is, I don't know how standardized this is (it's probably not very standardized),
-    so it probably needs to be customizable.
-- Track might need defaultDuration, defaultIntensity options? Or event durations/intensities Arrays?
-  - Rhythm class already seems to support durations/intensities Arrays
-- New track mode 'chord-root' (better name? just root). Ignores inversion or is somehow relative to the root of the chord.
-  - In this mode, we might want the pitch numbers to follow the scale vs the chord. This could be different modes. 
-    I am wondering if track.type should be split into different options, though, like "follow" and "constraint" (or keep "type" but add "follow")?
-  - Meh, these ideas are probably too complicated. Maybe just add track mode 'bass', which follows the chord roots and is constrained to the scale.
+- Rest behavior in Rhythms (negative numbers?). I guess this shouldn't "consume" pitches in the track (0 intensity could be used for that instead?)
+  - -Infinity could mean "no more events" when looping
+- Delayed track start. Tracks could have offset, or we could implement and use rests.
+- Looping behavior for Rhythm times/durations/intensities
+- Song defaults: sectionDuration, scale
+- Constants (names module) for things like KICK, SNARE. This isn't standardized, but...
+  Comparing http://soundprogramming.net/file-formats/general-midi-drum-note-numbers/ against several Ableton Drum Racks, this seems ok:
+    KICK = 36
+    RIM = 37
+    SNARE = 38
+    CLAP = 39
+    C_HAT = 42
+    O_HAT = 46
+    CYMBAL = 49 
 - More scales
 - More chords
-- Chord features:
+- More flexible Chords:
   - Add a bass note below the chord.
     So for example, in C MAJOR, TRIAD(5,{bass:C}) could result in C,E,A or maybe C,A,C(,E?)
     This starts getting into the territory of wanting to control the spacing/openess of the chord
@@ -47,5 +43,4 @@ Maybe
 - Automatic voice leading, esp for chord progressions, maybe for bass/lead too (prefer intervals less than a tritone)?
 - Maybe Rhythm should support Iterables for times, pitches, durations, intensities, so we can use
   the Pattern classes for this stuff! They would need to detect end-of-iteration and restart though (potentially depending on other options).
-  - Maybe introduce a LoopingIterable helper class?
   - Now I'm not even sure the Pattern classes belong in this library. Although the random class could be nice...

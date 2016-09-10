@@ -14,7 +14,7 @@ class Section {
                                 .max(...this.tracks
                                   .map(t => t.duration)
                                   .filter(dur => isFinite(dur)));
-    // TODO: we might need to start making all section duration explicit if we support auto-looping of rhythm or pitches. Also, rename to length?
+    // TODO: we might need to start making all section duration explicit if we support auto-looping of rhythm or pitches
   }
 
   *[Symbol.iterator]() {
@@ -44,14 +44,16 @@ class Section {
           // let chord;
           switch (mode) {
             case 'arpeggio': {
-              // chord = chordAt(harmonySequence, time); // only need to do this for arpeggio and chord modes
               pitch = chord.pitch(number, { scale, octave });
+              break;
+            }
+            case 'bass': {
+              pitch = chord.pitch(0, { scale, octave, inversion: 0, offset: number });
               break;
             }
             case 'chord': {
               pitch = null;
-              // chord = chordAt(harmonySequence, time); // only need to do this for arpeggio and chord modes
-              const pitches = chord.pitches({ scale, octave, inversion: number });
+              const pitches = chord.pitches({ scale, octave, inversion: chord.inversion + number });
               for (const p of pitches) {
                 const note = { pitch: p, duration, intensity, channel };
                 yield { time, track: trackIdx, note };  // TODO: maybe the MIDI file track should be based on the channel
