@@ -9,15 +9,15 @@ const song = new Song({
     tracks: [{
       rate: 1,
       rhythm: 'XxxxXxxxXxxxXxxx',
-      pitches: [C2], // kick
+      pitches: [KICK],
     },{
       rate: 1/2,
       rhythm: distribute(7, 32),
-      pitches: [E2], // snare (rim)
+      pitches: [SNARE],
     },{
       rate: 1/4,
       rhythm: distribute(37, 64),
-      pitches: [Gb2], // snare (rim)
+      pitches: [CLOSED_HIHAT],
     }]
   }]
 });
