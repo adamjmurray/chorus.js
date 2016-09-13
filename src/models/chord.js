@@ -13,8 +13,9 @@ class Chord {
    * @param octave
    * @param inversion
    */
-  constructor(offsets, { scale, root = 0, octave = 4, inversion = 0 } = {}) {
-    this.offsets = offsets.slice(); // scale degress relative to the given root
+  constructor(offsets, { scale, root = 0, octave = 4, inversion = 0, shifts } = {}) {
+    this.offsets = offsets.slice(); // scale degrees relative to the given root
+    this.shifts = shifts; // chromatic shifts for the scale-degree offsets
     this.scale = scale;
     this.root = root; // the scale degree of the root of the chord
     this.octave = octave;
@@ -31,10 +32,20 @@ class Chord {
    * @param offset
    * @returns {Array|*|{}}
    */
-  pitches({ scale = this.scale, root = this.root, octave = this.octave, inversion = this.inversion, offset = 0 } = {}) {
+  pitches({ scale = this.scale, root = this.root, octave = this.octave, inversion = this.inversion, shifts = this.shifts, offset = 0, } = {}) {
     const offsets = this.offsetsForInversion(inversion, { scale });
-    return offsets.map(chordPitchOffset =>
+    const pitches = offsets.map(chordPitchOffset =>
       scale.pitch(root + chordPitchOffset + offset, { octave }));
+    if (shifts && shifts.length) {
+      if (inversion) {
+        shifts = shifts.slice(0, offsets.length);
+        while (shifts.length < offsets.length) shifts.push(0);
+        for (let i = 1; i <= inversion; i++) shifts.push(shifts.shift());
+        for (let i = -1; i >= inversion; i--) shifts.unshift(shifts.pop());
+      }
+      return pitches.map((pitch, index) => pitch.add(shifts[index] || 0));
+    }
+    return pitches;
   }
 
   /**
@@ -47,8 +58,8 @@ class Chord {
    * @param offset
    * @returns {*}
    */
-  pitch(position, { scale = this.scale, root = this.root, octave = this.octave, inversion = this.inversion, offset = 0 } = {}) {
-    const pitches = this.pitches({ scale, root, octave, inversion, offset });
+  pitch(position, { scale = this.scale, root = this.root, octave = this.octave, inversion = this.inversion, shifts = this.shifts, offset = 0 } = {}) {
+    const pitches = this.pitches({ scale, root, octave, inversion, shifts, offset });
     const pitch = pitches[mod(position, pitches.length)];
     const octaveOffset = Math.floor(position / pitches.length);
     if (octaveOffset !== 0) {
@@ -68,7 +79,7 @@ class Chord {
 
   inv(inversion) {
     if (!inversion) return this;
-    return new Chord(this.offsets, { scale: this.scale, root: this.root, octave: this.octave, inversion: inversion });
+    return new Chord(this.offsets, { scale: this.scale, root: this.root, octave: this.octave, shifts: this.shifts, inversion: inversion });
   }
 
 }

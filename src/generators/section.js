@@ -70,8 +70,10 @@ class Section {
             }
           }
         }
-        const note = { pitch, duration, intensity, channel };
-        yield { time, track: trackIdx, note }; // TODO: maybe the MIDI file track should be based on the channel
+        if (pitch) {
+          const note = { pitch, duration, intensity, channel };
+          yield { time, track: trackIdx, note }; // TODO: maybe the MIDI file track should be based on the channel
+        }
       }
     }
   }
