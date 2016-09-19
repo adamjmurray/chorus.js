@@ -1,5 +1,20 @@
 const { mod } = require('../utils');
 
+function findUniqueOctaveOffset(offsets, scaleLength, direction = 1) {
+  direction = Math.sign(direction) || 1;
+  if (direction < 0) offsets = offsets.slice().reverse();
+  let octave = direction;
+  while (true) { // eslint-disable-line no-constant-condition
+    for (const offset of offsets) {
+      const octaveOffset = offset + (octave * scaleLength);
+      if (!offsets.includes(octaveOffset)) {
+        return octaveOffset;
+      }
+    }
+    octave += direction;
+  }
+}
+
 /**
  * A chord
  */
@@ -72,8 +87,14 @@ class Chord {
     if (!inversion) return this.offsets; // 0 means no inversion, treat other falsey values the same
     const offsets = this.offsets.slice(); // make a copy
     const scaleLength = scale.length;
-    for (let i =  1; i <= inversion; i++) offsets.push(offsets.shift() + scaleLength);
-    for (let i = -1; i >= inversion; i--) offsets.unshift(offsets.pop() - scaleLength);
+    for (let i =  1; i <= inversion; i++) {
+      offsets.push(findUniqueOctaveOffset(offsets, scaleLength));
+      offsets.shift();
+    }
+    for (let i = -1; i >= inversion; i--) {
+      offsets.unshift(findUniqueOctaveOffset(offsets, scaleLength, -1));
+      offsets.pop();
+    }
     return offsets;
   }
 

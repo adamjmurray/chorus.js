@@ -49,4 +49,22 @@ describe('Chord', () => {
       assert.deepEqual(chord.offsetsForInversion(), [2,4,7]);
     });
   });
+
+  describe('inversions', () => {
+    it('can invert chords with octave doubling upward', () => {
+      const chord = new Chord([0,2,4,7], { scale: SCALES.MAJOR.C, root: 0 }).inv(1);
+      assert.deepEqual(chord.pitches(), [PITCHES.E4, PITCHES.G4, PITCHES.C5, PITCHES.E5]);
+    });
+
+    it('can invert chords with octave doubling downward', () => {
+      const chord = new Chord([0,2,4,7], { scale: SCALES.MAJOR.C, root: 0 }).inv(-1);
+      assert.deepEqual(chord.pitches(), [PITCHES.G3, PITCHES.C4, PITCHES.E4, PITCHES.G4]);
+    });
+
+    // TODO:
+    // it('can invert chords with octave doubling and shifts upward', () => {
+    //   const chord = new Chord([0,2,4,7], { scale: SCALES.MAJOR.C, root: 0, shifts: [1,0,0,0] }).inv(1);
+    //   assert.deepEqual(chord.pitches(), [PITCHES.E4, PITCHES.G4, PITCHES.C5, PITCHES.E5]);
+    // });
+  });
 });
