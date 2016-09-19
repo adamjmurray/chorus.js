@@ -65,9 +65,12 @@ class Rhythm {
       let time = 0;
       let nextTime;
       for (const value of rhythm) {
-        nextTime = time + (rate * value);
-        times.push(time);
-        durations.push(nextTime - time);
+        nextTime = time + (rate * Math.abs(value));
+        const duration = (nextTime - time) * Math.sign(value);
+        if (duration > 0) {
+          times.push(time);
+          durations.push(duration);
+        } // else this is a rest
         time = nextTime;
       }
       intensities = new Array(8).fill(0.7);
@@ -75,7 +78,7 @@ class Rhythm {
     this.times = times;
     this.intensities = intensities || [];
     this.durations = durations;
-    this.duration = times[times.length-1] + durations[durations.length-1];
+    this.duration = times[times.length-1] + Math.abs(durations[durations.length-1]);
     this.durationMod = durationMod;
   }
 

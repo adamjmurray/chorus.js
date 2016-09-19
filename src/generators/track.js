@@ -24,12 +24,12 @@ class Track {
     let timeOffset = 0;
     while (true) { // eslint-disable-line no-constant-condition
       let pitchNext = pitchIter.next();
-      let rhythmNext = rhythmIter.next();
       if (pitchNext.done) {
         pitchDone = true;
         pitchIter = this.pitches[Symbol.iterator]();
         pitchNext = pitchIter.next();
       }
+      let rhythmNext = rhythmIter.next();
       if (rhythmNext.done) {
         rhythmDone = true;
         rhythmIter = this.rhythm[Symbol.iterator]();

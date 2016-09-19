@@ -1,6 +1,4 @@
 Features
-- Rest behavior in Rhythms (negative numbers?). I guess this shouldn't "consume" pitches in the track (0 intensity could be used for that instead?)
-  - -Infinity could mean "no more events" when looping
 - Looping behavior for Rhythm times/durations/intensities
 - Song defaults: sectionDuration, scale
 - More scales
