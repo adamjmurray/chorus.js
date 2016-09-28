@@ -1,19 +1,32 @@
 const assert = require('assert');
-const { Song, SCALES } = require('../../src');
+const { Song, SCALES, CHORDS } = require('../../src');
+
+function note({ time, pitch, velocity, duration, channel }) {
+  return {
+    type: 'note',
+    time: time,
+    pitch: pitch,
+    velocity: velocity == null ? 89 : velocity,
+    duration: duration == null ? 1 : duration,
+    release: 100,
+    channel: channel == null ? 1 : channel,
+  }
+}
 
 describe('Song', () => {
 
   describe('toJSON()', () => {
-    it('can product MIDI JSON', () => {
+    it('supports scale mode', () => {
       const song = new Song({
         bpm: 120,
         sections: [{
           scale: SCALES.MAJOR.C,
+          duration: 8,
           tracks: [{
             mode: 'scale',
-            rate: 1/4,
-            rhythm: 'X==.x==.x=..x...',
-            pitches: [0, 1, 2, 3],
+            rate: 1,
+            rhythm: [1],
+            pitches: [0, 1, 2, 3, 4, 5, 6, 7, 8],
           }]
         }]
       });
@@ -21,42 +34,50 @@ describe('Song', () => {
         "bpm": 120,
         "tracks": [
           [
-            {
-              "time": 0,
-              "type": "note",
-              "pitch": 60,
-              "velocity": 127,
-              "duration": 0.7424999999999999,
-              "release": 100,
-              "channel": 1
-            },
-            {
-              "time": 1,
-              "type": "note",
-              "pitch": 62,
-              "velocity": 89,
-              "duration": 0.7424999999999999,
-              "release": 100,
-              "channel": 1
-            },
-            {
-              "time": 2,
-              "type": "note",
-              "pitch": 64,
-              "velocity": 89,
-              "duration": 0.495,
-              "release": 100,
-              "channel": 1
-            },
-            {
-              "time": 3,
-              "type": "note",
-              "pitch": 65,
-              "velocity": 89,
-              "duration": 0.2475,
-              "release": 100,
-              "channel": 1
-            }
+            note({ time: 0, pitch: 60 }),
+            note({ time: 1, pitch: 62 }),
+            note({ time: 2, pitch: 64 }),
+            note({ time: 3, pitch: 65 }),
+            note({ time: 4, pitch: 67 }),
+            note({ time: 5, pitch: 69 }),
+            note({ time: 6, pitch: 71 }),
+            note({ time: 7, pitch: 72 }),
+          ]
+        ]
+      });
+    });
+
+    it('supports bass mode', () => {
+      const song = new Song({
+        bpm: 120,
+        sections: [{
+          scale: SCALES.MAJOR.C,
+          harmony: {
+            rate: 2,
+            chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(5).inv(-2), CHORDS.TRIAD(3).inv(-1), CHORDS.SEVENTH(4).inv(-2), CHORDS.TRIAD(0)],
+          },
+          duration: 8,
+          tracks: [{
+            mode: 'bass',
+            rate: 1,
+            rhythm: [1],
+            pitches: [0, 1],
+            looped: true,
+          }]
+        }]
+      });
+      assert.deepEqual(song.toJSON(), {
+        "bpm": 120,
+        "tracks": [
+          [
+            note({ time: 0, pitch: 60 }),
+            note({ time: 1, pitch: 62 }),
+            note({ time: 2, pitch: 69 }),
+            note({ time: 3, pitch: 71 }),
+            note({ time: 4, pitch: 65 }),
+            note({ time: 5, pitch: 67 }),
+            note({ time: 6, pitch: 67 }),
+            note({ time: 7, pitch: 69 }),
           ]
         ]
       });

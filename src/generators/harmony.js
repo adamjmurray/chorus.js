@@ -10,7 +10,7 @@ class Harmony {
     if (rhythm) {
       this.rhythm = rhythm instanceof Rhythm ? rhythm : new Rhythm(rhythm, { rate });
     } else {
-      rhythm = new Array(chords.length);
+      rhythm = new Array(chords.length || 1);
       rhythm.fill(1);
       this.rhythm = new Rhythm(rhythm, { rate });
     }

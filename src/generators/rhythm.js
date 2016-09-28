@@ -20,16 +20,17 @@ class Rhythm {
    * @param {Iterable}
    * @param {Object} options
    * @param {Number} [options.rate=1/4] rate the number of beats each 'time unit' represents (e.g. 1/4 is a quarter of one beat, which is a sixteenth note in common time signatures)
-   * @param {Number} [options.duration] duration the duration of all notes
-   * @param {Number} [options.relativeDuration=0.99] relativeDuration makes the duration relative to the time-delta's between notes. The default 0.99 is nearly legato.
    */
-  constructor(rhythm, { rate=1/4, durationMod=0.99 } = {}) {
+  constructor(rhythm, { rate=1/4, intensities, durations, looped } = {}) {
+    this.intensities = intensities;
+    this.durations = durations;
+    this.looped = looped;
     const times = [];
-    const durations = [];
-    let intensities;
     if (typeof rhythm === 'string') {
+      this.loopDuration = rhythm.length * rate;
       this.string = rhythm;
       intensities = [];
+      durations = [];
       let duration = null;
       let count = 0;
       for (const char of rhythm) {
@@ -61,7 +62,10 @@ class Rhythm {
         }
       }
       if (duration) durations.push(duration);
-    } else {
+    }
+    else {
+      this.loopDuration = rhythm.reduce((a,b) => a + b) * rate;
+      durations = [];
       let time = 0;
       let nextTime;
       for (const value of rhythm) {
@@ -73,28 +77,26 @@ class Rhythm {
         } // else this is a rest
         time = nextTime;
       }
-      intensities = new Array(8).fill(0.7);
     }
     this.times = times;
-    this.intensities = intensities || [];
-    this.durations = durations;
-    this.duration = times[times.length-1] + Math.abs(durations[durations.length-1]);
-    this.durationMod = durationMod;
+    if (!this.intensities) this.intensities = intensities || [0.7];
+    if (!this.durations) this.durations = durations;
+
+    // TODO: stop relying on this and require section length
+    // But, how to handle looping at the track level?
+    this.duration = looped ? Infinity : this.loopDuration;
   }
 
   /**
-   * Generates a Rhythm using a Euclidean algorithm. It evenly distributes the given number of pulses into the given
-   * total number of time units.
+   * Generates a Rhythm by evenly distributes the given number of pulses into the given total number of time units.
+   * Very similar to a "Euclidean rhythm".
    * @param pulses {number}
    * @param total {number}
    * @param options accepts the same options as the constructor, plus a rotation option
    * @see https://en.wikipedia.org/wiki/Euclidean_rhythm
-   * @see https://charlesrthompson.com/2015/02/25/using-euclidean-rhythms-to-create-new-beat-patterns/
    */
   static distribute(pulses, total, options={}) {
     if (!(pulses < total)) throw new Error('pulses must be less than total');
-    // This isn't actually the euclidean algorithm (see below for a "real" one), but I believe
-    // this simpler Math.floor-based alternative gives the same results (potentially rotated)
     const rhythm = [];
     let count = 0;
     let nextPulse = Math.floor(++count/pulses * total);
@@ -121,44 +123,24 @@ class Rhythm {
       }
     }
     return rhythmString;
-    // return new Rhythm(rhythmString, options);
-
-    // I think this is a "proper" euclidean rhythm algorithm, as explained here:
-    // http://cgm.cs.mcgill.ca/~godfried/publications/banff.pdf
-    // and here:
-    // https://charlesrthompson.com/2015/02/25/using-euclidean-rhythms-to-create-new-beat-patterns/
-    // But it does a lot of array concats so it doesn't seem very efficient.
-    /*
-    const rhythm = new Array(total);
-    for (let i=0; i<total; i++) {
-      rhythm[i] = [i < pulses ? 'x' : '.'];
-    }
-    let rests = total - pulses;
-    let prev = Math.max(pulses, rests);
-    let remainder = Math.min(pulses, rests);
-    console.log('init', rhythm);
-    while (remainder > 0) {
-      console.log([prev, remainder]);
-      for (let i=0; i < remainder; i++) {
-        rhythm[i] = rhythm[i].concat(rhythm.pop());
-      }
-      console.log('after pass', rhythm);
-      [prev, remainder] = [remainder, prev - remainder];
-    }
-    console.log('euclidean rhythm', rhythm[0].join(''));
-    */
   }
 
   *[Symbol.iterator]() {
-    const { times, intensities, durations, durationMod } = this;
-    for (let idx=0; idx < times.length; idx++) {
-      const time = times[idx];
+    const { times, intensities, durations, looped, loopDuration } = this;
+    let idx = 0;
+    let timeOffset = 0;
+    const hasData = times.length && intensities.length && durations.length;
+    while (hasData) {
+      const time = timeOffset + times[idx % times.length];
       const intensity = intensities[idx % intensities.length];
       const duration = durations[idx % durations.length];
-      const data = { time };
-      if (intensity) data.intensity = intensity;
-      if (duration) data.duration = duration * durationMod;
-      yield data;
+      yield { time, intensity, duration };
+      idx++;
+      if (idx % times.length == 0) {
+        if (looped) {
+          timeOffset += loopDuration;
+        } else break;
+      }
     }
   }
 }

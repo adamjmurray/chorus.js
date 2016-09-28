@@ -1,17 +1,24 @@
 Features
-- Looping behavior for Rhythm times/durations/intensities
+- Convert all unique example behaviors to automated test cases
 - Song defaults: sectionDuration, scale
 - More scales
 - Improve MIDI file support 
   - lots of little features are missing, plus error handling for semi-malformed input files could be improved / see MIDI specs
   - Multiple tracks/parts that use the same channel (for example when doing polyrhythms) should render to the same MIDI file track
+- Maybe Rhythm should support Iterables for times, pitches, durations, intensities
+  - Add a randomize Iterable class (input: min, max value)
+- Live-coding mode:
+  - Loop a section
+  - Watch the Song source file for changes
+  - Synchronize changes with section-looping
+- Enhance output-selector:
+  - Support writing to MIDI files
+  - Allow an environment variable to set the port (or file)
 
 Refactoring
 - Stop using Rhythm in Harmony, since it doesn't need intensities or durations.
 - Rename Track to Part? Especially since multiple "Tracks" may send to a single DAW track or MIDI file track.
   - Maybe Track should contain a list of Parts, but is the model getting too complicated? Just use channel for MIDI track number in this library?
-
-TESTS!
 
 Bugs
 - Invert a Chord that doubles the octave can have strange behavior with shifts to the offsets.
@@ -23,10 +30,4 @@ Bugs
 - require('./helpers/select-output') causes process to hang if you don't actually select an output
 
 Maybe
-- chord.add(offsets, {shifts}) to add additional notes to a chord
-  - maybe a way to add a specific pitch/pitch class below the chord (add a bass)?
-- Support melodic sequences (as in the music theory kind of sequence), where the same relative pitch patterns are repeated by starting at different scale (or chord?) degrees
 - Automatic voice leading, esp for chord progressions, maybe for bass/lead too (prefer intervals less than a tritone)?
-- Maybe Rhythm should support Iterables for times, pitches, durations, intensities, so we can use
-  the Pattern classes for this stuff! They would need to detect end-of-iteration and restart though (potentially depending on other options).
-  - Now I'm not even sure the Pattern classes belong in this library. Although the random class could be nice...
