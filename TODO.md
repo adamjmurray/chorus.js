@@ -1,4 +1,7 @@
 Features
+- Rhythm and Track should take an (optional?) length. Looping should respect this value.
+  - When length is determined automatically it should never be Infinity, but rather the loopDuration. 
+    Get rid of concept of loopDuration. Just have length and looped properties
 - Song defaults: sectionDuration, scale
 - More scales
 - Improve MIDI file support 
@@ -13,14 +16,12 @@ Features
 - Enhance output-selector:
   - Support writing to MIDI files
   - Allow an environment variable to set the port (or file)
-- Rhythm and Track should take an (optional?) duration. Looping should respect this value.
-  - When duration is determined automatically it should never be Infinity, but rather the loopDuration. 
-    Get rid of concept of loopDuration. Just have duration and looped properties
 
 Refactoring
-- Stop using Rhythm in Harmony, since it doesn't need intensities or durations.
+- Rename section/track/rhythm.duration to length (to disambiguate from durations in rhythm)
 - Rename Track to Part? Especially since multiple "Tracks" may send to a single DAW track or MIDI file track.
   - Maybe Track should contain a list of Parts, but is the model getting too complicated? Just use channel for MIDI track number in this library?
+- SCALES[type] should be a function for consistency with CHORDS[type]
 
 Examples
 - Track "lead" mode

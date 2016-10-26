@@ -64,7 +64,7 @@ class Rhythm {
       if (duration) durations.push(duration);
     }
     else {
-      this.loopDuration = rhythm.reduce((a,b) => a + b) * rate;
+      this.loopDuration = rhythm.reduce((a,b) => a + b) * rate; // TODO: needs to Math.abs?
       durations = [];
       let time = 0;
       let nextTime;
