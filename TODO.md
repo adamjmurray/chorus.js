@@ -1,6 +1,5 @@
 Features
 - Song defaults: sectionDuration, scale
-- Add a track 'lead' mode that constrains to the scale but is relative to the lowest note of the chord
 - More scales
 - Improve MIDI file support 
   - lots of little features are missing, plus error handling for semi-malformed input files could be improved / see MIDI specs
@@ -23,6 +22,9 @@ Refactoring
 - Rename Track to Part? Especially since multiple "Tracks" may send to a single DAW track or MIDI file track.
   - Maybe Track should contain a list of Parts, but is the model getting too complicated? Just use channel for MIDI track number in this library?
 
+Examples
+- Track "lead" mode
+
 Bugs
 - Invert a Chord that doubles the octave can have strange behavior with shifts to the offsets.
   Ex: C major chord with octave doubling and a shift of 1 on the first note, so C#,E,G,C. First inversion => E,G,C,F instead of E,G,C,C#
@@ -39,4 +41,5 @@ Maybe
   the nearest pitch value might work ok?
   - Alternately it may be interesting to support an "accidentals" ("offsets"?) array that can shift the pitch, and like
     most aspects of this library can be a differing length from the pitch list.
+- Constrain track range. Since bass mode ignores inversions, it can jump up too much. Sometimes it should go down an octave. See also next idea:
 - Automatic voice leading, esp for chord progressions, maybe for bass/lead too (prefer intervals less than a tritone)?

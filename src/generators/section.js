@@ -20,15 +20,15 @@ class Section {
   *[Symbol.iterator]() {
     const { scale, harmony, tracks } = this;
     let trackIdx = -1;
-    for (const track of tracks) {
+    for (const track of tracks) { // can't use forEach because we're in a generator
       trackIdx++;
       const octave = track.octave;
+      const channel = track.channel || (trackIdx + 1);
+      const trackMode = track.mode;
       let harmonyIter = harmony[Symbol.iterator]();
       let harmonyCurr = harmonyIter.next();
       let harmonyNext = harmonyIter.next();
       for (const event of track) {
-        const channel = track.channel || (trackIdx + 1);
-        const mode = track.mode;
         let { time, pitch, duration, intensity } = event;
         if (time >= this.duration) {
           // exceeded section duration (we're assuming monotonically increasing times)
@@ -42,13 +42,17 @@ class Section {
         if (typeof pitch === 'number') {
           const number = pitch;
           // let chord;
-          switch (mode) {
+          switch (trackMode) {
             case 'arpeggio': {
               pitch = chord.pitch(number, { scale, octave });
               break;
             }
             case 'bass': {
               pitch = chord.pitch(0, { scale, octave, inversion: 0, offset: number });
+              break;
+            }
+            case 'lead': {
+              pitch = chord.pitch(0, { scale, octave, offset: number });
               break;
             }
             case 'chord': {
@@ -67,6 +71,9 @@ class Section {
             case 'chromatic': {
               pitch = scale.pitch(0, { octave }).add(number);
               break;
+            }
+            default: {
+              console.error(`Unsupported track mode "${trackMode}"`);
             }
           }
         }

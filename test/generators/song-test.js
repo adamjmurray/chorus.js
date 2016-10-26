@@ -149,7 +149,7 @@ describe('Song', () => {
           scale: SCALES.MAJOR.C,
           harmony: {
             rate: 2,
-            chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(5).inv(-2), CHORDS.TRIAD(3).inv(-1), CHORDS.SEVENTH(4).inv(-2), CHORDS.TRIAD(0)],
+            chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(5).inv(-2), CHORDS.TRIAD(3).inv(-1), CHORDS.SEVENTH(4).inv(-2)],
           },
           duration: 8,
           tracks: [{
@@ -173,6 +173,42 @@ describe('Song', () => {
             note({ time: 5, pitch: 67 }),
             note({ time: 6, pitch: 67 }),
             note({ time: 7, pitch: 69 }),
+          ]
+        ]
+      });
+    });
+
+    it('supports lead mode', () => {
+      const song = new Song({
+        bpm: 120,
+        sections: [{
+          scale: SCALES.MAJOR.C,
+          harmony: {
+            rate: 2,
+            chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(0).inv(1), CHORDS.TRIAD(2).inv(-2), CHORDS.SEVENTH(4).inv(-2)],
+          },
+          duration: 8,
+          tracks: [{
+            mode: 'lead',
+            rate: 1,
+            rhythm: [1],
+            pitches: [0, 1],
+            looped: true,
+          }]
+        }]
+      });
+      assert.deepEqual(song.toJSON(), {
+        "bpm": 120,
+        "tracks": [
+          [
+            note({ time: 0, pitch: 60 }),
+            note({ time: 1, pitch: 62 }),
+            note({ time: 2, pitch: 64 }),
+            note({ time: 3, pitch: 65 }),
+            note({ time: 4, pitch: 55 }),
+            note({ time: 5, pitch: 57 }),
+            note({ time: 6, pitch: 62 }),
+            note({ time: 7, pitch: 64 }),
           ]
         ]
       });
