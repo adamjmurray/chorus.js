@@ -1,6 +1,6 @@
 Features
-- Convert all unique example behaviors to automated test cases
 - Song defaults: sectionDuration, scale
+- Add a track 'lead' mode that constrains to the scale but is relative to the lowest note of the chord
 - More scales
 - Improve MIDI file support 
   - lots of little features are missing, plus error handling for semi-malformed input files could be improved / see MIDI specs
@@ -14,6 +14,9 @@ Features
 - Enhance output-selector:
   - Support writing to MIDI files
   - Allow an environment variable to set the port (or file)
+- Rhythm and Track should take an (optional?) duration. Looping should respect this value.
+  - When duration is determined automatically it should never be Infinity, but rather the loopDuration. 
+    Get rid of concept of loopDuration. Just have duration and looped properties
 
 Refactoring
 - Stop using Rhythm in Harmony, since it doesn't need intensities or durations.
@@ -30,4 +33,10 @@ Bugs
 - require('./helpers/select-output') causes process to hang if you don't actually select an output
 
 Maybe
+- Instead of forcing a track into chromatic mode (which is hard to work with because it's not relative to the chords)
+  I keep having this idea that floating point numbers could be used for accidentals (e.g. 0.5 is a half step above the
+  scale root in scale mode). There seem to be a lot of messy edge cases (consider microtonal scales), but rounding to
+  the nearest pitch value might work ok?
+  - Alternately it may be interesting to support an "accidentals" ("offsets"?) array that can shift the pitch, and like
+    most aspects of this library can be a differing length from the pitch list.
 - Automatic voice leading, esp for chord progressions, maybe for bass/lead too (prefer intervals less than a tritone)?
