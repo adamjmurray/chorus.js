@@ -1,7 +1,8 @@
+const { TimedMultiIterable } = require('../utils');
 /**
  * A chord progression generator.
  */
-class Harmony {
+class Harmony extends TimedMultiIterable {
 
   /**
    * @param {Object} options
@@ -13,42 +14,19 @@ class Harmony {
    *        for the duration of containing Section.
    */
   constructor({chords=[], rate=1, durations, length, looped}={}) {
-    this.chords = chords;
-    this.rate = Math.abs(rate);
-    this.durations = (durations || new Array(chords.length || 1).fill(1)).map(Math.abs);
-    this.length = length || this.durations.reduce((a,b) => a + b) * rate;
-    this.looped = looped;
-    this.times = [];
+    rate = Math.abs(rate);
+    durations = (durations || new Array(chords.length || 1).fill(1)).map(Math.abs);
+    length = length || durations.reduce((a,b) => a + b) * rate;
+    const times = [];
     let time = 0;
-    for (const duration of this.durations) {
-      this.times.push(time);
+    for (const duration of durations) {
+      times.push(time);
       time += rate * duration;
     }
-  }
-
-  *[Symbol.iterator]() {
-    let chordDone = false;
-    let timeDone = false;
-    let chordIter = this.chords[Symbol.iterator]();
-    let timeIter = this.times[Symbol.iterator]();
-    let timeOffset = 0;
-    do {
-      let chordNext = chordIter.next();
-      let timeNext = timeIter.next();
-      if (chordNext.done) {
-        chordDone = true;
-        chordIter = this.chords[Symbol.iterator]();
-        chordNext = chordIter.next();
-      }
-      if (timeNext.done) {
-        timeDone = true;
-        timeIter = this.times[Symbol.iterator]();
-        timeNext = timeIter.next();
-        timeOffset += this.length;
-      }
-      // if (chordDone && timeDone && !this.looped) break; // TODO: should we always yield one thing?
-      yield {time: timeNext.value + timeOffset, chord: chordNext.value};
-    } while (this.looped || !chordDone || !timeDone)
+    super({ time: times, chord: chords }, length, looped);
+    this.chords = chords;
+    this.rate = rate;
+    this.durations = durations;
   }
 }
 
