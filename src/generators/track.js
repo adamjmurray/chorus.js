@@ -5,14 +5,13 @@ const Rhythm = require('./rhythm');
  */
 class Track {
 
-  constructor({channel, mode, pitches, rhythm, rate=1, octave=4, looped} = {}) {
+  constructor({channel, mode, pitches, rhythm, rate=1, octave=4, length, looped} = {}) {
     this.channel = channel;
     this.mode = mode;
     this.pitches = pitches; // NOTE: these are relative, depends on scale/chords and follow settings
     this.rhythm = rhythm instanceof Rhythm ? rhythm : new Rhythm(rhythm, {rate});
     this.octave = octave;
-    this.loopDuration = this.rhythm.duration;
-    this.duration = looped ? Infinity : this.loopDuration;
+    this.length = length || this.rhythm.length;
     this.looped = looped;
   }
 
@@ -34,7 +33,7 @@ class Track {
         rhythmDone = true;
         rhythmIter = this.rhythm[Symbol.iterator]();
         rhythmNext = rhythmIter.next();
-        timeOffset += this.loopDuration;
+        timeOffset += this.length;
       }
       if (pitchDone && rhythmDone && !this.looped) break;
       let { time, duration, intensity } = rhythmNext.value;

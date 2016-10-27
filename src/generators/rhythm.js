@@ -21,13 +21,13 @@ class Rhythm {
    * @param {Object} options
    * @param {Number} [options.rate=1/4] rate the number of beats each 'time unit' represents (e.g. 1/4 is a quarter of one beat, which is a sixteenth note in common time signatures)
    */
-  constructor(rhythm, { rate=1/4, intensities, durations, looped } = {}) {
+  constructor(rhythm, { rate=1/4, intensities, durations, length, looped } = {}) {
     this.intensities = intensities;
     this.durations = durations;
     this.looped = looped;
     const times = [];
     if (typeof rhythm === 'string') {
-      this.loopDuration = rhythm.length * rate;
+      this.length = length || rhythm.length * rate;
       this.string = rhythm;
       intensities = [];
       durations = [];
@@ -64,7 +64,7 @@ class Rhythm {
       if (duration) durations.push(duration);
     }
     else {
-      this.loopDuration = rhythm.reduce((a,b) => a + b) * rate; // TODO: needs to Math.abs?
+      this.length = rhythm.map(Math.abs).reduce((a,b) => a + b) * rate;
       durations = [];
       let time = 0;
       let nextTime;
@@ -81,10 +81,6 @@ class Rhythm {
     this.times = times;
     if (!this.intensities) this.intensities = intensities || [0.7];
     if (!this.durations) this.durations = durations;
-
-    // TODO: stop relying on this and require section length
-    // But, how to handle looping at the track level?
-    this.duration = looped ? Infinity : this.loopDuration;
   }
 
   /**
@@ -126,7 +122,7 @@ class Rhythm {
   }
 
   *[Symbol.iterator]() {
-    const { times, intensities, durations, looped, loopDuration } = this;
+    const { times, intensities, durations, length, looped } = this;
     let idx = 0;
     let timeOffset = 0;
     const hasData = times.length && intensities.length && durations.length;
@@ -138,7 +134,7 @@ class Rhythm {
       idx++;
       if (idx % times.length == 0) {
         if (looped) {
-          timeOffset += loopDuration;
+          timeOffset += length;
         } else break;
       }
     }

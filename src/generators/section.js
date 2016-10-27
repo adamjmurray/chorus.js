@@ -6,15 +6,11 @@ const Harmony = require('./harmony');
  */
 class Section {
 
-  constructor({scale, harmony, tracks=[], duration} = {}) {
+  constructor({scale, harmony, tracks=[], length} = {}) {
     this.scale = scale;
     this.harmony = harmony instanceof Harmony ? harmony : new Harmony(harmony);
     this.tracks = tracks.map(t => t instanceof Track ? t : new Track(t));
-    this.duration = duration || Math
-                                .max(...this.tracks
-                                  .map(t => t.duration)
-                                  .filter(dur => isFinite(dur)));
-    // TODO: we might need to start making all section duration explicit if we support auto-looping of rhythm or pitches
+    this.length = length || Math.max(...this.tracks.map(t => t.length));
   }
 
   *[Symbol.iterator]() {
@@ -30,8 +26,8 @@ class Section {
       let harmonyNext = harmonyIter.next();
       for (const event of track) {
         let { time, pitch, duration, intensity } = event;
-        if (time >= this.duration) {
-          // exceeded section duration (we're assuming monotonically increasing times)
+        if (time >= this.length) {
+          // exceeded section length (we're assuming monotonically increasing times)
           break;
         }
         while (harmonyNext && harmonyNext.value && harmonyNext.value.time <= time) {

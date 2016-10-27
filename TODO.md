@@ -1,7 +1,5 @@
 Features
-- Rhythm and Track should take an (optional?) length. Looping should respect this value.
-  - When length is determined automatically it should never be Infinity, but rather the loopDuration. 
-    Get rid of concept of loopDuration. Just have length and looped properties
+- A "delay" option for Track that delays the start of the events 
 - Song defaults: sectionDuration, scale
 - More scales
 - Improve MIDI file support 
@@ -18,6 +16,7 @@ Features
   - Allow an environment variable to set the port (or file)
 
 Refactoring
+- The generators module is technically a collection of iterables (nitpic)
 - Rename section/track/rhythm.duration to length (to disambiguate from durations in rhythm)
 - Rename Track to Part? Especially since multiple "Tracks" may send to a single DAW track or MIDI file track.
   - Maybe Track should contain a list of Parts, but is the model getting too complicated? Just use channel for MIDI track number in this library?

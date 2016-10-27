@@ -5,7 +5,7 @@ const { Song, Rhythm } = require('../src');
 const song = new Song({
   bpm: 120,
   sections: [{
-    duration: 32,
+    length: 32,
     tracks: [{
       looped: true,
       rhythm: new Rhythm([1.5, 0.5], {

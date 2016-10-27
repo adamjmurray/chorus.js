@@ -6,7 +6,7 @@ const song = new Song({
   bpm: 160,
   sections: [
     {
-      duration: 16,
+      length: 16,
       scale: HARMONIC_MINOR.C,
       harmony: {
         rate: 4,
@@ -21,7 +21,7 @@ const song = new Song({
       }]
     },
     {
-      duration: 16,
+      length: 16,
       scale: HARMONIC_MINOR.C,
       harmony: {
         rate: 4,

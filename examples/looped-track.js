@@ -6,7 +6,7 @@ const song = new Song({
   bpm: 120,
   sections: [
     {
-      duration: 8,
+      length: 8,
       tracks: [{
         looped: true,
         rhythm: [1, 1.5, 0.5],
@@ -14,7 +14,7 @@ const song = new Song({
       }]
     },
     {
-      duration: 8,
+      length: 8,
       tracks: [{
         looped: true,
         rhythm: [0.66, 0.34],

@@ -20,7 +20,7 @@ class Song {
         event.time += timeOffset;
         yield noteJSON(event);
       }
-      timeOffset += section.duration;
+      timeOffset += section.length;
     }
   }
 
