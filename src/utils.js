@@ -57,8 +57,16 @@ class TimedMultiIterable {
           nexts[i] = iterators[i].next();
           if (name === 'time') timeOffset += this.length;
         }
-        result[name] = nexts[i].value;
-        if (name === 'time') result[name] += timeOffset;
+        const value = nexts[i].value;
+        if (value && value.constructor === Object) {
+          for (const subname of Object.keys(value)) {
+            result[subname] = value[subname];
+            if (subname === 'time') result[subname] += timeOffset;
+          }
+        } else {
+          result[name] = value;
+          if (name === 'time') result[name] += timeOffset;
+        }
       }
     } while (this.looped || isDones.includes(false));
   }

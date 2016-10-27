@@ -1,12 +1,12 @@
 Features
 - A "delay" option for Track that delays the start of the events 
-- Song defaults: sectionDuration, scale
+- Song defaults: sectionLength, scale
 - More scales
 - Improve MIDI file support 
   - lots of little features are missing, plus error handling for semi-malformed input files could be improved / see MIDI specs
   - Multiple tracks/parts that use the same channel (for example when doing polyrhythms) should render to the same MIDI file track
-- Maybe Rhythm should support Iterables for times, pitches, durations, intensities
-  - Add a randomize Iterable class (input: min, max value)
+- Iterables for randomization (input: min, max value, integer vs float mode), for use as intensities, durations, etc
+  - More iterable patterns, like weighted choice
 - Live-coding mode:
   - Loop a section
   - Watch the Song source file for changes
@@ -17,7 +17,6 @@ Features
 
 Refactoring
 - The generators module is technically a collection of iterables (nitpic)
-- Rename section/track/rhythm.duration to length (to disambiguate from durations in rhythm)
 - Rename Track to Part? Especially since multiple "Tracks" may send to a single DAW track or MIDI file track.
   - Maybe Track should contain a list of Parts, but is the model getting too complicated? Just use channel for MIDI track number in this library?
 - SCALES[type] should be a function for consistency with CHORDS[type]
