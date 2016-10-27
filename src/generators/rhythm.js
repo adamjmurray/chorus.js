@@ -1,9 +1,9 @@
-const { TimedMultiIterable } = require('../utils');
+const Sequencer = require('./sequencer');
 
 /**
  * A Rhythm generates `{time, intensity, duration}` tuples (intensity and duration optional depending on constructor properties).
  */
-class Rhythm extends TimedMultiIterable {
+class Rhythm extends Sequencer {
 
   /**
    * @param {String|Iterable} rhythm either a String or {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#iterable|Iterable}

@@ -1,8 +1,8 @@
-const { TimedMultiIterable } = require('../utils');
+const Sequencer = require('./sequencer');
 /**
  * A chord progression generator.
  */
-class Harmony extends TimedMultiIterable {
+class Harmony extends Sequencer {
 
   /**
    * @param {Object} options

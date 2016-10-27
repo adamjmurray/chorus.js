@@ -1,10 +1,10 @@
 const Rhythm = require('./rhythm');
-const { TimedMultiIterable } = require('../utils');
+const Sequencer = require('./sequencer');
 
 /**
  * A Track
  */
-class Track extends TimedMultiIterable {
+class Track extends Sequencer {
 
   constructor({ channel, mode, pitches, rhythm, rate=1, octave=4, length, looped }={}) {
     rhythm = rhythm instanceof Rhythm ? rhythm : new Rhythm(rhythm, {rate});
