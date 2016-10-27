@@ -2,9 +2,9 @@ const Rhythm = require('./rhythm');
 const Sequencer = require('./sequencer');
 
 /**
- * A Track
+ * A musical idea, such as a melody, bass-line, or rhythm groove
  */
-class Track extends Sequencer {
+class Part extends Sequencer {
 
   constructor({ channel, mode, pitches, rhythm, rate=1, octave=4, length, looped }={}) {
     rhythm = rhythm instanceof Rhythm ? rhythm : new Rhythm(rhythm, {rate});
@@ -18,4 +18,4 @@ class Track extends Sequencer {
   }
 }
 
-module.exports = Track;
+module.exports = Part;
