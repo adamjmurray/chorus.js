@@ -1,4 +1,4 @@
-const Track = require('./track');
+const Part = require('./part');
 const Harmony = require('./harmony');
 
 /**
@@ -6,25 +6,25 @@ const Harmony = require('./harmony');
  */
 class Section {
 
-  constructor({scale, harmony, tracks=[], length} = {}) {
+  constructor({scale, harmony, parts=[], length} = {}) {
     this.scale = scale;
     this.harmony = harmony instanceof Harmony ? harmony : new Harmony(harmony);
-    this.tracks = tracks.map(t => t instanceof Track ? t : new Track(t));
-    this.length = length || Math.max(...this.tracks.map(t => t.length));
+    this.parts = parts.map(t => t instanceof Part ? t : new Part(t));
+    this.length = length || Math.max(...this.parts.map(t => t.length));
   }
 
   *[Symbol.iterator]() {
-    const { scale, harmony, tracks } = this;
-    let trackIdx = -1;
-    for (const track of tracks) { // can't use forEach because we're in a generator
-      trackIdx++;
-      const octave = track.octave;
-      const channel = track.channel || (trackIdx + 1);
-      const trackMode = track.mode;
+    const { scale, harmony, parts } = this;
+    let partIdx = -1;
+    for (const part of parts) { // can't use forEach because we're in a generator
+      partIdx++;
+      const octave = part.octave;
+      const channel = part.channel || (partIdx + 1);
+      const partMode = part.mode;
       let harmonyIter = harmony[Symbol.iterator]();
       let harmonyCurr = harmonyIter.next();
       let harmonyNext = harmonyIter.next();
-      for (const event of track) {
+      for (const event of part) {
         let { time, pitch, duration, intensity } = event;
         if (time >= this.length) {
           // exceeded section length (we're assuming monotonically increasing times)
@@ -38,7 +38,7 @@ class Section {
         if (typeof pitch === 'number') {
           const number = pitch;
           // let chord;
-          switch (trackMode) {
+          switch (partMode) {
             case 'arpeggio': {
               pitch = chord.pitch(number, { scale, octave });
               break;
@@ -56,7 +56,7 @@ class Section {
               const pitches = chord.pitches({ scale, octave, inversion: chord.inversion + number });
               for (const p of pitches) {
                 const note = { pitch: p, duration, intensity, channel };
-                yield { time, track: trackIdx, note };  // TODO: maybe the MIDI file track should be based on the channel
+                yield { time, part: partIdx, note };  // TODO: maybe the MIDI file part should be based on the channel
               }
               break;
             }
@@ -69,13 +69,13 @@ class Section {
               break;
             }
             default: {
-              console.error(`Unsupported track mode "${trackMode}"`);
+              console.error(`Unsupported part mode "${partMode}"`);
             }
           }
         }
         if (pitch) {
           const note = { pitch, duration, intensity, channel };
-          yield { time, track: trackIdx, note }; // TODO: maybe the MIDI file track should be based on the channel
+          yield { time, part: partIdx, note }; // TODO: maybe the MIDI file part should be based on the channel
         }
       }
     }

@@ -7,20 +7,20 @@ const song = new Song({
   sections: [
     {
       // length: 8, // determined automatically
-      tracks: [{
+      parts: [{
         rhythm: [1, 1, 1, 1, 1, 1, 1, 1],
         pitches: [C4, D4, E4, G4, F4, D4, A3, D4],
       }]
     },
     {
       length: 8,
-      tracks: [{
+      parts: [{
         rhythm: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         pitches: [G4, F4, D4, B3, C4, A3, G3, B3, C2, C6], // last 2 are ignored because it exceeds the section length
       }]
     },
     {
-      tracks: [{
+      parts: [{
         rhythm: [1],
         pitches: [C4],
       }]

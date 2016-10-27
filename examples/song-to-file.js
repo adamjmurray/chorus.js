@@ -9,7 +9,7 @@ const song = new Song({
     harmony: {
       rate: 4,
       chords: [TRIAD(0), TRIAD(5), TRIAD(3), TRIAD(4), TRIAD(0)] },
-    tracks: [{
+    parts: [{
       mode: 'arpeggio',
       rate: 1/4,
       rhythm: 'X=.x=.x.X=.x=.x.|X=.x==x.X=xX.xX.|X=.x=.x.X=.x=.x.|X=.x==x.x=X.x.x.|X===', // X: accented, x: normal, =: tie, .: rest

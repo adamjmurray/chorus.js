@@ -14,7 +14,7 @@ describe('Song', () => {
         sections: [{
           scale: SCALES.MAJOR.C,
           length: 8,
-          tracks: [{
+          parts: [{
             mode: 'scale',
             rate: 1,
             rhythm: [1],
@@ -45,7 +45,7 @@ describe('Song', () => {
         sections: [{
           scale: SCALES.MAJOR.C,
           length: 8,
-          tracks: [{
+          parts: [{
             mode: 'chromatic',
             rate: 1,
             rhythm: [1],
@@ -78,7 +78,7 @@ describe('Song', () => {
           harmony: {
             rate: 2,
             chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(1)] },
-          tracks: [{
+          parts: [{
             mode: 'chord',
             rate: 1,
             rhythm: [1, 1, 1, 1],
@@ -116,7 +116,7 @@ describe('Song', () => {
           harmony: {
             rate: 4,
             chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(1)] },
-          tracks: [{
+          parts: [{
             mode: 'arpeggio',
             rate: 1,
             rhythm: [1],
@@ -152,7 +152,7 @@ describe('Song', () => {
             rate: 2,
             chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(5).inv(-2), CHORDS.TRIAD(3).inv(-1), CHORDS.SEVENTH(4).inv(-2)],
           },
-          tracks: [{
+          parts: [{
             mode: 'bass',
             rate: 1,
             rhythm: [1],
@@ -188,7 +188,7 @@ describe('Song', () => {
             rate: 2,
             chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(0).inv(1), CHORDS.TRIAD(2).inv(-2), CHORDS.SEVENTH(4).inv(-2)],
           },
-          tracks: [{
+          parts: [{
             mode: 'lead',
             rate: 1,
             rhythm: [1],
@@ -226,7 +226,7 @@ describe('Song', () => {
               looped: true,
               chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(-2)]
             },
-            tracks: [{
+            parts: [{
               looped: true,
               mode: 'arpeggio',
               rhythm: [1, 1.5, 1, 0.5],
@@ -241,7 +241,7 @@ describe('Song', () => {
               looped: true,
               chords: [CHORDS.TRIAD(-4), CHORDS.TRIAD(-3)]
             },
-            tracks: [{
+            parts: [{
               looped: true,
               mode: 'arpeggio',
               rhythm: [1, 1.5, 1, 0.5],
@@ -249,7 +249,7 @@ describe('Song', () => {
             }]
           },
           {
-            tracks: [{
+            parts: [{
               rhythm: [1],
               pitches: [PITCHES.C4],
             }]

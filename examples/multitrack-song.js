@@ -9,7 +9,7 @@ const song = new Song({
     harmony: {
       rate: 4,
       chords: [TRIAD(0), TRIAD(5), TRIAD(3), TRIAD(4), TRIAD(0)] },
-    tracks: [{
+    parts: [{
       channel: 1, // this is the default, but it's best to be explicit with multiple tracks
       rate: 1/2,
       rhythm: 'X.x.x.x.|X.x.x..x|X.x.x.x.|X...xxxx|X',

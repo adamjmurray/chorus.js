@@ -13,7 +13,7 @@ const song = new Song({
         looped: true,
         chords: [TRIAD(0), TRIAD(-2)]
       },
-      tracks: [{
+      parts: [{
         looped: true,
         mode: 'arpeggio',
         rhythm: [1, 1.5, 1, 0.5],
@@ -28,7 +28,7 @@ const song = new Song({
         looped: true,
         chords: [TRIAD(-4), TRIAD(-3)]
       },
-      tracks: [{
+      parts: [{
         looped: true,
         mode: 'arpeggio',
         rhythm: [1, 1.5, 1, 0.5],
@@ -36,7 +36,7 @@ const song = new Song({
       }]
     },
     {
-      tracks: [{
+      parts: [{
         rhythm: [1],
         pitches: [C4],
       }]

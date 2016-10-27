@@ -6,7 +6,7 @@ const { distribute } = Rhythm;
 const song = new Song({
   bpm: 120,
   sections: [{
-    tracks: [{
+    parts: [{
       rate: 1,
       rhythm: 'XxxxXxxxXxxxXxxx',
       pitches: [KICK],

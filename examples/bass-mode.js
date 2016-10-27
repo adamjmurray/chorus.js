@@ -10,7 +10,7 @@ const song = new Song({
       rate: 4,
       chords: [TRIAD(0), TRIAD(5).inv(-2), TRIAD(3).inv(-1), SEVENTH(4).inv(-2), TRIAD(0)],
     },
-    tracks: [{
+    parts: [{
       channel: 1,
       mode: 'bass',
       octave: 2,
