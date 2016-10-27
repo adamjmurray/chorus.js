@@ -13,7 +13,7 @@ class Harmony extends TimedMultiIterable {
    * @param {Boolean} [options.looped=false] - If true, the chords and durations sequences will auto-restart (independently from each other)
    *        for the duration of containing Section.
    */
-  constructor({chords=[], rate=1, durations, length, looped}={}) {
+  constructor({ chords=[], rate=1, durations, length, looped }={}) {
     rate = Math.abs(rate);
     durations = (durations || new Array(chords.length || 1).fill(1)).map(Math.abs);
     length = length || durations.reduce((a,b) => a + b) * rate;
@@ -23,7 +23,7 @@ class Harmony extends TimedMultiIterable {
       times.push(time);
       time += rate * duration;
     }
-    super({ time: times, chord: chords }, length, looped);
+    super({ time: times, chord: chords }, { length, looped });
     this.chords = chords;
     this.rate = rate;
     this.durations = durations;

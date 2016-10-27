@@ -31,7 +31,7 @@ function noteJSON(noteEvent) {
 
 class TimedMultiIterable {
 
-  constructor(iterablesByName={}, length, looped) {
+  constructor(iterablesByName={}, { length, looped }) {
     this.iterablesByName = iterablesByName;
     this.length = length;
     this.looped = looped;
@@ -44,9 +44,11 @@ class TimedMultiIterable {
     const iterators = iterables.map(iterable => iterable[Symbol.iterator]());
     const isDones = iterators.map(() => false);
     let timeOffset = 0;
+    let result;
     do {
+      if (result) yield result;
       const nexts = iterators.map(iterator => iterator.next());
-      const result = {};
+      result = {};
       for (let i = 0; i < nexts.length; i++) {
         const name = names[i];
         if (nexts[i].done) {
@@ -58,7 +60,6 @@ class TimedMultiIterable {
         result[name] = nexts[i].value;
         if (name === 'time') result[name] += timeOffset;
       }
-      yield result; // TODO: should we always yield one thing?
     } while (this.looped || isDones.includes(false));
   }
 }

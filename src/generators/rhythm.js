@@ -1,7 +1,9 @@
+const { TimedMultiIterable } = require('../utils');
+
 /**
  * A Rhythm generates `{time, intensity, duration}` tuples (intensity and duration optional depending on constructor properties).
  */
-class Rhythm {
+class Rhythm extends TimedMultiIterable {
 
   /**
    * @param {String|Iterable} rhythm either a String or {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#iterable|Iterable}
@@ -22,13 +24,9 @@ class Rhythm {
    * @param {Number} [options.rate=1/4] rate the number of beats each 'time unit' represents (e.g. 1/4 is a quarter of one beat, which is a sixteenth note in common time signatures)
    */
   constructor(rhythm, { rate=1/4, intensities, durations, length, looped } = {}) {
-    this.intensities = intensities;
-    this.durations = durations;
-    this.looped = looped;
     const times = [];
     if (typeof rhythm === 'string') {
-      this.length = length || rhythm.length * rate;
-      this.string = rhythm;
+      length = length || rhythm.length * rate;
       intensities = [];
       durations = [];
       let duration = null;
@@ -64,7 +62,7 @@ class Rhythm {
       if (duration) durations.push(duration);
     }
     else {
-      this.length = rhythm.map(Math.abs).reduce((a,b) => a + b) * rate;
+      length = rhythm.map(Math.abs).reduce((a,b) => a + b) * rate;
       durations = [];
       let time = 0;
       let nextTime;
@@ -78,9 +76,11 @@ class Rhythm {
         time = nextTime;
       }
     }
+    intensities = intensities || [0.7];
+    super({ time: times, intensity: intensities, duration: durations }, { length, looped });
     this.times = times;
-    if (!this.intensities) this.intensities = intensities || [0.7];
-    if (!this.durations) this.durations = durations;
+    this.intensities = intensities;
+    this.durations = durations;
   }
 
   /**
@@ -119,25 +119,6 @@ class Rhythm {
       }
     }
     return rhythmString;
-  }
-
-  *[Symbol.iterator]() {
-    const { times, intensities, durations, length, looped } = this;
-    let idx = 0;
-    let timeOffset = 0;
-    const hasData = times.length && intensities.length && durations.length;
-    while (hasData) {
-      const time = timeOffset + times[idx % times.length];
-      const intensity = intensities[idx % intensities.length];
-      const duration = durations[idx % durations.length];
-      yield { time, intensity, duration };
-      idx++;
-      if (idx % times.length == 0) {
-        if (looped) {
-          timeOffset += length;
-        } else break;
-      }
-    }
   }
 }
 
