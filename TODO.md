@@ -1,5 +1,5 @@
 Features
-- A "delay" option for Track that delays the start of the events 
+- A Part's channel should determine track for MIDI file output
 - Song defaults: sectionLength, scale
 - More scales
 - Improve MIDI file support 
@@ -16,14 +16,9 @@ Features
   - Allow an environment variable to set the port (or file)
 
 Refactoring
-- The generators module is technically a collection of iterables (nitpic)
-- Rename Track to Part? Especially since multiple "Tracks" may send to a single DAW track or MIDI file track.
-  - Maybe Track should contain a list of Parts, but is the model getting too complicated? Just use channel for MIDI track number in this library?
 - SCALES[type] should be a function for consistency with CHORDS[type]
-
-Examples
-- Track "lead" mode
-
+  - Especially because it assumes the chromatic scale (i.e. how can we define 19-tet scales this way?)
+  
 Bugs
 - Invert a Chord that doubles the octave can have strange behavior with shifts to the offsets.
   Ex: C major chord with octave doubling and a shift of 1 on the first note, so C#,E,G,C. First inversion => E,G,C,F instead of E,G,C,C#

@@ -1,9 +1,10 @@
 class Sequencer {
 
-  constructor(iterablesByName={}, { length, looped }) {
+  constructor(iterablesByName={}, { length, looped=false, delay=0 }) {
     this.iterablesByName = iterablesByName;
     this.length = length;
     this.looped = looped;
+    this.delay = delay;
   }
 
   *[Symbol.iterator]() {
@@ -12,7 +13,7 @@ class Sequencer {
     const iterables = names.map(name => iterablesByName[name]);
     const iterators = iterables.map(iterable => iterable[Symbol.iterator]());
     const isDones = iterators.map(() => false);
-    let timeOffset = 0;
+    let timeOffset = this.delay;
     let result;
     do {
       if (result) yield result;

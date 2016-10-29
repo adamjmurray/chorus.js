@@ -6,10 +6,10 @@ const Sequencer = require('./sequencer');
  */
 class Part extends Sequencer {
 
-  constructor({ channel, mode, pitches, rhythm, rate=1, octave=4, length, looped }={}) {
+  constructor({ channel, mode, pitches, rhythm, rate=1, octave=4, length, looped=false, delay=0 }={}) {
     rhythm = rhythm instanceof Rhythm ? rhythm : new Rhythm(rhythm, {rate});
     length = length || rhythm.length;
-    super({ time: rhythm, pitch: pitches }, { length, looped });
+    super({ time: rhythm, pitch: pitches }, { length, looped, delay });
     this.channel = channel;
     this.mode = mode;
     this.pitches = pitches;

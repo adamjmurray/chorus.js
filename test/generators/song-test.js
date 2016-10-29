@@ -300,5 +300,33 @@ describe('Song', () => {
         ]
       });
     });
+
+    it('supports delay', () => {
+      const song = new Song({
+        bpm: 120,
+        sections: [{
+          scale: SCALES.MAJOR.C,
+          length: 8,
+          parts: [{
+            delay: 4,
+            mode: 'scale',
+            rate: 1,
+            rhythm: [1],
+            pitches: [0, 1, 2, 3],
+          }]
+        }]
+      });
+      assert.deepEqual(song.toJSON(), {
+        "bpm": 120,
+        "tracks": [
+          [
+            note({ time: 4, pitch: 60 }),
+            note({ time: 5, pitch: 62 }),
+            note({ time: 6, pitch: 64 }),
+            note({ time: 7, pitch: 65 }),
+          ]
+        ]
+      });
+    });
   });
 });
