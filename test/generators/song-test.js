@@ -389,5 +389,54 @@ describe('Song', () => {
         ],
       });
     });
+
+    it('allows setting the default scale and section length at the song-level', () => {
+      const song = new Song({
+        bpm: 120,
+        scale: SCALES.DORIAN.D,
+        sectionLength: 4,
+        sections: [
+          {
+            parts: [{
+              mode: 'scale',
+              rate: 1/2,
+              pitches: [0,1,2,3]
+            }],
+          },
+          {
+            scale: SCALES.MAJOR.C,
+            length: 2,
+            parts: [{
+              mode: 'scale',
+              rate: 1/4,
+              pitches: [0,1,2,3]
+            }],
+          },
+          {
+            parts: [{
+              mode: 'scale',
+              rate: 1,
+              pitches: [0]
+            }],
+          },
+        ],
+      });
+      assert.deepEqual(song.toJSON(), {
+        "bpm": 120,
+        "tracks": [
+          [
+            note({ time: 0, pitch: 62, duration: 0.5 }),
+            note({ time: 0.5, pitch: 64, duration: 0.5 }),
+            note({ time: 1, pitch: 65, duration: 0.5 }),
+            note({ time: 1.5, pitch: 67, duration: 0.5 }),
+            note({ time: 4, pitch: 60, duration: 0.25 }),
+            note({ time: 4.25, pitch: 62, duration: 0.25 }),
+            note({ time: 4.5, pitch: 64, duration: 0.25 }),
+            note({ time: 4.75, pitch: 65, duration: 0.25 }),
+            note({ time: 6, pitch: 62, duration: 1 }),
+          ],
+        ],
+      });
+    });
   });
 });

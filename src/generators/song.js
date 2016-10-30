@@ -6,9 +6,11 @@ const { noteJSON } = require('../utils');
  */
 class Song {
 
-  constructor({bpm=120, sections}) {
+  constructor({bpm=120, sections, scale, sectionLength}) {
     this.bpm = bpm;
-    this.sections = sections.map(s => s instanceof Section ? s : new Section(s));
+    this.sections = sections.map(s =>
+      s instanceof Section ? s : new Section(Object.assign({ scale, length: sectionLength }, s))
+    );
   }
 
   *[Symbol.iterator]() {

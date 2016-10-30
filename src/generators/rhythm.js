@@ -23,7 +23,7 @@ class Rhythm extends Sequencer {
    * @param {Object} options
    * @param {Number} [options.rate=1/4] rate the number of beats each 'time unit' represents (e.g. 1/4 is a quarter of one beat, which is a sixteenth note in common time signatures)
    */
-  constructor(rhythm, { rate=1/4, intensities, durations, length, looped } = {}) {
+  constructor(rhythm = [1], { rate=1/4, intensities, durations, length, looped } = {}) {
     const times = [];
     if (typeof rhythm === 'string') {
       length = length || rhythm.length * rate;
