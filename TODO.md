@@ -3,10 +3,11 @@ Features
 - Enhance output-selector:
   - Support writing to MIDI files
   - Allow an environment variable to set the port (or file)
-- A Part's channel should determine track for MIDI file output
-- Improve MIDI file support 
-  - lots of little features are missing, plus error handling for semi-malformed input files could be improved / see MIDI specs
-  - Multiple tracks/parts that use the same channel (for example when doing polyrhythms) should render to the same MIDI file track
+- Improve MIDI file support
+  - A Part's channel should determine track for MIDI file output
+  - bpm/tempo support
+  - other missing core features?
+  - error handling for semi-malformed input files could be improved / see MIDI specs
 - Iterables for randomization (input: min, max value, integer vs float mode), for use as intensities, durations, etc
   - More iterable patterns, like weighted choice
 - Live-coding mode:
