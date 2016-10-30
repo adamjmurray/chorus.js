@@ -35,7 +35,8 @@ class Section {
           harmonyNext = harmonyIter.next();
         }
         let { value:{chord}={} } = harmonyCurr || {};
-        if (typeof pitch === 'number') {
+
+        if (partMode && typeof pitch === 'number') {
           const number = pitch;
           // let chord;
           switch (partMode) {

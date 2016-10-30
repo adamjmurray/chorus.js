@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { Song, SCALES, CHORDS, PITCHES } = require('../../src');
+const { Song, Chord, Rhythm, SCALES, CHORDS, PITCHES } = require('../../src');
 
 function note({ time, pitch, velocity = 89, duration = 1, channel = 1}) {
   return { type: 'note', time, pitch, velocity, duration, release: 100, channel };
@@ -326,6 +326,70 @@ describe('Song', () => {
             note({ time: 7, pitch: 65 }),
           ]
         ]
+      });
+    });
+
+    it ('supports chords with shifts', () => {
+      const song = new Song({
+        bpm: 120,
+        sections: [{
+          scale: SCALES.HARMONIC_MINOR.C,
+          harmony: {
+            rate: 2,
+            chords: [new Chord([0,2,4], {root: 1, inversion: 1, shifts: [-1]}), CHORDS.SEVENTH(4).inv(-2), CHORDS.TRIAD_PLUS_8(0)] },
+          parts: [{
+            mode: 'chord',
+            rate: 2,
+            rhythm: 'xxX=',
+            pitches: [0],
+            octave: 3,
+          }]
+        }]
+      });
+      assert.deepEqual(song.toJSON(), {
+        "bpm": 120,
+        "tracks": [
+          [
+            note({ time: 0, pitch: 53, velocity: 89, duration: 2 }),
+            note({ time: 0, pitch: 56, velocity: 89, duration: 2 }),
+            note({ time: 0, pitch: 61, velocity: 89, duration: 2 }),
+            note({ time: 2, pitch: 50, velocity: 89, duration: 2 }),
+            note({ time: 2, pitch: 53, velocity: 89, duration: 2 }),
+            note({ time: 2, pitch: 55, velocity: 89, duration: 2 }),
+            note({ time: 2, pitch: 59, velocity: 89, duration: 2 }),
+            note({ time: 4, pitch: 48, velocity: 127, duration: 4 }),
+            note({ time: 4, pitch: 51, velocity: 127, duration: 4 }),
+            note({ time: 4, pitch: 55, velocity: 127, duration: 4 }),
+            note({ time: 4, pitch: 60, velocity: 127, duration: 4 }),
+          ]
+        ]
+      });
+    });
+
+    it('supports Euclidean-style rhythms via Rhythm.distribute()', () => {
+      const song = new Song({
+        bpm: 120,
+        sections: [{
+          parts: [{
+            rate: 1/2,
+            rhythm: Rhythm.distribute(7, 32),
+            pitches: [42],
+          }],
+        }],
+      });
+      assert.deepEqual(song.toJSON(), {
+        "bpm": 120,
+        "tracks": [
+          [
+            note({ time: 0, pitch: 42, duration: 0.5 }),
+            note({ time: 2.5, pitch: 42, duration: 0.5 }),
+            note({ time: 5, pitch: 42, duration: 0.5 }),
+            note({ time: 7, pitch: 42, duration: 0.5 }),
+            note({ time: 9.5, pitch: 42, duration: 0.5 }),
+            note({ time: 11.5, pitch: 42, duration: 0.5 }),
+            note({ time: 14, pitch: 42, duration: 0.5 }),
+          ],
+        ],
       });
     });
   });
