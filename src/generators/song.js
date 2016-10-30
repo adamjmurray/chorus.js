@@ -24,17 +24,19 @@ class Song {
     }
   }
 
-  // TODO: this won't work with multi-section songs, need timeOffset logic. Refactor?
   toJSON() {
     const {bpm, sections} = this;
     const partsJSON = [];
+    let timeOffset = 0;
     for (const section of sections) {
       for (const event of section) {
         const partIdx = event.part; // this will be needed for MIDI file output or toJSON()
         let partJSON = partsJSON[partIdx];
         if (!partJSON) partJSON = partsJSON[partIdx] = [];
+        event.time += timeOffset;
         partJSON.push(noteJSON(event));
       }
+      timeOffset += section.length;
     }
     // TODO: make this bpm be compatible with serializer (which doesn't even output a tempo event yet...)
     // TODO: convert parts to tracks based on their channel
