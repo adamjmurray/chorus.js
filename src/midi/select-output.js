@@ -5,15 +5,18 @@ const { basename } = require('path');
 const MIDIOut = require('./out');
 
 let cli;
-let outputPortArg;
+let outputPortArgOrEnvVar;
 for (let i=2; i<process.argv.length; i++) {
   const arg = process.argv[i];
-  if (arg === '-p') outputPortArg = process.argv[++i];
+  if (arg === '-p') outputPortArgOrEnvVar = process.argv[++i] || '';
 }
+if (outputPortArgOrEnvVar == null) outputPortArgOrEnvVar = process.env.CHORUS_OUTPUT_PORT;
 
 function usage() {
   console.log(`
 Usage: node node_modules/chorus/examples/${basename(process.argv[1])} -p [outputPort]
+
+Or set outputPort with the environment variable CHORUS_OUTPUT_PORT
 
 No MIDI output specified.\n`);
 }
@@ -64,13 +67,13 @@ function selectAndOpenOutput(midiOut, portSearch) {
       midiOut.open(port);
       return midiOut
     })
-    .catch(() => selectOutput(midiOut));
+    .catch(() => selectAndOpenOutput(midiOut));
 }
 
 function selectOutput(midiOutOptions) {
-  if (!outputPortArg) usage();
+  if (!outputPortArgOrEnvVar) usage();
   const midiOut = new MIDIOut(midiOutOptions);
-  return selectAndOpenOutput(midiOut, outputPortArg);
+  return selectAndOpenOutput(midiOut, outputPortArgOrEnvVar);
 }
 
 module.exports = selectOutput;

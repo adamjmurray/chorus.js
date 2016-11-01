@@ -1,7 +1,6 @@
 Features
 - Enhance output-selector:
-  - Support writing to MIDI files
-  - Allow an environment variable to set the port (or file)
+  - Support writing to MIDI files  
 - Improve MIDI file support
   - A Part's channel should determine track for MIDI file output
   - bpm/tempo support
