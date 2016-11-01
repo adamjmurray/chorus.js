@@ -1,5 +1,5 @@
 require('../src/names').into(global);
-const selectOutput = require('./helpers/select-output');
+const selectOutput = require('../src/midi/select-output');
 const { Scheduler } = require('../src/midi');
 const scheduler = new Scheduler({ bpm: 120 });
 

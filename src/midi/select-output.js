@@ -1,6 +1,8 @@
+/* eslint no-console: off */
+
 const readline = require('readline').createInterface({ input: process.stdin, output: process.stdout });
 const { basename } = require('path');
-const { MIDIOut } = require('../../src/midi');
+const MIDIOut = require('./out');
 
 let outputPortArg;
 for (let i=2; i<process.argv.length; i++) {
@@ -16,11 +18,7 @@ No MIDI output specified.\n`);
 }
 
 function findPortMatches(ports, substrings) {
-  const matches =
-    ports.filter(port =>
-      substrings.find(substring =>
-        port.toLowerCase().includes(substring)));
-  return matches;
+  return ports.filter(port => substrings.find(substring => port.toLowerCase().includes(substring)));
 }
 
 function findPort(ports, portSearch) {
@@ -66,8 +64,10 @@ function selectAndOpenOutput(midiOut, portSearch) {
     .catch(() => selectOutput(midiOut));
 }
 
-module.exports = function selectOutput(midiOutOptions) {
+function selectOutput(midiOutOptions) {
   if (!outputPortArg) usage();
   const midiOut = new MIDIOut(midiOutOptions);
   return selectAndOpenOutput(midiOut, outputPortArg);
-};
+}
+
+module.exports = selectOutput;
