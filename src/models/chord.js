@@ -29,8 +29,8 @@ class Chord {
    * @param inversion
    */
   constructor(offsets, { scale, root = 0, octave = 4, inversion = 0, shifts } = {}) {
-    this.offsets = offsets.slice(); // scale degrees relative to the given root
-    this.shifts = shifts; // chromatic shifts for the scale-degree offsets
+    this.offsets = Object.freeze(offsets.slice()); // scale degrees relative to the given root
+    this.shifts = shifts ? Object.freeze(shifts.slice()) : shifts; // chromatic shifts for the scale-degree offsets
     this.scale = scale;
     this.root = root; // the scale degree of the root of the chord
     this.octave = octave;

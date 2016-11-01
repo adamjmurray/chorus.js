@@ -7,6 +7,28 @@ describe('Chord', () => {
     it('constructs a Chord with the given scale offsets', () => {
       assert.deepEqual(new Chord([0,2,4]).offsets, [0,2,4]);
     });
+
+    it('creates an immutable object', () => {
+      const chord = new Chord([0,2,4], { scale: SCALES.MAJOR.C, root: 1, octave: 3, inversion: 1, shifts: [1] });
+      chord.offsets = null;
+      chord.scale = null;
+      chord.root = null;
+      chord.octave = null;
+      chord.inversion = null;
+      chord.shifts = null;
+      let { offsets, scale, root, octave, inversion, shifts } = chord;
+      assert.deepEqual(
+        { offsets, scale, root, octave, inversion, shifts },
+        { offsets: [0,2,4], scale: SCALES.MAJOR.C, root: 1, octave: 3, inversion: 1, shifts: [1] }
+      );
+      assert.throws(() => { chord.offsets.push(1); }, TypeError);
+      assert.throws(() => { chord.shifts.push(2); }, TypeError);
+      ({ offsets, scale, root, octave, inversion, shifts } = chord);
+      assert.deepEqual(
+        { offsets, scale, root, octave, inversion, shifts },
+        { offsets: [0,2,4], scale: SCALES.MAJOR.C, root: 1, octave: 3, inversion: 1, shifts: [1] }
+      );
+    });
   });
 
   describe('pitches()', () => {

@@ -22,6 +22,8 @@ describe('Scale', () => {
       scale.root = PITCH_CLASSES.D;
       assert.deepEqual(scale.intervals, [2,2,2,2,2,2]);
       assert.deepEqual(scale.root, PITCH_CLASSES.C);
+      assert.throws(() => { scale.intervals.push(2); }, TypeError);
+      assert.deepEqual(scale.intervals, [2,2,2,2,2,2]);
     });
   });
 
