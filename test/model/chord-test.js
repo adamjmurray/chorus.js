@@ -61,6 +61,11 @@ describe('Chord', () => {
       assert.deepEqual(chord.pitches(), [PITCHES.G3, PITCHES.C4, PITCHES.E4, PITCHES.G4]);
     });
 
+    it('can invert chords properly in non-heptatonic (7 pitches per octave) scales', () => {
+      const chord = new Chord([0,2,3], { scale: SCALES.PENTATONIC_MAJOR.C, root: 0 }).inv(1);
+      assert.deepEqual(chord.pitches(), [PITCHES.E4, PITCHES.G4, PITCHES.C5]);
+    });
+
     // TODO:
     // it('can invert chords with octave doubling and shifts upward', () => {
     //   const chord = new Chord([0,2,4,7], { scale: SCALES.MAJOR.C, root: 0, shifts: [1,0,0,0] }).inv(1);

@@ -3,12 +3,16 @@ const PitchClass = require('../models/pitch-class');
 const PITCH_CLASSES = require('./pitch-classes');
 
 const SCALE_TYPES = {
+  CHROMATIC: [1,1,1,1,1,1,1,1,1,1,1,1],
   // 8 pitches per octave:
   OCTATONIC: [2,1,2,1,2,1,2,1],
   OCTATONIC2: [1,2,1,2,1,2,1,2],
   BEBOP_DOMINANT: [2,2,1,2,2,1,1,1],
-  // TODO: more bebop scales: https://en.wikipedia.org/wiki/Bebop_scale
-  // 7 pitches per octave:
+  BEBOP_DORIAN: [2,1,1,1,2,2,1,2],
+  BEBOP_HARMONIC_MINOR: [2,1,2,2,1,2,1,1],
+  BEBOP_MAJOR: [2,2,1,2,1,1,2,1],
+  BEBOP_MELODIC_MINOR: [2,1,2,2,1,1,2,1],
+  // 7 pitches per octave / diatonic scales:
   IONIAN:     [2,2,1,2,2,2,1],
   DORIAN:     [2,1,2,2,2,1,2],
   PHRYGIAN:   [1,2,2,2,1,2,2],
@@ -16,25 +20,43 @@ const SCALE_TYPES = {
   MIXOLYDIAN: [2,2,1,2,2,1,2],
   AEOLIAN:    [2,1,2,2,1,2,2],
   LOCRIAN:    [1,2,2,1,2,2,2],
-  HARMONIC_MINOR: [2,1,2,2,1,3,1],
-  HARMONIC_MAJOR: [2,2,1,2,1,3,1],
+  // 7 pitches per octave / other:
   ACOUSTIC: [2,2,2,1,2,1,2],
-  ALGERIAN: [2,1,3,1,1,3,1],
-  ALGERIAN_FULL: [2,1,3,1,1,3,1,2,1,2,2,1,3,1], // https://en.wikipedia.org/wiki/Algerian_scale
   ALTERED: [1,2,1,2,2,2,2],
   BYZANTINE: [1,3,1,2,1,3,1],
   ENIGMATIC: [1,3,2,2,2,1,1],
   FREYGISH: [1,3,1,2,1,2,2],
-  // TODO: GYPSY, etc... https://en.wikipedia.org/wiki/List_of_musical_scales_and_modes
+  HALF_DIMINISHED: [2,1,2,1,2,2,2],
+  HARMONIC_MINOR: [2,1,2,2,1,3,1],
+  HARMONIC_MAJOR: [2,2,1,2,1,3,1],
+  HUNGARIAN: [2,1,3,1,1,2,2],
+  HUNGARIAN_MINOR: [2,1,3,1,1,3,1],
+  LOCRIAN_MAJOR: [2,2,1,1,2,2,2],
+  LYDIAN_AUGMENTED: [2,2,2,2,1,2,1],
+  MELODIC_MINOR: [2,1,2,2,2,2,1],
+  NEAPOLITAN_MAJOR: [1,2,2,2,2,2,1],
+  NEAPOLITAN_MINOR: [1,2,2,2,1,3,1],
+  PELOG: [1,2,3,1,1,2,2],
+  PERSIAN: [1,3,1,1,2,3,1],
+  PHRYGIAN_DOMINANT: [1,3,1,2,1,2,2],
+  UKRAINIAN_DORIAN: [2,1,3,1,2,1,2],
   // 6 pitches per octave:
-  WHOLE_TONE: [2,2,2,2,2,2],
   AUGMENTED: [3,1,3,1,3,1],
-  PROMETHEUS: [2,2,2,3,1,2],
   BLUES: [3,2,1,1,3,2],
+  OF_HARMONICS: [3,1,1,2,2,3],
+  PROMETHEUS: [2,2,2,3,1,2],
+  TRITONE: [1,3,2,1,3,2],
+  WHOLE_TONE: [2,2,2,2,2,2],
   // 5 pitches per octave:
   PENTATONIC_MAJOR: [2,2,3,2,3],
   PENTATONIC_MINOR: [3,2,2,3,2],
-  // TODO: more pentatonic scales: https://en.wikipedia.org/wiki/Pentatonic_scale
+  EGYPTIAN: [2,3,2,3,2],
+  HIRAJOSHI: [4,2,1,4,1],
+  INSEN: [1,4,2,3,2],
+  IWATO: [1,4,1,4,2],
+  MAN_GONG: [3,2,3,2,2],
+  SAKURA: [1,4,2,1,4],
+  SLENDRO: [2,3,2,2,3],
 };
 SCALE_TYPES.MAJOR = SCALE_TYPES.IONIAN;
 SCALE_TYPES.MINOR = SCALE_TYPES.NATURAL_MINOR = SCALE_TYPES.AEOLIAN;

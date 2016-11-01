@@ -1,5 +1,4 @@
 Features
-- More scales
 - Enhance output-selector:
   - Support writing to MIDI files
   - Allow an environment variable to set the port (or file)
