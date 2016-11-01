@@ -1,9 +1,10 @@
 /* eslint no-console: off */
 
-const readline = require('readline').createInterface({ input: process.stdin, output: process.stdout });
+const readline = require('readline');
 const { basename } = require('path');
 const MIDIOut = require('./out');
 
+let cli;
 let outputPortArg;
 for (let i=2; i<process.argv.length; i++) {
   const arg = process.argv[i];
@@ -44,7 +45,7 @@ function findPort(ports, portSearch) {
 function selectPort(ports) {
   return new Promise((resolve, reject) => {
     console.log(' ', ports.join('\n  '));
-    readline.question('Which port? ', portSearch => {
+    cli.question('Which port? ', portSearch => {
       findPort(ports, portSearch)
         .then(resolve)
         .catch(matches => (matches ? resolve(selectPort(matches)) : reject()));
@@ -53,11 +54,13 @@ function selectPort(ports) {
 }
 
 function selectAndOpenOutput(midiOut, portSearch) {
+  if (!cli) cli = readline.createInterface({ input: process.stdin, output: process.stdout });
   const ports = midiOut.ports();
   if (!portSearch) console.log('MIDI output ports:');
   return (portSearch ? findPort(ports, portSearch) : selectPort(ports))
     .then(port => {
-      readline.close();
+      cli.close();
+      cli = null;
       midiOut.open(port);
       return midiOut
     })

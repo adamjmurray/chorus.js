@@ -24,7 +24,6 @@ Bugs
 - All notes off doesn't work for higher channels. It seems like it should. I wonder if we are overloading the MIDI port with too many messages? Try adding a MIDI monitor to Ableton Live to verify
   - Also having problems with this in Bitwig. Could be a MIDI rate-limiting issue? Maybe just try sending the "all notes off" CC message?
 - The models with array properties aren't immutable. Try testing push()ing something onto scale/chord
-- require('./helpers/select-output') causes process to hang if you don't actually select an output
 
 Maybe
 - Instead of forcing a track into chromatic mode (which is hard to work with because it's not relative to the chords)
