@@ -3,18 +3,25 @@
 const readline = require('readline');
 const { basename } = require('path');
 const MIDIOut = require('./out');
+const MIDIFile = require('./file');
 
 let cli;
 let outputPortArgOrEnvVar;
+let outputFile;
 for (let i=2; i<process.argv.length; i++) {
   const arg = process.argv[i];
   if (arg === '-p') outputPortArgOrEnvVar = process.argv[++i] || '';
+  if (arg === '-f') outputFile = process.argv[++i];
 }
 if (outputPortArgOrEnvVar == null) outputPortArgOrEnvVar = process.env.CHORUS_OUTPUT_PORT;
 
 function usage() {
   console.log(`
-Usage: node node_modules/chorus/examples/${basename(process.argv[1])} -p [outputPort]
+Usage
+
+File output: node node_modules/chorus/examples/${basename(process.argv[1])} -f [outputFile]
+
+Realtime output: node node_modules/chorus/examples/${basename(process.argv[1])} -p [outputPort]
 
 Or set outputPort with the environment variable CHORUS_OUTPUT_PORT
 
@@ -71,6 +78,17 @@ function selectAndOpenOutput(midiOut, portSearch) {
 }
 
 function selectOutput(midiOutOptions) {
+  if (outputFile) {
+    // Provide the same output.play(song) interface from MIDIOut
+    return Promise.resolve({
+      play(song) {
+        return new MIDIFile(outputFile)
+          .write(song.toJSON())
+          .then(() => console.log(`Wrote MIDI file ${outputFile}`))
+          .catch(err => console.error(`Failed to write MIDI file ${outputFile}`, err));
+      }
+    });
+  }
   if (!outputPortArgOrEnvVar) usage();
   const midiOut = new MIDIOut(midiOutOptions);
   return selectAndOpenOutput(midiOut, outputPortArgOrEnvVar);
