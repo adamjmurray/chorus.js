@@ -11,7 +11,7 @@ class Scale {
 
   constructor(intervals, { root = new PitchClass(0) } = {}) {
     if (!(intervals instanceof Array)) throw new TypeError('Scale intervals must be an Array');
-    if (!(root instanceof PitchClass)) throw new TypeError('Scale root must be a PitchClass');
+    if (!(root instanceof PitchClass)) root = new PitchClass(root);
     // list of integers for the interval distance between consecutive notes of the scale:
     // (intervals sum is 12 for octave-repeating scales)
     this.intervals = Object.freeze(intervals.slice());

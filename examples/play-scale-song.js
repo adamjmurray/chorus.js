@@ -5,7 +5,7 @@ const { Song } = require('../src/generators');
 const song = new Song({
   bpm: 120,
   sections: [{
-    scale: MAJOR.C,
+    scale: MAJOR(C),
     parts: [{
       mode: 'scale',
       rate: 1/2,

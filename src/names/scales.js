@@ -63,14 +63,8 @@ SCALE_TYPES.MINOR = SCALE_TYPES.NATURAL_MINOR = SCALE_TYPES.AEOLIAN;
 
 const SCALES = {};
 Object.keys(SCALE_TYPES).forEach(type => {
-  const scalesOfType = {};
-  for (const name of PitchClass.NAMES) {
-    const root = PITCH_CLASSES[name];
-    const scale = new Scale(SCALE_TYPES[type], { root });
-    scalesOfType[root] = scale;
-    scalesOfType[root.name] = scale;
-  }
-  SCALES[type] = scalesOfType;
+  SCALES[type] = (root) =>
+    new Scale(SCALE_TYPES[type], { root });
 });
 
 module.exports = Object.freeze(SCALES);

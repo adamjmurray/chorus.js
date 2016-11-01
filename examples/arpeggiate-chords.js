@@ -3,7 +3,7 @@ const selectOutput = require('../src/midi/select-output');
 const { Scheduler } = require('../src/midi');
 
 const scheduler = new Scheduler({ bpm: 120 });
-const scale = MAJOR.C;
+const scale = MAJOR(C);
 const chords = [TRIAD(0), TRIAD(5,{inv:-2}), TRIAD(3,{inv:-1}), SEVENTH(4,{inv:-2})];
 
 selectOutput({ defaultDuration: 200 }).then(output => {

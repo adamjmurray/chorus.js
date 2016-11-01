@@ -1,7 +1,3 @@
-Refactoring
-- SCALES[type] should be a function for consistency with CHORDS[type]
-  - Especially because it assumes the chromatic scale (i.e. how can we define 19-tet scales this way?)
-  
 Bugs
 - Invert a Chord that doubles the octave can have strange behavior with shifts to the offsets.
   Ex: C major chord with octave doubling and a shift of 1 on the first note, so C#,E,G,C. First inversion => E,G,C,F instead of E,G,C,C#
@@ -9,6 +5,10 @@ Bugs
   - Also having problems with this in Bitwig. Could be a MIDI rate-limiting issue? Maybe just try sending the "all notes off" CC message?
 
 Features
+- Support for scales with more than 12 pitches per octave. 
+  - Scales take a root pitch class, but pitch classes operate on mod 12 logic, so this interferes with e.g. working in 19-TET
+  - One option may be to let PitchClass (and Scale?) take in an option to override the mod 12 value.
+    This needs to work consistently end-to-end with the Song generator and related classes. 
 - Improve MIDI file support
   - A Part's channel should determine track for MIDI file output
   - bpm/tempo support
@@ -16,6 +16,7 @@ Features
   - error handling for semi-malformed input files could be improved / see MIDI specs
 - Iterables for randomization (input: min, max value, integer vs float mode), for use as intensities, durations, etc
   - More iterable patterns, like weighted choice
+- Documentation
 
 Maybe
 - Instead of forcing a track into chromatic mode (which is hard to work with because it's not relative to the chords)

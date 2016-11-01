@@ -5,7 +5,7 @@ const { Song } = require('../src/generators');
 const song = new Song({
   bpm: 120,
   sections: [{
-    scale: HARMONIC_MINOR.C,
+    scale: HARMONIC_MINOR(C),
     harmony: {
       rate: 4,
       chords: [TRIAD(0), TRIAD(5), TRIAD(3), TRIAD(4), TRIAD(0)] },

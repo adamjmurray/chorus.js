@@ -1,5 +1,6 @@
 const assert = require('assert');
-const { Song, Chord, Rhythm, SCALES, CHORDS, PITCHES } = require('../../src');
+const { Song, Chord, Rhythm, SCALES, CHORDS, PITCHES, PITCH_CLASSES } = require('../../src');
+const { C, D } = PITCH_CLASSES;
 
 function note({ time, pitch, velocity = 89, duration = 1, channel = 1}) {
   return { type: 'note', time, pitch, velocity, duration, release: 100, channel };
@@ -12,7 +13,7 @@ describe('Song', () => {
       const song = new Song({
         bpm: 120,
         sections: [{
-          scale: SCALES.MAJOR.C,
+          scale: SCALES.MAJOR(C),
           length: 8,
           parts: [{
             mode: 'scale',
@@ -43,7 +44,7 @@ describe('Song', () => {
       const song = new Song({
         bpm: 120,
         sections: [{
-          scale: SCALES.MAJOR.C,
+          scale: SCALES.MAJOR(C),
           length: 8,
           parts: [{
             mode: 'chromatic',
@@ -74,7 +75,7 @@ describe('Song', () => {
       const song = new Song({
         bpm: 120,
         sections: [{
-          scale: SCALES.MAJOR.C,
+          scale: SCALES.MAJOR(C),
           harmony: {
             rate: 2,
             chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(1)] },
@@ -111,7 +112,7 @@ describe('Song', () => {
       const song = new Song({
         bpm: 120,
         sections: [{
-          scale: SCALES.MAJOR.C,
+          scale: SCALES.MAJOR(C),
           length: 8,
           harmony: {
             rate: 4,
@@ -146,7 +147,7 @@ describe('Song', () => {
       const song = new Song({
         bpm: 120,
         sections: [{
-          scale: SCALES.MAJOR.C,
+          scale: SCALES.MAJOR(C),
           length: 8,
           harmony: {
             rate: 2,
@@ -182,7 +183,7 @@ describe('Song', () => {
       const song = new Song({
         bpm: 120,
         sections: [{
-          scale: SCALES.MAJOR.C,
+          scale: SCALES.MAJOR(C),
           length: 8,
           harmony: {
             rate: 2,
@@ -220,7 +221,7 @@ describe('Song', () => {
         sections: [
           {
             length: 16,
-            scale: SCALES.HARMONIC_MINOR.C,
+            scale: SCALES.HARMONIC_MINOR(C),
             harmony: {
               rate: 4,
               looped: true,
@@ -235,7 +236,7 @@ describe('Song', () => {
           },
           {
             length: 16,
-            scale: SCALES.HARMONIC_MINOR.C,
+            scale: SCALES.HARMONIC_MINOR(C),
             harmony: {
               rate: 4,
               looped: true,
@@ -302,7 +303,7 @@ describe('Song', () => {
       const song = new Song({
         bpm: 120,
         sections: [{
-          scale: SCALES.MAJOR.C,
+          scale: SCALES.MAJOR(C),
           length: 8,
           parts: [{
             delay: 4,
@@ -330,7 +331,7 @@ describe('Song', () => {
       const song = new Song({
         bpm: 120,
         sections: [{
-          scale: SCALES.HARMONIC_MINOR.C,
+          scale: SCALES.HARMONIC_MINOR(C),
           harmony: {
             rate: 2,
             chords: [new Chord([0,2,4], {root: 1, inversion: 1, shifts: [-1]}), CHORDS.SEVENTH(4).inv(-2), CHORDS.TRIAD_PLUS_8(0)] },
@@ -393,7 +394,7 @@ describe('Song', () => {
     it('allows setting the default scale and section length at the song-level', () => {
       const song = new Song({
         bpm: 120,
-        scale: SCALES.DORIAN.D,
+        scale: SCALES.DORIAN(D),
         sectionLength: 4,
         sections: [
           {
@@ -404,7 +405,7 @@ describe('Song', () => {
             }],
           },
           {
-            scale: SCALES.MAJOR.C,
+            scale: SCALES.MAJOR(C),
             length: 2,
             parts: [{
               mode: 'scale',

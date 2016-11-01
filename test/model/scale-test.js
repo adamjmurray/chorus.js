@@ -8,14 +8,19 @@ describe('Scale', () => {
     it("throws a TypeError if the first argument is not an Array", () => {
       assert.throws(() => new Scale(0), TypeError);
     });
-    it("throws a TypeError if the root option is not a PitchClass", () => {
-      assert.throws(() => new Scale([2,2,2,2,2,2], { root: 0 }), TypeError);
-    });
+
     it("constructs a Scale with the given interval Array and root PitchClass", () => {
       const scale = new Scale([2,2,2,2,2,2], { root: PITCH_CLASSES.C });
       assert.deepEqual(scale.intervals, [2,2,2,2,2,2]);
       assert.deepEqual(scale.root, PITCH_CLASSES.C);
     });
+
+    it("attempts to convert the root option to a PitchClass", () => {
+      const scale = new Scale([2,2,2,2,2,2], { root: 0 });
+      assert.deepEqual(scale.intervals, [2,2,2,2,2,2]);
+      assert.deepEqual(scale.root, PITCH_CLASSES.C);
+    });
+
     it("produces an immutable object", () => {
       const scale = new Scale([2,2,2,2,2,2], { root: PITCH_CLASSES.C });
       scale.intervals = [1,1,1,1,1,1];
@@ -42,7 +47,7 @@ describe('Scale', () => {
   });
 
   describe('pitch()', () => {
-    const scale = SCALES.DORIAN.D;
+    const scale = SCALES.DORIAN(PITCH_CLASSES.D);
     it("returns a pitch with the scale's pitch class at the given index", () => {
       assert.deepEqual(scale.pitch(0), PITCHES.D4);
       assert.deepEqual(scale.pitch(1), PITCHES.E4);

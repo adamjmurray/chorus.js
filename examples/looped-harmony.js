@@ -4,10 +4,10 @@ const { Song } = require('../src');
 
 const song = new Song({
   bpm: 160,
+  scale: HARMONIC_MINOR(C),
   sections: [
     {
       length: 16,
-      scale: HARMONIC_MINOR.C,
       harmony: {
         rate: 4,
         looped: true,
@@ -22,7 +22,6 @@ const song = new Song({
     },
     {
       length: 16,
-      scale: HARMONIC_MINOR.C,
       harmony: {
         rate: 4,
         looped: true,
@@ -37,7 +36,7 @@ const song = new Song({
     },
     {
       parts: [{
-        rhythm: [1],
+        rhythm: [4],
         pitches: [C4],
       }]
     }

@@ -5,7 +5,7 @@ const { Song } = require('../src');
 const song = new Song({
   bpm: 120,
   sections: [{
-    scale: HARMONIC_MINOR.C,
+    scale: HARMONIC_MINOR(C),
     harmony: {
       rate: 4,
       chords: [TRIAD(0), TRIAD(5).inv(-2), TRIAD(3).inv(-1), SEVENTH(4).inv(-2), TRIAD(0)],
