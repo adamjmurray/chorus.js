@@ -10,19 +10,19 @@ describe('Scale', () => {
     });
 
     it("constructs a Scale with the given interval Array and root PitchClass", () => {
-      const scale = new Scale([2,2,2,2,2,2], { root: PITCH_CLASSES.C });
+      const scale = new Scale([2,2,2,2,2,2], PITCH_CLASSES.C);
       assert.deepEqual(scale.intervals, [2,2,2,2,2,2]);
       assert.deepEqual(scale.root, PITCH_CLASSES.C);
     });
 
     it("attempts to convert the root option to a PitchClass", () => {
-      const scale = new Scale([2,2,2,2,2,2], { root: 0 });
+      const scale = new Scale([2,2,2,2,2,2], 0);
       assert.deepEqual(scale.intervals, [2,2,2,2,2,2]);
       assert.deepEqual(scale.root, PITCH_CLASSES.C);
     });
 
     it("produces an immutable object", () => {
-      const scale = new Scale([2,2,2,2,2,2], { root: PITCH_CLASSES.C });
+      const scale = new Scale([2,2,2,2,2,2], PITCH_CLASSES.C);
       scale.intervals = [1,1,1,1,1,1];
       scale.root = PITCH_CLASSES.D;
       assert.deepEqual(scale.intervals, [2,2,2,2,2,2]);
@@ -34,14 +34,14 @@ describe('Scale', () => {
 
   describe('.length', () => {
     it("is the number of intervals ", () => {
-      const scale = new Scale([2,2,2,2,2,2], { root: PITCH_CLASSES.C });
+      const scale = new Scale([2,2,2,2,2,2], PITCH_CLASSES.C);
       assert.equal(scale.length, 6);
     });
   });
 
   describe('.semitones', () => {
     it("is the sum of the intervals", () => {
-      const scale = new Scale([2,2,2,2,2,2], { root: PITCH_CLASSES.C });
+      const scale = new Scale([2,2,2,2,2,2], PITCH_CLASSES.C);
       assert.equal(scale.semitones, 12);
     });
   });
@@ -86,15 +86,6 @@ describe('Scale', () => {
       assert.deepEqual(scale.pitch(4, { octave: 3 }), PITCHES.A3);
       assert.deepEqual(scale.pitch(5, { octave: 2 }), PITCHES.B2);
       assert.deepEqual(scale.pitch(6, { octave: 1 }), PITCHES.C2);
-    });
-    it("can override the root via an option", () => {
-      assert.deepEqual(scale.pitch(0, { root: PITCH_CLASSES.C }), PITCHES.C4);
-      assert.deepEqual(scale.pitch(1, { root: PITCH_CLASSES.C }), PITCHES.D4);
-      assert.deepEqual(scale.pitch(2, { root: PITCH_CLASSES.C }), PITCHES.Eb4);
-      assert.deepEqual(scale.pitch(3, { root: PITCH_CLASSES.C }), PITCHES.F4);
-      assert.deepEqual(scale.pitch(4, { root: PITCH_CLASSES.C }), PITCHES.G4);
-      assert.deepEqual(scale.pitch(5, { root: PITCH_CLASSES.C }), PITCHES.A4);
-      assert.deepEqual(scale.pitch(6, { root: PITCH_CLASSES.C }), PITCHES.Bb4);
     });
   });
 });

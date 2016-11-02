@@ -9,7 +9,7 @@ const { mod } = require('../utils');
  */
 class Scale {
 
-  constructor(intervals, { root = new PitchClass(0) } = {}) {
+  constructor(intervals, root=new PitchClass(0)) {
     if (!(intervals instanceof Array)) throw new TypeError('Scale intervals must be an Array');
     if (!(root instanceof PitchClass)) root = new PitchClass(root);
     // list of integers for the interval distance between consecutive notes of the scale:
@@ -32,8 +32,8 @@ class Scale {
     return this.intervals.reduce((a,b) => a + b, 0);
   }
 
-  pitch(degree, { root = this.root, octave = 4 } = {}) {
-    let pitchClassValue = root.valueOf();
+  pitch(degree, { octave = 4 } = {}) {
+    let pitchClassValue = this.root.valueOf();
     for (let i =  0; i < degree;  i++) pitchClassValue += this.intervals[i % this.length];
     for (let i = -1; i >= degree; i--) pitchClassValue -= this.intervals[mod(i, this.length)];
     const pitchClass = new PitchClass(pitchClassValue);

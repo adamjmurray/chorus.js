@@ -61,8 +61,7 @@ SCALE_TYPES.MINOR = SCALE_TYPES.NATURAL_MINOR = SCALE_TYPES.AEOLIAN;
 
 const SCALES = {};
 Object.keys(SCALE_TYPES).forEach(type => {
-  SCALES[type] = (root) =>
-    new Scale(SCALE_TYPES[type], { root });
+  SCALES[type] = (root) => new Scale(SCALE_TYPES[type], root);
 });
 
 module.exports = Object.freeze(SCALES);

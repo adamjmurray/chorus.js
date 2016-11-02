@@ -28,7 +28,7 @@ Bugs
 - Documentation
 
 Cleanup
-- Re-evaluate if everything in scale and chord should be optionally overriden by the classes non-constructor functions.
+- Re-evaluate if everything in chord should be optionally overridden by the classes non-constructor functions.
   I'd argue for simplifying as much as possible for 1.0 if it's not needed by the Song generator logic.
 
 Future Features
