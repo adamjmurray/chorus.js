@@ -1,6 +1,4 @@
 const Scale = require('../models/scale');
-const PitchClass = require('../models/pitch-class');
-const PITCH_CLASSES = require('./pitch-classes');
 
 const SCALE_TYPES = {
   CHROMATIC: [1,1,1,1,1,1,1,1,1,1,1,1],
