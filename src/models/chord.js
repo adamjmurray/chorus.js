@@ -1,18 +1,34 @@
 const { mod } = require('../utils');
 
-function findUniqueOctaveOffset(offsets, scaleLength, direction = 1) {
+function findUniqueOctaveOffset(offsetsAndShifts, scaleLength, direction = 1) {
   direction = Math.sign(direction) || 1;
-  if (direction < 0) offsets = offsets.slice().reverse();
-  let octave = direction;
-  while (true) { // eslint-disable-line no-constant-condition
-    for (const offset of offsets) {
-      const octaveOffset = offset + (octave * scaleLength);
-      if (!offsets.includes(octaveOffset)) {
-        return octaveOffset;
+  if (direction < 0) offsetsAndShifts = offsetsAndShifts.slice().reverse();
+  for (let octave=direction; true; octave += direction) { // eslint-disable-line no-constant-condition
+    for (const [offset,shift] of offsetsAndShifts) {
+      const invertedOffset = offset + (octave * scaleLength);
+      if (!offsetsAndShifts.find(([o,s]) => (o === invertedOffset && s === shift))) {
+        return [invertedOffset,shift];
       }
     }
-    octave += direction;
   }
+}
+
+function offsetsAndShiftsForInversion(offsets, shifts, inversion, scaleLength) {
+  offsets = offsets.slice(); // make a copy
+  shifts = (shifts || []).slice(0, offsets.length);
+  if (shifts.length < offsets.length) {
+    shifts = shifts.concat(new Array(offsets.length - shifts.length).fill(0));
+  }
+  const offsetsAndShifts = offsets.map((offset, index) => [offset, shifts[index]]);
+  for (let i =  1; i <= inversion; i++) {
+    offsetsAndShifts.push(findUniqueOctaveOffset(offsetsAndShifts, scaleLength));
+    offsetsAndShifts.shift();
+  }
+  for (let i = -1; i >= inversion; i--) {
+    offsetsAndShifts.unshift(findUniqueOctaveOffset(offsetsAndShifts, scaleLength, -1));
+    offsetsAndShifts.pop();
+  }
+  return offsetsAndShifts;
 }
 
 /**
@@ -22,9 +38,9 @@ class Chord {
 
   /**
    *
+   * @param offsets - a list of scale offsets (Numbers) and/or scale offsets + chromatic shifts (duples of Numbers)
    * @param scale
    * @param root
-   * @param offsets
    * @param octave
    * @param inversion
    */
@@ -48,18 +64,9 @@ class Chord {
    * @returns {Array|*|{}}
    */
   pitches({ scale = this.scale, root = this.root, octave = this.octave, inversion = this.inversion, shifts = this.shifts, offset = 0, } = {}) {
-    const offsets = this.offsetsForInversion(inversion, { scale });
-    const pitches = offsets.map(chordPitchOffset =>
-      scale.pitch(root + chordPitchOffset + offset, { octave }));
-    if (shifts && shifts.length) {
-      if (inversion) {
-        shifts = shifts.slice(0, offsets.length);
-        while (shifts.length < offsets.length) shifts.push(0);
-        for (let i = 1; i <= inversion; i++) shifts.push(shifts.shift());
-        for (let i = -1; i >= inversion; i--) shifts.unshift(shifts.pop());
-      }
-      return pitches.map((pitch, index) => pitch.add(shifts[index] || 0));
-    }
+    const offsetsAndShifts = offsetsAndShiftsForInversion(this.offsets, shifts, inversion, scale.length);
+    const pitches = offsetsAndShifts.map(([invertedOffset, invertedShift]) =>
+      scale.pitch(root + invertedOffset + offset, { octave }).add(invertedShift));
     return pitches;
   }
 
@@ -81,21 +88,6 @@ class Chord {
       return pitch.add(octaveOffset * scale.semitones);
     }
     return pitch;
-  }
-
-  offsetsForInversion(inversion = this.inversion, { scale = this.scale } = {}) {
-    if (!inversion) return this.offsets; // 0 means no inversion, treat other falsey values the same
-    const offsets = this.offsets.slice(); // make a copy
-    const scaleLength = scale.length;
-    for (let i =  1; i <= inversion; i++) {
-      offsets.push(findUniqueOctaveOffset(offsets, scaleLength));
-      offsets.shift();
-    }
-    for (let i = -1; i >= inversion; i--) {
-      offsets.unshift(findUniqueOctaveOffset(offsets, scaleLength, -1));
-      offsets.pop();
-    }
-    return offsets;
   }
 
   inv(inversion) {

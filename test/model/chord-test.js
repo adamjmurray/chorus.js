@@ -37,6 +37,26 @@ describe('Chord', () => {
       const chord = new Chord([0,2,4], { scale: SCALES.MAJOR(C), root: 3 }); // F MAJ chord
       assert.deepEqual(chord.pitches(), [PITCHES.F4, PITCHES.A4, PITCHES.C5]);
     });
+
+    it('can invert the chord upward', () => {
+      const chord = new Chord([0,2,4], { scale: SCALES.MAJOR(C), root: 3 }); // F MAJ chord
+      assert.deepEqual(chord.pitches({ inversion: 1 }), [PITCHES.A4, PITCHES.C5, PITCHES.F5]);
+    });
+
+    it('can invert the chord downward', () => {
+      const chord = new Chord([0,2,4], { scale: SCALES.MAJOR(C), root: 3 }); // F MAJ chord
+      assert.deepEqual(chord.pitches({ inversion: -1 }), [PITCHES.C4, PITCHES.F4, PITCHES.A4]);
+    });
+
+    it("doesn't invert the chord with an inversion of 0", () => {
+      const chord = new Chord([0,2,4], { scale: SCALES.MAJOR(C), root: 3 }); // F MAJ chord
+      assert.deepEqual(chord.pitches({ inversion: 0 }), [PITCHES.F4, PITCHES.A4, PITCHES.C5]);
+    });
+
+    it('uses the inversion constructed with if none is given', () => {
+      const chord = new Chord([0,2,4], { scale: SCALES.MAJOR(C), root: 3, inversion: 1 }); // F MAJ chord first inversion
+      assert.deepEqual(chord.pitches(), [PITCHES.A4, PITCHES.C5, PITCHES.F5]);
+    });
   });
 
   describe('pitch()', () => {
@@ -51,25 +71,6 @@ describe('Chord', () => {
     it('goes downward for negative numbers', () => {
       const chord = new Chord([0,2,4], { scale: SCALES.MAJOR(C), root: 3 }); // F MAJ chord
       assert.deepEqual(chord.pitch(-1), PITCHES.C4);
-    });
-  });
-
-  describe('offsetsForInversion()', () => {
-    it('gives the offset for the inverted chord', () => {
-      const chord = new Chord([0,2,4], { scale: SCALES.MAJOR(C), root: 3 }); // F MAJ chord
-      assert.deepEqual(chord.offsetsForInversion(1), [2,4,7]);
-    });
-    it('an inversion of 0 is returns the same intervals', () => {
-      const chord = new Chord([0,2,4], { scale: SCALES.MAJOR(C), root: 3 }); // F MAJ chord
-      assert.deepEqual(chord.offsetsForInversion(0), [0,2,4]);
-    });
-    it('a negative inversion of 0 is returns the same intervals', () => {
-      const chord = new Chord([0,2,4], { scale: SCALES.MAJOR(C), root: 3 }); // F MAJ chord
-      assert.deepEqual(chord.offsetsForInversion(-1), [-3,0,2]);
-    });
-    it('uses the inversion constructed with if none is given', () => {
-      const chord = new Chord([0,2,4], { scale: SCALES.MAJOR(C), root: 3, inversion: 1 }); // F MAJ chord first inversion
-      assert.deepEqual(chord.offsetsForInversion(), [2,4,7]);
     });
   });
 
@@ -89,10 +90,9 @@ describe('Chord', () => {
       assert.deepEqual(chord.pitches(), [PITCHES.E4, PITCHES.G4, PITCHES.C5]);
     });
 
-    // TODO:
-    // it('can invert chords with octave doubling and shifts upward', () => {
-    //   const chord = new Chord([0,2,4,7], { scale: SCALES.MAJOR(C), root: 0, shifts: [1,0,0,0] }).inv(1);
-    //   assert.deepEqual(chord.pitches(), [PITCHES.E4, PITCHES.G4, PITCHES.C5, PITCHES.E5]);
-    // });
+    it('can invert chords with octave doubling and shifts upward', () => {
+      const chord = new Chord([0,2,4,7], { scale: SCALES.MAJOR(C), root: 0, shifts: [1,0,0,0] }).inv(1);
+      assert.deepEqual(chord.pitches(), [PITCHES.E4, PITCHES.G4, PITCHES.C5, PITCHES.Db5]);
+    });
   });
 });
