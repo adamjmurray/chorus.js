@@ -36,8 +36,8 @@ class Scale {
     let pitchClassValue = this.root.valueOf();
     for (let i =  0; i < degree;  i++) pitchClassValue += this.intervals[i % this.length];
     for (let i = -1; i >= degree; i--) pitchClassValue -= this.intervals[mod(i, this.length)];
-    const pitchClass = new PitchClass(pitchClassValue);
-    return new Pitch(pitchClass, octave + Math.floor(pitchClassValue / 12));
+    const pitchClass = new PitchClass(pitchClassValue, this.root.pitchesPerOctave);
+    return new Pitch(pitchClass, octave + Math.floor(pitchClassValue / this.root.pitchesPerOctave));
   }
 }
 

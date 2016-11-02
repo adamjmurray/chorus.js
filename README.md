@@ -6,9 +6,9 @@ A music composition toolkit for JavaScript
 
 ## Features
 
-- Generate multi-track songs with intuitive support for harmony-based compusition ("Western music").
+- Generate multi-track songs with intuitive support for harmony-based composition ("Western music").
 - Realtime and file-based MIDI I/O
-
+- Microtonal support for working with more than 12 pitches per octave 
 
 
 ## Status

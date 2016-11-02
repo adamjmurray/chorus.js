@@ -56,7 +56,7 @@ class PitchClass {
   /**
    * @param nameOrValue {number|string} a PitchClass numerical value or string name.
    */
-  constructor(nameOrValue) {
+  constructor(nameOrValue, pitchesPerOctave=12) {
     let value;
     if (typeof nameOrValue === 'number') {
       value = nameOrValue;
@@ -73,12 +73,13 @@ class PitchClass {
         }
       }
     }
-    value = mod(Math.round(value), 12);
+    this.pitchesPerOctave = pitchesPerOctave;
+    value = mod(Math.round(value), pitchesPerOctave);
     /**
      * The canonical name of this PitchClass. See {@link PitchClass.NAMES}
      * @member {PitchClass}
      * @readonly */
-    this.name = PitchClass.NAMES[value];
+    this.name = pitchesPerOctave === 12 ? PitchClass.NAMES[value] : String(value); // TODO? support custom naming schemes
     /**
      * The number of semitones above C. Used to compute {@link Pitch#value MIDI pitch values}.
      * This is always the canonical value in the range 0-11 (inclusive). Assigning this property will convert to the
@@ -98,7 +99,7 @@ class PitchClass {
   }
 
   add(value) {
-    return new PitchClass(this.value + value);
+    return new PitchClass(this.value + value, this.pitchesPerOctave);
   }
 }
 

@@ -1,4 +1,11 @@
+TODO next:
+- Write a bunch of tests related to the non-12-pitches-per-octave behaviors introduced in pitch, pitchClass, scale (see relevant commit diff)
+- See TODO in Pitch constructor related to setting a pitch value offset in microtonal tunings     
+
 Bugs
+- Notes are running into each other beings things are "100% legato". For example when I was testing the 19tet example and recording live MIDI to Ableton.
+  Maybe we can ensure the note offs come before note ons (could be issues with the scheduler?). Otherwise need some way to deal with this.
+  A quick hack solution would be to have a legato option (relative duration? not sure what to call it) in Part, and maybe a default in Song.
 - All notes off doesn't work for higher channels. It seems like it should. I wonder if we are overloading the MIDI port with too many messages? Try adding a MIDI monitor to Ableton Live to verify
   - Also having problems with this in Bitwig. Could be a MIDI rate-limiting issue? Maybe just try sending the "all notes off" CC message?
 
@@ -14,10 +21,6 @@ Bugs
       which simplifies things
     - scale.pitch could accept() this duple and apply the chromatic shift to the base result
     - Any pitch list in the generators module (SOng, etc) should allow this duple in place of a Number
-- Support for scales with more than 12 pitches per octave. 
-  - Scales take a root pitch class, but pitch classes operate on mod 12 logic, so this interferes with e.g. working in 19-TET
-  - One option may be to let PitchClass (and Scale?) take in an option to override the mod 12 value.
-    This needs to work consistently end-to-end with the Song generator and related classes. 
 - Improve MIDI file support
   - A Part's channel should determine track for MIDI file output
   - bpm/tempo support

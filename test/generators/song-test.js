@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { Song, Chord, Rhythm, SCALES, CHORDS, PITCHES, PITCH_CLASSES } = require('../../src');
+const { Song, Chord, Rhythm, Scale, PitchClass, SCALES, CHORDS, PITCHES, PITCH_CLASSES } = require('../../src');
 const { C, D } = PITCH_CLASSES;
 
 function note({ time, pitch, velocity = 89, duration = 1, channel = 1}) {
@@ -435,6 +435,50 @@ describe('Song', () => {
             note({ time: 4.5, pitch: 64, duration: 0.25 }),
             note({ time: 4.75, pitch: 65, duration: 0.25 }),
             note({ time: 6, pitch: 62, duration: 1 }),
+          ],
+        ],
+      });
+    });
+
+    it('supports microtonal scales', () => {
+      const song = new Song({
+        bpm: 120,
+        sections: [{
+          scale: new Scale([3,2,3,3,2,3,3], new PitchClass(0,19)), // major-ish scale in 19-TET
+          length: 4,
+          harmony: {
+            rate: 2,
+            chords: [CHORDS.TRIAD_PLUS_8(0), CHORDS.TRIAD_PLUS_8(3)]
+          },
+          parts: [{
+            mode: 'chord',
+            rate: 1,
+            octave: 3,
+            looped: true,
+            pitches: [0,1],
+          }]
+        }]
+      });
+      assert.deepEqual(song.toJSON(), {
+        "bpm": 120,
+        "tracks": [
+          [
+            note({ time: 0, pitch: 76 }),
+            note({ time: 0, pitch: 81 }),
+            note({ time: 0, pitch: 87 }),
+            note({ time: 0, pitch: 95 }),
+            note({ time: 1, pitch: 81 }),
+            note({ time: 1, pitch: 87 }),
+            note({ time: 1, pitch: 95 }),
+            note({ time: 1, pitch: 100 }),
+            note({ time: 2, pitch: 84 }),
+            note({ time: 2, pitch: 89 }),
+            note({ time: 2, pitch: 95 }),
+            note({ time: 2, pitch: 103 }),
+            note({ time: 3, pitch: 89 }),
+            note({ time: 3, pitch: 95 }),
+            note({ time: 3, pitch: 103 }),
+            note({ time: 3, pitch: 108 }),
           ],
         ],
       });

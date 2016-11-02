@@ -31,6 +31,7 @@ class Pitch {
   constructor(value, octave = 4) {
     let pitchClass;
     if (typeof value === 'number') {
+      // This assumes 12 pitches per octave. To use a different value, pass in a PitchClass with the desired pitchesPerOctave
       pitchClass = new PitchClass( mod(Math.round(value), 12) );
       octave = Math.floor(value / 12) - 1;
     }
@@ -49,7 +50,10 @@ class Pitch {
           pitchClass = new PitchClass(string);
         }
       }
-      value = pitchClass.value + 12 * (octave + 1);
+      // TODO: depending on how a microtonal tuning is set up, an offset can be involved
+      // For example in 19-TET, the value of 0 may be significantly higher than a 0 value with 12-TET, so that
+      // middle C on a keybaord produces the same pitch. Need to figure out how to deal with that...
+      value = pitchClass.value + pitchClass.pitchesPerOctave * (octave + 1);
     }
     /**
      * @member {PitchClass}
