@@ -33,11 +33,16 @@ Bugs
 Cleanup
 - Re-evaluate if everything in chord should be optionally overridden by the classes non-constructor functions.
   I'd argue for simplifying as much as possible for 1.0 if it's not needed by the Song generator logic.
+- Rename github repo to chorus.js (assuming I don't come up with a better name). Leave the old page there and redirect.
 
 Future Features
 - Live-coding mode:
   - Loop a section
   - Watch the Song source file for changes
   - Synchronize changes with section-looping
+- Web support
+  - Ideally support realtime MIDI with the Web MIDI API, but browser support is lacking right now
+  - Support MIDI file download as a fallback
+  - Direct audio output with the Web Audio API (this could really lower the barrier to microtonal composition)
 - Constrain track range. Since bass mode ignores inversions, it can jump up too much. Sometimes it should go down an octave. See also next idea:
 - Automatic voice leading, esp for chord progressions, maybe for bass/lead too (prefer intervals less than a tritone)?

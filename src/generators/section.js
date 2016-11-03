@@ -2,7 +2,7 @@ const Part = require('./part');
 const Harmony = require('./harmony');
 
 /**
- * A Song section
+ * A section of a {@link Song}.
  */
 class Section {
 
