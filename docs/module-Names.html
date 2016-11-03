@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Module: Names</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Module: Names</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>Predefined constants for common musical objects and properties.</p></div>
+        
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="names_index.js.html">names/index.js</a>, <a href="names_index.js.html#line7">line 7</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Inject all names into the global namespace.
+// WARNING: This is not safe to do in large/serious projects, however,
+// it is very convenient when experimenting with this library.
+require('midikit/names').into(global);</code></pre>
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".CHORDS"><span class="type-signature">(static) </span>CHORDS<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Common <a href="Chord.html">Chord</a> types defined in terms of scale degree offsets (the third argument to the Chord constructor)</p>
+<ul>
+<li><code>TRIAD</code></li>
+<li><code>QUARTAL</code></li>
+<li><code>QUINTAL</code></li>
+<li><code>SEVENTH</code></li>
+</ul>
+<p>Note: whether a chord such as a triad is major, minor, diminished, or augmented depends on the scale and the root
+of the chord. This is because chords in midikit are defined in terms of scale degrees, so you don't have to worry
+about accidentally using notes that aren't part of the scale. If you don't know music theory, don't worry about it!
+When using scales and chords in midikit, things will tend to sound good by default.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="names_index.js.html">names/index.js</a>, <a href="names_index.js.html#line48">line 48</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://en.wikipedia.org/wiki/Triad_(music)">https://en.wikipedia.org/wiki/Triad_(music)</a></li>
+        
+            <li><a href="https://en.wikipedia.org/wiki/Suspended_chord">https://en.wikipedia.org/wiki/Suspended_chord</a></li>
+        
+            <li><a href="https://en.wikipedia.org/wiki/Quartal_and_quintal_harmony">https://en.wikipedia.org/wiki/Quartal_and_quintal_harmony</a></li>
+        
+            <li><a href="https://en.wikipedia.org/wiki/Seventh_chord">https://en.wikipedia.org/wiki/Seventh_chord</a></li>
+        
+            <li><a href="https://en.wikipedia.org/wiki/Inversion_(music)#Chords">https://en.wikipedia.org/wiki/Inversion_(music)#Chords</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const { PITCH_CLASSES, SCALE_TYPES, CHORD_TYPES } = require('chorus');
+const { C } = PITCH_CLASSES;
+const { MAJOR } = SCALE_TYPES;
+const { TRIAD, SEVENTH } = CHORD_TYPES;
+const { Scale } = require('chorus');
+const cMajorScale = new Scale(C, MAJOR);
+const I_CHORD  = new Chord(TRIAD, 0, cMajorScale); // C major triad
+const IV_CHORD = new Chord(TRIAD, 3, cMajorScale); // F major triad
+const V7_CHORD = new Chord(SEVENTH, 4, cMajorScale); // G major dominant 7th chord
+const vi_CHORD = new Chord(TRIAD, 5, cMajorScale); // a minor triad</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".PITCH_CLASSES"><span class="type-signature">(static) </span>PITCH_CLASSES<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>The 12 <a href="PitchClass.html">PitchClasses</a>:</p>
+<p><code>C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B</code></p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="names_index.js.html">names/index.js</a>, <a href="names_index.js.html#line55">line 55</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".PITCHES"><span class="type-signature">(static) </span>PITCHES<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>The 128 <a href="Pitch.html">Pitches</a>:</p>
+<p><code>C_1, Db_1, D_1, Eb_1, E_1, F_1, Gb_1, G_1, Ab_1, A_1, Bb_1, B_1, C0, Db0, D0, ..., Ab8, B8, C9, Cb9, D9, Db9, E9, F9, Gb9, G9</code></p>
+<p><code>C_1</code> is the minimum Pitch value of 0 (<code>&quot;_1&quot;</code> means -1 octave number).</p>
+<p><code>G9</code> the is maximum Pitch value of 127.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="names_index.js.html">names/index.js</a>, <a href="names_index.js.html#line66">line 66</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".SCALES"><span class="type-signature">(static) </span>SCALES<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Common <a href="Scale.html">Scale</a> types defined in terms of intervals (the second argument to the Scale constructor):</p>
+<ul>
+<li><code>IONIAN</code>, also known as:<ul>
+<li><code>MAJOR</code></li>
+</ul>
+</li>
+<li><code>DORIAN</code></li>
+<li><code>PHRYGIAN</code></li>
+<li><code>LYDIAN</code></li>
+<li><code>MIXOLYDIAN</code></li>
+<li><code>AEOLIAN</code>, also known as:<ul>
+<li><code>MINOR</code></li>
+<li><code>NATURAL_MINOR</code></li>
+</ul>
+</li>
+<li><code>LOCRIAN</code></li>
+<li><code>HARMONIC_MINOR</code></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="names_index.js.html">names/index.js</a>, <a href="names_index.js.html#line93">line 93</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://en.wikipedia.org/wiki/Scale_(music)">https://en.wikipedia.org/wiki/Scale_(music)</a></li>
+        
+            <li><a href="https://en.wikipedia.org/wiki/Mode_(music)#Modern">https://en.wikipedia.org/wiki/Mode_(music)#Modern</a></li>
+        
+            <li><a href="https://en.wikipedia.org/wiki/List_of_musical_scales_and_modes">https://en.wikipedia.org/wiki/List_of_musical_scales_and_modes</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const { PITCH_CLASSES, SCALE_TYPES } = require('midikit/names');
+const { C } = PITCH_CLASSES;
+const { MAJOR } = SCALE_TYPES;
+const { Scale } = require('chorus');
+const cMajorScale = new Scale(C, MAJOR);</code></pre>
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".into"><span class="type-signature">(static) </span>into<span class="signature">(namespace)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Inject all predefined names into the given Object.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>namespace</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the object whose properties will be destructively modified to set all name/values defined here</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="names_index.js.html">names/index.js</a>, <a href="names_index.js.html#line101">line 101</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Generators.html">Generators</a></li><li><a href="module-MIDI.html">MIDI</a></li><li><a href="module-Models.html">Models</a></li><li><a href="module-Names.html">Names</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MIDIFile.html">MIDIFile</a></li><li><a href="MIDIIn.html">MIDIIn</a></li><li><a href="MIDIOut.html">MIDIOut</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Thu Nov 03 2016 00:40:36 GMT-0700 (PDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

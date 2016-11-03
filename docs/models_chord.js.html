@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: models/chord.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: models/chord.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const { mod } = require('../utils');
+
+function findUniqueOctaveOffset(offsetsAndShifts, scaleLength, direction = 1) {
+  direction = Math.sign(direction) || 1;
+  if (direction &lt; 0) offsetsAndShifts = offsetsAndShifts.slice().reverse();
+  for (let octave=direction; true; octave += direction) { // eslint-disable-line no-constant-condition
+    for (const [offset,shift] of offsetsAndShifts) {
+      const invertedOffset = offset + (octave * scaleLength);
+      if (!offsetsAndShifts.find(([o,s]) => (o === invertedOffset &amp;&amp; s === shift))) {
+        return [invertedOffset,shift];
+      }
+    }
+  }
+}
+
+function offsetsAndShiftsForInversion(offsets, shifts, inversion, scaleLength) {
+  offsets = offsets.slice(); // make a copy
+  shifts = (shifts || []).slice(0, offsets.length);
+  if (shifts.length &lt; offsets.length) {
+    shifts = shifts.concat(new Array(offsets.length - shifts.length).fill(0));
+  }
+  const offsetsAndShifts = offsets.map((offset, index) => [offset, shifts[index]]);
+  for (let i =  1; i &lt;= inversion; i++) {
+    offsetsAndShifts.push(findUniqueOctaveOffset(offsetsAndShifts, scaleLength));
+    offsetsAndShifts.shift();
+  }
+  for (let i = -1; i >= inversion; i--) {
+    offsetsAndShifts.unshift(findUniqueOctaveOffset(offsetsAndShifts, scaleLength, -1));
+    offsetsAndShifts.pop();
+  }
+  return offsetsAndShifts;
+}
+
+/**
+ * A chord
+ */
+class Chord {
+
+  /**
+   *
+   * @param offsets - a list of scale offsets (Numbers) and/or scale offsets + chromatic shifts (duples of Numbers)
+   * @param scale
+   * @param root
+   * @param octave
+   * @param inversion
+   */
+  constructor(offsets, { scale, root = 0, octave = 4, inversion = 0, shifts } = {}) {
+    this.offsets = Object.freeze(offsets.slice()); // scale degrees relative to the given root
+    this.shifts = shifts ? Object.freeze(shifts.slice()) : shifts; // chromatic shifts for the scale-degree offsets
+    this.scale = scale;
+    this.root = root; // the scale degree of the root of the chord
+    this.octave = octave;
+    this.inversion = inversion;
+    Object.freeze(this);
+  }
+
+  /**
+   *
+   * @param scale
+   * @param root
+   * @param octave
+   * @param inversion
+   * @param offset
+   * @returns {Array|*|{}}
+   */
+  pitches({ scale = this.scale, root = this.root, octave = this.octave, inversion = this.inversion, shifts = this.shifts, offset = 0, } = {}) {
+    const offsetsAndShifts = offsetsAndShiftsForInversion(this.offsets, shifts, inversion, scale.length);
+    const pitches = offsetsAndShifts.map(([invertedOffset, invertedShift]) =>
+      scale.pitch(root + invertedOffset + offset, { octave }).add(invertedShift));
+    return pitches;
+  }
+
+  /**
+   *
+   * @param position
+   * @param scale
+   * @param root
+   * @param octave
+   * @param inversion
+   * @param offset
+   * @returns {*}
+   */
+  pitch(position, { scale = this.scale, root = this.root, octave = this.octave, inversion = this.inversion, shifts = this.shifts, offset = 0 } = {}) {
+    const pitches = this.pitches({ scale, root, octave, inversion, shifts, offset });
+    const pitch = pitches[mod(position, pitches.length)];
+    const octaveOffset = Math.floor(position / pitches.length);
+    if (octaveOffset !== 0) {
+      return pitch.add(octaveOffset * scale.semitones);
+    }
+    return pitch;
+  }
+
+  inv(inversion) {
+    if (!inversion) return this;
+    return new Chord(this.offsets, { scale: this.scale, root: this.root, octave: this.octave, shifts: this.shifts, inversion: inversion });
+  }
+
+}
+
+module.exports = Chord;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Generators.html">Generators</a></li><li><a href="module-MIDI.html">MIDI</a></li><li><a href="module-Models.html">Models</a></li><li><a href="module-Names.html">Names</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MIDIFile.html">MIDIFile</a></li><li><a href="MIDIIn.html">MIDIIn</a></li><li><a href="MIDIOut.html">MIDIOut</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Thu Nov 03 2016 00:40:36 GMT-0700 (PDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

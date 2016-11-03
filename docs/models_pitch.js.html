@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: models/pitch.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: models/pitch.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const PitchClass = require('./pitch-class');
+const { mod } = require('../utils');
+
+/**
+ * A Pitch is an immutable representation of the frequency of a musical note.
+ * It consists of a {@link PitchClass} and an octave number.
+ * It has an underlying value for MIDI pitch, which supports the range 0 to 127 (inclusive).
+ *
+ * @example
+ * // The following are equivalent:
+ * new Pitch(60);
+ * new Pitch(new PitchClass('C'), 4);
+ * new Pitch(new PitchClass('C')); // default octave is 4
+ * new Pitch('C4');
+ * new Pitch('C', 4);
+ * new Pitch('C'); // default octave is 4
+ */
+class Pitch {
+
+  /**
+   * The maximum pitch value supported by MIDI: 127. Note the minimum value is 0.
+   */
+  static get MAX_VALUE() {
+    return 127;
+  }
+
+  /**
+   * @param {number|PitchClass|string} value - The numeric pitch value, or a PitchClass, or a string of the pitch class name and optional octave. See examples below.
+   * @param {number} [octave=4] - The octave to use when the first argument is a PitchClass or a string without the octave. The octave should be in the range -1 to 9 (inclusive) to avoid invalid pitch values.
+   */
+  constructor(value, octave = 4) {
+    let pitchClass;
+    if (typeof value === 'number') {
+      // This assumes 12 pitches per octave. To use a different value, pass in a PitchClass with the desired pitchesPerOctave
+      pitchClass = new PitchClass( mod(Math.round(value), 12) );
+      octave = Math.floor(value / 12) - 1;
+    }
+    else {
+      if (value instanceof PitchClass) {
+        pitchClass = value;
+      }
+      else {
+        const string = value.toString();
+        const matches = /([A-Ga-g][b#]*)([-_]1|[0-9])$/.exec(string);
+        if (matches) {
+          pitchClass = new PitchClass(matches[1]);
+          octave = Number(matches[2].replace('_','-'));
+        }
+        else {
+          pitchClass = new PitchClass(string);
+        }
+      }
+      // TODO: depending on how a microtonal tuning is set up, an offset can be involved
+      // For example in 19-TET, the value of 0 may be significantly higher than a 0 value with 12-TET, so that
+      // middle C on a keybaord produces the same pitch. Need to figure out how to deal with that...
+      value = pitchClass.value + pitchClass.pitchesPerOctave * (octave + 1);
+    }
+    /**
+     * @member {PitchClass}
+     * @readonly */
+    this.pitchClass = pitchClass;
+    /**
+     * @member {number}
+     * @readonly */
+    this.octave = octave;
+    /**
+     * The MIDI pitch value. Should be in the range 0 to 127 (inclusive).
+     * @member {number}
+     * @readonly */
+    this.value = value;
+    /**
+     * The [canonical name]{@link module:Names.PITCHES} for this Pitch.
+     * @member {string}
+     * @readonly */
+    this.name = `${pitchClass.name}${octave.toString().replace('-', '_')}`;
+    Object.freeze(this);
+  }
+
+  valueOf() {
+    return this.value;
+  }
+
+  inspect() {
+    return this.name;
+  }
+
+  /**
+   * Return a new Pitch whose value is the sum of this Pitch's value and the given value
+   * @param value {number} the value to add to this Pitch's value
+   * @returns {Pitch}
+   */
+  add(value) {
+    return new Pitch(this.value + value);
+  }
+}
+
+module.exports = Pitch;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Generators.html">Generators</a></li><li><a href="module-MIDI.html">MIDI</a></li><li><a href="module-Models.html">Models</a></li><li><a href="module-Names.html">Names</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MIDIFile.html">MIDIFile</a></li><li><a href="MIDIIn.html">MIDIIn</a></li><li><a href="MIDIOut.html">MIDIOut</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Thu Nov 03 2016 00:40:36 GMT-0700 (PDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

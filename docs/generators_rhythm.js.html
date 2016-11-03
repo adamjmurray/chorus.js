@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: generators/rhythm.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: generators/rhythm.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const Sequencer = require('./sequencer');
+
+/**
+ * A Rhythm generates `{time, intensity, duration}` tuples (intensity and duration optional depending on constructor properties).
+ */
+class Rhythm extends Sequencer {
+
+  /**
+   * @param {String|Iterable} rhythm either a String or {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#iterable|Iterable}
+   * of delta-start times
+   *
+   * If it's a String, it can contain the following characters:
+   *   - `"X"` - accented note
+   *   - `"x"` - normal note
+   *   - `"="` - tie
+   *   - `"."` - rest
+   * Each character's duration is a 'time unit' that is the duration of the rate option.
+   *
+   * If it's a Iterable of delta-start times, it represents the time between each note (and the start of
+   * sequence for the first note). The times are are relative to the rate option.
+   *
+   * @param {Iterable}
+   * @param {Object} options
+   * @param {Number} [options.rate=1/4] rate the number of beats each 'time unit' represents (e.g. 1/4 is a quarter of one beat, which is a sixteenth note in common time signatures)
+   */
+  constructor(rhythm = [1], { rate=1/4, intensities, durations, length, looped } = {}) {
+    const times = [];
+    if (typeof rhythm === 'string') {
+      length = length || rhythm.length * rate;
+      intensities = [];
+      durations = [];
+      let duration = null;
+      let count = 0;
+      for (const char of rhythm) {
+        switch (char) {
+          case 'X':
+            times.push(rate * count);
+            intensities.push(1);
+            if (duration) durations.push(duration); // previous duration
+            duration = rate;
+            count++;
+            break;
+          case 'x':
+            times.push(rate * count);
+            intensities.push(0.7);
+            if (duration) durations.push(duration); // previous duration
+            duration = rate;
+            count++;
+            break;
+          case '=':
+            if (duration) duration += rate;
+            count++;
+            break;
+          case '.':
+            if (duration) durations.push(duration);
+            duration = null;
+            count++;
+            break;
+          default:
+        }
+      }
+      if (duration) durations.push(duration);
+    }
+    else {
+      length = rhythm.map(Math.abs).reduce((a,b) => a + b) * rate;
+      durations = [];
+      let time = 0;
+      let nextTime;
+      for (const value of rhythm) {
+        nextTime = time + (rate * Math.abs(value));
+        const duration = (nextTime - time) * Math.sign(value);
+        if (duration > 0) {
+          times.push(time);
+          durations.push(duration);
+        } // else this is a rest
+        time = nextTime;
+      }
+    }
+    intensities = intensities || [0.7];
+    super({ time: times, intensity: intensities, duration: durations }, { length, looped });
+    this.times = times;
+    this.intensities = intensities;
+    this.durations = durations;
+  }
+
+  /**
+   * Generates a Rhythm by evenly distributes the given number of pulses into the given total number of time units.
+   * Very similar to a "Euclidean rhythm".
+   * @param pulses {number}
+   * @param total {number}
+   * @param options accepts the same options as the constructor, plus a rotation option
+   * @see https://en.wikipedia.org/wiki/Euclidean_rhythm
+   */
+  static distribute(pulses, total, options={}) {
+    if (!(pulses &lt; total)) throw new Error('pulses must be less than total');
+    const rhythm = [];
+    let count = 0;
+    let nextPulse = Math.floor(++count/pulses * total);
+    for (let i=1; i&lt;=total; i++) {
+      if (i &lt; nextPulse) {
+        rhythm.push('.'); // rest
+      } else {
+        rhythm.push('x'); // pulse
+        nextPulse = Math.floor(++count/pulses * total);
+      }
+    }
+    let rhythmString = rhythm.reverse().join('');
+    if (options.rotation) {
+      const rotation = options.rotation;
+      for (let i =  1; i &lt;= rotation; i++) {
+        const nextX = rhythmString.indexOf('x', 1);
+        if (nextX > 0) rhythmString = rhythmString.slice(nextX) + rhythmString.slice(0, nextX);
+        else break;
+      }
+      for (let i = -1; i >= rotation; i--) {
+        const prevX = rhythmString.lastIndexOf('x');
+        if (prevX > 0) rhythmString = rhythmString.slice(prevX) + rhythmString.slice(0, prevX);
+        else break;
+      }
+    }
+    return rhythmString;
+  }
+}
+
+module.exports = Rhythm;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Generators.html">Generators</a></li><li><a href="module-MIDI.html">MIDI</a></li><li><a href="module-Models.html">Models</a></li><li><a href="module-Names.html">Names</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MIDIFile.html">MIDIFile</a></li><li><a href="MIDIIn.html">MIDIIn</a></li><li><a href="MIDIOut.html">MIDIOut</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Thu Nov 03 2016 00:40:36 GMT-0700 (PDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

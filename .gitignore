@@ -2,6 +2,5 @@
 *.tmp
 *.mid
 coverage
-doc
 node_modules
 tmp

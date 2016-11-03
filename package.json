@@ -26,7 +26,7 @@
     "lint": "node_modules/.bin/eslint src test",
     "mocha": "node_modules/.bin/mocha test/*.js test/**/*.js",
     "cover": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- test/*.js test/**/*.js",
-    "doc": "node_modules/.bin/jsdoc src --configure ./jsdoc.json --recurse --destination doc --readme docs-home.md",
+    "doc": "node_modules/.bin/jsdoc src --configure ./jsdoc.json --recurse --destination docs --readme docs-home.md",
     "doc-watch": "nodemon -e js,md -x npm run doc"
   },
   "optionalDependencies": {
