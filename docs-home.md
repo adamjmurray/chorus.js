@@ -1,4 +1,4 @@
-## chorus.js overview
+## chorus.js Overview
 
 The {@link Song} class is used to generate a song. The overall structure looks like this:
  
@@ -141,3 +141,6 @@ Relative pitch values produce `Pitch`es based on the `Part`'s mode setting, the 
 which makes it easy to try different scales and chord progressions without changing the `Part`.
 
 This is the basic `Song` structure. Each object mentioned here has various options to further control the song's behavior.
+Consult each class's documentation for more information.
+
+TODO: examples!

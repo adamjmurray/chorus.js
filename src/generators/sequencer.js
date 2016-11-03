@@ -1,5 +1,15 @@
+/**
+ * Generic sequencing logic *intended for internal use*.
+ *
+ * The superclass of {@link Rhythm}, {@link Harmony}, and {@link Part}.
+ */
 class Sequencer {
 
+  /**
+   *
+   * @param {Object} iterablesByName the property names and iterables used by @@iterator()
+   * @param {Object} options see subclass documentation
+   */
   constructor(iterablesByName={}, { length, looped=false, delay=0 }) {
     this.iterablesByName = iterablesByName;
     this.length = length;
@@ -7,6 +17,16 @@ class Sequencer {
     this.delay = delay;
   }
 
+  /**
+   * @function @@iterator
+   * @memberOf Sequencer
+   * @instance
+   * @description The `[Symbol.iterator]()` generator function* that implements the
+   *              [iterable protocol]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol}
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols|MDN: Iteration Protocols}
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator|MDN: Symbol.iterator}
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*|MDN: function*}
+   */
   *[Symbol.iterator]() {
     const iterablesByName = this.iterablesByName;
     const names =  Object.keys(iterablesByName);

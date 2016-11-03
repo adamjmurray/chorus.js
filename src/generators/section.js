@@ -2,17 +2,40 @@ const Part = require('./part');
 const Harmony = require('./harmony');
 
 /**
- * A section of a {@link Song}.
+ * A section of a {@link Song} with a particular scale and harmony.
+ *
+ * See the overview on the [documentation homepage](./index.html).
+ * @implements [iterable protocol]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol}
  */
 class Section {
 
-  constructor({scale, harmony, parts=[], length} = {}) {
+  /**
+   * @arg {Object} options
+   * @arg {Harmony} options.harmony The Section's harmony (its chord progression)
+   * @arg {Part[]|Object[]} options.parts The Section's parts as either an Array of {@link Part} objects,
+   *              or an Array of options objects for the [Part constructor]{@link Part}
+   * @arg {Scale} options.scale The Section's {@link Scale}.
+   *                              Must be provided unless this instance is constructed by the containing {@link Song}
+   *                              *and* it's [sectionLength]{@link Song} is set.
+   * @arg {Number} [options.length=max {@link Part|Part.length}] The length of the Section in beats.
+   */
+  constructor({harmony, scale, parts=[], length} = {}) {
     this.scale = scale;
     this.harmony = harmony instanceof Harmony ? harmony : new Harmony(harmony);
     this.parts = parts.map(t => t instanceof Part ? t : new Part(t));
     this.length = length || Math.max(...this.parts.map(t => t.length));
   }
 
+  /**
+   * @function @@iterator
+   * @memberOf Section
+   * @instance
+   * @description The `[Symbol.iterator]()` generator function* that implements the
+   *              [iterable protocol]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol}
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols|MDN: Iteration Protocols}
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator|MDN: Symbol.iterator}
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*|MDN: function*}
+   */
   *[Symbol.iterator]() {
     const { scale, harmony, parts } = this;
     let partIdx = -1;
