@@ -30,7 +30,12 @@ Bugs
 - Iterables for randomization (input: min, max value, integer vs float mode), for use as intensities, durations, etc
   - More iterable patterns, like weighted choice  
 - Documentation
-
+  - Double check my install/usage notes on Windows
+  - Install/usage notes may be bogus. 
+    I remember hitting some technical roadblock with Bitwig before going back developing against to Ableton Live.
+    Might be the all notes off bug mentioned above. Need to revisit!
+  - Setup a Changelog file
+  
 Cleanup
 - Renamed generators to structure? It keeps bothering me this term is overloaded with ES6 generator functions
 - Rhythm construction is inconsistent with the other classes in that module (see looped rhythm example, why do we have to construct a Rhythm explicitly?).
@@ -39,6 +44,8 @@ Cleanup
   I'd argue for simplifying as much as possible for 1.0 if it's not needed by the Song generator logic.
 - Rename github repo to chorus.js (assuming I don't come up with a better name). Leave the old page there and redirect.
 - Provide constants for the part modes
+
+Once I do all the above, then we're at v1.0.0?
 
 Future Features
 - Live-coding mode:

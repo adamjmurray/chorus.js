@@ -1,6 +1,6 @@
 {
   "name": "chorus",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A harmony-based music composition toolkit with MIDI I/O",
   "author": "Adam Murray <adam@compusition.com>",
   "license": "MIT",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/adamjmurray/npm-chorus"
+    "url": "https://github.com/adamjmurray/chorus.js"
   },
   "keywords": [
     "music",
@@ -26,8 +26,8 @@
     "lint": "node_modules/.bin/eslint src test",
     "mocha": "node_modules/.bin/mocha test/*.js test/**/*.js",
     "cover": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- test/*.js test/**/*.js",
-    "doc": "node_modules/.bin/jsdoc src --configure ./jsdoc.json --recurse --destination docs --readme docs-home.md",
-    "doc-watch": "nodemon -e js,md -x npm run doc"
+    "docs": "node_modules/.bin/jsdoc src --configure ./jsdoc.json --recurse --destination docs --readme docs-home.md",
+    "docs-watch": "nodemon -e js,md -x npm run doc"
   },
   "optionalDependencies": {
     "midi": "^0.9.5"

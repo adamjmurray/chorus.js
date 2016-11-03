@@ -2,8 +2,6 @@
 
 A music composition toolkit for JavaScript
 
-
-
 ## Features
 
 - Generate multi-track songs with intuitive support for harmony-based composition ("Western music").
@@ -13,16 +11,24 @@ A music composition toolkit for JavaScript
 
 ## Status
 
-Early alpha version, not ready for general usage. 
+Early beta-ish version, not ready for general usage. 
 
-If you found this and you're trying it anyway, see the examples folder.
+If you found this and you're trying it anyway, see the examples folder and documentation (link below).
 
-For now, I recommend installing [the latest source code](https://github.com/adamjmurray/npm-chorus):
+For now, I recommend installing [the latest source code](https://github.com/adamjmurray/chorus.js):
 
-      npm install adamjmurray/npm-chorus
+      npm install adamjmurray/chorus.js
 
 Check the github page for the latest info.
 
+Update November 2, 2016: The codebase is starting to stabilize, so I'll probably start publishing updates to npm regularly soon.
+
+
+## Documentation
+
+https://adamjmurray.github.io/chorus.js/
+
+Very much a work in progress!
 
 
 ## Installation
