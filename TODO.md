@@ -1,5 +1,6 @@
 TODO next:
 - See TODO in Pitch constructor related to setting a pitch value offset in microtonal tunings     
+- Get generators module coverage to 100%
 
 Bugs
 - Notes are running into each other beings things are "100% legato". For example when I was testing the 19tet example and recording live MIDI to Ableton.

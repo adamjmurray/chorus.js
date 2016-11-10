@@ -74,7 +74,28 @@ describe('Chord', () => {
     });
   });
 
-  describe('inversions', () => {
+  describe('.inv()', () => {
+    it('can invert a chord upward', () => {
+      const chord = new Chord([0,2,4], { scale: SCALES.MAJOR(C), root: 0 });
+      assert.deepEqual(chord.inv(1).pitches(), [PITCHES.E4, PITCHES.G4, PITCHES.C5]);
+      assert.deepEqual(chord.inv(2).pitches(), [PITCHES.G4, PITCHES.C5, PITCHES.E5]);
+      assert.deepEqual(chord.inv(3).pitches(), [PITCHES.C5, PITCHES.E5, PITCHES.G5]);
+      assert.deepEqual(chord.inv(4).pitches(), [PITCHES.E5, PITCHES.G5, PITCHES.C6]);
+    });
+
+    it('can invert a chord downward', () => {
+      const chord = new Chord([0,2,4], { scale: SCALES.MAJOR(C), root: 0 });
+      assert.deepEqual(chord.inv(-1).pitches(), [PITCHES.G3, PITCHES.C4, PITCHES.E4]);
+      assert.deepEqual(chord.inv(-2).pitches(), [PITCHES.E3, PITCHES.G3, PITCHES.C4]);
+      assert.deepEqual(chord.inv(-3).pitches(), [PITCHES.C3, PITCHES.E3, PITCHES.G3]);
+      assert.deepEqual(chord.inv(-4).pitches(), [PITCHES.G2, PITCHES.C3, PITCHES.E3]);
+    });
+
+    it('has no effect when the inversion is 0', () => {
+      const chord = new Chord([0,2,4,7], { scale: SCALES.MAJOR(C), root: 0 }).inv(0);
+      assert.deepEqual(chord.pitches(), [PITCHES.C4, PITCHES.E4, PITCHES.G4, PITCHES.C5]);
+    });
+
     it('can invert chords with octave doubling upward', () => {
       const chord = new Chord([0,2,4,7], { scale: SCALES.MAJOR(C), root: 0 }).inv(1);
       assert.deepEqual(chord.pitches(), [PITCHES.E4, PITCHES.G4, PITCHES.C5, PITCHES.E5]);

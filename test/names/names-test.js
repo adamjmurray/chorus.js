@@ -16,4 +16,18 @@ describe('Names', () => {
       assert.equal(Names.PITCHES.C4.pitchClass.name, 'C');
     });
   });
+
+  describe('.into()', () => {
+    it('injects the name constants into the given object', () => {
+      const obj = { property: 'value', C: 'overwritten' };
+      Names.into(obj);
+      assert.equal(obj.property, 'value');
+      assert.equal(obj.C, Names.PITCH_CLASSES.C);
+      for (const namespace of ['PITCH_CLASSES', 'PITCHES', 'SCALES', 'CHORDS', 'DRUMS']) {
+        for (const name of Object.keys(Names[namespace])) {
+          assert.equal(obj[name], Names[namespace][name]);
+        }
+      }
+    });
+  });
 });
