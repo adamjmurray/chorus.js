@@ -1,5 +1,4 @@
 TODO next:
-- Write a bunch of tests related to the non-12-pitches-per-octave behaviors introduced in pitch, pitchClass, scale (see relevant commit diff)
 - See TODO in Pitch constructor related to setting a pitch value offset in microtonal tunings     
 
 Bugs
@@ -48,6 +47,7 @@ Cleanup
 Once I do all the above, then we're at v1.0.0?
 
 Future Features
+- Support custom names for PitchClasses and Pitches when pitchesPerOctave != 12
 - Live-coding mode:
   - Loop a section
   - Watch the Song source file for changes

@@ -1,5 +1,4 @@
 const PitchClass = require('./pitch-class');
-const { mod } = require('../utils');
 
 /**
  * A Pitch is an immutable representation of the frequency of a musical note.
@@ -28,11 +27,10 @@ class Pitch {
    * @param {number|PitchClass|string} value - The numeric pitch value, or a PitchClass, or a string of the pitch class name and optional octave. See examples below.
    * @param {number} [octave=4] - The octave to use when the first argument is a PitchClass or a string without the octave. The octave should be in the range -1 to 9 (inclusive) to avoid invalid pitch values.
    */
-  constructor(value, octave = 4) {
+  constructor(value, octave=4, pitchesPerOctave=12) {
     let pitchClass;
     if (typeof value === 'number') {
-      // This assumes 12 pitches per octave. To use a different value, pass in a PitchClass with the desired pitchesPerOctave
-      pitchClass = new PitchClass( mod(Math.round(value), 12) );
+      pitchClass = new PitchClass(value, pitchesPerOctave);
       octave = Math.floor(value / 12) - 1;
     }
     else {
@@ -72,7 +70,8 @@ class Pitch {
      * The [canonical name]{@link module:Names.PITCHES} for this Pitch.
      * @member {string}
      * @readonly */
-    this.name = `${pitchClass.name}${octave.toString().replace('-', '_')}`;
+    this.name = pitchClass.pitchesPerOctave === 12 ?
+      `${pitchClass.name}${octave.toString().replace('-', '_')}` : String(value);
     Object.freeze(this);
   }
 
@@ -90,7 +89,7 @@ class Pitch {
    * @returns {Pitch}
    */
   add(value) {
-    return new Pitch(this.value + value);
+    return new Pitch(this.value + value, null, this.pitchClass.pitchesPerOctave);
   }
 }
 

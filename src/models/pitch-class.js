@@ -79,7 +79,7 @@ class PitchClass {
      * The canonical name of this PitchClass. See {@link PitchClass.NAMES}
      * @member {PitchClass}
      * @readonly */
-    this.name = pitchesPerOctave === 12 ? PitchClass.NAMES[value] : String(value); // TODO? support custom naming schemes
+    this.name = pitchesPerOctave === 12 ? PitchClass.NAMES[value] : String(value);
     /**
      * The number of semitones above C. Used to compute {@link Pitch#value MIDI pitch values}.
      * This is always the canonical value in the range 0-11 (inclusive). Assigning this property will convert to the

@@ -1,5 +1,6 @@
 const assert = require('assert');
 const Scale = require('../../src/models/scale');
+const PitchClass = require('../../src/models/pitch-class');
 const { PITCH_CLASSES, PITCHES, SCALES } = require('../../src/names');
 
 describe('Scale', () => {
@@ -57,6 +58,7 @@ describe('Scale', () => {
       assert.deepEqual(scale.pitch(5), PITCHES.B4);
       assert.deepEqual(scale.pitch(6), PITCHES.C5);
     });
+
     it("adds to the octave when wrapping around in the positive direction, ", () => {
       assert.deepEqual(scale.pitch(7), PITCHES.D5);
       assert.deepEqual(scale.pitch(8), PITCHES.E5);
@@ -67,6 +69,7 @@ describe('Scale', () => {
       assert.deepEqual(scale.pitch(13), PITCHES.C6);
       assert.deepEqual(scale.pitch(14), PITCHES.D6);
     });
+
     it("subtracts from the octave when wrapping around in the negative direction", () => {
       assert.deepEqual(scale.pitch(-1), PITCHES.C4);
       assert.deepEqual(scale.pitch(-2), PITCHES.B3);
@@ -78,6 +81,7 @@ describe('Scale', () => {
       assert.deepEqual(scale.pitch(-8), PITCHES.C3);
       assert.deepEqual(scale.pitch(-9), PITCHES.B2);
     });
+
     it("allows octave shifts via an option", () => {
       assert.deepEqual(scale.pitch(0, { octave: 4 }), PITCHES.D4);
       assert.deepEqual(scale.pitch(1, { octave: 5 }), PITCHES.E5);
@@ -86,6 +90,18 @@ describe('Scale', () => {
       assert.deepEqual(scale.pitch(4, { octave: 3 }), PITCHES.A3);
       assert.deepEqual(scale.pitch(5, { octave: 2 }), PITCHES.B2);
       assert.deepEqual(scale.pitch(6, { octave: 1 }), PITCHES.C2);
+    });
+
+    it('supports other than 12 pitches per octave', () => {
+      const microtonalScale = new Scale([3,2,3,3,2,3,3], new PitchClass(0,19));
+      assert.equal(microtonalScale.pitch(0, {octave: -1}), 0);
+      assert.equal(microtonalScale.pitch(1, {octave: -1}), 3);
+      assert.equal(microtonalScale.pitch(2, {octave: -1}), 5);
+      assert.equal(microtonalScale.pitch(8, {octave: -1}), 22);
+      assert.equal(microtonalScale.pitch(8, {octave: 0}), 41);
+      assert.equal(microtonalScale.pitch(-1, {octave: 0}), 16);
+      assert.equal(microtonalScale.pitch(-3, {octave: 0}), 11);
+      assert.equal(microtonalScale.pitch(-3, {octave: 1}), 30);
     });
   });
 });
