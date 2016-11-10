@@ -22,10 +22,12 @@
   ],
   "main": "./src/index.js",
   "scripts": {
-    "test": "npm run lint && npm run mocha",
     "lint": "node_modules/.bin/eslint --config etc/.eslintrc.js src test",
     "mocha": "node_modules/.bin/mocha test/*.js test/**/*.js",
+    "test": "npm run lint && npm run mocha",
     "cover": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- test/*.js test/**/*.js",
+    "coveralls": "npm run cover && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "ci": "npm run lint && npm run coveralls",
     "docs": "node_modules/.bin/jsdoc src --configure etc/jsdoc.json --recurse --destination docs --readme etc/docs-home.md",
     "docs-watch": "nodemon -e js,md -x npm run doc"
   },
@@ -33,6 +35,7 @@
     "midi": "^0.9.5"
   },
   "devDependencies": {
+    "coveralls": "^2.11.14",
     "eslint": "^3.9.1",
     "istanbul": "^1.1.0-alpha.1",
     "jsdoc": "^3.4.2",
