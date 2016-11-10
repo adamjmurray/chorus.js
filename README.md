@@ -1,6 +1,5 @@
-[![NPM](https://nodei.co/npm/chorus.png)](https://npmjs.org/package/chorus)
-
-[![Build Status](https://travis-ci.org/adamjmurray/chorus.js.svg?branch=master)](https://travis-ci.org/adamjmurray/chorus.js)
+[![npm version](https://badge.fury.io/js/chorus.svg)](https://npmjs.org/package/chorus)
+[![build status](https://travis-ci.org/adamjmurray/chorus.js.svg?branch=master)](https://travis-ci.org/adamjmurray/chorus.js)
 
 # chorus.js
 
