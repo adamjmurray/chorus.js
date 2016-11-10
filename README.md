@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/adamjmurray/chorus.js.svg?branch=master)](https://travis-ci.org/adamjmurray/chorus.js)
+
 # chorus.js
 
 A music composition toolkit for JavaScript
