@@ -23,10 +23,10 @@
   "main": "./src/index.js",
   "scripts": {
     "test": "npm run lint && npm run mocha",
-    "lint": "node_modules/.bin/eslint src test",
+    "lint": "node_modules/.bin/eslint --config etc/.eslintrc.js src test",
     "mocha": "node_modules/.bin/mocha test/*.js test/**/*.js",
     "cover": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- test/*.js test/**/*.js",
-    "docs": "node_modules/.bin/jsdoc src --configure ./jsdoc.json --recurse --destination docs --readme docs-home.md",
+    "docs": "node_modules/.bin/jsdoc src --configure etc/jsdoc.json --recurse --destination docs --readme etc/docs-home.md",
     "docs-watch": "nodemon -e js,md -x npm run doc"
   },
   "optionalDependencies": {
