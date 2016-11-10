@@ -1,7 +1,13 @@
 const MIDIFile = require('../../src/midi/file');
 const assert = require('assert');
+const fs = require('fs');
 
 describe('MIDIFile.write()', () => {
+
+  const tmpFolder = `${__dirname}/../../tmp`;
+
+  before(() => fs.existsSync(tmpFolder) ? null : fs.mkdirSync(tmpFolder));
+
   it('parses pitch classes', () => {
     const json = {
       "header": {
@@ -54,7 +60,7 @@ describe('MIDIFile.write()', () => {
         ]
       ]
     };
-    const midiFile = new MIDIFile(`${__dirname}/../../tmp/write-test.mid`);
+    const midiFile = new MIDIFile(`${tmpFolder}/write-test.mid`);
     return midiFile.write(json)
       .then(() => midiFile.read())
       .then(reloadedJson => assert.deepEqual(reloadedJson, json));
