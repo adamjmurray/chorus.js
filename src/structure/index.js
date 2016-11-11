@@ -9,7 +9,6 @@ const Part = require('./part');
  * - {@link Part}
  * - {@link Rhythm}
  * - {@link Section}
- * - {@link Sequencer}
  * - {@link Song}
  * @module Structure
  */
