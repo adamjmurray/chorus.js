@@ -29,7 +29,7 @@
     "coveralls": "npm run cover && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "ci": "npm run lint && npm run coveralls",
     "docs": "node_modules/.bin/jsdoc src --configure etc/jsdoc.json --recurse --destination docs --readme etc/docs-home.md",
-    "docs-watch": "nodemon -e js,md -x npm run doc"
+    "docs-watch": "nodemon -e js,md -x npm run docs"
   },
   "optionalDependencies": {
     "midi": "^0.9.5"
