@@ -92,7 +92,6 @@ class Rhythm extends Sequencer {
    * @see https://en.wikipedia.org/wiki/Euclidean_rhythm
    */
   static distribute(pulses, total, options={}) {
-    if (!(pulses < total)) throw new Error('pulses must be less than total');
     const rhythm = [];
     let count = 0;
     let nextPulse = Math.floor(++count/pulses * total);

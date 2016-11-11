@@ -94,6 +94,7 @@ class Section {
             }
             default: {
               console.error(`Unsupported part mode "${partMode}"`);
+              pitch = null;
             }
           }
         }

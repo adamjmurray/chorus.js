@@ -215,6 +215,26 @@ describe('Song', () => {
       });
     });
 
+    it("doesn't output notes when a part has an invalid mode", () => {
+      const song = new Song({
+        bpm: 120,
+        sections: [{
+          scale: SCALES.MAJOR(C),
+          length: 4,
+          parts: [{
+            mode: 'invalid',
+            rate: 1,
+            rhythm: [1],
+            pitches: [0, 1, 2, 3],
+          }]
+        }]
+      });
+      assert.deepEqual(song.toJSON(), {
+        "bpm": 120,
+        "tracks": [],
+      });
+    });
+
     it('supports looped harmonies', () => {
       const song = new Song({
         bpm: 160,
@@ -482,6 +502,36 @@ describe('Song', () => {
           ],
         ],
       });
+    });
+  });
+
+  describe('[Symbol.iterator]()', () => {
+
+      it("yields the song's events one by one", () => {
+      const song = new Song({
+        bpm: 120,
+        sections: [{
+          scale: SCALES.MAJOR(C),
+          length: 8,
+          parts: [{
+            mode: 'scale',
+            rate: 1,
+            rhythm: [1],
+            pitches: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+          }]
+        }]
+      });
+      assert.deepEqual([...song], [
+        { type: 'bpm', value: 120 },
+        note({ time: 0, pitch: 60 }),
+        note({ time: 1, pitch: 62 }),
+        note({ time: 2, pitch: 64 }),
+        note({ time: 3, pitch: 65 }),
+        note({ time: 4, pitch: 67 }),
+        note({ time: 5, pitch: 69 }),
+        note({ time: 6, pitch: 71 }),
+        note({ time: 7, pitch: 72 }),
+      ]);
     });
   });
 });
