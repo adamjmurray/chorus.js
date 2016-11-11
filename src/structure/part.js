@@ -79,6 +79,8 @@ class Part extends Sequencer {
    *
    *   Use no mode / pitch objects for drum parts.
    *
+   * The supported modes are available via static {@link Part.MODES} constants of this class.
+   *
    * @arg {Iterable} options.pitches
    * @arg {Rhythm|Iterable} options.rhythm
    * @arg {Number} [options.rate=1]
@@ -106,4 +108,24 @@ class Part extends Sequencer {
   }
 }
 
-module.exports = Part;
+// TODO: Should we move the verbose constructor documentation for the individual modes down here?
+/**
+ * Constants for all supported Part.mode options. See [constructor documentation]{@link Part} for descriptions.
+ * @const
+ * @prop ARPEGGIO {String}
+ * @prop BASS {String}
+ * @prop CHORD {String}
+ * @prop CHROMATIC {String}
+ * @prop LEAD {String}
+ * @prop SCALE {String}
+ */
+Part.MODES = Object.freeze({
+  ARPEGGIO: 'arpeggio',
+  BASS: 'bass',
+  CHORD: 'chord',
+  CHROMATIC: 'chromatic',
+  LEAD: 'lead',
+  SCALE: 'scale',
+});
+
+module.exports = Object.freeze(Part);

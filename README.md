@@ -15,24 +15,14 @@ A music composition toolkit for JavaScript
 
 ## Status
 
-Early beta-ish version, not ready for general usage. 
+Early beta-ish version, not quite ready for general usage. 
 
-If you found this and you're trying it anyway, see the examples folder and documentation (link below).
-
-For now, I recommend installing [the latest source code](https://github.com/adamjmurray/chorus.js):
-
-      npm install adamjmurray/chorus.js
-
-Check the github page for the latest info.
-
-Update November 2, 2016: The codebase is starting to stabilize, so I'll probably start publishing updates to npm regularly soon.
+If you found this and you're trying it anyway, see this README, the examples folder, documentation, and tests for ideas on usage.
 
 
 ## Documentation
 
-https://adamjmurray.github.io/chorus.js/
-
-Very much a work in progress!
+Work in progress: https://adamjmurray.github.io/chorus.js/
 
 
 ## Installation

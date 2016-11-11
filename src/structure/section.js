@@ -1,5 +1,6 @@
 const Part = require('./part');
 const Harmony = require('./harmony');
+const { ARPEGGIO, BASS, CHORD, CHROMATIC, LEAD, SCALE } = Part.MODES;
 
 /**
  * A section of a {@link Song} with a particular scale and harmony.
@@ -63,19 +64,19 @@ class Section {
           const number = pitch;
           // let chord;
           switch (partMode) {
-            case 'arpeggio': {
+            case ARPEGGIO: {
               pitch = chord.pitch(number, { scale, octave });
               break;
             }
-            case 'bass': {
+            case BASS: {
               pitch = chord.pitch(0, { scale, octave, inversion: 0, offset: number });
               break;
             }
-            case 'lead': {
+            case LEAD: {
               pitch = chord.pitch(0, { scale, octave, offset: number });
               break;
             }
-            case 'chord': {
+            case CHORD: {
               pitch = null;
               const pitches = chord.pitches({ scale, octave, inversion: chord.inversion + number });
               for (const p of pitches) {
@@ -84,11 +85,11 @@ class Section {
               }
               break;
             }
-            case 'scale': {
+            case SCALE: {
               pitch = scale.pitch(number, { octave });
               break;
             }
-            case 'chromatic': {
+            case CHROMATIC: {
               pitch = scale.pitch(0, { octave }).add(number);
               break;
             }

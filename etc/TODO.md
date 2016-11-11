@@ -30,6 +30,7 @@ Bugs
 - Iterables for randomization (input: min, max value, integer vs float mode), for use as intensities, durations, etc
   - More iterable patterns, like weighted choice  
 - Documentation
+  - Can we remove the "generated at" timestamps fromt he template to avoid diffs in every file every time something is changed?
   - Double check my install/usage notes on Windows
   - Install/usage notes may be bogus. 
     I remember hitting some technical roadblock with Bitwig before going back developing against to Ableton Live.
@@ -41,7 +42,6 @@ Cleanup
   Probably everything should be passed in via an options object (and we can still have a special case for a String value + rate option, maybe?)
 - Re-evaluate if everything in chord should be optionally overridden by the classes non-constructor functions.
   I'd argue for simplifying as much as possible for 1.0 if it's not needed by the Song generator logic.
-- Provide constants for the part modes, update examples
 
 Once I do all the above, then we're at v1.0.0?
 
