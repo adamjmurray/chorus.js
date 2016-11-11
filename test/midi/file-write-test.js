@@ -4,7 +4,7 @@ const fs = require('fs');
 
 describe('MIDIFile.write()', () => {
 
-  const tmpFolder = `${__dirname}/../../tmp`;
+  const tmpFolder = 'tmp';
 
   before(() => fs.existsSync(tmpFolder) ? null : fs.mkdirSync(tmpFolder));
 
