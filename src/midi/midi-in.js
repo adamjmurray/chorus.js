@@ -4,6 +4,7 @@ const midi = require('midi');
  * Realtime MIDI input.
  */
 class MIDIIn {
+
   constructor() {
     this.input = new midi.input();
     this.isOpen = false;

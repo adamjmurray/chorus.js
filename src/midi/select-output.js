@@ -2,7 +2,7 @@
 
 const readline = require('readline');
 const { basename } = require('path');
-const MIDIOut = require('./out');
+const MIDIOut = require('./midi-out');
 const MIDIFile = require('./file');
 
 let cli;
