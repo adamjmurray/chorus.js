@@ -27,7 +27,27 @@ module.exports = {
 
         testMessage(deltaTime, message) {
           this.callbacks.forEach(callback => callback(deltaTime, message));
-        }
+        },
+      };
+    },
+
+    output: function() {
+      return {
+        getPortCount: () => 2,
+
+        getPortName: index => ['output-stub-1', 'output-stub-2'][index],
+
+        openPort(index) {
+          return !!this.getPortName(index);
+        },
+
+        closePort: () => {},
+
+        sentBytes: [],
+
+        sendMessage(bytes) {
+          this.sentBytes.push(bytes);
+        },
       };
     },
   },
