@@ -10,7 +10,7 @@ class Sequencer {
    * @param {Object} iterablesByName the property names and iterables used by @@iterator()
    * @param {Object} options see subclass documentation
    */
-  constructor(iterablesByName={}, { length, looped=false, delay=0 }) {
+  constructor(iterablesByName={}, { length, looped=false, delay=0 }={}) {
     this.iterablesByName = iterablesByName;
     this.length = length;
     this.looped = looped;

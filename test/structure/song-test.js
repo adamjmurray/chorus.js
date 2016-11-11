@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { Song, Chord, Rhythm, Scale, PitchClass, SCALES, CHORDS, PITCHES, PITCH_CLASSES } = require('../../src');
+const { Song, Section, Chord, Rhythm, Scale, PitchClass, SCALES, CHORDS, PITCHES, PITCH_CLASSES } = require('../../src');
 const { C, D } = PITCH_CLASSES;
 
 function note({ time, pitch, velocity = 89, duration = 1, channel = 1}) {
@@ -7,6 +7,18 @@ function note({ time, pitch, velocity = 89, duration = 1, channel = 1}) {
 }
 
 describe('Song', () => {
+
+  describe('constructor()', () => {
+    it('defaults bpm to 120', () => {
+      assert.equal(new Song().bpm, 120);
+    });
+
+    it('accepts an Array of Section objects for the sections option', () => {
+      const section1 = new Section();
+      const section2 = new Section();
+      assert.deepEqual(new Song({ sections: [section1,section2] }).sections, [section1,section2]);
+    });
+  });
 
   describe('toJSON()', () => {
     it('supports scale mode', () => {

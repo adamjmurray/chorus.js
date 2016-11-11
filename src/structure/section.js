@@ -22,7 +22,7 @@ class Section {
   constructor({harmony, scale, parts=[], length} = {}) {
     this.scale = scale;
     this.harmony = harmony instanceof Harmony ? harmony : new Harmony(harmony);
-    this.parts = parts.map(t => t instanceof Part ? t : new Part(t));
+    this.parts = parts.map(part => part instanceof Part ? part : new Part(part));
     this.length = length || Math.max(...this.parts.map(t => t.length));
   }
 
@@ -57,7 +57,7 @@ class Section {
           harmonyCurr = harmonyNext;
           harmonyNext = harmonyIter.next();
         }
-        let { value:{chord}={} } = harmonyCurr || {};
+        let { value:{chord}={} } = harmonyCurr;
 
         if (partMode && typeof pitch === 'number') {
           const number = pitch;

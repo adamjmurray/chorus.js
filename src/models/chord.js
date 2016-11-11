@@ -1,7 +1,7 @@
 const { mod } = require('../utils');
 
-function findUniqueOctaveOffset(offsetsAndShifts, scaleLength, direction = 1) {
-  direction = Math.sign(direction) || 1;
+function findUniqueOctaveOffset(offsetsAndShifts, scaleLength, direction) {
+  direction = Math.sign(direction);
   if (direction < 0) offsetsAndShifts = offsetsAndShifts.slice().reverse();
   for (let octave=direction; true; octave += direction) { // eslint-disable-line no-constant-condition
     for (const [offset,shift] of offsetsAndShifts) {
@@ -21,7 +21,7 @@ function offsetsAndShiftsForInversion(offsets, shifts, inversion, scaleLength) {
   }
   const offsetsAndShifts = offsets.map((offset, index) => [offset, shifts[index]]);
   for (let i =  1; i <= inversion; i++) {
-    offsetsAndShifts.push(findUniqueOctaveOffset(offsetsAndShifts, scaleLength));
+    offsetsAndShifts.push(findUniqueOctaveOffset(offsetsAndShifts, scaleLength, 1));
     offsetsAndShifts.shift();
   }
   for (let i = -1; i >= inversion; i--) {

@@ -18,7 +18,7 @@ class Song {
    * @arg {Scale} [options.scale] default section scale, optional if every {@link Section} defines its scale
    * @arg {Number} [options.sectionLength] default section length, optional if every {@link Section} defines its own length
    */
-  constructor({sections, bpm=120, scale, sectionLength}) {
+  constructor({sections=[], bpm=120, scale, sectionLength}={}) {
     this.bpm = bpm;
     this.sections = sections.map(s =>
       s instanceof Section ? s : new Section(Object.assign({ scale, length: sectionLength }, s))

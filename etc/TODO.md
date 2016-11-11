@@ -7,6 +7,7 @@ Bugs
   A quick hack solution would be to have a legato option (relative duration? not sure what to call it) in Part, and maybe a default in Song.
 - All notes off doesn't work for higher channels. It seems like it should. I wonder if we are overloading the MIDI port with too many messages? Try adding a MIDI monitor to Ableton Live to verify
   - Also having problems with this in Bitwig. Could be a MIDI rate-limiting issue? Maybe just try sending the "all notes off" CC message?
+- Section[Symbol.iterator] blows up when parts contains an empty Part (i.e. parts:[new Part()])  
 
 1.0 Features
 - Better handling of accidentals (AKA chromatic "shifts")
