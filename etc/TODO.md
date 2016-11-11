@@ -19,7 +19,7 @@ Bugs
     - Shifts doesn't need to be part of the chord.pitch() and chord.pitches() interface if we fold into the offsets list, 
       which simplifies things
     - scale.pitch could accept() this duple and apply the chromatic shift to the base result
-    - Any pitch list in the generators module (SOng, etc) should allow this duple in place of a Number
+    - Any pitch list in the structure module (Song, etc) should allow this duple in place of a Number
 - Improve MIDI file support
   - A Part's channel should determine track for MIDI file output
     - Default the part.channel to it's index within the section, at construction time (instead of deferring this logic to Section @@iterator) 
@@ -36,13 +36,11 @@ Bugs
   - Setup a Changelog file
   
 Cleanup
-- Renamed generators to structure? It keeps bothering me this term is overloaded with ES6 generator functions
 - Rhythm construction is inconsistent with the other classes in that module (see looped rhythm example, why do we have to construct a Rhythm explicitly?).
   Probably everything should be passed in via an options object (and we can still have a special case for a String value + rate option, maybe?)
 - Re-evaluate if everything in chord should be optionally overridden by the classes non-constructor functions.
   I'd argue for simplifying as much as possible for 1.0 if it's not needed by the Song generator logic.
-- Rename github repo to chorus.js (assuming I don't come up with a better name). Leave the old page there and redirect.
-- Provide constants for the part modes
+- Provide constants for the part modes, update examples
 
 Once I do all the above, then we're at v1.0.0?
 

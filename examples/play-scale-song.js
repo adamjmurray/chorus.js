@@ -1,6 +1,6 @@
 require('../src/names').into(global);
 const selectOutput = require('../src/midi/select-output');
-const { Song } = require('../src/generators');
+const { Song } = require('../src');
 
 const song = new Song({
   bpm: 120,

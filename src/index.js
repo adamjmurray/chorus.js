@@ -1,4 +1,4 @@
-const { Harmony, Rhythm, Section, Song, Part } = require('./generators');
+const { Harmony, Rhythm, Section, Song, Part } = require('./structure');
 const { Chord, Pitch, PitchClass, Scale } = require('./models');
 const { CHORDS, PITCH_CLASSES, PITCHES, SCALES } = require('./names');
 // other submodules are optional

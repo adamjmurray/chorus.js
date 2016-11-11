@@ -6,10 +6,11 @@ const Part = require('./part');
 /**
  * Objects that produce musical patterns which can be played or saved to a MIDI file.
  * - {@link Harmony}
+ * - {@link Part}
  * - {@link Rhythm}
  * - {@link Section}
+ * - {@link Sequencer}
  * - {@link Song}
- * - {@link Part}
- * @module Generators
+ * @module Structure
  */
 module.exports = { Harmony, Rhythm, Section, Song, Part };
