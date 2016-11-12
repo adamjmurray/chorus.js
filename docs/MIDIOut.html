@@ -135,7 +135,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line8">line 8</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line9">line 9</a>
     </li></ul></dd>
     
 
@@ -184,14 +184,14 @@
 
     
 
-    <h4 class="name" id="allNotesOff"><span class="type-signature"></span>allNotesOff<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="allNotesOff"><span class="type-signature"></span>allNotesOff<span class="signature">(channel)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Turn off all notes. Can fix &quot;stuck&quot; notes. Called automatically when Node.js exits.</p>
+    <p>Turn off all notes for the given channel.</p>
 </div>
 
 
@@ -200,6 +200,55 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>channel</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>MIDI channel</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -235,12 +284,19 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line143">line 143</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line141">line 141</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><p><a href="MIDIOut.html#panic">panic()</a></p></li>
+        </ul>
+    </dd>
     
 
     
@@ -317,7 +373,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line85">line 85</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line81">line 81</a>
     </li></ul></dd>
     
 
@@ -541,7 +597,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line133">line 133</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line129">line 129</a>
     </li></ul></dd>
     
 
@@ -721,7 +777,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line122">line 122</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line118">line 118</a>
     </li></ul></dd>
     
 
@@ -901,7 +957,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line112">line 112</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line108">line 108</a>
     </li></ul></dd>
     
 
@@ -1035,7 +1091,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line45">line 45</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line41">line 41</a>
     </li></ul></dd>
     
 
@@ -1074,6 +1130,115 @@
     <dd>
         
 <span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="panic"><span class="type-signature"></span>panic<span class="signature">()</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Turn off all notes that could possibly be playing. Fixes &quot;stuck&quot; notes.</p>
+<p>Called automatically when Node.js exits.</p>
+<p>Note: Due to MIDI rate-limiting, this operation happens asynchronously over a few milliseconds.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line157">line 157</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><p><a href="MIDIOut.html#allNotesOff">allNotesOff(channel)</a></p></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
 
 
     </dd>
@@ -1191,7 +1356,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line156">line 156</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line177">line 177</a>
     </li></ul></dd>
     
 
@@ -1295,7 +1460,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line31">line 31</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line27">line 27</a>
     </li></ul></dd>
     
 
@@ -1438,7 +1603,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line100">line 100</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line96">line 96</a>
     </li></ul></dd>
     
 

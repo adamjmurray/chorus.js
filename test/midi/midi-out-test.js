@@ -29,14 +29,14 @@ describe('MIDIOut', () => {
       assert.equal(new MIDIOut({ defaultDuration: 500 }).defaultDuration, 500);
     });
 
-    it('sets a process SIGINT callback', () => {
+    it('sets a process SIGINT callback', done => {
       let exitCode = null;
       process.exit = code => {
         exitCode = code
       };
       new MIDIOut();
       processCallbacks.SIGINT();
-      assert.equal(exitCode, 130);
+      setTimeout(() => { assert.equal(exitCode, 130); done(); }, 0);
     });
 
     it('sets a process exit callback that automatically closes the port', () => {
@@ -47,18 +47,18 @@ describe('MIDIOut', () => {
       assert(!midiOut.isOpen);
     });
 
-    it('sets a process exit callback that sends all note off messages', () => {
+    it('sets a process beforeExit callback that sends all note off messages if the output is open', done => {
       const midiOut = new MIDIOut();
       midiOut.open();
       assert(midiOut.isOpen);
-      processCallbacks.exit();
+      processCallbacks.beforeExit();
       const expectedBytes = [];
       for (let channel=1; channel <= 16; channel++) {
         for (let pitch=0; pitch < 128; pitch++) {
           expectedBytes.push([0x80|(channel-1), pitch, 0])
         }
       }
-      assert.deepEqual(midiOut.output.sentBytes, expectedBytes);
+      setTimeout(() => { assert.deepEqual(midiOut.output.sentBytes, expectedBytes); done(); }, 100);
     })
   });
 
@@ -166,6 +166,12 @@ describe('MIDIOut', () => {
       midiOut.noteOn(60, 100, 2);
       assert.deepEqual(midiOut.output.sentBytes, [[0x90|1, 60, 100]]);
     });
+
+    it('defaults velocity to 70 and channel to 1', () => {
+      const midiOut = new MIDIOut();
+      midiOut.noteOn(60);
+      assert.deepEqual(midiOut.output.sentBytes, [[0x90, 60, 70]]);
+    });
   });
 
   describe('noteOff()', () => {
@@ -173,6 +179,12 @@ describe('MIDIOut', () => {
       const midiOut = new MIDIOut();
       midiOut.noteOff(55, 99, 3);
       assert.deepEqual(midiOut.output.sentBytes, [[0x80|2, 55, 99]]);
+    });
+
+    it('defaults velocity to 70 and channel to 1', () => {
+      const midiOut = new MIDIOut();
+      midiOut.noteOff(55);
+      assert.deepEqual(midiOut.output.sentBytes, [[0x80, 55, 70]]);
     });
   });
 
@@ -187,28 +199,53 @@ describe('MIDIOut', () => {
       }, 1);
     });
 
-    it('uses the defaultDuration and channel 1 if not specified', done => {
+    it('uses the defaultDuration, velocity 70, and channel 1 if not specified', done => {
       const midiOut = new MIDIOut({ defaultDuration: 0 });
-      midiOut.note(70, 120);
-      assert.deepEqual(midiOut.output.sentBytes, [[0x90, 70, 120]]);
+      midiOut.note(72);
+      assert.deepEqual(midiOut.output.sentBytes, [[0x90, 72, 70]]);
       setTimeout(() => {
-        assert.deepEqual(midiOut.output.sentBytes, [[0x90, 70, 120], [0x80, 70, 120]]);
+        assert.deepEqual(midiOut.output.sentBytes, [[0x90, 72, 70], [0x80, 72, 70]]);
         done();
       }, 1);
     });
   });
 
-  describe('allNotesOff()', () => {
-    it('it sends a note-off message to for every pitch on every channel', () => {
+  describe('allNotesOff(channel)', () => {
+    it('it sends a note-off message to for every pitch on the given channel if the output is open', () => {
       const midiOut = new MIDIOut();
+      midiOut.open();
+      const expectedBytes = [];
+      for (let pitch=0; pitch < 128; pitch++) {
+        expectedBytes.push([0x80|2, pitch, 0])
+      }
+      midiOut.allNotesOff(3);
+      assert.deepEqual(midiOut.output.sentBytes, expectedBytes);
+    });
+
+    it('does nothing if the output is closed', () => {
+      const midiOut = new MIDIOut();
+      midiOut.allNotesOff(3);
+      assert.deepEqual(midiOut.output.sentBytes, []);
+    });
+  });
+
+  describe('panic()', () => {
+    it('it asynchronously sends a note-off message to for every pitch on every channel if the output is open', () => {
+      const midiOut = new MIDIOut();
+      midiOut.open();
       const expectedBytes = [];
       for (let channel=1; channel <= 16; channel++) {
         for (let pitch=0; pitch < 128; pitch++) {
           expectedBytes.push([0x80|(channel-1), pitch, 0])
         }
       }
-      midiOut.allNotesOff();
-      assert.deepEqual(midiOut.output.sentBytes, expectedBytes);
+      return midiOut.panic().then(() => assert.deepEqual(midiOut.output.sentBytes, expectedBytes));
+    });
+
+    it('does nothing if the output is closed', () => {
+      const midiOut = new MIDIOut();
+      midiOut.panic();
+      return midiOut.panic().then(() => assert.deepEqual(midiOut.output.sentBytes, []));
     });
   });
 

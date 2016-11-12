@@ -1,5 +1,6 @@
 const midi = require('midi');
 const { NOTE_ON, NOTE_OFF } = require('./constants');
+const { sequentialAsync, sleep } = require('../utils');
 const Scheduler = require('./scheduler');
 
 /**
@@ -15,14 +16,9 @@ class MIDIOut {
     this.output = new midi.output();
     this.isOpen = false;
     this.defaultDuration = defaultDuration;
-    process.on('exit', () => {
-      this.allNotesOff();
-      this.close()
-    });
-    process.on('SIGINT', () => {
-      // trigger on exit behavior
-      process.exit(130);
-    });
+    process.on('beforeExit', () => this.panic().then(() => this.close()));
+    process.on('exit', () => this.close());
+    process.on('SIGINT', () => this.panic().then(() => process.exit(130)));
   }
 
   /**
@@ -138,14 +134,39 @@ class MIDIOut {
   }
 
   /**
-   * Turn off all notes. Can fix "stuck" notes. Called automatically when Node.js exits.
+   * Turn off all notes for the given channel.
+   * @param channel {Number} MIDI channel
+   * @see [panic()]{@link MIDIOut#panic}
    */
-  allNotesOff() {
-    for (let channel=1; channel <= 16; channel++) {
-      for (let pitch=0; pitch < 128; pitch++) {
-        this.noteOff(pitch, 0, channel);
-      }
+  allNotesOff(channel) {
+    if (!this.isOpen || !channel) return;
+    for (let pitch=0; pitch < 128; pitch++) {
+      this.noteOff(pitch, 0, channel);
     }
+  }
+
+  /**
+   * Turn off all notes that could possibly be playing. Fixes "stuck" notes.
+   *
+   * Called automatically when Node.js exits.
+   *
+   * Note: Due to MIDI rate-limiting, this operation happens asynchronously over a few milliseconds.
+   * @returns {Promise}
+   * @see [allNotesOff(channel)]{@link MIDIOut#allNotesOff}
+   */
+  panic() {
+    if (!this.isOpen) return Promise.resolve();
+    // Calls all notes off channel-by-channel sequentially, with a delay in between
+    // to avoid dropping note-off events due to MIDI rate-limiting.
+    return sequentialAsync(
+      new Array(16).fill(0).map((_,idx) =>
+        () => {
+          const channel = idx + 1;
+          this.allNotesOff(channel);
+          return sleep(5); // Seems like a 1ms delay can still result in stuck notes, so I made it a little longer.
+        }
+      )
+    );
   }
 
   /**

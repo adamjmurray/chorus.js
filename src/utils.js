@@ -29,4 +29,18 @@ function noteJSON(noteEvent) {
   }
 }
 
-module.exports = { mod, clamp, clampInt, noteJSON };
+/*
+ * Run a list of asynchronous operations sequentially (waiting until one finishes before starting the next).
+ * @param asyncOperations {Array} An Array functions that initiate an async operation when called and return a Promise
+ * @returns {Promise} A Promise that resolves after all async operations have completed
+ */
+function sequentialAsync(asyncOperations) {
+  const asyncOp = asyncOperations.shift();
+  return asyncOp ? asyncOp().then(() => sequentialAsync(asyncOperations)) : Promise.resolve();
+}
+
+function sleep(milliseconds) {
+  return new Promise(resolve => setTimeout(() => resolve(), milliseconds));
+}
+
+module.exports = { mod, clamp, clampInt, noteJSON, sequentialAsync, sleep };

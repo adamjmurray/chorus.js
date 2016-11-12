@@ -1,15 +1,11 @@
-TODO next:
-- See TODO in Pitch constructor related to setting a pitch value offset in microtonal tunings     
-
 Bugs
 - Notes are running into each other beings things are "100% legato". For example when I was testing the 19tet example and recording live MIDI to Ableton.
   Maybe we can ensure the note offs come before note ons (could be issues with the scheduler?). Otherwise need some way to deal with this.
   A quick hack solution would be to have a legato option (relative duration? not sure what to call it) in Part, and maybe a default in Song.
-- All notes off doesn't work for higher channels. It seems like it should. I wonder if we are overloading the MIDI port with too many messages? Try adding a MIDI monitor to Ableton Live to verify
-  - Also having problems with this in Bitwig. Could be a MIDI rate-limiting issue? Maybe just try sending the "all notes off" CC message?
 - Section[Symbol.iterator] blows up when parts contains an empty Part (i.e. parts:[new Part()])  
 
 1.0 Features
+- Pitch value offsets for micortonal tunings (i.e. Don't always count pitch numbers from 0. See TODO in Pitch constructor) 
 - Better handling of accidentals (AKA chromatic "shifts")
   - See the private functions at the top of chord.js. This [offset,shift] duple list was the best way I could find to fix
     a bug related to inverting chords with shifts and octave doublings. I've also been struggling with how to model
@@ -25,22 +21,26 @@ Bugs
   - A Part's channel should determine track for MIDI file output
     - Default the part.channel to it's index within the section, at construction time (instead of deferring this logic to Section @@iterator) 
   - bpm/tempo support
-  - other missing core features?
+  - other missing core features? Worry about comprehensive input file support later?
   - error handling for semi-malformed input files could be improved / see MIDI specs
 - Iterables for randomization (input: min, max value, integer vs float mode), for use as intensities, durations, etc
   - More iterable patterns, like weighted choice  
 - Documentation
   - Double check my install/usage notes on Windows
-  - Install/usage notes may be bogus. 
-    I remember hitting some technical roadblock with Bitwig before going back developing against to Ableton Live.
-    Might be the all notes off bug mentioned above. Need to revisit!
+  - Ableton Live instructions
+  - Bitwig instructions need to explain per-channel setup via Toms_Bitwig_Scripts
+  - Other DAWS? PreSonus Studio One (has a free version), Garage Band, Logic (maybe later) 
   - Setup a Changelog file
   
 Cleanup
+- Rename MIDI* classes: MidiIn, MidiOut, MidiFile? "MIDI" is technically correct, but the current names violate this codebase's conventions 
+- "rate" is the wrong name. Rates get faster when their values are higher, Part.rate/etc is the inverse
 - Rhythm construction is inconsistent with the other classes in that module (see looped rhythm example, why do we have to construct a Rhythm explicitly?).
   Probably everything should be passed in via an options object (and we can still have a special case for a String value + rate option, maybe?)
 - Re-evaluate if everything in chord should be optionally overridden by the classes non-constructor functions.
   I'd argue for simplifying as much as possible for 1.0 if it's not needed by the Song generator logic.
+- node-midi has a problem with reusing IO objects: https://github.com/justinlatimer/node-midi/issues/112
+  This could be dealt with in the MIDIIn and MIDIOut classes. Doesn't seem urgent.
 
 Once I do all the above, then we're at v1.0.0?
 
