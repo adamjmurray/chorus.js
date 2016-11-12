@@ -30,7 +30,6 @@ Bugs
 - Iterables for randomization (input: min, max value, integer vs float mode), for use as intensities, durations, etc
   - More iterable patterns, like weighted choice  
 - Documentation
-  - Can we remove the "generated at" timestamps fromt he template to avoid diffs in every file every time something is changed?
   - Double check my install/usage notes on Windows
   - Install/usage notes may be bogus. 
     I remember hitting some technical roadblock with Bitwig before going back developing against to Ableton Live.
