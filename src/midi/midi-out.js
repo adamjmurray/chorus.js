@@ -106,7 +106,7 @@ class MIDIOut {
    * @param channel
    */
   noteOn(pitch, velocity=70, channel=1) {
-    this.send(NOTE_ON | (channel-1), pitch, velocity);
+    this.send(NOTE_ON | (channel-1), Number(pitch), velocity);
   }
 
   /**
@@ -116,7 +116,7 @@ class MIDIOut {
    * @param channel
    */
   noteOff(pitch, velocity=70, channel=1) {
-    this.send(NOTE_OFF | (channel-1), pitch, velocity);
+    this.send(NOTE_OFF | (channel-1), Number(pitch), velocity);
   }
 
   /**
@@ -128,7 +128,7 @@ class MIDIOut {
    */
   note(pitch, velocity=70, duration=this.defaultDuration, channel=1) {
     // TODO: validation
-    const pitchValue = pitch + 0; // coerce to a Number if needed (using Pitch.valueOf())
+    const pitchValue = Number(pitch); // coerce to a Number if needed (using Pitch.valueOf())
     this.noteOn(pitchValue, velocity, channel);
     setTimeout(() => this.noteOff(pitchValue, velocity, channel), duration)
   }
@@ -177,16 +177,19 @@ class MIDIOut {
   play(songOrJSON) {
     const scheduler = new Scheduler();
     if (songOrJSON[Symbol.iterator]) {
-      let bpm = 120; // TODO: make this default a constant? We are using it in a few places
       // it's a Song, iterate over all its events
       for (const event of songOrJSON) {
         if (event.type === 'bpm') {
-          bpm = scheduler.bpm = event.value;
-        } // TODO: we could look for the time property and schedule tempo changes
+          scheduler.bpm = event.value;
+        }
         else if (event.type === 'note') {
-          scheduler.at(event.time, () => {
-            this.note(event.pitch, event.velocity, event.duration * 60000/bpm, event.channel);
-          })
+          const { pitch, velocity, time, duration, channel } = event;
+          scheduler.at(time, () => {
+            this.noteOn(pitch, velocity, channel);
+          });
+          scheduler.at(time + duration, () => {
+            this.noteOff(pitch, velocity, channel);
+          });
         }
       }
     }
@@ -197,9 +200,13 @@ class MIDIOut {
       for (const track of tracks) {
         for (const event of track) {
           if (event.type === 'note') {
-            scheduler.at(event.time, () => {
-              this.note(event.pitch, event.velocity, event.duration * 60000 / bpm, event.channel);
-            })
+            const { pitch, velocity, time, duration, channel } = event;
+            scheduler.at(time, () => {
+              this.noteOn(pitch, velocity, channel);
+            });
+            scheduler.at(time + duration, () => {
+              this.noteOff(pitch, velocity, channel);
+            });
           }
         }
       }

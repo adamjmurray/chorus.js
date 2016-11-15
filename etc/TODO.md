@@ -1,7 +1,4 @@
 Bugs
-- Notes are running into each other beings things are "100% legato". For example when I was testing the 19tet example and recording live MIDI to Ableton.
-  Maybe we can ensure the note offs come before note ons (could be issues with the scheduler?). Otherwise need some way to deal with this.
-  A quick hack solution would be to have a legato option (relative duration? not sure what to call it) in Part, and maybe a default in Song.
 - Section[Symbol.iterator] blows up when parts contains an empty Part (i.e. parts:[new Part()])  
 
 1.0 Features
@@ -41,10 +38,12 @@ Cleanup
   I'd argue for simplifying as much as possible for 1.0 if it's not needed by the Song generator logic.
 - node-midi has a problem with reusing IO objects: https://github.com/justinlatimer/node-midi/issues/112
   This could be dealt with in the MIDIIn and MIDIOut classes. Doesn't seem urgent.
+- MIDIOut.play() should just convert Song objects toJSON() and have a single code path (need more test coverage)  
 
 Once I do all the above, then we're at v1.0.0?
 
 Future Features
+- Tempo changes
 - Support custom names for PitchClasses and Pitches when pitchesPerOctave != 12
 - Live-coding mode:
   - Loop a section

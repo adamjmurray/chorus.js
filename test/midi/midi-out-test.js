@@ -1,6 +1,8 @@
 const assert = require('assert');
 const proxyquire = require('proxyquire');
 const { MIDIOut } = proxyquire('../../src/midi', require('./midi-stub'));
+const { Song } = require('../../src');
+const { sleep } = require('../../src/utils');
 
 describe('MIDIOut', () => {
 
@@ -249,5 +251,68 @@ describe('MIDIOut', () => {
     });
   });
 
-  describe.skip('play()'); // TODO
+  describe('play()', () => {
+
+    context('with Song argument', () => {
+
+      it("schedules legato notes' note-off events before the next note-on", () => {
+        const song = new Song({
+          bpm: 10000, // so we don't have to sleep for long
+          sections: [{
+            parts: [{
+              rate: 1,
+              rhythm: 'X'.repeat(8),
+              pitches: [60,60,60,60],
+            }]
+          }]
+        });
+        const expectedBytes = [
+          [0x90, 60, 127], [0x80, 60, 127],
+          [0x90, 60, 127], [0x80, 60, 127],
+          [0x90, 60, 127], [0x80, 60, 127],
+          [0x90, 60, 127], [0x80, 60, 127],
+          [0x90, 60, 127], [0x80, 60, 127],
+          [0x90, 60, 127], [0x80, 60, 127],
+          [0x90, 60, 127], [0x80, 60, 127],
+          [0x90, 60, 127], [0x80, 60, 127],
+        ];
+        const midiOut = new MIDIOut();
+        midiOut.play(song);
+        return sleep(50).then(() => {
+          assert.deepEqual(midiOut.output.sentBytes, expectedBytes);
+        });
+      });
+    });
+
+    context('with JSON argument', () => {
+
+      it("schedules legato notes' note-off events before the next note-on", () => {
+        const song = new Song({
+          bpm: 10000, // so we don't have to sleep for long
+          sections: [{
+            parts: [{
+              rate: 1,
+              rhythm: 'X'.repeat(8),
+              pitches: [60, 60, 60, 60],
+            }]
+          }]
+        });
+        const expectedBytes = [
+          [0x90, 60, 127], [0x80, 60, 127],
+          [0x90, 60, 127], [0x80, 60, 127],
+          [0x90, 60, 127], [0x80, 60, 127],
+          [0x90, 60, 127], [0x80, 60, 127],
+          [0x90, 60, 127], [0x80, 60, 127],
+          [0x90, 60, 127], [0x80, 60, 127],
+          [0x90, 60, 127], [0x80, 60, 127],
+          [0x90, 60, 127], [0x80, 60, 127],
+        ];
+        const midiOut = new MIDIOut();
+        midiOut.play(song.toJSON());
+        return sleep(50).then(() => {
+          assert.deepEqual(midiOut.output.sentBytes, expectedBytes);
+        });
+      });
+    });
+  });
 });
