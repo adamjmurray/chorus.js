@@ -34,7 +34,7 @@ const Scheduler = require('./scheduler');
 /**
  * Realtime MIDI output.
  */
-class MIDIOut {
+class MidiOut {
 
   /**
    *
@@ -134,7 +134,7 @@ class MIDIOut {
    * @param channel
    */
   noteOn(pitch, velocity=70, channel=1) {
-    this.send(NOTE_ON | (channel-1), pitch, velocity);
+    this.send(NOTE_ON | (channel-1), Number(pitch), velocity);
   }
 
   /**
@@ -144,7 +144,7 @@ class MIDIOut {
    * @param channel
    */
   noteOff(pitch, velocity=70, channel=1) {
-    this.send(NOTE_OFF | (channel-1), pitch, velocity);
+    this.send(NOTE_OFF | (channel-1), Number(pitch), velocity);
   }
 
   /**
@@ -156,7 +156,7 @@ class MIDIOut {
    */
   note(pitch, velocity=70, duration=this.defaultDuration, channel=1) {
     // TODO: validation
-    const pitchValue = pitch + 0; // coerce to a Number if needed (using Pitch.valueOf())
+    const pitchValue = Number(pitch); // coerce to a Number if needed (using Pitch.valueOf())
     this.noteOn(pitchValue, velocity, channel);
     setTimeout(() => this.noteOff(pitchValue, velocity, channel), duration)
   }
@@ -164,7 +164,7 @@ class MIDIOut {
   /**
    * Turn off all notes for the given channel.
    * @param channel {Number} MIDI channel
-   * @see [panic()]{@link MIDIOut#panic}
+   * @see [panic()]{@link MidiOut#panic}
    */
   allNotesOff(channel) {
     if (!this.isOpen || !channel) return;
@@ -180,7 +180,7 @@ class MIDIOut {
    *
    * Note: Due to MIDI rate-limiting, this operation happens asynchronously over a few milliseconds.
    * @returns {Promise}
-   * @see [allNotesOff(channel)]{@link MIDIOut#allNotesOff}
+   * @see [allNotesOff(channel)]{@link MidiOut#allNotesOff}
    */
   panic() {
     if (!this.isOpen) return Promise.resolve();
@@ -205,16 +205,19 @@ class MIDIOut {
   play(songOrJSON) {
     const scheduler = new Scheduler();
     if (songOrJSON[Symbol.iterator]) {
-      let bpm = 120; // TODO: make this default a constant? We are using it in a few places
       // it's a Song, iterate over all its events
       for (const event of songOrJSON) {
         if (event.type === 'bpm') {
-          bpm = scheduler.bpm = event.value;
-        } // TODO: we could look for the time property and schedule tempo changes
+          scheduler.bpm = event.value;
+        }
         else if (event.type === 'note') {
-          scheduler.at(event.time, () => {
-            this.note(event.pitch, event.velocity, event.duration * 60000/bpm, event.channel);
-          })
+          const { pitch, velocity, time, duration, channel } = event;
+          scheduler.at(time, () => {
+            this.noteOn(pitch, velocity, channel);
+          });
+          scheduler.at(time + duration, () => {
+            this.noteOff(pitch, velocity, channel);
+          });
         }
       }
     }
@@ -225,9 +228,13 @@ class MIDIOut {
       for (const track of tracks) {
         for (const event of track) {
           if (event.type === 'note') {
-            scheduler.at(event.time, () => {
-              this.note(event.pitch, event.velocity, event.duration * 60000 / bpm, event.channel);
-            })
+            const { pitch, velocity, time, duration, channel } = event;
+            scheduler.at(time, () => {
+              this.noteOn(pitch, velocity, channel);
+            });
+            scheduler.at(time + duration, () => {
+              this.noteOff(pitch, velocity, channel);
+            });
           }
         }
       }
@@ -237,7 +244,7 @@ class MIDIOut {
   }
 }
 
-module.exports = MIDIOut;
+module.exports = MidiOut;
 </code></pre>
         </article>
     </section>
@@ -248,7 +255,7 @@ module.exports = MIDIOut;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-MIDI.html">MIDI</a></li><li><a href="module-Models.html">Models</a></li><li><a href="module-Names.html">Names</a></li><li><a href="module-Structure.html">Structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MIDIFile.html">MIDIFile</a></li><li><a href="MIDIIn.html">MIDIIn</a></li><li><a href="MIDIOut.html">MIDIOut</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-MIDI.html">MIDI</a></li><li><a href="module-Models.html">Models</a></li><li><a href="module-Names.html">Names</a></li><li><a href="module-Structure.html">Structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul>
 </nav>
 
 <br class="clear">
