@@ -51,4 +51,24 @@ module.exports = {
       };
     },
   },
+
+  // For testing MidiOut.select() / select-output
+  readline: {
+    '@global': true,
+    '@noCallThru': true,
+
+    createInterface: function(options) {
+      assert.equal(options.input, process.stdin);
+      assert.equal(options.output, process.stdout);
+      return {
+        question(message, callback) {
+          assert.equal(message, 'Which port? ');
+          callback('output-stub-1');
+        } ,
+        close() {
+          this.closed = true;
+        },
+      };
+    },
+  },
 };

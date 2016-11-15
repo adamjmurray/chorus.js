@@ -1,5 +1,5 @@
 const assert = require('assert');
-const proxyquire = require('proxyquire');
+const proxyquire = require('proxyquire').noPreserveCache();
 const { MidiOut } = proxyquire('../../src/midi', require('./midi-stub'));
 const { Song } = require('../../src');
 const { sleep } = require('../../src/utils');
@@ -135,6 +135,16 @@ describe('MidiOut', () => {
       const midiOut = new MidiOut();
       midiOut.openByPortIndex(1);
       assert(!midiOut.openByPortIndex(1));
+    });
+  });
+
+  describe('select()', () => {
+    it('it interactively selects an output', () => {
+      return MidiOut.select()
+        .then(midiOut => {
+          // the stub selects this port:
+          assert.equal(midiOut.portName, 'output-stub-1');
+        });
     });
   });
 
