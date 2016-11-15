@@ -1,6 +1,6 @@
 require('../src/names').into(global);
-const selectOutput = require('../src/midi/select-output');
 const { Song } = require('../src');
+const { MidiOut } = require('../src/midi');
 
 const song = new Song({
   bpm: 120,
@@ -18,8 +18,4 @@ const song = new Song({
   }]
 });
 
-selectOutput().then(output => {
-  // console.log(JSON.stringify(song, null, 2));
-  // output.play(song.toJSON()); // this works too!
-  output.play(song);
-});
+MidiOut.select().then(midiOut => midiOut.play(song));

@@ -2,8 +2,7 @@
 
 const readline = require('readline');
 const { basename } = require('path');
-const MIDIOut = require('./midi-out');
-const MIDIFile = require('./file');
+const MidiFile = require('./file');
 
 let cli;
 let outputPortArgOrEnvVar;
@@ -79,10 +78,10 @@ function selectAndOpenOutput(midiOut, portSearch) {
 
 function selectOutput(midiOutOptions) {
   if (outputFile) {
-    // Provide the same output.play(song) interface from MIDIOut
+    // Provide the same output.play(song) interface from MidiOut
     return Promise.resolve({
       play(song) {
-        return new MIDIFile(outputFile)
+        return new MidiFile(outputFile)
           .write(song.toJSON())
           .then(() => console.log(`Wrote MIDI file ${outputFile}`))
           .catch(err => console.error(`Failed to write MIDI file ${outputFile}`, err));
@@ -90,7 +89,7 @@ function selectOutput(midiOutOptions) {
     });
   }
   if (!outputPortArgOrEnvVar) usage();
-  const midiOut = new MIDIOut(midiOutOptions);
+  const midiOut = new (require('./midi-out'))(midiOutOptions); // using a deferred require because MidOut requires this
   return selectAndOpenOutput(midiOut, outputPortArgOrEnvVar);
 }
 

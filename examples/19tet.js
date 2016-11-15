@@ -1,6 +1,6 @@
 require('../src/names').into(global);
-const selectOutput = require('../src/midi/select-output');
 const { PitchClass, Scale, Song } = require('../src');
+const { MidiOut } = require('../src/midi');
 
 // This example uses a scale based on 19-TET (https://en.wikipedia.org/wiki/19_equal_temperament)
 // which has 19 pitches per octave. It approximates a minor scale.
@@ -25,4 +25,4 @@ const song = new Song({
   }]
 });
 
-selectOutput().then(output => output.play(song));
+MidiOut.select().then(midiOut => midiOut.play(song));
