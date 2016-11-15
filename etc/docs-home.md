@@ -2,7 +2,7 @@
 
 The {@link Song} class is used to generate a song. The overall structure looks like this:
  
-<table style="color:#111; font-family:sans-serif; border:3px solid sienna; border-radius:12px; background-color:#EEB; border-collapse:separate; border-spacing:10px; box-shadow: 4px 6px 12px rgba(0,0,0,0.5);">
+<table style="color:#111; font-family:sans-serif; border:3px solid sienna; border-radius:12px; background-color:#EEB; border-collapse:separate; border-spacing:5px; box-shadow: 4px 6px 12px rgba(0,0,0,0.5);">
   <tr>
     <td style="border:0; font-size:xx-large; font-weight:bold;">Song</td>
     <td style="border:0; font-size:large; text-align:center;">&rarr;&nbsp;<em>time</em>&nbsp;&rarr;</td>
@@ -15,27 +15,27 @@ The {@link Song} class is used to generate a song. The overall structure looks l
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">scale</span></td>
         </tr>
       </table>
-      <table style="border:2px solid darkgreen; border-radius:6px; background-color:#BEB; width:100%; border-collapse:separate; border-spacing:10px; margin-top:10px;">
+      <table style="border:2px solid darkgreen; border-radius:6px; background-color:#BEB; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
         <tr>
           <td style="border:0;">Harmony</td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">chords</span></td>
         </tr>
       </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:10px; margin-top:10px;">
+      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
         <tr>
           <td style="border:0;">Part&nbsp;1&nbsp;</td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">rhythm</span></td>
         </tr>
       </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:10px; margin-top:10px;">
+      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
         <tr>
           <td style="border:0;">Part&nbsp;2&nbsp;</td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">rhythm</span></td>
         </tr>
       </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:10px; margin-top:10px;">
+      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
         <tr>
           <td style="border:0;">Part&nbsp;3&nbsp;</td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>
@@ -53,20 +53,20 @@ The {@link Song} class is used to generate a song. The overall structure looks l
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">scale</span></td>
         </tr>
       </table>
-      <table style="border:2px solid darkgreen; border-radius:6px; background-color:#BEB; width:100%; border-collapse:separate; border-spacing:10px; margin-top:10px;">
+      <table style="border:2px solid darkgreen; border-radius:6px; background-color:#BEB; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
         <tr>
           <td style="border:0;">Harmony</td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">chords</span></td>
         </tr>
       </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:10px; margin-top:10px;">
+      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
         <tr>
           <td style="border:0;">Part&nbsp;1&nbsp;</td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">rhythm</span></td>
         </tr>
       </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:10px; margin-top:10px;">
+      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
         <tr>
           <td style="border:0;">Part&nbsp;2&nbsp;</td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>
@@ -84,34 +84,34 @@ The {@link Song} class is used to generate a song. The overall structure looks l
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">scale</span></td>
         </tr>
       </table>
-      <table style="border:2px solid darkgreen; border-radius:6px; background-color:#BEB; width:100%; border-collapse:separate; border-spacing:10px; margin-top:10px;">
+      <table style="border:2px solid darkgreen; border-radius:6px; background-color:#BEB; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
         <tr>
           <td style="border:0;">Harmony</td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">chords</span></td>
         </tr>
       </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:10px; margin-top:10px;">
+      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
         <tr>
           <td style="border:0;">Part&nbsp;1&nbsp;</td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">rhythm</span></td>
         </tr>
       </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:10px; margin-top:10px;">
+      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
         <tr>
           <td style="border:0;">Part&nbsp;2&nbsp;</td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">rhythm</span></td>
         </tr>
       </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:10px; margin-top:10px;">
+      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
         <tr>
           <td style="border:0;">Part&nbsp;3&nbsp;</td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">rhythm</span></td>
         </tr>
       </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:10px; margin-top:10px;">
+      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
         <tr>
           <td style="border:0;">Part&nbsp;4&nbsp;</td>
           <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>

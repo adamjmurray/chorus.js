@@ -135,7 +135,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line9">line 9</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line10">line 10</a>
     </li></ul></dd>
     
 
@@ -178,6 +178,175 @@
 
     
         <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".select"><span class="type-signature">(static) </span>select<span class="signature">(constructorOptions)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Select the MIDI output interactively, or via a command line argument or environment variable.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>constructorOptions</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>options object passed to the <a href="MidiOut.html">constructor</a>.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line101">line 101</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>a Promise object that resolves to a MidiOut instance</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code># chorus-script.js
+const { Song } = require('chorus');
+const { MidiOut } = require('chorus/midi');
+const song = new Song(...);
+MidiOut.select().then(midiOut => midiOut.play(song));
+
+____________________________________________________
+# command line usage
+
+# realtime output with the given port:
+node chorus-script.js -p midiPortName
+
+# or via an environment variable:
+CHORUS_OUTPUT_PORT=midiPortName node chorus-script.js
+
+# file output:
+node chorus-script.js -f midiFileName</code></pre>
+
+
 
         
             
@@ -284,7 +453,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line141">line 141</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line172">line 172</a>
     </li></ul></dd>
     
 
@@ -373,7 +542,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line81">line 81</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line109">line 109</a>
     </li></ul></dd>
     
 
@@ -434,6 +603,8 @@
 
 <div class="description">
     <p>Send a note on, followed by a note off after the given duration in milliseconds</p>
+<p>NOTE: This is a convenience method. The timing is not always predictable.
+      It's recommend you explicitly schedule noteOn() and noteOff() calls when using the <a href="Scheduler.html">Scheduler</a>.</p>
 </div>
 
 
@@ -597,7 +768,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line129">line 129</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line160">line 160</a>
     </li></ul></dd>
     
 
@@ -777,7 +948,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line118">line 118</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line146">line 146</a>
     </li></ul></dd>
     
 
@@ -957,7 +1128,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line108">line 108</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line136">line 136</a>
     </li></ul></dd>
     
 
@@ -1091,7 +1262,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line41">line 41</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line42">line 42</a>
     </li></ul></dd>
     
 
@@ -1197,7 +1368,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line157">line 157</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line188">line 188</a>
     </li></ul></dd>
     
 
@@ -1356,7 +1527,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line177">line 177</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line208">line 208</a>
     </li></ul></dd>
     
 
@@ -1460,7 +1631,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line27">line 27</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line28">line 28</a>
     </li></ul></dd>
     
 
@@ -1603,7 +1774,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line96">line 96</a>
+        <a href="midi_midi-out.js.html">midi/midi-out.js</a>, <a href="midi_midi-out.js.html#line124">line 124</a>
     </li></ul></dd>
     
 

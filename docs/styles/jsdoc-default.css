@@ -352,3 +352,18 @@ tr > th:last-child { border-right: 1px solid #ddd; }
 .disabled {
     color: #454545;
 }
+
+h4.name {
+    margin-top: 60px;
+}
+h1+h4.name, h2+h4.name, h3+h4.name {
+    margin-top: 0;
+}
+
+#main {
+    overflow: scroll;
+    width: 85%;
+}
+nav {
+    width: 15%;
+}

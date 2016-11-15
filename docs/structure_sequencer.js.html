@@ -73,6 +73,7 @@ class Sequencer {
           isDones[i] = true;
           iterators[i] = iterables[i][Symbol.iterator]();
           nexts[i] = iterators[i].next();
+          if (nexts[i].done) return; // empty iterator, give up
           if (name === 'time') timeOffset += this.length;
         }
         const value = nexts[i].value;

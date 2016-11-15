@@ -124,7 +124,7 @@ class Part extends Sequencer {
    * @arg {Number} [options.delay=0] Delays the start of the part (relative to the start of the containing {@link Section})
    * by the given number of beats.
    */
-  constructor({ channel, mode, pitches, rhythm, rate=1, octave=4, length, looped=false, delay=0 }={}) {
+  constructor({ channel, mode, pitches=[], rhythm, rate=1, octave=4, length, looped=false, delay=0 }={}) {
     rhythm = rhythm instanceof Rhythm ? rhythm : new Rhythm(rhythm, {rate});
     length = length || rhythm.length;
     super({ time: rhythm, pitch: pitches }, { length, looped, delay });
