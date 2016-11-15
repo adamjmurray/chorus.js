@@ -6,7 +6,7 @@ const Scheduler = require('./scheduler');
 /**
  * Realtime MIDI output.
  */
-class MIDIOut {
+class MidiOut {
 
   /**
    *
@@ -136,7 +136,7 @@ class MIDIOut {
   /**
    * Turn off all notes for the given channel.
    * @param channel {Number} MIDI channel
-   * @see [panic()]{@link MIDIOut#panic}
+   * @see [panic()]{@link MidiOut#panic}
    */
   allNotesOff(channel) {
     if (!this.isOpen || !channel) return;
@@ -152,7 +152,7 @@ class MIDIOut {
    *
    * Note: Due to MIDI rate-limiting, this operation happens asynchronously over a few milliseconds.
    * @returns {Promise}
-   * @see [allNotesOff(channel)]{@link MIDIOut#allNotesOff}
+   * @see [allNotesOff(channel)]{@link MidiOut#allNotesOff}
    */
   panic() {
     if (!this.isOpen) return Promise.resolve();
@@ -216,4 +216,4 @@ class MIDIOut {
   }
 }
 
-module.exports = MIDIOut;
+module.exports = MidiOut;

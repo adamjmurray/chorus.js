@@ -30,7 +30,6 @@ Bugs
   - Setup a Changelog file
   
 Cleanup
-- Rename MIDI* classes: MidiIn, MidiOut, MidiFile? "MIDI" is technically correct, but the current names violate this codebase's conventions 
 - "rate" is the wrong name. Rates get faster when their values are higher, Part.rate/etc is the inverse
 - Rhythm construction is inconsistent with the other classes in that module (see looped rhythm example, why do we have to construct a Rhythm explicitly?).
   Probably everything should be passed in via an options object (and we can still have a special case for a String value + rate option, maybe?)

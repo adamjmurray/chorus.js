@@ -1,10 +1,10 @@
 const assert = require('assert');
 const proxyquire = require('proxyquire');
-const { MIDIOut } = proxyquire('../../src/midi', require('./midi-stub'));
+const { MidiOut } = proxyquire('../../src/midi', require('./midi-stub'));
 const { Song } = require('../../src');
 const { sleep } = require('../../src/utils');
 
-describe('MIDIOut', () => {
+describe('MidiOut', () => {
 
   let processCallbacks = {};
 
@@ -16,19 +16,19 @@ describe('MIDIOut', () => {
 
   describe('constructor()', () => {
     it('creates a midi output', () => {
-      assert(new MIDIOut().output);
+      assert(new MidiOut().output);
     });
 
     it('does not open a port automatically', () => {
-      assert(!new MIDIOut().isOpen);
+      assert(!new MidiOut().isOpen);
     });
 
     it('accepts a defaultDuration option', () => {
-      assert.equal(new MIDIOut({ defaultDuration: 1000 }).defaultDuration, 1000);
+      assert.equal(new MidiOut({ defaultDuration: 1000 }).defaultDuration, 1000);
     });
 
     it('defaults defaultDuration to 500', () => {
-      assert.equal(new MIDIOut({ defaultDuration: 500 }).defaultDuration, 500);
+      assert.equal(new MidiOut({ defaultDuration: 500 }).defaultDuration, 500);
     });
 
     it('sets a process SIGINT callback', done => {
@@ -36,13 +36,13 @@ describe('MIDIOut', () => {
       process.exit = code => {
         exitCode = code
       };
-      new MIDIOut();
+      new MidiOut();
       processCallbacks.SIGINT();
       setTimeout(() => { assert.equal(exitCode, 130); done(); }, 0);
     });
 
     it('sets a process exit callback that automatically closes the port', () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       midiOut.open();
       assert(midiOut.isOpen);
       processCallbacks.exit();
@@ -50,7 +50,7 @@ describe('MIDIOut', () => {
     });
 
     it('sets a process beforeExit callback that sends all note off messages if the output is open', done => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       midiOut.open();
       assert(midiOut.isOpen);
       processCallbacks.beforeExit();
@@ -66,13 +66,13 @@ describe('MIDIOut', () => {
 
   describe('ports()', () => {
     it('returns the input port names', () => {
-      assert.deepEqual(new MIDIOut().ports(), ['output-stub-1', 'output-stub-2']);
+      assert.deepEqual(new MidiOut().ports(), ['output-stub-1', 'output-stub-2']);
     });
   });
 
   describe('open()', () => {
     it('it opens the port with the given index, if it exists', () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       assert(midiOut.open(1));
       assert(midiOut.isOpen);
       assert.equal(midiOut.portIndex, 1);
@@ -80,7 +80,7 @@ describe('MIDIOut', () => {
     });
 
     it('defaults to port index 0 if no arguments are given', () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       assert(midiOut.open());
       assert(midiOut.isOpen);
       assert.equal(midiOut.portIndex, 0);
@@ -88,7 +88,7 @@ describe('MIDIOut', () => {
     });
 
     it('it opens the port with the given port name, if it exists', () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       assert(midiOut.open('output-stub-2'));
       assert(midiOut.isOpen);
       assert.equal(midiOut.portIndex, 1);
@@ -96,7 +96,7 @@ describe('MIDIOut', () => {
     });
 
     it('it opens the port name matching with the given RegExp, if it exists', () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       assert(midiOut.open(/stub-2/));
       assert(midiOut.isOpen);
       assert.equal(midiOut.portIndex, 1);
@@ -104,14 +104,14 @@ describe('MIDIOut', () => {
     });
 
     it("returns false if the port doesn't exist", () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       assert(!midiOut.open(-1));
       assert(!midiOut.open(/invalid/));
       assert(!midiOut.open('invalid'));
     });
 
     it("returns false if the port is already open", () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       midiOut.open(1);
       assert(!midiOut.open(1));
     });
@@ -119,7 +119,7 @@ describe('MIDIOut', () => {
 
   describe('openByPortIndex()', () => {
     it('opens the port with the given index, if it exists', () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       assert(midiOut.openByPortIndex(1));
       assert(midiOut.isOpen);
       assert.equal(midiOut.portIndex, 1);
@@ -127,12 +127,12 @@ describe('MIDIOut', () => {
     });
 
     it("returns false if the port doesn't exist", () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       assert(!midiOut.openByPortIndex(-1));
     });
 
     it("returns false if the port is already open", () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       midiOut.openByPortIndex(1);
       assert(!midiOut.openByPortIndex(1));
     });
@@ -140,7 +140,7 @@ describe('MIDIOut', () => {
 
   describe('close()', () => {
     it('closes any open ports', () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       assert(midiOut.open(1));
       assert(midiOut.close());
       assert(!midiOut.isOpen);
@@ -149,14 +149,14 @@ describe('MIDIOut', () => {
     });
 
     it("does nothing if the port isn't open", () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       assert(midiOut.close());
     });
   });
 
   describe('send()', () => {
     it('sends the given bytes', () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       midiOut.send(1,2,3);
       assert.deepEqual(midiOut.output.sentBytes, [[1,2,3]]);
     });
@@ -164,13 +164,13 @@ describe('MIDIOut', () => {
 
   describe('noteOn()', () => {
     it('sends a MIDI note-on message', () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       midiOut.noteOn(60, 100, 2);
       assert.deepEqual(midiOut.output.sentBytes, [[0x90|1, 60, 100]]);
     });
 
     it('defaults velocity to 70 and channel to 1', () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       midiOut.noteOn(60);
       assert.deepEqual(midiOut.output.sentBytes, [[0x90, 60, 70]]);
     });
@@ -178,13 +178,13 @@ describe('MIDIOut', () => {
 
   describe('noteOff()', () => {
     it('sends a MIDI note-off message', () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       midiOut.noteOff(55, 99, 3);
       assert.deepEqual(midiOut.output.sentBytes, [[0x80|2, 55, 99]]);
     });
 
     it('defaults velocity to 70 and channel to 1', () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       midiOut.noteOff(55);
       assert.deepEqual(midiOut.output.sentBytes, [[0x80, 55, 70]]);
     });
@@ -192,7 +192,7 @@ describe('MIDIOut', () => {
 
   describe('note()', () => {
     it('sends a note-on message, and then a note-off after the given duration', done => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       midiOut.note(70, 120, 0, 4);
       assert.deepEqual(midiOut.output.sentBytes, [[0x90|3, 70, 120]]);
       setTimeout(() => {
@@ -202,7 +202,7 @@ describe('MIDIOut', () => {
     });
 
     it('uses the defaultDuration, velocity 70, and channel 1 if not specified', done => {
-      const midiOut = new MIDIOut({ defaultDuration: 0 });
+      const midiOut = new MidiOut({ defaultDuration: 0 });
       midiOut.note(72);
       assert.deepEqual(midiOut.output.sentBytes, [[0x90, 72, 70]]);
       setTimeout(() => {
@@ -214,7 +214,7 @@ describe('MIDIOut', () => {
 
   describe('allNotesOff(channel)', () => {
     it('it sends a note-off message to for every pitch on the given channel if the output is open', () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       midiOut.open();
       const expectedBytes = [];
       for (let pitch=0; pitch < 128; pitch++) {
@@ -225,7 +225,7 @@ describe('MIDIOut', () => {
     });
 
     it('does nothing if the output is closed', () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       midiOut.allNotesOff(3);
       assert.deepEqual(midiOut.output.sentBytes, []);
     });
@@ -233,7 +233,7 @@ describe('MIDIOut', () => {
 
   describe('panic()', () => {
     it('it asynchronously sends a note-off message to for every pitch on every channel if the output is open', () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       midiOut.open();
       const expectedBytes = [];
       for (let channel=1; channel <= 16; channel++) {
@@ -245,7 +245,7 @@ describe('MIDIOut', () => {
     });
 
     it('does nothing if the output is closed', () => {
-      const midiOut = new MIDIOut();
+      const midiOut = new MidiOut();
       midiOut.panic();
       return midiOut.panic().then(() => assert.deepEqual(midiOut.output.sentBytes, []));
     });
@@ -276,7 +276,7 @@ describe('MIDIOut', () => {
           [0x90, 60, 127], [0x80, 60, 127],
           [0x90, 60, 127], [0x80, 60, 127],
         ];
-        const midiOut = new MIDIOut();
+        const midiOut = new MidiOut();
         midiOut.play(song);
         return sleep(50).then(() => {
           assert.deepEqual(midiOut.output.sentBytes, expectedBytes);
@@ -307,7 +307,7 @@ describe('MIDIOut', () => {
           [0x90, 60, 127], [0x80, 60, 127],
           [0x90, 60, 127], [0x80, 60, 127],
         ];
-        const midiOut = new MIDIOut();
+        const midiOut = new MidiOut();
         midiOut.play(song.toJSON());
         return sleep(50).then(() => {
           assert.deepEqual(midiOut.output.sentBytes, expectedBytes);

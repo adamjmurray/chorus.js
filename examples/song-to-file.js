@@ -1,5 +1,5 @@
 require('../src/names').into(global);
-const { MIDIFile } = require('../src/midi');
+const { MidiFile } = require('../src/midi');
 const { Song } = require('../src');
 
 const song = new Song({
@@ -18,7 +18,7 @@ const song = new Song({
   }]
 });
 
-new MIDIFile('./song-to-file-example.mid')
+new MidiFile('song-to-file-example.mid')
   .write(song.toJSON())
   .then(() => console.log('wrote song-to-file-example.mid'))
   .catch(err => console.error('Failed to write MIDI file', err));

@@ -9,7 +9,8 @@ module.exports = {
     "mocha-no-only"
   ],
   rules: {
-    "no-console": 1,
+    "no-console": ["off"],
+    "no-var": ["error"],
     "mocha-no-only/mocha-no-only": ["error"],
   }
 };

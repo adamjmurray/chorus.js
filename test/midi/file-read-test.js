@@ -1,9 +1,9 @@
 const assert = require('assert');
-const MIDIFile = require('../../src/midi/file');
+const MidiFile = require('../../src/midi/file');
 
-describe('MIDIFile.read()', () => {
+describe('MidiFile.read()', () => {
   it('parses pitch classes', () => {
-    return new MIDIFile(`${__dirname}/../assets/test1.mid`)
+    return new MidiFile(`test/assets/test1.mid`)
       .read()
       .then(data => {
         assert.deepEqual(data, {

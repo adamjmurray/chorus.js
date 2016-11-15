@@ -3,7 +3,7 @@ const midi = require('midi');
 /**
  * Realtime MIDI input.
  */
-class MIDIIn {
+class MidiIn {
 
   constructor() {
     this.input = new midi.input();
@@ -83,4 +83,4 @@ class MIDIIn {
 
 }
 
-module.exports = MIDIIn;
+module.exports = MidiIn;

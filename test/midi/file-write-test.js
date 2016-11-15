@@ -1,8 +1,8 @@
-const MIDIFile = require('../../src/midi/file');
+const MidiFile = require('../../src/midi/file');
 const assert = require('assert');
 const fs = require('fs');
 
-describe('MIDIFile.write()', () => {
+describe('MidiFile.write()', () => {
 
   const tmpFolder = 'tmp';
 
@@ -60,7 +60,7 @@ describe('MIDIFile.write()', () => {
         ]
       ]
     };
-    const midiFile = new MIDIFile(`${tmpFolder}/write-test.mid`);
+    const midiFile = new MidiFile(`${tmpFolder}/write-test.mid`);
     return midiFile.write(json)
       .then(() => midiFile.read())
       .then(reloadedJson => assert.deepEqual(reloadedJson, json));

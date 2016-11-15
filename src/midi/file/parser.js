@@ -1,7 +1,7 @@
 const MIDIFILE = require('./constants');
 const ByteScanner = require('./byte-scanner');
 
-class MIDIFileParser {
+class MidiFileParser {
 
   constructor(arrayBuffer) {
     this.arrayBuffer = arrayBuffer;
@@ -327,4 +327,4 @@ class MIDIFileParser {
 
 }
 
-module.exports = MIDIFileParser;
+module.exports = MidiFileParser;

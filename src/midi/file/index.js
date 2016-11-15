@@ -1,11 +1,11 @@
 const fs = require('fs');
-const MIDIFileParser = require('./parser');
-const MIDIFileSerializer = require('./serializer');
+const MidiFileParser = require('./parser');
+const MidiFileSerializer = require('./serializer');
 
 /**
  * Read and write MIDI files.
  */
-class MIDIFile {
+class MidiFile {
   /**
    *
    * @param filepath
@@ -23,7 +23,7 @@ class MIDIFile {
       fs.readFile(this.filepath, (error, buffer) => {
         if (error) reject(error);
         const arrayBuffer = new Uint8Array(buffer).buffer;
-        const parser = new MIDIFileParser(arrayBuffer);
+        const parser = new MidiFileParser(arrayBuffer);
         resolve(parser.toJSON());
       });
     });
@@ -35,8 +35,8 @@ class MIDIFile {
    * @returns {Promise}
    */
   write(midiJSON) {
-    const uint8Array = new MIDIFileSerializer(midiJSON).toUint8Array();
-    var buffer = new Buffer(uint8Array);
+    const uint8Array = new MidiFileSerializer(midiJSON).toUint8Array();
+    const buffer = new Buffer(uint8Array);
     return new Promise((resolve, reject) => {
       fs.writeFile(this.filepath, buffer, (error) => {
         if (error) reject(error);
@@ -46,4 +46,4 @@ class MIDIFile {
   }
 }
 
-module.exports = MIDIFile;
+module.exports = MidiFile;
