@@ -22,7 +22,6 @@ describe('Section', () => {
 
   describe('[Symbol.iterator]()', () => {
     it("doesn't blow up with no harmony", () => {
-      // TODO: it does however blow up with an empty part!
       const section = new Section({ parts: [new Part({pitches:[60], rhythm:[1]})] });
       const iterator = section[Symbol.iterator]();
       assert.deepEqual(iterator.next(), {
@@ -49,6 +48,12 @@ describe('Section', () => {
         },
         done: false,
       });
+      assert(iterator.next().done);
+    });
+
+    it("doesn't blow up with empty Parts", () => {
+      const section = new Section({ parts: [new Part()] });
+      const iterator = section[Symbol.iterator]();
       assert(iterator.next().done);
     });
   });

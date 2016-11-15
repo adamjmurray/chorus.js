@@ -1,6 +1,3 @@
-Bugs
-- Section[Symbol.iterator] blows up when parts contains an empty Part (i.e. parts:[new Part()])  
-
 1.0 Features
 - Pitch value offsets for micortonal tunings (i.e. Don't always count pitch numbers from 0. See TODO in Pitch constructor) 
 - Better handling of accidentals (AKA chromatic "shifts")
@@ -22,12 +19,15 @@ Bugs
   - error handling for semi-malformed input files could be improved / see MIDI specs
 - Iterables for randomization (input: min, max value, integer vs float mode), for use as intensities, durations, etc
   - More iterable patterns, like weighted choice  
-- Documentation
-  - Double check my install/usage notes on Windows
-  - Ableton Live instructions
-  - Bitwig instructions need to explain per-channel setup via Toms_Bitwig_Scripts
-  - Other DAWS? PreSonus Studio One (has a free version), Garage Band, Logic (maybe later) 
-  - Setup a Changelog file
+
+Documentation
+- Move structure diagram into a tutorial doc? Organize non-module/class docs into tutorial files. 
+  Each documented DAW setup should go into it's own tutorial
+- Double check my install/usage notes on Windows
+- Ableton Live instructions
+- Bitwig instructions need to explain per-channel setup via Toms_Bitwig_Scripts
+- Other DAWS? PreSonus Studio One (has a free version), Garage Band, Logic (maybe later) 
+- Setup a Changelog file
   
 Cleanup
 - "rate" is the wrong name. Rates get faster when their values are higher, Part.rate/etc is the inverse

@@ -99,7 +99,7 @@ class Section {
             }
           }
         }
-        if (pitch) {
+        if (pitch != null) {
           const note = { pitch, duration, intensity, channel };
           yield { time, part: partIdx, note }; // TODO: maybe the MIDI file part should be based on the channel
         }

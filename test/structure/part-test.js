@@ -36,4 +36,12 @@ describe('Part', () => {
       assert.equal(Part.MODES.BASS, 'bass');
     });
   });
+
+  describe('[Symbol.iterator]()', () => {
+    it("doesn't blow up when constructed with no arguments", () => {
+      const part = new Part();
+      const iterator = part[Symbol.iterator]();
+      assert(iterator.next().done);
+    })
+  });
 });
