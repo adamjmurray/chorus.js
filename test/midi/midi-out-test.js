@@ -317,7 +317,7 @@ describe('MidiOut', () => {
         ];
         const midiOut = new MidiOut();
         midiOut.play(song.toJSON());
-        return sleep(50).then(() => {
+        return sleep(75).then(() => {
           assert.deepEqual(midiOut.output.sentBytes, expectedBytes);
         });
       });
