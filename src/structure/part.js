@@ -82,8 +82,11 @@ class Part extends Sequencer {
    * The supported modes are available via static {@link Part.MODES} constants of this class.
    *
    * @arg {Iterable} options.pitches
-   * @arg {Rhythm|Iterable} options.rhythm
-   * @arg {Number} [options.rate=1]
+   * @arg {Rhythm|String|Iterable|Object} [options.rhythm=pitches.map(p=>1)] Either a Rhythm object, or options for
+   * the {@link Rhythm|Rhythm constructor}. When a String or Iterable, it's used as the `pattern` option for the Rhythm
+   * constructor (for convenience). Otherwise, it's treated as the entire options object for the constructor.
+   * @arg {Number} [options.pulse] When the `rhythm` option is a String, this gets passed to the
+   * {@link Rhythm|Rhythm constructor}.
    * @arg {Number} [options.octave=4]
    * @arg {Number} [options.length] The length of the part in beats.
    *
@@ -96,8 +99,11 @@ class Part extends Sequencer {
    * @arg {Number} [options.delay=0] Delays the start of the part (relative to the start of the containing {@link Section})
    * by the given number of beats.
    */
-  constructor({ channel, mode, pitches=[], rhythm, rate=1, octave=4, length, looped=false, delay=0 }={}) {
-    rhythm = rhythm instanceof Rhythm ? rhythm : new Rhythm(rhythm, {rate});
+  constructor({ channel, mode, pitches=[], rhythm, pulse, octave=4, length, looped=false, delay=0 }={}) {
+    if (!rhythm) rhythm = pitches.map(() => 1);
+    rhythm = rhythm instanceof Rhythm ? rhythm : new Rhythm(
+      (typeof rhythm === 'string' || rhythm instanceof Array) ? { pattern: rhythm, pulse } : rhythm
+    );
     length = length || rhythm.length;
     super({ time: rhythm, pitch: pitches }, { length, looped, delay });
     this.channel = channel;

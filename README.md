@@ -1,6 +1,6 @@
 [![npm version](https://badge.fury.io/js/chorus.svg)](https://npmjs.org/package/chorus)&nbsp;&nbsp;&nbsp;
 [![build status](https://travis-ci.org/adamjmurray/chorus.js.svg?branch=master)](https://travis-ci.org/adamjmurray/chorus.js)&nbsp;&nbsp;&nbsp;
-[![test coverage](https://coveralls.io/repos/github/adamjmurray/chorus.js/badge.svg?branch=master#1)](https://coveralls.io/github/adamjmurray/chorus.js?branch=master)
+[![test coverage](https://coveralls.io/repos/github/adamjmurray/chorus.js/badge.svg?branch=master)](https://coveralls.io/github/adamjmurray/chorus.js?branch=master)
 
 # chorus.js
 
@@ -8,21 +8,24 @@ A music composition toolkit for JavaScript
 
 ## Features
 
-- Generate multi-track songs with intuitive support for harmony-based composition ("Western music").
-- Realtime and file-based MIDI I/O
-- Microtonal support for working with more than 12 pitches per octave 
+- Multi-track music creation via [MIDI](http://www.instructables.com/id/What-is-MIDI/) real-time and file output
+- Harmony-based pitch sequencing using scales and chord progressions
+- Minimalistic API suitable for learning music theory 
+- Microtonal support for experimental music with more than 12 pitches per octave
 
 
 ## Status
 
-Early beta-ish version, not quite ready for general usage. 
+Beta version. The API is still in flux, but should be stable soon.
 
-If you found this and you're trying it anyway, see this README, the examples folder, documentation, and tests for ideas on usage.
+Currently requires Node.js 6+. It will be updated to support web browsers at some point.
 
 
 ## Documentation
 
 Work in progress: https://adamjmurray.github.io/chorus.js/
+
+See this README, the examples folder, documentation, and tests for ideas on usage.
 
 
 ## Installation

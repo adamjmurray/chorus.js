@@ -29,8 +29,6 @@ describe('Song', () => {
           length: 8,
           parts: [{
             mode: 'scale',
-            rate: 1,
-            rhythm: [1],
             pitches: [0, 1, 2, 3, 4, 5, 6, 7, 8],
           }]
         }]
@@ -60,8 +58,6 @@ describe('Song', () => {
           length: 8,
           parts: [{
             mode: 'chromatic',
-            rate: 1,
-            rhythm: [1],
             pitches: [0, 1, 2, 3, 4, 5, 6, 7, 8],
           }]
         }]
@@ -89,13 +85,12 @@ describe('Song', () => {
         sections: [{
           scale: SCALES.MAJOR(C),
           harmony: {
-            rate: 2,
-            chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(1)] },
+            chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(1)],
+            durations: [2],
+          },
           parts: [{
             mode: 'chord',
-            rate: 1,
-            rhythm: [1, 1, 1, 1],
-            pitches: [0, 1],
+            pitches: [0, 1, 0, 1],
           }]
         }]
       });
@@ -127,12 +122,11 @@ describe('Song', () => {
           scale: SCALES.MAJOR(C),
           length: 8,
           harmony: {
-            rate: 4,
-            chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(1)] },
+            chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(1)],
+            durations: [4]
+          },
           parts: [{
             mode: 'arpeggio',
-            rate: 1,
-            rhythm: [1],
             pitches: [0, 1, 2, 3],
             looped: true,
           }]
@@ -162,13 +156,11 @@ describe('Song', () => {
           scale: SCALES.MAJOR(C),
           length: 8,
           harmony: {
-            rate: 2,
             chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(5).inv(-2), CHORDS.TRIAD(3).inv(-1), CHORDS.SEVENTH(4).inv(-2)],
+            durations: [2],
           },
           parts: [{
             mode: 'bass',
-            rate: 1,
-            rhythm: [1],
             pitches: [0, 1],
             looped: true,
           }]
@@ -198,13 +190,11 @@ describe('Song', () => {
           scale: SCALES.MAJOR(C),
           length: 8,
           harmony: {
-            rate: 2,
             chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(0).inv(1), CHORDS.TRIAD(2).inv(-2), CHORDS.SEVENTH(4).inv(-2)],
+            durations: [2],
           },
           parts: [{
             mode: 'lead',
-            rate: 1,
-            rhythm: [1],
             pitches: [0, 1],
             looped: true,
           }]
@@ -235,8 +225,6 @@ describe('Song', () => {
           length: 4,
           parts: [{
             mode: 'invalid',
-            rate: 1,
-            rhythm: [1],
             pitches: [0, 1, 2, 3],
           }]
         }]
@@ -255,35 +243,34 @@ describe('Song', () => {
             length: 16,
             scale: SCALES.HARMONIC_MINOR(C),
             harmony: {
-              rate: 4,
+              chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(-2)],
+              durations: [4],
               looped: true,
-              chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(-2)]
             },
             parts: [{
-              looped: true,
               mode: 'arpeggio',
               rhythm: [1, 1.5, 1, 0.5],
               pitches: [0, 1, 2, 0],
+              looped: true,
             }]
           },
           {
             length: 16,
             scale: SCALES.HARMONIC_MINOR(C),
             harmony: {
-              rate: 4,
+              chords: [CHORDS.TRIAD(-4), CHORDS.TRIAD(-3)],
+              durations: [4],
               looped: true,
-              chords: [CHORDS.TRIAD(-4), CHORDS.TRIAD(-3)]
             },
             parts: [{
-              looped: true,
               mode: 'arpeggio',
               rhythm: [1, 1.5, 1, 0.5],
               pitches: [0, 1, 2, 0],
+              looped: true,
             }]
           },
           {
             parts: [{
-              rhythm: [1],
               pitches: [PITCHES.C4],
             }]
           }
@@ -340,8 +327,6 @@ describe('Song', () => {
           parts: [{
             delay: 4,
             mode: 'scale',
-            rate: 1,
-            rhythm: [1],
             pitches: [0, 1, 2, 3],
           }]
         }]
@@ -365,12 +350,13 @@ describe('Song', () => {
         sections: [{
           scale: SCALES.HARMONIC_MINOR(C),
           harmony: {
-            rate: 2,
-            chords: [new Chord([0,2,4], {root: 1, inversion: 1, shifts: [-1]}), CHORDS.SEVENTH(4).inv(-2), CHORDS.TRIAD_PLUS_8(0)] },
+            chords: [new Chord([0,2,4], {root: 1, inversion: 1, shifts: [-1]}), CHORDS.SEVENTH(4).inv(-2), CHORDS.TRIAD_PLUS_8(0)],
+            durations: [2],
+          },
           parts: [{
             mode: 'chord',
-            rate: 2,
             rhythm: 'xxX=',
+            pulse: 2,
             pitches: [0],
             octave: 3,
           }]
@@ -401,8 +387,8 @@ describe('Song', () => {
         bpm: 120,
         sections: [{
           parts: [{
-            rate: 1/2,
             rhythm: Rhythm.distribute(7, 32),
+            pulse: 1/2,
             pitches: [42],
           }],
         }],
@@ -432,7 +418,7 @@ describe('Song', () => {
           {
             parts: [{
               mode: 'scale',
-              rate: 1/2,
+              rhythm: [1/2],
               pitches: [0,1,2,3]
             }],
           },
@@ -441,14 +427,13 @@ describe('Song', () => {
             length: 2,
             parts: [{
               mode: 'scale',
-              rate: 1/4,
+              rhythm: [1/4],
               pitches: [0,1,2,3]
             }],
           },
           {
             parts: [{
               mode: 'scale',
-              rate: 1,
               pitches: [0]
             }],
           },
@@ -479,15 +464,14 @@ describe('Song', () => {
           scale: new Scale([3,2,3,3,2,3,3], new PitchClass(0,19)), // major-ish scale in 19-TET
           length: 4,
           harmony: {
-            rate: 2,
-            chords: [CHORDS.TRIAD_PLUS_8(0), CHORDS.TRIAD_PLUS_8(3)]
+            chords: [CHORDS.TRIAD_PLUS_8(0), CHORDS.TRIAD_PLUS_8(3)],
+            durations: [2],
           },
           parts: [{
             mode: 'chord',
-            rate: 1,
             octave: 3,
-            looped: true,
             pitches: [0,1],
+            looped: true,
           }]
         }]
       });
@@ -527,8 +511,6 @@ describe('Song', () => {
           length: 8,
           parts: [{
             mode: 'scale',
-            rate: 1,
-            rhythm: [1],
             pitches: [0, 1, 2, 3, 4, 5, 6, 7, 8],
           }]
         }]

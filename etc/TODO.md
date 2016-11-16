@@ -30,9 +30,6 @@ Documentation
 - Setup a Changelog file
   
 Cleanup
-- "rate" is the wrong name. Rates get faster when their values are higher, Part.rate/etc is the inverse
-- Rhythm construction is inconsistent with the other classes in that module (see looped rhythm example, why do we have to construct a Rhythm explicitly?).
-  Probably everything should be passed in via an options object (and we can still have a special case for a String value + rate option, maybe?)
 - Re-evaluate if everything in chord should be optionally overridden by the classes non-constructor functions.
   I'd argue for simplifying as much as possible for 1.0 if it's not needed by the Song generator logic.
 - node-midi has a problem with reusing IO objects: https://github.com/justinlatimer/node-midi/issues/112
