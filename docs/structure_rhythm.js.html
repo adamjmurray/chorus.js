@@ -29,54 +29,62 @@
             <pre class="prettyprint source linenums"><code>const Sequencer = require('./sequencer');
 
 /**
- * A Rhythm generates `{time, intensity, duration}` tuples (intensity and duration optional depending on constructor properties).
+ * Generates `{time, intensity, duration}` values to control the groove of a {@link Part}.
+ * @extends Sequencer
  */
 class Rhythm extends Sequencer {
 
   /**
-   * @param {String|Iterable} rhythm either a String or {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#iterable|Iterable}
-   * of delta-start times
-   *
-   * If it's a String, it can contain the following characters:
-   *   - `"X"` - accented note
-   *   - `"x"` - normal note
-   *   - `"="` - tie
-   *   - `"."` - rest
-   * Each character's duration is a 'time unit' that is the duration of the rate option.
-   *
-   * If it's a Iterable of delta-start times, it represents the time between each note (and the start of
-   * sequence for the first note). The times are are relative to the rate option.
-   *
-   * @param {Iterable}
    * @param {Object} options
-   * @param {Number} [options.rate=1/4] rate the number of beats each 'time unit' represents (e.g. 1/4 is a quarter of one beat, which is a sixteenth note in common time signatures)
+   * @param {String|Iterable} options.pattern When a String, it can contain the following characters:
+   *   - `"X"` &amp;rarr; accented note
+   *   - `"x"` &amp;rarr; normal note
+   *   - `"="` &amp;rarr; tie
+   *   - `"."` &amp;rarr; rest
+   *
+   * Each characters' duration is determined by the `pulse` option.
+   * NOTE: Other characters are ignored and can be used to improve readability, for example `"X.x.|x==.|..x=|x=X="`
+   *
+   * When an {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#iterable|Iterable}
+   * of delta-start times, it represents the time between each note (with the first note always starting immediately).
+   * NOTE: Negative numbers can be used as rests, and the absolute value is the time until the next note.
+   * @param {Number} [options.pulse=1] The duration in beats of each character in a String `pattern`.
+   * Only relevant if the `pattern` option is a String.
+   * @param {Iterable} [options.intensities=[0.7]]
+   * Determines the note intensities in an Iterable `pattern`. Ignored if the `pattern` option is a String.
+   * @param {Iterable} [options.durations=time between notes]
+   * Determines the note durations in an Iterable `pattern`. Ignored if the `pattern` option is a String.
+   * @param {Iterable} [options.length=pattern length]
+   * Overrides the length of this rhythm to be different than the `pattern` length. Useful when this rhythm is `looped`.
+   * @param {Iterable} [options.looped=false] If true, this rhythm will repeat infinitely. Note that delta-start times,
+   * intensities, and durations loop independently for Iterable `pattern`s, which creates less repetitive rhythms.
    */
-  constructor(rhythm = [1], { rate=1/4, intensities, durations, length, looped } = {}) {
+  constructor({ pattern=[], pulse=1, intensities, durations, length, looped } = {}) {
     const times = [];
-    if (typeof rhythm === 'string') {
-      length = length || rhythm.length * rate;
+    if (typeof pattern === 'string') {
+      length = length || pattern.length * pulse;
       intensities = [];
       durations = [];
       let duration = null;
       let count = 0;
-      for (const char of rhythm) {
+      for (const char of pattern) {
         switch (char) {
           case 'X':
-            times.push(rate * count);
+            times.push(pulse * count);
             intensities.push(1);
             if (duration) durations.push(duration); // previous duration
-            duration = rate;
+            duration = pulse;
             count++;
             break;
           case 'x':
-            times.push(rate * count);
+            times.push(pulse * count);
             intensities.push(0.7);
             if (duration) durations.push(duration); // previous duration
-            duration = rate;
+            duration = pulse;
             count++;
             break;
           case '=':
-            if (duration) duration += rate;
+            if (duration) duration += pulse;
             count++;
             break;
           case '.':
@@ -90,19 +98,20 @@ class Rhythm extends Sequencer {
       if (duration) durations.push(duration);
     }
     else {
-      length = rhythm.map(Math.abs).reduce((a,b) => a + b) * rate;
-      durations = [];
+      length = pattern.map(Math.abs).reduce((a,b) => a + b, 0);
+      const legatoDurations = [];
       let time = 0;
       let nextTime;
-      for (const value of rhythm) {
-        nextTime = time + (rate * Math.abs(value));
+      for (const value of pattern) {
+        nextTime = time + Math.abs(value);
         const duration = (nextTime - time) * Math.sign(value);
         if (duration > 0) {
           times.push(time);
-          durations.push(duration);
+          legatoDurations.push(duration);
         } // else this is a rest
         time = nextTime;
       }
+      if (!durations) durations = legatoDurations;
     }
     intensities = intensities || [0.7];
     super({ time: times, intensity: intensities, duration: durations }, { length, looped });
@@ -112,40 +121,42 @@ class Rhythm extends Sequencer {
   }
 
   /**
-   * Generates a Rhythm by evenly distributes the given number of pulses into the given total number of time units.
-   * Very similar to a "Euclidean rhythm".
+   * Generates a Rhythm pattern String by evenly distributes the given number of pulses into the given total number of
+   * time units. Very similar to a "Euclidean pattern". Use the return value for the constructor's pattern option.
    * @param pulses {number}
    * @param total {number}
-   * @param options accepts the same options as the constructor, plus a rotation option
-   * @see https://en.wikipedia.org/wiki/Euclidean_rhythm
+   * @param {Object} options
+   * @param {Number} [options.rotation=0] shifts the pattern with wrap-around
+   * @see https://en.wikipedia.org/wiki/Euclidean_pattern
    */
   static distribute(pulses, total, options={}) {
-    const rhythm = [];
+    const pattern = [];
     let count = 0;
     let nextPulse = Math.floor(++count/pulses * total);
     for (let i=1; i&lt;=total; i++) {
       if (i &lt; nextPulse) {
-        rhythm.push('.'); // rest
+        pattern.push('.'); // rest
       } else {
-        rhythm.push('x'); // pulse
+        pattern.push('x'); // pulse
         nextPulse = Math.floor(++count/pulses * total);
       }
     }
-    let rhythmString = rhythm.reverse().join('');
+    let patternString = pattern.reverse().join('');
+    // TODO: I think rotation is better handled by manipulating the Array, not the String
     if (options.rotation) {
       const rotation = options.rotation;
       for (let i =  1; i &lt;= rotation; i++) {
-        const nextX = rhythmString.indexOf('x', 1);
-        if (nextX > 0) rhythmString = rhythmString.slice(nextX) + rhythmString.slice(0, nextX);
+        const nextX = patternString.indexOf('x', 1);
+        if (nextX > 0) patternString = patternString.slice(nextX) + patternString.slice(0, nextX);
         else break;
       }
       for (let i = -1; i >= rotation; i--) {
-        const prevX = rhythmString.lastIndexOf('x');
-        if (prevX > 0) rhythmString = rhythmString.slice(prevX) + rhythmString.slice(0, prevX);
+        const prevX = patternString.lastIndexOf('x');
+        if (prevX > 0) patternString = patternString.slice(prevX) + patternString.slice(0, prevX);
         else break;
       }
     }
-    return rhythmString;
+    return patternString;
   }
 }
 

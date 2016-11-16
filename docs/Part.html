@@ -296,7 +296,13 @@ TODO: document Chord inversions and link</p>
 <span class="param-type"><a href="Rhythm.html">Rhythm</a></span>
 |
 
+<span class="param-type">String</span>
+|
+
 <span class="param-type">Iterable</span>
+|
+
+<span class="param-type">Object</span>
 
 
             
@@ -304,6 +310,8 @@ TODO: document Chord inversions and link</p>
 
             
                 <td class="attributes">
+                
+                    &lt;optional><br>
                 
 
                 
@@ -315,17 +323,21 @@ TODO: document Chord inversions and link</p>
             
                 <td class="default">
                 
+                    pitches.map(p=>1)
+                
                 </td>
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Either a Rhythm object, or options for
+the <a href="Rhythm.html">Rhythm constructor</a>. When a String or Iterable, it's used as the <code>pattern</code> option for the Rhythm
+constructor (for convenience). Otherwise, it's treated as the entire options object for the constructor.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>rate</code></td>
+                <td class="name"><code>pulse</code></td>
             
 
             <td class="type">
@@ -352,12 +364,11 @@ TODO: document Chord inversions and link</p>
             
                 <td class="default">
                 
-                    1
-                
                 </td>
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>When the <code>rhythm</code> option is a String, this gets passed to the
+<a href="Rhythm.html">Rhythm constructor</a>.</p></td>
         </tr>
 
     
@@ -830,7 +841,7 @@ by the given number of beats.</p></td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structure_part.js.html">structure/part.js</a>, <a href="structure_part.js.html#line122">line 122</a>
+        <a href="structure_part.js.html">structure/part.js</a>, <a href="structure_part.js.html#line128">line 128</a>
     </li></ul></dd>
     
 

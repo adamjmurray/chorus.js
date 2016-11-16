@@ -30,7 +30,7 @@
     
         <h2>Rhythm</h2>
         
-            <div class="class-description"><p>A Rhythm generates <code>{time, intensity, duration}</code> tuples (intensity and duration optional depending on constructor properties).</p></div>
+            <div class="class-description"><p>Generates <code>{time, intensity, duration}</code> values to control the groove of a <a href="Part.html">Part</a>.</p></div>
         
     
 </header>
@@ -44,7 +44,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="Rhythm"><span class="type-signature"></span>new Rhythm<span class="signature">(rhythm, options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Rhythm"><span class="type-signature"></span>new Rhythm<span class="signature">(options)</span><span class="type-signature"></span></h4>
 
     
 
@@ -79,66 +79,6 @@
     </thead>
 
     <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>rhythm</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-|
-
-<span class="param-type">Iterable</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>either a String or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#iterable">Iterable</a>
-of delta-start times</p>
-<p>If it's a String, it can contain the following characters:</p>
-<ul>
-<li><code>&quot;X&quot;</code> - accented note</li>
-<li><code>&quot;x&quot;</code> - normal note</li>
-<li><code>&quot;=&quot;</code> - tie</li>
-<li><code>&quot;.&quot;</code> - rest
-Each character's duration is a 'time unit' that is the duration of the rate option.</li>
-</ul>
-<p>If it's a Iterable of delta-start times, it represents the time between each note (and the start of
-sequence for the first note). The times are are relative to the rate option.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code></code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Iterable</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
     
 
         <tr>
@@ -189,7 +129,56 @@ sequence for the first note). The times are are relative to the rate option.</p>
 
         <tr>
             
-                <td class="name"><code>rate</code></td>
+                <td class="name"><code>pattern</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Iterable</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>When a String, it can contain the following characters:</p>
+<ul>
+<li><code>&quot;X&quot;</code> &rarr; accented note</li>
+<li><code>&quot;x&quot;</code> &rarr; normal note</li>
+<li><code>&quot;=&quot;</code> &rarr; tie</li>
+<li><code>&quot;.&quot;</code> &rarr; rest</li>
+</ul>
+<p>Each characters' duration is determined by the <code>pulse</code> option.
+NOTE: Other characters are ignored and can be used to improve readability, for example <code>&quot;X.x.|x==.|..x=|x=X=&quot;</code></p>
+<p>When an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#iterable">Iterable</a>
+of delta-start times, it represents the time between each note (with the first note always starting immediately).
+NOTE: Negative numbers can be used as rests, and the absolute value is the time until the next note.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pulse</code></td>
             
 
             <td class="type">
@@ -216,12 +205,170 @@ sequence for the first note). The times are are relative to the rate option.</p>
             
                 <td class="default">
                 
-                    1/4
+                    1
                 
                 </td>
             
 
-            <td class="description last"><p>rate the number of beats each 'time unit' represents (e.g. 1/4 is a quarter of one beat, which is a sixteenth note in common time signatures)</p></td>
+            <td class="description last"><p>The duration in beats of each character in a String <code>pattern</code>.
+Only relevant if the <code>pattern</code> option is a String.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>intensities</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Iterable</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    [0.7]
+                
+                </td>
+            
+
+            <td class="description last"><p>Determines the note intensities in an Iterable <code>pattern</code>. Ignored if the <code>pattern</code> option is a String.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>durations</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Iterable</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    time between notes
+                
+                </td>
+            
+
+            <td class="description last"><p>Determines the note durations in an Iterable <code>pattern</code>. Ignored if the <code>pattern</code> option is a String.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Iterable</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    pattern length
+                
+                </td>
+            
+
+            <td class="description last"><p>Overrides the length of this rhythm to be different than the <code>pattern</code> length. Useful when this rhythm is <code>looped</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>looped</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Iterable</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>If true, this rhythm will repeat infinitely. Note that delta-start times,
+intensities, and durations loop independently for Iterable <code>pattern</code>s, which creates less repetitive rhythms.</p></td>
         </tr>
 
     
@@ -269,7 +416,7 @@ sequence for the first note). The times are are relative to the rate option.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structure_rhythm.js.html">structure/rhythm.js</a>, <a href="structure_rhythm.js.html#line6">line 6</a>
+        <a href="structure_rhythm.js.html">structure/rhythm.js</a>, <a href="structure_rhythm.js.html#line7">line 7</a>
     </li></ul></dd>
     
 
@@ -299,6 +446,17 @@ sequence for the first note). The times are are relative to the rate option.</p>
     </div>
 
     
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="Sequencer.html">Sequencer</a></li>
+    </ul>
+
+
+    
 
     
 
@@ -325,8 +483,8 @@ sequence for the first note). The times are are relative to the rate option.</p>
 
 
 <div class="description">
-    <p>Generates a Rhythm by evenly distributes the given number of pulses into the given total number of time units.
-Very similar to a &quot;Euclidean rhythm&quot;.</p>
+    <p>Generates a Rhythm pattern String by evenly distributes the given number of pulses into the given total number of
+time units. Very similar to a &quot;Euclidean pattern&quot;. Use the return value for the constructor's pattern option.</p>
 </div>
 
 
@@ -413,13 +571,87 @@ Very similar to a &quot;Euclidean rhythm&quot;.</p>
 
             <td class="type">
             
+                
+<span class="param-type">Object</span>
+
+
+            
             </td>
 
             
 
             
 
-            <td class="description last"><p>accepts the same options as the constructor, plus a rotation option</p></td>
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>rotation</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last"><p>shifts the pattern with wrap-around</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
@@ -460,7 +692,7 @@ Very similar to a &quot;Euclidean rhythm&quot;.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structure_rhythm.js.html">structure/rhythm.js</a>, <a href="structure_rhythm.js.html#line94">line 94</a>
+        <a href="structure_rhythm.js.html">structure/rhythm.js</a>, <a href="structure_rhythm.js.html#line104">line 104</a>
     </li></ul></dd>
     
 
@@ -470,7 +702,106 @@ Very similar to a &quot;Euclidean rhythm&quot;.</p>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://en.wikipedia.org/wiki/Euclidean_rhythm">https://en.wikipedia.org/wiki/Euclidean_rhythm</a></li>
+            <li><a href="https://en.wikipedia.org/wiki/Euclidean_pattern">https://en.wikipedia.org/wiki/Euclidean_pattern</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="@@iterator"><span class="type-signature"></span>@@iterator<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>The <code>[Symbol.iterator]()</code> generator function* that implements the
+             <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol">iterable protocol</a></p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Sequencer.html#@@iterator">Sequencer#@@iterator</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structure_sequencer.js.html">structure/sequencer.js</a>, <a href="structure_sequencer.js.html#line20">line 20</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">MDN: Iteration Protocols</a></li>
+        
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator">MDN: Symbol.iterator</a></li>
+        
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*">MDN: function*</a></li>
         </ul>
     </dd>
     
