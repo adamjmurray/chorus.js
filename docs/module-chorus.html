@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: midi/file/index.js</title>
+    <title>JSDoc: Module: chorus</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,67 +17,126 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: midi/file/index.js</h1>
+    <h1 class="page-title">Module: chorus</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>const fs = require('fs');
-const MidiFileParser = require('./parser');
-const MidiFileSerializer = require('./serializer');
+        
+            
+        
+    
+</header>
 
-/**
- * Read and write MIDI files.
- */
-class MidiFile {
-  /**
-   *
-   * @param filepath
-   */
-  constructor(filepath) {
-    this.filepath = filepath;
-  }
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h4>The top-level module for chorus.js, which exports all the classes exported by the <a href="./module-Structure.html">Structure</a>, <a href="./module-Models.html">Models</a>, and <a href="./module-Names.html">Names</a> modules.</h4><p>NOTE: Because it requires native dependencies, the <a href="./module-MIDI.html">MIDI</a> module is not exported by default here.</p></div>
+        
 
-  /**
-   *
-   * @returns {Promise}
-   */
-  read() {
-    return new Promise((resolve, reject) => {
-      fs.readFile(this.filepath, (error, buffer) => {
-        if (error) reject(error);
-        const arrayBuffer = new Uint8Array(buffer).buffer;
-        const parser = new MidiFileParser(arrayBuffer);
-        resolve(parser.toJSON());
-      });
-    });
-  }
+        
+            
 
-  /**
-   *
-   * @param midiJSON
-   * @returns {Promise}
-   */
-  write(midiJSON) {
-    const uint8Array = new MidiFileSerializer(midiJSON).toUint8Array();
-    const buffer = new Buffer(uint8Array);
-    return new Promise((resolve, reject) => {
-      fs.writeFile(this.filepath, buffer, (error) => {
-        if (error) reject(error);
-        resolve();
-      })
-    });
-  }
-}
 
-module.exports = MidiFile;
-</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line6">line 6</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

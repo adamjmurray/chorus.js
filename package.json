@@ -11,15 +11,6 @@
     "type": "git",
     "url": "https://github.com/adamjmurray/chorus.js"
   },
-  "keywords": [
-    "music",
-    "midi",
-    "harmony",
-    "composition",
-    "scales",
-    "chords",
-    "rhythm"
-  ],
   "main": "./src/index.js",
   "scripts": {
     "lint": "node_modules/.bin/eslint --config etc/.eslintrc.js src test",
@@ -42,5 +33,27 @@
     "jsdoc": "^3.4.2",
     "mocha": "^3.1.2",
     "proxyquire": "^1.7.10"
-  }
+  },
+  "keywords": [
+    "music",
+    "song",
+    "midi",
+    "harmony",
+    "harmonies",
+    "harmonic",
+    "compose",
+    "composing",
+    "composition",
+    "scale",
+    "scales",
+    "chord",
+    "chords",
+    "progression",
+    "progressions",
+    "rhythm",
+    "rhtyhms",
+    "multitrack",
+    "multi-track",
+    "microtonal"
+  ]
 }

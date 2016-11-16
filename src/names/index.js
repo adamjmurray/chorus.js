@@ -5,7 +5,7 @@ const SCALES = require('./scales');
 const DRUMS = require('./drums');
 
 /**
- * Predefined constants for common musical objects and properties.
+ * #### Predefined constants for common musical objects and properties.
  *
  * @module Names
  * @example
