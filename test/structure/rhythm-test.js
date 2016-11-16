@@ -1,5 +1,6 @@
 const assert = require('assert');
-const { Rhythm } = require('../../src');
+const { Rhythm, Random } = require('../../src');
+const { take } = require('../../src/utils');
 
 describe('Rhythm', () => {
 
@@ -23,6 +24,20 @@ describe('Rhythm', () => {
 
     it('allows durations to be given as an option when pattern is an Array', () => {
       assert.deepEqual(new Rhythm({ pattern: [3,2,1,1], durations: [1,1,2,1] }).durations, [1,1,2,1]);
+    });
+
+    it('allows intensities to be given as an option when pattern is an Array', () => {
+      assert.deepEqual(new Rhythm({ pattern: [3,2,1,1], intensities: [0.9,0.7,0.8,1] }).intensities, [0.9,0.7,0.8,1]);
+    });
+
+    it('allows Random.intensity()', () => {
+      const rhythm = new Rhythm({ pattern: [1,2], intensities: Random.intensity() });
+      let bitFlip = 0;
+      for (const value of take(rhythm[Symbol.iterator](), 20)) {
+        assert.equal(value.duration, bitFlip + 1);
+        assert(value.intensity >= 0 && value.intensity < 1);
+        bitFlip = (bitFlip + 1) % 2;
+      }
     });
   });
 

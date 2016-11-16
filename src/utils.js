@@ -43,4 +43,10 @@ function sleep(milliseconds) {
   return new Promise(resolve => setTimeout(() => resolve(), milliseconds));
 }
 
-module.exports = { mod, clamp, clampInt, noteJSON, sequentialAsync, sleep };
+function take(iterator, n) {
+  const values = [];
+  for (let i=0; i<n; i++) values.push(iterator.next().value);
+  return values;
+}
+
+module.exports = { mod, clamp, clampInt, noteJSON, sequentialAsync, sleep, take };

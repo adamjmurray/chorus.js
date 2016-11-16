@@ -1,5 +1,8 @@
 1.0 Features
-- Pitch value offsets for micortonal tunings (i.e. Don't always count pitch numbers from 0. See TODO in Pitch constructor) 
+- Random
+  - I assumed some iterable constructor options in the structure module have a .map() function. May not always be true?
+  - Needs more tests (see the Rhythm test that tests random intensities)
+- Pitch value offsets for microtonal tunings (i.e. Don't always count pitch numbers from 0. See TODO in Pitch constructor) 
 - Better handling of accidentals (AKA chromatic "shifts")
   - See the private functions at the top of chord.js. This [offset,shift] duple list was the best way I could find to fix
     a bug related to inverting chords with shifts and octave doublings. I've also been struggling with how to model
@@ -17,8 +20,9 @@
   - bpm/tempo support
   - other missing core features? Worry about comprehensive input file support later?
   - error handling for semi-malformed input files could be improved / see MIDI specs
-- Iterables for randomization (input: min, max value, integer vs float mode), for use as intensities, durations, etc
-  - More iterable patterns, like weighted choice  
+    What's the point of MIDI input right now? It doesn't really add anything to this library until we can parse
+    MIDI into a Song object and then do things like transform the scale and chord progression.
+    Deprioritize until I need it or someone asks for it...
 
 Documentation
 - Move structure diagram into a tutorial doc? Organize non-module/class docs into tutorial files. 
