@@ -23,7 +23,7 @@ const song = new Song({
     },
     {
       parts: [{
-        rhythm: [1],
+        rhythm: [4],
         pitches: [C4],
       }]
     }

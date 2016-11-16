@@ -6,9 +6,9 @@ const song = new Song({
   bpm: 120,
   sections: [{
     parts: [{
-      rate: 1/2,
       rhythm: 'X.x.x.x.|X.x.x..x|X.x.x.x.|X...xxxx|X',
-      pitches: [KICK],
+      pulse: 1/2,
+      pitches: [KICK], // intended to be used with a drum sound
     }]
   }]
 });

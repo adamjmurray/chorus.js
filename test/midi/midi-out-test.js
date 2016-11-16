@@ -300,7 +300,6 @@ describe('MidiOut', () => {
           bpm: 10000, // so we don't have to sleep for long
           sections: [{
             parts: [{
-              rate: 1,
               rhythm: 'X'.repeat(8),
               pitches: [60, 60, 60, 60],
             }]

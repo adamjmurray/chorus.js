@@ -7,17 +7,17 @@ const song = new Song({
   bpm: 120,
   sections: [{
     parts: [{
-      rate: 1,
+      pulse: 1,
       rhythm: 'XxxxXxxxXxxxXxxx',
-      pitches: [KICK],
+      pitches: [KICK], // intended to be used with a kick drum sound
     },{
-      rate: 1/2,
+      pulse: 1/2,
       rhythm: distribute(7, 32),
-      pitches: [SNARE],
+      pitches: [SNARE], // intended to be used with a snare sound
     },{
-      rate: 1/4,
+      pulse: 1/4,
       rhythm: distribute(37, 64),
-      pitches: [CLOSED_HIHAT],
+      pitches: [CLOSED_HIHAT],  // intended to be used with a high-hat cymbal sound
     }]
   }]
 });

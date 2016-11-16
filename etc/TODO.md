@@ -35,6 +35,7 @@ Cleanup
 - node-midi has a problem with reusing IO objects: https://github.com/justinlatimer/node-midi/issues/112
   This could be dealt with in the MIDIIn and MIDIOut classes. Doesn't seem urgent.
 - MIDIOut.play() should just convert Song objects toJSON() and have a single code path (need more test coverage)  
+- Drum constants should probably be Pitch objects
 
 Once I do all the above, then we're at v1.0.0?
 

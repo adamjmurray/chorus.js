@@ -7,12 +7,13 @@ const song = new Song({
   sections: [{
     scale: HARMONIC_MINOR(C),
     harmony: {
-      rate: 2,
-      chords: [new Chord([0,2,4], {root: 1, inversion: 1, shifts: [-1]}), SEVENTH(4).inv(-2), TRIAD_PLUS_8(0)] },
+      chords: [new Chord([0,2,4], {root: 1, inversion: 1, shifts: [-1]}), SEVENTH(4).inv(-2), TRIAD_PLUS_8(0)],
+      durations: [2],
+    },
     parts: [{
       mode: 'chord',
-      rate: 2,
       rhythm: 'XXX=',
+      pulse: 2,
       pitches: [0],
       octave: 3,
     }]

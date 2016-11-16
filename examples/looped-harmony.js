@@ -9,9 +9,9 @@ const song = new Song({
     {
       length: 16,
       harmony: {
-        rate: 4,
         looped: true,
-        chords: [TRIAD(0), TRIAD(-2)]
+        chords: [TRIAD(0), TRIAD(-2)],
+        durations: [4],
       },
       parts: [{
         looped: true,
@@ -23,9 +23,9 @@ const song = new Song({
     {
       length: 16,
       harmony: {
-        rate: 4,
         looped: true,
-        chords: [TRIAD(-4), TRIAD(-3)]
+        chords: [TRIAD(-4), TRIAD(-3)],
+        durations: [4],
       },
       parts: [{
         looped: true,

@@ -12,12 +12,11 @@ const song = new Song({
   sections: [{
     scale: new Scale([3,2,3,3,2,3,3], new PitchClass(0,19)),
     harmony: {
-      rate: 4,
-      chords: [TRIAD_PLUS_8(0), TRIAD_PLUS_8(2), TRIAD_PLUS_8(3), SEVENTH(4), TRIAD_PLUS_8(0)]
+      chords: [TRIAD_PLUS_8(0), TRIAD_PLUS_8(2), TRIAD_PLUS_8(3), SEVENTH(4), TRIAD_PLUS_8(0)],
+      durations: [4],
     },
     parts: [{
       mode: 'chord',
-      rate: 1,
       octave: 3,
       rhythm: 'XxXx|Xxxx|XxXx|xxxx|X===',
       pitches: [0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-2,-2,0],
