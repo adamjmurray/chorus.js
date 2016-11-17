@@ -55,11 +55,12 @@ class Rhythm extends Sequencer {
    * @param {Iterable} [options.durations=time between notes]
    * Determines the note durations in an Iterable `pattern`. Ignored if the `pattern` option is a String.
    * @param {Iterable} [options.length=pattern length]
-   * Overrides the length of this rhythm to be different than the `pattern` length. Useful when this rhythm is `looped`.
+   * Overrides the length of this rhythm to be different than the `pattern` length.
+   * Useful when this rhythm is `looped` or when using {@link Random.duration}s.
    * @param {Iterable} [options.looped=false] If true, this rhythm will repeat infinitely. Note that delta-start times,
    * intensities, and durations loop independently for Iterable `pattern`s, which creates less repetitive rhythms.
    */
-  constructor({ pattern=[], pulse=1, intensities, durations, length, looped } = {}) {
+  constructor({ pattern=[], pulse=1, intensities, durations, length, looped=false } = {}) {
     const times = [];
     if (typeof pattern === 'string') {
       length = length || pattern.length * pulse;
@@ -98,7 +99,7 @@ class Rhythm extends Sequencer {
       if (duration) durations.push(duration);
     }
     else {
-      length = pattern.map(Math.abs).reduce((a,b) => a + b, 0);
+      length = length || pattern.map(Math.abs).reduce((a,b) => a + b, 0);
       const legatoDurations = [];
       let time = 0;
       let nextTime;

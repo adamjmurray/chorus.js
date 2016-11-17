@@ -246,7 +246,7 @@ that yield random values for use in other <a href="./module-Structure.html">Stru
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structure_random.js.html">structure/random.js</a>, <a href="structure_random.js.html#line45">line 45</a>
+        <a href="structure_random.js.html">structure/random.js</a>, <a href="structure_random.js.html#line60">line 60</a>
     </li></ul></dd>
     
 
@@ -284,8 +284,9 @@ that yield random values for use in other <a href="./module-Structure.html">Stru
 
 
 <div class="description">
-    <p>Randomly yield an number suitable for durations values.</p>
+    <p>Randomly yield an integer suitable for durations values in a <a href="Rhythm.html">Rhythm</a>.</p>
 <p>First a random integer value between <code>min</code> and <code>max</code> is calculated, then it's multiplied by the <code>multiplier</code>.</p>
+<p>NOTE: Random durations are currently <em>not</em> supported by Harmony.durations or Rhythm.pattern.</p>
 </div>
 
 
@@ -525,7 +526,7 @@ that yield random values for use in other <a href="./module-Structure.html">Stru
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structure_random.js.html">structure/random.js</a>, <a href="structure_random.js.html#line36">line 36</a>
+        <a href="structure_random.js.html">structure/random.js</a>, <a href="structure_random.js.html#line51">line 51</a>
     </li></ul></dd>
     
 
@@ -563,7 +564,7 @@ that yield random values for use in other <a href="./module-Structure.html">Stru
 
 
 <div class="description">
-    <p>Randomly yield a floating point number suitable for intensity values.</p>
+    <p>Randomly yield a floating point number suitable for intensity values in a <a href="Rhythm.html">Rhythm</a>.</p>
 </div>
 
 
@@ -764,7 +765,247 @@ that yield random values for use in other <a href="./module-Structure.html">Stru
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structure_random.js.html">structure/random.js</a>, <a href="structure_random.js.html#line22">line 22</a>
+        <a href="structure_random.js.html">structure/random.js</a>, <a href="structure_random.js.html#line35">line 35</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".pitch"><span class="type-signature">(static) </span>pitch<span class="signature">(options)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Randomly yield an integer suitable for relative pitches in a <a href="Part.html">Part</a>.</p>
+<p>The default min and max work well with 3-note chords when the part's <a href="Part.html">mode</a> is <code>arpeggio</code>.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>min</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last"><p>minimum possible value (inclusive)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>max</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    2
+                
+                </td>
+            
+
+            <td class="description last"><p>maximum possible value (inclusive)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structure_random.js.html">structure/random.js</a>, <a href="structure_random.js.html#line24">line 24</a>
     </li></ul></dd>
     
 
@@ -918,7 +1159,7 @@ that yield random values for use in other <a href="./module-Structure.html">Stru
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structure_random.js.html">structure/random.js</a>, <a href="structure_random.js.html#line60">line 60</a>
+        <a href="structure_random.js.html">structure/random.js</a>, <a href="structure_random.js.html#line75">line 75</a>
     </li></ul></dd>
     
 
