@@ -22,6 +22,7 @@
     Deprioritize until I need it or someone asks for it...
 
 Documentation
+- Document Chord
 - Move structure diagram into a tutorial doc? Organize non-module/class docs into tutorial files. 
   Each documented DAW setup should go into it's own tutorial
 - Double check my install/usage notes on Windows
@@ -31,8 +32,6 @@ Documentation
 - Setup a Changelog file
   
 Cleanup
-- Re-evaluate if everything in chord should be optionally overridden by the classes non-constructor functions.
-  I'd argue for simplifying as much as possible for 1.0 if it's not needed by the Song generator logic.
 - node-midi has a problem with reusing IO objects: https://github.com/justinlatimer/node-midi/issues/112
   This could be dealt with in the MIDIIn and MIDIOut classes. Doesn't seem urgent.
 - MIDIOut.play() should just convert Song objects toJSON() and have a single code path (need more test coverage)  
