@@ -1,5 +1,6 @@
 const assert = require('assert');
 const { Part, Rhythm } = require('../../src');
+const { take } = require('../../src/utils');
 
 describe('Part', () => {
 
@@ -46,6 +47,14 @@ describe('Part', () => {
       const part = new Part();
       const iterator = part[Symbol.iterator]();
       assert(iterator.next().done);
-    })
+    });
+
+    it('loops correctly with non-looped rhythms', () => {
+      const part = new Part({ pitches: [0], rhythm: 'X', looped: true });
+      assert.deepEqual(
+        take(part, 10),
+        new Array(10).fill(0).map((_,idx) => ({ time: idx, intensity: 1, duration: 1, pitch: 0 }))
+      );
+    });
   });
 });

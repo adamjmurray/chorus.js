@@ -48,13 +48,16 @@ class Sequencer {
           if (nexts[i].done) return; // empty iterator, give up
           if (name === 'time') timeOffset += this.length;
         }
-        const value = nexts[i].value;
+        let value = nexts[i].value;
         if (value && value.constructor === Object) {
           for (const subname of Object.keys(value)) {
             result[subname] = value[subname];
             if (subname === 'time') result[subname] += timeOffset;
           }
         } else {
+          if (value && value.next instanceof Function) { // nested Iterator (such as a Random generator function)
+            value = value.next().value;
+          }
           result[name] = value;
           if (name === 'time') result[name] += timeOffset;
         }

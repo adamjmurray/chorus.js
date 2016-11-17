@@ -30,13 +30,21 @@ describe('Rhythm', () => {
       assert.deepEqual(new Rhythm({ pattern: [3,2,1,1], intensities: [0.9,0.7,0.8,1] }).intensities, [0.9,0.7,0.8,1]);
     });
 
-    it('allows Random.intensity()', () => {
-      const rhythm = new Rhythm({ pattern: [1,2], intensities: Random.intensity() });
-      let bitFlip = 0;
-      for (const value of take(rhythm[Symbol.iterator](), 20)) {
-        assert.equal(value.duration, bitFlip + 1);
-        assert(value.intensity >= 0 && value.intensity < 1);
-        bitFlip = (bitFlip + 1) % 2;
+    it('supports Random.intensity() in the intensities list', () => {
+      const rhythm = new Rhythm({ pattern: [1,2], intensities: [1, Random.intensity()], looped: true });
+      let even = 1;
+      let previousIntensity = null;
+      for (const { duration, intensity} of take(rhythm[Symbol.iterator](), 20)) {
+        if (even) {
+          assert.equal(duration, 1);
+          assert.equal(intensity, 1);
+        } else {
+          assert.equal(duration, 2);
+          assert(intensity >= 0 && intensity < 1);
+        }
+        assert(intensity !== previousIntensity);
+        previousIntensity = intensity;
+        even = (even+1) % 2;
       }
     });
   });

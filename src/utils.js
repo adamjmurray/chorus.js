@@ -44,6 +44,7 @@ function sleep(milliseconds) {
 }
 
 function take(iterator, n) {
+  iterator = iterator[Symbol.iterator] ? iterator[Symbol.iterator]() : iterator;
   const values = [];
   for (let i=0; i<n; i++) values.push(iterator.next().value);
   return values;
