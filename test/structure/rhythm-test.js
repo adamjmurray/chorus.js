@@ -30,22 +30,62 @@ describe('Rhythm', () => {
       assert.deepEqual(new Rhythm({ pattern: [3,2,1,1], intensities: [0.9,0.7,0.8,1] }).intensities, [0.9,0.7,0.8,1]);
     });
 
+    it('allows length to be overridden when pattern is a String', () => {
+      const rhythm = new Rhythm({ pattern: 'Xx', length: 4, looped: true });
+      assert.deepEqual(take(rhythm, 4), [
+        { time: 0, intensity: 1, duration: 1 },
+        { time: 1, intensity: 0.7, duration: 1 },
+        { time: 4, intensity: 1, duration: 1 },
+        { time: 5, intensity: 0.7, duration: 1 },
+      ]);
+    });
+
+    it('allows length to be overridden when pattern is an Array', () => {
+      const rhythm = new Rhythm({ pattern: [1,1], length: 4, looped: true });
+      assert.deepEqual(take(rhythm, 4), [
+        { time: 0, intensity: 0.7, duration: 1 },
+        { time: 1, intensity: 0.7, duration: 1 },
+        { time: 4, intensity: 0.7, duration: 1 },
+        { time: 5, intensity: 0.7, duration: 1 },
+      ]);
+    });
+
     it('supports Random.intensity() in the intensities list', () => {
-      const rhythm = new Rhythm({ pattern: [1,2], intensities: [1, Random.intensity()], looped: true });
-      let even = 1;
+      const rhythm = new Rhythm({ pattern: [1,2], intensities: [1,Random.intensity()], looped: true });
+      let even = true;
       let previousIntensity = null;
-      for (const { duration, intensity} of take(rhythm[Symbol.iterator](), 20)) {
+      let expectedTime = 0;
+      for (const { time, duration, intensity} of take(rhythm[Symbol.iterator](), 20)) {
+        assert.equal(time, expectedTime);
         if (even) {
           assert.equal(duration, 1);
           assert.equal(intensity, 1);
+          expectedTime += 1;
         } else {
           assert.equal(duration, 2);
           assert(intensity >= 0 && intensity < 1);
+          expectedTime += 2;
         }
         assert(intensity !== previousIntensity);
         previousIntensity = intensity;
-        even = (even+1) % 2;
+        even = !even;
       }
+    });
+
+    it('supports Random.duration() in the durations list', () => {
+      // default Random.duration() returns 1, 2, 3 or 4
+      const rhythm = new Rhythm({ pattern: [1], durations: [4,Random.duration()], length: 8, looped: true });
+      const durations = new Set();
+      let even = true;
+      take(rhythm[Symbol.iterator](), 100).forEach(({ time, intensity, duration }, idx) => {
+        assert.equal(time, 8 * idx);
+        assert.equal(intensity, 0.7);
+        assert(duration === 1 || duration === 2 || duration === 3 || duration === 4);
+        if (even) assert.equal(duration, 4);
+        durations.add(duration);
+        even = !even;
+      });
+      assert.deepEqual([...durations].sort(), [1,2,3,4]);
     });
   });
 

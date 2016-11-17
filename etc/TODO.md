@@ -1,7 +1,4 @@
 1.0 Features
-- Random
-  - I assumed some iterable constructor options in the structure module have a .map() function. May not always be true?
-  - Needs more tests (see the Rhythm test that tests random intensities)
 - Pitch value offsets for microtonal tunings (i.e. Don't always count pitch numbers from 0. See TODO in Pitch constructor) 
 - Better handling of accidentals (AKA chromatic "shifts")
   - See the private functions at the top of chord.js. This [offset,shift] duple list was the best way I could find to fix
@@ -56,3 +53,5 @@ Future Features
   - Direct audio output with the Web Audio API (this could really lower the barrier to microtonal composition)
 - Constrain track range. Since bass mode ignores inversions, it can jump up too much. Sometimes it should go down an octave. See also next idea:
 - Automatic voice leading, esp for chord progressions, maybe for bass/lead too (prefer intervals less than a tritone)?
+- Random timing (not just durations)
+  This simply doesn't work with the way we are calculating the times list in Rhythm & Harmony constructors right now.

@@ -11,7 +11,7 @@ class Harmony extends Sequencer {
    * @param {Boolean} [options.looped=false] - If true, the chords and durations sequences will auto-restart (independently from each other)
    *        for the duration of containing Section.
    */
-  constructor({ chords=[], durations, looped }={}) {
+  constructor({ chords=[], durations, looped=false }={}) {
     durations = (durations || new Array(chords.length || 1).fill(1)).map(Math.abs);
     const length = durations.reduce((a,b) => a + b, 0);
     const times = [];
