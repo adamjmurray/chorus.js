@@ -85,7 +85,7 @@ describe('Rhythm', () => {
         durations.add(duration);
         even = !even;
       });
-      assert.deepEqual([...durations].sort(), [1,2,3,4]);
+      assert.deepEqual([...durations].sort((a,b)=>a-b), [1,2,3,4]);
     });
   });
 

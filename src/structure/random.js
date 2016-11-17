@@ -14,7 +14,20 @@ class Random {
   constructor() {}
 
   /**
-   * Randomly yield a floating point number suitable for intensity values.
+   * Randomly yield an integer suitable for relative pitches in a {@link Part}.
+   *
+   * The default min and max work well with 3-note chords when the part's {@link Part|mode} is `arpeggio`.
+   * @param {Object} options
+   * @param {Number} [options.min=0] minimum possible value (inclusive)
+   * @param {Number} [options.max=2] maximum possible value (inclusive)
+   */
+  static *pitch({ min=0, max=2 }={}) {
+    const range = max - min + 1; // + 1 includes the max value
+    while (true) yield Math.floor(min + range*Math.random());
+  }
+
+  /**
+   * Randomly yield a floating point number suitable for intensity values in a {@link Rhythm}.
    * @param {Object} options
    * @param {Number} [options.min=0] minimum possible value (inclusive)
    * @param {Number} [options.max=1] maximum possible value (exclusive)
@@ -25,9 +38,11 @@ class Random {
   }
 
   /**
-   * Randomly yield an number suitable for durations values.
+   * Randomly yield an integer suitable for durations values in a {@link Rhythm}.
    *
    * First a random integer value between `min` and `max` is calculated, then it's multiplied by the `multiplier`.
+   *
+   * NOTE: Random durations are currently *not* supported by Harmony.durations or Rhythm.pattern.
    * @param {Object} options
    * @param {Number} [options.min=1] minimum possible value (inclusive)
    * @param {Number} [options.max=4] maximum possible value (inclusive)

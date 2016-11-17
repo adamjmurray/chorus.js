@@ -19,4 +19,11 @@ describe('utils', () => {
       assert.equal(utils.clamp(null, 0, 2), 0);
     });
   });
+
+  describe('take()', () => {
+    it('gets the next N values from an Iterator', () => {
+      const iterator = (n=0) => ({ next: () => ({ value: n++, done: false }) });
+      assert.deepEqual(utils.take(iterator(), 5), [0,1,2,3,4]);
+    });
+  });
 });

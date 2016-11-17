@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { Part, Rhythm } = require('../../src');
+const { Part, Rhythm, Random } = require('../../src');
 const { take } = require('../../src/utils');
 
 describe('Part', () => {
@@ -20,7 +20,25 @@ describe('Part', () => {
 
     it('accepts an options object for the rhythm option', () => {
       assert.deepEqual(new Part({ rhythm: { pattern: [1,2,1] } }).rhythm.times, [0,1,3]);
-    })
+    });
+
+    it('supports Random.pitch() in the pitches list', () => {
+      // default Random.pitch() returns 0, 1 or 2
+      const part = new Part({ pitches: [-1, Random.pitch()], looped: true });
+      const pitches = new Set();
+      let even = true;
+      take(part[Symbol.iterator](), 100).forEach(({ time, pitch }, idx) => {
+        assert.equal(time, idx);
+        if (even) {
+          assert.equal(pitch, -1);
+        } else {
+          assert(pitch === 0 || pitch === 1 || pitch === 2);
+        }
+        pitches.add(pitch);
+        even = !even;
+      });
+      assert.deepEqual([...pitches].sort((a,b)=>a-b), [-1,0,1,2]);
+    });
   });
 
   describe('MODES', () => {
