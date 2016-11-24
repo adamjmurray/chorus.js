@@ -103,5 +103,18 @@ describe('Scale', () => {
       assert.equal(microtonalScale.pitch(-3, {octave: 0}), 11);
       assert.equal(microtonalScale.pitch(-3, {octave: 1}), 30);
     });
+
+    it('supports relative pitch objects', () => {
+      assert.deepEqual(scale.pitch({ degree:0, shift:0 }), PITCHES.D4);
+      assert.deepEqual(scale.pitch({ degree:0, shift:1 }), PITCHES.Eb4);
+      assert.deepEqual(scale.pitch({ degree:0, shift:-1 }), PITCHES.Db4);
+      assert.deepEqual(scale.pitch({ degree:0, shift:2 }), PITCHES.E4);
+      assert.deepEqual(scale.pitch({ degree:0, shift:-2 }), PITCHES.C4);
+      assert.deepEqual(scale.pitch({ degree:1, shift:1 }), PITCHES.F4);
+      assert.deepEqual(scale.pitch({ degree:1, shift:-1 }), PITCHES.Eb4);
+      assert.deepEqual(scale.pitch({ degree:-1, shift:1 }), PITCHES.Db4);
+      assert.deepEqual(scale.pitch({ degree:-1, shift:-1 }), PITCHES.B3);
+      assert.deepEqual(scale.pitch({ degree:7, shift:1 }), PITCHES.Eb5);
+    });
   });
 });

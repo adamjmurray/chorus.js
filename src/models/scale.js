@@ -32,10 +32,12 @@ class Scale {
     return this.intervals.reduce((a,b) => a + b, 0);
   }
 
-  pitch(degree, { octave = 4 } = {}) {
+  pitch(position, { octave = 4 } = {}) {
+    const degree = position.degree || position;
     let pitchClassValue = this.root.valueOf();
     for (let i =  0; i < degree;  i++) pitchClassValue += this.intervals[i % this.length];
     for (let i = -1; i >= degree; i--) pitchClassValue -= this.intervals[mod(i, this.length)];
+    pitchClassValue += position.shift || 0;
     const pitchClass = new PitchClass(pitchClassValue, this.root.pitchesPerOctave);
     return new Pitch(pitchClass, octave + Math.floor(pitchClassValue / this.root.pitchesPerOctave));
   }

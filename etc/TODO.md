@@ -1,16 +1,23 @@
+Rework handling of relative pitches, which represent a pitch relative to a given scale
+- Relative pitches can be either Numbers (representing 0-indexed scale degrees with wrap-around) 
+  or {degree:Number, shift:Number} objects to support accidentals.
+- Scale.pitch()'s input is a relative pitch  
+- Chords should be modeled in terms of a list of relative pitches. 
+  - Chord.constructor(relativePitches, { inversion = 0 } = {})
+    - This way the root is the first relative pitch, so the CHORDS functions will add an offset to each relative pitch rather than change the root.
+  - Chord.pitch()/pitches() functions return a list of relative pitches (so basically they just evaluate inversions)
+- Test case
+const chord = new Chord([{degree:1, shift:-1},3,5])
+chord.pitch(0) => {degree:1, shift:-1}
+(C_MIN)scale.pitch(chord.pitch(0)) => Db4
+(C_MIN)scale.pitch(chord.pitch(1)) => F4
+(C_MIN)scale.pitch(chord.pitch(0) + 1) => Eb4 
+^ the shift is lost when we add - but how can this be implemented? 
+If valueOf() {degree/shift} is just degree, maybe the structure classes can add this function?
+
 1.0 Features
 - Pitch value offsets for microtonal tunings (i.e. Don't always count pitch numbers from 0. See TODO in Pitch constructor) 
-- Better handling of accidentals (AKA chromatic "shifts")
-  - See the private functions at the top of chord.js. This [offset,shift] duple list was the best way I could find to fix
-    a bug related to inverting chords with shifts and octave doublings. I've also been struggling with how to model
-    accidentals (AKA chromatic "shifts" as they are currently called in chords.js). Some ideas involved floating point numbers (messy)
-    or separates lists of shifts (as we are using in the public interface of chords). Now I think letting a chord "offset" be
-    either a Number or one of these [offset,shift] duples is the way to go. So expanding on this idea:
-    - Is there a better name for [offset,shift] (semi-related, the additional offset you can apply in chord.pitches is confusing)
-    - Shifts doesn't need to be part of the chord.pitch() and chord.pitches() interface if we fold into the offsets list, 
-      which simplifies things
-    - scale.pitch could accept() this duple and apply the chromatic shift to the base result
-    - Any pitch list in the structure module (Song, etc) should allow this duple in place of a Number
+- Multiple notes at once. Should work intuitively in most part modes. For chord mode, take the union of the resulting pitches.
 - Improve MIDI file support
   - A Part's channel should determine track for MIDI file output
     - Default the part.channel to it's index within the section, at construction time (instead of deferring this logic to Section @@iterator) 
@@ -32,6 +39,9 @@ Documentation
 - Setup a Changelog file
   
 Cleanup
+- Rename scale.pitch() to scale.pitchAt()
+- Rename chord.pitches() to chord.relativePitches()
+- Rename chord.pitch() to chord.relativePitchAt()
 - node-midi has a problem with reusing IO objects: https://github.com/justinlatimer/node-midi/issues/112
   This could be dealt with in the MIDIIn and MIDIOut classes. Doesn't seem urgent.
 - MIDIOut.play() should just convert Song objects toJSON() and have a single code path (need more test coverage)  
