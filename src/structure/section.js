@@ -1,6 +1,46 @@
 const Part = require('./part');
+const Pitch = require('../model/pitch');
+const PitchClass = require('../model/pitch-class');
 const Harmony = require('./harmony');
 const { ARPEGGIO, BASS, CHORD, CHROMATIC, LEAD, SCALE } = Part.MODES;
+
+function evaluatePartMode(partMode, relativePitch, scale, chord, octave) {
+  if (relativePitch instanceof Array) {
+    return [].concat(...relativePitch.map(rp => evaluatePartMode(partMode, rp, scale, chord, octave)));
+  }
+  if (relativePitch instanceof Pitch) {
+    return [relativePitch];
+  }
+  if (relativePitch instanceof PitchClass) {
+    return [new Pitch(relativePitch, octave)];
+  }
+  if (!partMode) {
+    return [Number(relativePitch)];
+  }
+  switch (partMode) {
+    case ARPEGGIO:
+      return [chord.pitch(relativePitch, { scale, octave })];
+
+    case BASS:
+      return [chord.pitch(0, { scale, octave, inversion: 0, offset: relativePitch })];
+
+    case LEAD:
+      return [chord.pitch(0, { scale, octave, offset: relativePitch })];
+
+    case CHORD:
+      return chord.pitches({ scale, octave, inversion: chord.inversion + relativePitch });
+
+    case SCALE:
+      return [scale.pitch(relativePitch, {octave})];
+
+    case CHROMATIC:
+      return [scale.pitch(0, { octave }).add(relativePitch)];
+
+    default:
+      console.error(`Unsupported part mode "${partMode}"`); // eslint-disable-line no-console
+      return [];
+  }
+}
 
 /**
  * A section of a {@link Song} with a particular scale and harmony.
@@ -58,54 +98,12 @@ class Section {
           harmonyCurr = harmonyNext;
           harmonyNext = harmonyIter.next();
         }
-        let { value:{chord}={} } = harmonyCurr;
-        let pitches;
-        if (partMode && (typeof pitch === 'number' || pitch instanceof Array)) {
-          // pitch is a relative pitch, and we need to evaluate it against the part's mode
-          const number = pitch;
-          // let chord;
-          switch (partMode) {
-            case ARPEGGIO: {
-              pitches = [chord.pitch(number, { scale, octave })];
-              break;
-            }
-            case BASS: {
-              pitches = [chord.pitch(0, { scale, octave, inversion: 0, offset: number })];
-              break;
-            }
-            case LEAD: {
-              pitches = [chord.pitch(0, { scale, octave, offset: number })];
-              break;
-            }
-            case CHORD: {
-              pitches = chord.pitches({ scale, octave, inversion: chord.inversion + number });
-              break;
-            }
-            case SCALE: {
-              if (number instanceof Array) {
-                pitches = number.map(n => scale.pitch(n, {octave}));
-              } else {
-                pitches = [scale.pitch(number, {octave})];
-              }
-              break;
-            }
-            case CHROMATIC: {
-              pitches = [scale.pitch(0, { octave }).add(number)];
-              break;
-            }
-            default: {
-              console.error(`Unsupported part mode "${partMode}"`); // eslint-disable-line no-console
-            }
-          }
-        } else {
-          pitches = [pitch];
-        }
-        if (pitches) {
-          for (const p of pitches) {
-            if (p != null) {
-              const note = {pitch: p, duration, intensity, channel};
-              yield {time, part: partIdx, note};  // TODO: maybe the MIDI file part should be based on the channel
-            }
+        const { value:{chord}={} } = harmonyCurr;
+        const pitches = evaluatePartMode(partMode, pitch, scale, chord, octave);
+        for (const p of pitches) {
+          if (p != null) {
+            const note = {pitch: p, duration, intensity, channel};
+            yield {time, part: partIdx, note};  // TODO: maybe the MIDI file part should be based on the channel
           }
         }
       }
