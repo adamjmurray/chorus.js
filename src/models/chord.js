@@ -6,10 +6,10 @@ function findUniqueOctaveOffset(relativePitches, scaleLength, direction) {
   // TODO: do this once in the calling function?
   if (direction < 0) relativePitches = relativePitches.slice().reverse();
   for (let octave=direction; true; octave += direction) { // eslint-disable-line no-constant-condition
-    for (const {offset,shift} of relativePitches) {
-      const invertedOffset = offset + (octave * scaleLength);
-      if (!relativePitches.find(({offset:o,shift:s}) => (o === invertedOffset && s === shift))) {
-        return new RelativePitch(invertedOffset, shift);
+    for (const {degree,shift} of relativePitches) {
+      const invertedDegree = degree + (octave * scaleLength);
+      if (!relativePitches.find(({degree:d,shift:s}) => (d === invertedDegree && s === shift))) {
+        return new RelativePitch(invertedDegree, shift);
       }
     }
   }

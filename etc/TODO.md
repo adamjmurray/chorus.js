@@ -1,8 +1,3 @@
-Rework handling of relative pitches, which represent a pitch relative to a given scale
-- Relative pitches can be either Numbers (representing 0-indexed scale degrees with wrap-around) 
-  or {degree:Number, shift:Number} objects to support accidentals.
-  ^ For some reason I thought offset was a better name while implementing and went with that, but I think degree was good?
-
 1.0 Features
 - Pitch value offsets for microtonal tunings (i.e. Don't always count pitch numbers from 0. See TODO in Pitch constructor) 
 - Multiple notes at once. Should work intuitively in most part modes. For chord mode, take the union of the resulting pitches.
