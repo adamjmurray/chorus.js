@@ -1,19 +1,7 @@
 Rework handling of relative pitches, which represent a pitch relative to a given scale
 - Relative pitches can be either Numbers (representing 0-indexed scale degrees with wrap-around) 
   or {degree:Number, shift:Number} objects to support accidentals.
-- Scale.pitch()'s input is a relative pitch  
-- Chords should be modeled in terms of a list of relative pitches. 
-  - Chord.constructor(relativePitches, { inversion = 0 } = {})
-    - This way the root is the first relative pitch, so the CHORDS functions will add an offset to each relative pitch rather than change the root.
-  - Chord.pitch()/pitches() functions return a list of relative pitches (so basically they just evaluate inversions)
-- Test case
-const chord = new Chord([{degree:1, shift:-1},3,5])
-chord.pitch(0) => {degree:1, shift:-1}
-(C_MIN)scale.pitch(chord.pitch(0)) => Db4
-(C_MIN)scale.pitch(chord.pitch(1)) => F4
-(C_MIN)scale.pitch(chord.pitch(0) + 1) => Eb4 
-^ the shift is lost when we add - but how can this be implemented? 
-If valueOf() {degree/shift} is just degree, maybe the structure classes can add this function?
+  ^ For some reason I thought offset was a better name while implementing and went with that, but I think degree was good?
 
 1.0 Features
 - Pitch value offsets for microtonal tunings (i.e. Don't always count pitch numbers from 0. See TODO in Pitch constructor) 
@@ -39,9 +27,8 @@ Documentation
 - Setup a Changelog file
   
 Cleanup
-- Rename scale.pitch() to scale.pitchAt()
-- Rename chord.pitches() to chord.relativePitches()
-- Rename chord.pitch() to chord.relativePitchAt()
+- Remove deprecated functions
+- Re-enable no console ESLint rule and ignore the intentional uses by disabling the rule line-by-line
 - node-midi has a problem with reusing IO objects: https://github.com/justinlatimer/node-midi/issues/112
   This could be dealt with in the MIDIIn and MIDIOut classes. Doesn't seem urgent.
 - MIDIOut.play() should just convert Song objects toJSON() and have a single code path (need more test coverage)  

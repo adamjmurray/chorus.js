@@ -14,7 +14,7 @@ const CHORD_TYPES = {
 
 const CHORDS = {};
 Object.keys(CHORD_TYPES).forEach(type =>
-  CHORDS[type] = (root, { scale, octave, inv, inversion }={}) =>
-    new Chord(CHORD_TYPES[type], { root, scale, octave, inversion: inv || inversion }));
+  CHORDS[type] = (root, inversion) =>
+    new Chord(CHORD_TYPES[type].map(degree => root + degree), inversion));
 
 module.exports = Object.freeze(CHORDS);

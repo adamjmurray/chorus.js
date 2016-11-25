@@ -1,34 +1,31 @@
+const RelativePitch = require('./relative-pitch');
 const { mod } = require('../utils');
 
-function findUniqueOctaveOffset(offsetsAndShifts, scaleLength, direction) {
+function findUniqueOctaveOffset(relativePitches, scaleLength, direction) {
   direction = Math.sign(direction);
-  if (direction < 0) offsetsAndShifts = offsetsAndShifts.slice().reverse();
+  // TODO: do this once in the calling function?
+  if (direction < 0) relativePitches = relativePitches.slice().reverse();
   for (let octave=direction; true; octave += direction) { // eslint-disable-line no-constant-condition
-    for (const [offset,shift] of offsetsAndShifts) {
+    for (const {offset,shift} of relativePitches) {
       const invertedOffset = offset + (octave * scaleLength);
-      if (!offsetsAndShifts.find(([o,s]) => (o === invertedOffset && s === shift))) {
-        return [invertedOffset,shift];
+      if (!relativePitches.find(({offset:o,shift:s}) => (o === invertedOffset && s === shift))) {
+        return new RelativePitch(invertedOffset, shift);
       }
     }
   }
 }
 
-function offsetsAndShiftsForInversion(offsets, shifts, inversion, scaleLength) {
-  offsets = offsets.slice(); // make a copy
-  shifts = (shifts || []).slice(0, offsets.length);
-  if (shifts.length < offsets.length) {
-    shifts = shifts.concat(new Array(offsets.length - shifts.length).fill(0));
-  }
-  const offsetsAndShifts = offsets.map((offset, index) => [offset, shifts[index]]);
+function relativePitchesForInversion(relativePitches, inversion, scaleLength) {
+  relativePitches = relativePitches.slice(); // make a copy
   for (let i =  1; i <= inversion; i++) {
-    offsetsAndShifts.push(findUniqueOctaveOffset(offsetsAndShifts, scaleLength, 1));
-    offsetsAndShifts.shift();
+    relativePitches.push(findUniqueOctaveOffset(relativePitches, scaleLength, 1));
+    relativePitches.shift();
   }
   for (let i = -1; i >= inversion; i--) {
-    offsetsAndShifts.unshift(findUniqueOctaveOffset(offsetsAndShifts, scaleLength, -1));
-    offsetsAndShifts.pop();
+    relativePitches.unshift(findUniqueOctaveOffset(relativePitches, scaleLength, -1));
+    relativePitches.pop();
   }
-  return offsetsAndShifts;
+  return relativePitches;
 }
 
 /**
@@ -38,18 +35,12 @@ class Chord {
 
   /**
    *
-   * @param offsets - a list of scale offsets (Numbers) and/or scale offsets + chromatic shifts (duples of Numbers)
-   * @param scale
-   * @param root
-   * @param octave
+   * @param relativePitches
    * @param inversion
    */
-  constructor(offsets, { scale, root = 0, octave = 4, inversion = 0, shifts } = {}) {
-    this.offsets = Object.freeze(offsets.slice()); // scale degrees relative to the given root
-    this.shifts = shifts ? Object.freeze(shifts.slice()) : shifts; // chromatic shifts for the scale-degree offsets
-    this.scale = scale;
-    this.root = root; // the scale degree of the root of the chord
-    this.octave = octave;
+  constructor(relativePitches, inversion=0) {
+    relativePitches = relativePitches.map(rp => rp instanceof RelativePitch ? rp : new RelativePitch(rp));
+    this.relativePitches = Object.freeze(relativePitches);
     this.inversion = inversion;
     Object.freeze(this);
   }
@@ -62,23 +53,21 @@ class Chord {
    * @param offset
    * @returns {Array}
    */
-  pitches({ scale = this.scale, octave = this.octave, inversion = this.inversion, offset = 0, } = {}) {
-    const offsetsAndShifts = offsetsAndShiftsForInversion(this.offsets, this.shifts, inversion, scale.length);
-    const pitches = offsetsAndShifts.map(([invertedOffset, invertedShift]) =>
-      scale.pitch(this.root + invertedOffset + offset, { octave }).add(invertedShift));
+  pitches({ scale, octave=4, inversion=this.inversion, offset=0, }={}) {
+    const relativePitches = relativePitchesForInversion(this.relativePitches, inversion, scale.length);
+    const pitches = relativePitches.map(relativePitch =>
+      // Only add the additional offset if it's non-zero offset, because it causes the relativePitch's shift to be lost
+      scale.pitch(offset ? relativePitch.add(offset) : relativePitch, { octave }));
     return pitches;
   }
 
   /**
    *
    * @param position
-   * @param scale
-   * @param octave
    * @param inversion
-   * @param offset
    * @returns {*}
    */
-  pitch(position, { scale = this.scale, octave = this.octave, inversion = this.inversion, offset = 0 } = {}) {
+  pitchAt(position, { scale, octave=4, inversion=this.inversion, offset=0 }={}) {
     const pitches = this.pitches({ scale, octave, inversion, offset });
     const pitch = pitches[mod(position, pitches.length)];
     const octaveOffset = Math.floor(position / pitches.length);
@@ -88,11 +77,17 @@ class Chord {
     return pitch;
   }
 
-  inv(inversion) {
-    if (!inversion) return this;
-    return new Chord(this.offsets, { scale: this.scale, root: this.root, octave: this.octave, shifts: this.shifts, inversion: inversion });
+  /**
+   * @deprecated
+   */
+  pitch(position, options) {
+    return this.pitchAt(position, options);
   }
 
+  inv(inversion) {
+    if (!inversion) return this;
+    return new Chord(this.relativePitches, inversion);
+  }
 }
 
 module.exports = Chord;

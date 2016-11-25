@@ -1,5 +1,5 @@
 const { Harmony, Random, Rhythm, Section, Song, Part } = require('./structure');
-const { Chord, Pitch, PitchClass, Scale } = require('./models');
+const { Chord, Pitch, PitchClass, RelativePitch, Scale } = require('./models');
 const { CHORDS, PITCH_CLASSES, PITCHES, SCALES } = require('./names');
 // other submodules are optional
 
@@ -11,6 +11,6 @@ const { CHORDS, PITCH_CLASSES, PITCHES, SCALES } = require('./names');
  */
 module.exports = {
   Harmony, Random, Rhythm, Section, Song, Part,
-  Chord, Pitch, PitchClass, Scale,
+  Chord, Pitch, PitchClass, RelativePitch, Scale,
   CHORDS, PITCH_CLASSES, PITCHES, SCALES
 };
