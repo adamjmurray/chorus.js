@@ -78,6 +78,30 @@ describe('Chord', () => {
       const scale = SCALES.MINOR(C);
       assert.deepEqual(chord.pitch(0, { scale, offset: 1 }), PITCHES.Eb4);
     });
+
+    it("supports a RelativePitch as the first argument (without shift)", () => {
+      const chord = new Chord([0,2,4]);
+      const scale = SCALES.MINOR(C);
+      assert.deepEqual(chord.pitch(new RelativePitch(1), { scale }), PITCHES.Eb4);
+    });
+
+    it("supports a RelativePitch as the first argument (with shift)", () => {
+      const chord = new Chord([0,2,4]);
+      const scale = SCALES.MINOR(C);
+      assert.deepEqual(chord.pitch(new RelativePitch(1,1), { scale }), PITCHES.E4);
+    });
+
+    it("supports a RelativePitch-like as the first argument (without shift)", () => {
+      const chord = new Chord([0,2,4]);
+      const scale = SCALES.MINOR(C);
+      assert.deepEqual(chord.pitch({degree:1}, { scale }), PITCHES.Eb4);
+    });
+
+    it("supports a RelativePitch-like as the first argument (with shift)", () => {
+      const chord = new Chord([0,2,4]);
+      const scale = SCALES.MINOR(C);
+      assert.deepEqual(chord.pitch({degree:1, shift:1}, { scale }), PITCHES.E4);
+    });
   });
 
   describe('.inv()', () => {

@@ -1,7 +1,6 @@
 /**
- * A pitch that is relative to a given scale.
- * Normally this is relative to the root of a scale (see Scale.pitch() and Scale.pitchClassAt())
- * but it can also be relative to another note in the scale, in the case of the chord.pitch() offset option
+ * A pitch that is relative to another pitch in a scale or chord.
+ * It is converted to a pitch by Scale.pitch() or Chord.pitch()
  */
 class RelativePitch {
 

@@ -89,7 +89,7 @@ class Pitch {
    * @returns {Pitch}
    */
   add(value) {
-    return new Pitch(this.value + value, null, this.pitchClass.pitchesPerOctave);
+    return value ? new Pitch(this.value + value, null, this.pitchClass.pitchesPerOctave) : this;
   }
 }
 

@@ -63,18 +63,17 @@ class Chord {
 
   /**
    *
-   * @param position
+   * @param position {Number|RelativePitch}
    * @param inversion
    * @returns {*}
    */
   pitch(position, { scale, octave=4, inversion=this.inversion, offset=0 }={}) {
+    const shift = position.shift || 0;
+    position = position.degree || Number(position);
     const pitches = this.pitches({ scale, octave, inversion, offset });
     const pitch = pitches[mod(position, pitches.length)];
     const octaveOffset = Math.floor(position / pitches.length);
-    if (octaveOffset !== 0) {
-      return pitch.add(octaveOffset * scale.semitones);
-    }
-    return pitch;
+    return pitch.add(octaveOffset * scale.semitones + shift);
   }
 
   inv(inversion) {
