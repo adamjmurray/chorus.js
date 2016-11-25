@@ -4,7 +4,7 @@ const { mod } = require('../utils');
 
 // The raw value for the pitch class that hasn't had modular math applied to "normalize" it,
 // so octave offsets can be calculated properly in Scale.pitch()
-function pitchClassValue(scale, relativePitch) {
+function pitchValue(scale, relativePitch) {
   const degree = relativePitch.degree || Number(relativePitch);
   let value = Number(scale.root);
   for (let i =  0; i < degree;  i++) value += scale.intervals[i % scale.length];
@@ -20,13 +20,14 @@ function pitchClassValue(scale, relativePitch) {
  */
 class Scale {
 
-  constructor(intervals, root=new PitchClass(0)) {
+  constructor(intervals, root=new PitchClass(0), { pitchValueOffset=0 }={}) {
     if (!(intervals instanceof Array)) throw new TypeError('Scale intervals must be an Array');
     if (!(root instanceof PitchClass)) root = new PitchClass(root);
     // list of integers for the interval distance between consecutive notes of the scale:
     // intervals sum is root.pitchesPerOctave (usually 12) for octave-repeating scales
     this.intervals = Object.freeze(intervals.slice());
     this.root = root; // a pitch class
+    this.pitchValueOffset = pitchValueOffset;
     Object.freeze(this);
   }
 
@@ -49,7 +50,7 @@ class Scale {
    * @returns {PitchClass}
    */
   pitchClass(relativePitch) {
-    return new PitchClass(pitchClassValue(this, relativePitch), this.root.pitchesPerOctave);
+    return new PitchClass(pitchValue(this, relativePitch), this.root.pitchesPerOctave);
   }
 
   /**
@@ -59,9 +60,11 @@ class Scale {
    * @returns {Pitch}
    */
   pitch(relativePitch, { octave=4 }={}) {
-    const value = pitchClassValue(this, relativePitch);
+    const value = pitchValue(this, relativePitch);
     const pitchClass = new PitchClass(value, this.root.pitchesPerOctave);
-    return new Pitch(pitchClass, octave + Math.floor(value / this.root.pitchesPerOctave));
+    return new Pitch(pitchClass, octave + Math.floor(value / this.root.pitchesPerOctave), {
+      pitchValueOffset: this.pitchValueOffset,
+    });
   }
 }
 

@@ -27,11 +27,12 @@ class Pitch {
    * @param {number|PitchClass|string} value - The numeric pitch value, or a PitchClass, or a string of the pitch class name and optional octave. See examples below.
    * @param {number} [octave=4] - The octave to use when the first argument is a PitchClass or a string without the octave. The octave should be in the range -1 to 9 (inclusive) to avoid invalid pitch values.
    */
-  constructor(value, octave=4, pitchesPerOctave=12) {
+  constructor(value, octave=4, { pitchesPerOctave=12, pitchValueOffset=0 }={}) {
     let pitchClass;
     if (typeof value === 'number') {
       pitchClass = new PitchClass(value, pitchesPerOctave);
-      octave = Math.floor(value / 12) - 1;
+      octave = Math.floor(value / pitchesPerOctave) - 1;
+      value += pitchValueOffset;
     }
     else {
       if (value instanceof PitchClass) {
@@ -48,10 +49,7 @@ class Pitch {
           pitchClass = new PitchClass(string);
         }
       }
-      // TODO: depending on how a microtonal tuning is set up, an offset can be involved
-      // For example in 19-TET, the value of 0 may be significantly higher than a 0 value with 12-TET, so that
-      // middle C on a keybaord produces the same pitch. Need to figure out how to deal with that...
-      value = pitchClass.value + pitchClass.pitchesPerOctave * (octave + 1);
+      value = pitchClass.value + pitchClass.pitchesPerOctave * (octave + 1) + pitchValueOffset;
     }
     /**
      * @member {PitchClass}
@@ -89,7 +87,11 @@ class Pitch {
    * @returns {Pitch}
    */
   add(value) {
-    return value ? new Pitch(this.value + value, null, this.pitchClass.pitchesPerOctave) : this;
+    if (!value) return this;
+    return new Pitch(this.value + value, null, {
+      pitchesPerOctave: this.pitchClass.pitchesPerOctave,
+      pitchValueOffset: this.pitchValueOffset,
+    });
   }
 }
 

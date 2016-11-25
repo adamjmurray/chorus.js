@@ -92,6 +92,19 @@ describe('Scale', () => {
       assert.deepEqual(scale.pitch(6, { octave: 1 }), PITCHES.C2);
     });
 
+    it('supports relative pitch objects', () => {
+      assert.deepEqual(scale.pitch({ degree:0, shift:0 }), PITCHES.D4);
+      assert.deepEqual(scale.pitch({ degree:0, shift:1 }), PITCHES.Eb4);
+      assert.deepEqual(scale.pitch({ degree:0, shift:-1 }), PITCHES.Db4);
+      assert.deepEqual(scale.pitch({ degree:0, shift:2 }), PITCHES.E4);
+      assert.deepEqual(scale.pitch({ degree:0, shift:-2 }), PITCHES.C4);
+      assert.deepEqual(scale.pitch({ degree:1, shift:1 }), PITCHES.F4);
+      assert.deepEqual(scale.pitch({ degree:1, shift:-1 }), PITCHES.Eb4);
+      assert.deepEqual(scale.pitch({ degree:-1, shift:1 }), PITCHES.Db4);
+      assert.deepEqual(scale.pitch({ degree:-1, shift:-1 }), PITCHES.B3);
+      assert.deepEqual(scale.pitch({ degree:7, shift:1 }), PITCHES.Eb5);
+    });
+
     it('supports other than 12 pitches per octave', () => {
       const microtonalScale = new Scale([3,2,3,3,2,3,3], new PitchClass(0,19));
       assert.equal(microtonalScale.pitch(0, {octave: -1}), 0);
@@ -104,17 +117,16 @@ describe('Scale', () => {
       assert.equal(microtonalScale.pitch(-3, {octave: 1}), 30);
     });
 
-    it('supports relative pitch objects', () => {
-      assert.deepEqual(scale.pitch({ degree:0, shift:0 }), PITCHES.D4);
-      assert.deepEqual(scale.pitch({ degree:0, shift:1 }), PITCHES.Eb4);
-      assert.deepEqual(scale.pitch({ degree:0, shift:-1 }), PITCHES.Db4);
-      assert.deepEqual(scale.pitch({ degree:0, shift:2 }), PITCHES.E4);
-      assert.deepEqual(scale.pitch({ degree:0, shift:-2 }), PITCHES.C4);
-      assert.deepEqual(scale.pitch({ degree:1, shift:1 }), PITCHES.F4);
-      assert.deepEqual(scale.pitch({ degree:1, shift:-1 }), PITCHES.Eb4);
-      assert.deepEqual(scale.pitch({ degree:-1, shift:1 }), PITCHES.Db4);
-      assert.deepEqual(scale.pitch({ degree:-1, shift:-1 }), PITCHES.B3);
-      assert.deepEqual(scale.pitch({ degree:7, shift:1 }), PITCHES.Eb5);
+    it("passes the microtonal option pitchValueOffset to constructed Pitches", () => {
+      const microtonalScale = new Scale([3,2,3,3,2,3,3], new PitchClass(0,19), {pitchValueOffset: 10});
+      assert.equal(microtonalScale.pitch(0, {octave: -1}), 10);
+      assert.equal(microtonalScale.pitch(1, {octave: -1}), 13);
+      assert.equal(microtonalScale.pitch(2, {octave: -1}), 15);
+      assert.equal(microtonalScale.pitch(8, {octave: -1}), 32);
+      assert.equal(microtonalScale.pitch(8, {octave: 0}), 51);
+      assert.equal(microtonalScale.pitch(-1, {octave: 0}), 26);
+      assert.equal(microtonalScale.pitch(-3, {octave: 0}), 21);
+      assert.equal(microtonalScale.pitch(-3, {octave: 1}), 40);
     });
   });
 });

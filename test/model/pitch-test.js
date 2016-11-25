@@ -81,6 +81,12 @@ describe('PitchClass', () => {
     it("is the Pitch.value", () => {
       assert.equal(new Pitch(53).value, 53);
     });
+
+    it("can be offset by a pitchValueOffset option", () => {
+      // advanced option for microtonal support
+      assert.equal(new Pitch(30, null, { pitchValueOffset: 16 }).value, 46);
+      assert.equal(new Pitch(new PitchClass(10), 2, { pitchValueOffset: 1 }).value, 47);
+    });
   });
 
   describe('valueOf()', () => {

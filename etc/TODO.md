@@ -1,8 +1,8 @@
-Tests
+Improve Test Coverage
 - multiple notes at once
+- microtonal support (pitchesPerOctave, pitchValueOffset in PitchClass, Pitch, Scale)
 
 1.0 Features
-- Pitch value offsets for microtonal tunings (i.e. Don't always count pitch numbers from 0. See TODO in Pitch constructor) 
 - Improve MIDI file support
   - A Part's channel should determine track for MIDI file output
     - Default the part.channel to it's index within the section, at construction time (instead of deferring this logic to Section @@iterator) 
@@ -22,6 +22,8 @@ Documentation
   - multiple sections
   - simultaneous notes
   - non-scale pitches (chords and relative pitches with shifts)
+  - microtonal features
+    - Maybe include a .tun file generator?
   - low-level guide (maybe later?)
     - interactive playback with MidiOut
     - scheduling
