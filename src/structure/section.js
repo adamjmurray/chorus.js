@@ -60,7 +60,7 @@ class Section {
         }
         let { value:{chord}={} } = harmonyCurr;
 
-        if (partMode && typeof pitch === 'number') {
+        if (partMode && (typeof pitch === 'number' || pitch instanceof Array)) {
           const number = pitch;
           // let chord;
           switch (partMode) {
@@ -86,7 +86,16 @@ class Section {
               break;
             }
             case SCALE: {
-              pitch = scale.pitch(number, { octave });
+              if (number instanceof Array) {
+                const pitches = number.map(n => scale.pitch(n, {octave}));
+                for (const p of pitches) {
+                  const note = { pitch: p, duration, intensity, channel };
+                  yield { time, part: partIdx, note };  // TODO: maybe the MIDI file part should be based on the channel
+                }
+                pitch = null;
+              } else {
+                pitch = scale.pitch(number, {octave});
+              }
               break;
             }
             case CHROMATIC: {

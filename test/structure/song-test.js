@@ -29,7 +29,7 @@ describe('Song', () => {
           length: 8,
           parts: [{
             mode: 'scale',
-            pitches: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+            pitches: [0, 1, 2, 3, 4, 5, 6, 7, 8], // last note is beyond section length and ignored
           }]
         }]
       });
@@ -45,6 +45,36 @@ describe('Song', () => {
             note({ time: 5, pitch: 69 }),
             note({ time: 6, pitch: 71 }),
             note({ time: 7, pitch: 72 }),
+          ]
+        ]
+      });
+    });
+
+    it('supports scale mode with simultaneous pitches', () => {
+      const song = new Song({
+        bpm: 120,
+        sections: [{
+          scale: SCALES.MAJOR(C),
+          length: 8,
+          parts: [{
+            mode: 'scale',
+            pitches: [0, [1,2], 3, [4,5], 6, [7,8]],
+          }]
+        }]
+      });
+      assert.deepEqual(song.toJSON(), {
+        "bpm": 120,
+        "tracks": [
+          [
+            note({ time: 0, pitch: 60 }),
+            note({ time: 1, pitch: 62 }),
+            note({ time: 1, pitch: 64 }),
+            note({ time: 2, pitch: 65 }),
+            note({ time: 3, pitch: 67 }),
+            note({ time: 3, pitch: 69 }),
+            note({ time: 4, pitch: 71 }),
+            note({ time: 5, pitch: 72 }),
+            note({ time: 5, pitch: 74 }),
           ]
         ]
       });
