@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { Song, Section, Chord, Rhythm, Scale, PitchClass, SCALES, CHORDS, PITCHES, PITCH_CLASSES } = require('../../src');
+const {Song, Section, Chord, Rhythm, Scale, PitchClass, SCALES, CHORDS, PITCHES, PITCH_CLASSES} = require('../../src');
 const { C, D } = PITCH_CLASSES;
 
 function note({ time, pitch, velocity = 89, duration = 1, channel = 1}) {

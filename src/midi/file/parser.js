@@ -290,7 +290,7 @@ class MidiFileParser {
     else {
       if (this.notes[pitch]) {
         // TODO, support this case?
-        console.log(`Warning: ignoring overlapping note on track number ${this.trackNumber} for pitch ${pitch}`);
+        console.log(`Warning: ignoring overlapping note on track number ${this.trackNumber} for pitch ${pitch}`); // eslint-disable-line no-console
       }
       else {
         this.notes[pitch] = [velocity, this.timeInTicks];
@@ -322,7 +322,7 @@ class MidiFileParser {
       event.timeInTicks = startTime; // special case, readTrack() should use this instead of it's time offset
       return event;
     }
-    else console.log(`Warning: ignoring unmatched note off event on track ${this.trackNumber} for pitch ${pitch}`);
+    else console.log(`Warning: ignoring unmatched note off event on track ${this.trackNumber} for pitch ${pitch}`); // eslint-disable-line no-console
   }
 
 }

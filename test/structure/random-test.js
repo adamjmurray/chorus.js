@@ -18,7 +18,6 @@ describe('Random', () => {
     });
 
     it("yields integers between the given min and max (inclusive)", () => {
-      [...new Set(take(Random.pitch({ min: -2, max: 2 }), 1))].forEach(val => console.log(typeof val))
       assert.deepEqual([...new Set(take(Random.pitch({ min: -2, max: 2 }), 500))].sort(nums), [-2,-1,0,1,2]);
     });
   });

@@ -9,8 +9,11 @@ module.exports = {
     "mocha-no-only"
   ],
   rules: {
-    "no-console": ["off"],
     "no-var": ["error"],
     "mocha-no-only/mocha-no-only": ["error"],
+    "max-len": ["error", {
+      code: 120,
+      ignoreComments: true,
+    }],
   }
 };

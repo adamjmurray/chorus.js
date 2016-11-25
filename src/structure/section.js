@@ -94,7 +94,7 @@ class Section {
               break;
             }
             default: {
-              console.error(`Unsupported part mode "${partMode}"`);
+              console.error(`Unsupported part mode "${partMode}"`); // eslint-disable-line no-console
               pitch = null;
             }
           }

@@ -64,7 +64,7 @@ class MidiOut {
     if (!this.isOpen) {
       const portName = this.ports()[portIndex];
       if (portName) {
-        console.log(`Opening MIDI output port[${portIndex}]: ${portName}`);
+        console.log(`Opening MIDI output port[${portIndex}]: ${portName}`); // eslint-disable-line no-console
         this.output.openPort(portIndex);
         this.isOpen = true;
         this.portIndex = portIndex;
@@ -108,7 +108,7 @@ class MidiOut {
    */
   close() {
     if (this.isOpen) {
-      console.log(`Closing MIDI output port[${this.portIndex}]: ${this.portName}`);
+      console.log(`Closing MIDI output port[${this.portIndex}]: ${this.portName}`); // eslint-disable-line no-console
       this.output.closePort();
       this.isOpen = false;
       this.portIndex = null;
