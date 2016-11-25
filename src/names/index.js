@@ -5,9 +5,9 @@ const SCALES = require('./scales');
 const DRUMS = require('./drums');
 
 /**
+ * @module names
+ * @description
  * #### Predefined constants for common musical objects and properties.
- *
- * @module Names
  * @example
  * // Inject all names into the global namespace.
  * // WARNING: This is not safe to do in large/serious projects, however,

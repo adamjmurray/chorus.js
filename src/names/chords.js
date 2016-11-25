@@ -1,4 +1,4 @@
-const Chord = require('../models/chord');
+const Chord = require('../model/chord');
 
 const CHORD_TYPES = {
   TRIAD: [0,2,4],

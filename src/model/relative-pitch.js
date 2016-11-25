@@ -1,6 +1,6 @@
 /**
  * A pitch that is relative to another pitch in a scale or chord.
- * It is converted to a pitch by Scale.pitch() or Chord.pitch()
+ * It is converted to a pitch by {@link Scale#pitch|Scale.pitch()} or {@link Chord#pitch|Chord.pitch()}
  */
 class RelativePitch {
 

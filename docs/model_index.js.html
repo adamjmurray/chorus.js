@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: midi/file/index.js</title>
+    <title>JSDoc: Source: model/index.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: midi/file/index.js</h1>
+    <h1 class="page-title">Source: model/index.js</h1>
 
     
 
@@ -26,55 +26,22 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const fs = require('fs');
-const MidiFileParser = require('./parser');
-const MidiFileSerializer = require('./serializer');
-
+            <pre class="prettyprint source linenums"><code>const Chord = require('./chord');
+const Pitch = require('./pitch');
+const PitchClass = require('./pitch-class');
+const RelativePitch = require('./relative-pitch');
+const Scale = require('./scale');
 /**
- * Read and write MIDI files.
+ * @module model
+ * @description
+ * #### Core model used to build melodies, bass lines, and harmonic patterns.
+ * - {@link Chord}
+ * - {@link Pitch}
+ * - {@link PitchClass}
+ * - {@link RelativePitch}
+ * - {@link Scale}
  */
-class MidiFile {
-  /**
-   *
-   * @param filepath
-   */
-  constructor(filepath) {
-    this.filepath = filepath;
-  }
-
-  /**
-   *
-   * @returns {Promise}
-   */
-  read() {
-    return new Promise((resolve, reject) => {
-      fs.readFile(this.filepath, (error, buffer) => {
-        if (error) reject(error);
-        const arrayBuffer = new Uint8Array(buffer).buffer;
-        const parser = new MidiFileParser(arrayBuffer);
-        resolve(parser.toJSON());
-      });
-    });
-  }
-
-  /**
-   *
-   * @param midiJSON
-   * @returns {Promise}
-   */
-  write(midiJSON) {
-    const uint8Array = new MidiFileSerializer(midiJSON).toUint8Array();
-    const buffer = new Buffer(uint8Array);
-    return new Promise((resolve, reject) => {
-      fs.writeFile(this.filepath, buffer, (error) => {
-        if (error) reject(error);
-        resolve();
-      })
-    });
-  }
-}
-
-module.exports = MidiFile;
+module.exports = { Chord, Pitch, PitchClass, RelativePitch, Scale };
 </code></pre>
         </article>
     </section>

@@ -1,4 +1,4 @@
-const Scale = require('../models/scale');
+const Scale = require('../model/scale');
 
 const SCALE_TYPES = {
   CHROMATIC: [1,1,1,1,1,1,1,1,1,1,1,1],

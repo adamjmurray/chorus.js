@@ -12,7 +12,7 @@
     Deprioritize until I need it or someone asks for it...
 
 Documentation
-- Document Chord
+- Document Chord, Scale, RelativePitch thoroughly
 - Move structure diagram into a tutorial doc? Organize non-module/class docs into tutorial files. 
   Each documented DAW setup should go into it's own tutorial
 - Double check my install/usage notes on Windows

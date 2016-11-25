@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: midi/file/index.js</title>
+    <title>JSDoc: Source: model/relative-pitch.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: midi/file/index.js</h1>
+    <h1 class="page-title">Source: model/relative-pitch.js</h1>
 
     
 
@@ -26,55 +26,42 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const fs = require('fs');
-const MidiFileParser = require('./parser');
-const MidiFileSerializer = require('./serializer');
-
-/**
- * Read and write MIDI files.
+            <pre class="prettyprint source linenums"><code>/**
+ * A pitch that is relative to another pitch in a scale or chord.
+ * It is converted to a pitch by {@link Scale#pitch|Scale.pitch()} or {@link Chord#pitch|Chord.pitch()}
  */
-class MidiFile {
-  /**
-   *
-   * @param filepath
-   */
-  constructor(filepath) {
-    this.filepath = filepath;
-  }
+class RelativePitch {
 
   /**
    *
-   * @returns {Promise}
+   * @param degree the number of scale degrees (pitches in the scale) relative to the base pitch
+   * @param shift applies a chromatic shift (AKA an accidental) to allow for pitches outside the scale.
    */
-  read() {
-    return new Promise((resolve, reject) => {
-      fs.readFile(this.filepath, (error, buffer) => {
-        if (error) reject(error);
-        const arrayBuffer = new Uint8Array(buffer).buffer;
-        const parser = new MidiFileParser(arrayBuffer);
-        resolve(parser.toJSON());
-      });
-    });
+  constructor(degree, shift=0) {
+    if (degree.constructor === Object) {
+      this.degree = degree.degree || 0;
+      this.shift = degree.shift || 0;
+    } else {
+      this.degree = degree;
+      this.shift = shift;
+    }
+    Object.freeze(this);
   }
 
-  /**
-   *
-   * @param midiJSON
-   * @returns {Promise}
-   */
-  write(midiJSON) {
-    const uint8Array = new MidiFileSerializer(midiJSON).toUint8Array();
-    const buffer = new Buffer(uint8Array);
-    return new Promise((resolve, reject) => {
-      fs.writeFile(this.filepath, buffer, (error) => {
-        if (error) reject(error);
-        resolve();
-      })
-    });
+  valueOf() {
+    return this.degree; // we lose the shift when adding/subtracting the degree
+  }
+
+  add(relativePitch) {
+    const degree = relativePitch.degree || Number(relativePitch);
+    // The added relativePitch's shift supersedes this shift
+    // If relativePitch is just a number, we lose the shift
+    const shift = relativePitch.shift || 0;
+    return new RelativePitch(this.degree + degree, shift);
   }
 }
 
-module.exports = MidiFile;
+module.exports = RelativePitch;
 </code></pre>
         </article>
     </section>

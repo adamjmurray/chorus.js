@@ -1,4 +1,4 @@
-const PitchClass = require('../models/pitch-class');
+const PitchClass = require('../model/pitch-class');
 const names = PitchClass.NAMES;
 const PITCH_CLASSES = {};
 for (let i = 0; i < names.length; i++) {

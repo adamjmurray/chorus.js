@@ -5,7 +5,7 @@ const Rhythm = require('./rhythm');
 const Section = require('./section');
 const Song = require('./song');
 /**
- * @module Structure
+ * @module structure
  * @description
  * #### Objects that produce musical patterns which can be played or saved to a MIDI file.
  * - {@link Harmony}
