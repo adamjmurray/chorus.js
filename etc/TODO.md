@@ -1,4 +1,5 @@
-Tests for multiple notes at once (especially de-duping logic). 
+Tests
+- multiple notes at once
 
 1.0 Features
 - Pitch value offsets for microtonal tunings (i.e. Don't always count pitch numbers from 0. See TODO in Pitch constructor) 
@@ -11,6 +12,19 @@ Documentation
 - Document Chord, Scale, RelativePitch thoroughly
 - Move structure diagram into a tutorial doc? Organize non-module/class docs into tutorial files. 
   Each documented DAW setup should go into it's own tutorial
+- Walkthrough Guide:
+  - Songs with no part modes (just use numbers, and then pitch name constants)
+    - selecting an output, playing in realtime vs file output
+  - scales and scale mode
+  - harmony and chord/arpeggio modes
+  - lead and bass modes
+  - multiple parts
+  - multiple sections
+  - simultaneous notes
+  - non-scale pitches (chords and relative pitches with shifts)
+  - low-level guide (maybe later?)
+    - interactive playback with MidiOut
+    - scheduling
 - Double check my install/usage notes on Windows
 - Ableton Live instructions
 - Bitwig instructions need to explain per-channel setup via Toms_Bitwig_Scripts

@@ -99,12 +99,11 @@ class Section {
           harmonyNext = harmonyIter.next();
         }
         const { value:{chord}={} } = harmonyCurr;
-        const pitches = evaluatePartMode(partMode, pitch, scale, chord, octave);
-        for (const p of pitches) {
-          if (p != null) {
-            const note = {pitch: p, duration, intensity, channel};
-            yield {time, part: partIdx, note};  // TODO: maybe the MIDI file part should be based on the channel
-          }
+        const pitches = evaluatePartMode(partMode, pitch, scale, chord, octave).filter(p => p != null);
+        const uniquePitchValues = new Set(pitches.map(p => Number(p)));
+        for (const p of uniquePitchValues) {
+          // TODO: the MIDI file part should be based on the channel
+          yield {time, part: partIdx, note: {pitch: p, duration, intensity, channel} };
         }
       }
     }
