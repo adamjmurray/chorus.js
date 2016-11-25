@@ -67,7 +67,7 @@ describe('Chord', () => {
     });
 
     it('supports relative pitches with shifts', () => {
-      const chord = new Chord([{degree:1, shift:-1},3,5])
+      const chord = new Chord([{degree:1, shift:-1},3,5]);
       const scale = SCALES.MINOR(C);
       assert.deepEqual(chord.pitch(0, { scale }), PITCHES.Db4);
       assert.deepEqual(chord.pitch(1, { scale }), PITCHES.F4);
@@ -77,6 +77,12 @@ describe('Chord', () => {
       const chord = new Chord([{degree:1, shift:-1},3,5]);
       const scale = SCALES.MINOR(C);
       assert.deepEqual(chord.pitch(0, { scale, offset: 1 }), PITCHES.Eb4);
+    });
+
+    it("uses the shift from the offset when it's a RelativePitch", () => {
+      const chord = new Chord([{degree:1, shift:-1},3,5]);
+      const scale = SCALES.MINOR(C);
+      assert.deepEqual(chord.pitch(0, { scale, offset: new RelativePitch(1,1) }), PITCHES.E4);
     });
 
     it("supports a RelativePitch as the first argument (without shift)", () => {

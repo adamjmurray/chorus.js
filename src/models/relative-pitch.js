@@ -24,8 +24,12 @@ class RelativePitch {
     return this.degree; // we lose the shift when adding/subtracting the degree
   }
 
-  add(degree) {
-    return new RelativePitch(this.degree + degree); // we lose the shift when adding/subtracting the degree
+  add(relativePitch) {
+    const degree = relativePitch.degree || Number(relativePitch);
+    // The added relativePitch's shift supersedes this shift
+    // If relativePitch is just a number, we lose the shift
+    const shift = relativePitch.shift || 0;
+    return new RelativePitch(this.degree + degree, shift);
   }
 }
 
