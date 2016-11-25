@@ -59,58 +59,54 @@ class Section {
           harmonyNext = harmonyIter.next();
         }
         let { value:{chord}={} } = harmonyCurr;
-
+        let pitches;
         if (partMode && (typeof pitch === 'number' || pitch instanceof Array)) {
+          // pitch is a relative pitch, and we need to evaluate it against the part's mode
           const number = pitch;
           // let chord;
           switch (partMode) {
             case ARPEGGIO: {
-              pitch = chord.pitch(number, { scale, octave });
+              pitches = [chord.pitch(number, { scale, octave })];
               break;
             }
             case BASS: {
-              pitch = chord.pitch(0, { scale, octave, inversion: 0, offset: number });
+              pitches = [chord.pitch(0, { scale, octave, inversion: 0, offset: number })];
               break;
             }
             case LEAD: {
-              pitch = chord.pitch(0, { scale, octave, offset: number });
+              pitches = [chord.pitch(0, { scale, octave, offset: number })];
               break;
             }
             case CHORD: {
-              pitch = null;
-              const pitches = chord.pitches({ scale, octave, inversion: chord.inversion + number });
-              for (const p of pitches) {
-                const note = { pitch: p, duration, intensity, channel };
-                yield { time, part: partIdx, note };  // TODO: maybe the MIDI file part should be based on the channel
-              }
+              pitches = chord.pitches({ scale, octave, inversion: chord.inversion + number });
               break;
             }
             case SCALE: {
               if (number instanceof Array) {
-                const pitches = number.map(n => scale.pitch(n, {octave}));
-                for (const p of pitches) {
-                  const note = { pitch: p, duration, intensity, channel };
-                  yield { time, part: partIdx, note };  // TODO: maybe the MIDI file part should be based on the channel
-                }
-                pitch = null;
+                pitches = number.map(n => scale.pitch(n, {octave}));
               } else {
-                pitch = scale.pitch(number, {octave});
+                pitches = [scale.pitch(number, {octave})];
               }
               break;
             }
             case CHROMATIC: {
-              pitch = scale.pitch(0, { octave }).add(number);
+              pitches = [scale.pitch(0, { octave }).add(number)];
               break;
             }
             default: {
               console.error(`Unsupported part mode "${partMode}"`); // eslint-disable-line no-console
-              pitch = null;
             }
           }
+        } else {
+          pitches = [pitch];
         }
-        if (pitch != null) {
-          const note = { pitch, duration, intensity, channel };
-          yield { time, part: partIdx, note }; // TODO: maybe the MIDI file part should be based on the channel
+        if (pitches) {
+          for (const p of pitches) {
+            if (p != null) {
+              const note = {pitch: p, duration, intensity, channel};
+              yield {time, part: partIdx, note};  // TODO: maybe the MIDI file part should be based on the channel
+            }
+          }
         }
       }
     }
