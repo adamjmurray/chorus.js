@@ -52,31 +52,31 @@ describe('Chord', () => {
     });
   });
 
-  describe('pitchAt()', () => {
+  describe('pitch()', () => {
     it('returns a specific pitch in the chord', () => {
       const chord = new Chord([3,5,7]);
-      assert.deepEqual(chord.pitchAt(1, { scale: SCALES.MAJOR(C) }), PITCHES.A4);
+      assert.deepEqual(chord.pitch(1, { scale: SCALES.MAJOR(C) }), PITCHES.A4);
     });
     it('goes to the next octave when it wraps around', () => {
       const chord = new Chord([3,5,7]);
-      assert.deepEqual(chord.pitchAt(3, { scale: SCALES.MAJOR(C) }), PITCHES.F5);
+      assert.deepEqual(chord.pitch(3, { scale: SCALES.MAJOR(C) }), PITCHES.F5);
     });
     it('goes downward for negative numbers', () => {
       const chord = new Chord([3,5,7]);
-      assert.deepEqual(chord.pitchAt(-1, { scale: SCALES.MAJOR(C) }), PITCHES.C4);
+      assert.deepEqual(chord.pitch(-1, { scale: SCALES.MAJOR(C) }), PITCHES.C4);
     });
 
     it('supports relative pitches with shifts', () => {
       const chord = new Chord([{degree:1, shift:-1},3,5])
       const scale = SCALES.MINOR(C);
-      assert.deepEqual(chord.pitchAt(0, { scale }), PITCHES.Db4);
-      assert.deepEqual(chord.pitchAt(1, { scale }), PITCHES.F4);
+      assert.deepEqual(chord.pitch(0, { scale }), PITCHES.Db4);
+      assert.deepEqual(chord.pitch(1, { scale }), PITCHES.F4);
     });
 
     it("does not maintain a relative pitch's shift when an offset is applied", () => {
       const chord = new Chord([{degree:1, shift:-1},3,5]);
       const scale = SCALES.MINOR(C);
-      assert.deepEqual(chord.pitchAt(0, { scale, offset: 1 }), PITCHES.Eb4);
+      assert.deepEqual(chord.pitch(0, { scale, offset: 1 }), PITCHES.Eb4);
     });
   });
 

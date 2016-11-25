@@ -67,7 +67,7 @@ class Chord {
    * @param inversion
    * @returns {*}
    */
-  pitchAt(position, { scale, octave=4, inversion=this.inversion, offset=0 }={}) {
+  pitch(position, { scale, octave=4, inversion=this.inversion, offset=0 }={}) {
     const pitches = this.pitches({ scale, octave, inversion, offset });
     const pitch = pitches[mod(position, pitches.length)];
     const octaveOffset = Math.floor(position / pitches.length);
@@ -75,13 +75,6 @@ class Chord {
       return pitch.add(octaveOffset * scale.semitones);
     }
     return pitch;
-  }
-
-  /**
-   * @deprecated
-   */
-  pitch(position, options) {
-    return this.pitchAt(position, options);
   }
 
   inv(inversion) {

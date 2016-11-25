@@ -22,7 +22,6 @@ Documentation
 - Setup a Changelog file
   
 Cleanup
-- Remove deprecated functions
 - Re-enable no console ESLint rule and ignore the intentional uses by disabling the rule line-by-line
 - node-midi has a problem with reusing IO objects: https://github.com/justinlatimer/node-midi/issues/112
   This could be dealt with in the MIDIIn and MIDIOut classes. Doesn't seem urgent.

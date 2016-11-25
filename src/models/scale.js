@@ -3,8 +3,8 @@ const Pitch = require('./pitch');
 const { mod } = require('../utils');
 
 // The raw value for the pitch class that hasn't had modular math applied to "normalize" it,
-// so octave offsets can be calculated properly in Scale.pitchAt()
-function pitchClassValueAt(scale, relativePitch) {
+// so octave offsets can be calculated properly in Scale.pitch()
+function pitchClassValue(scale, relativePitch) {
   const degree = relativePitch.degree || Number(relativePitch);
   let value = Number(scale.root);
   for (let i =  0; i < degree;  i++) value += scale.intervals[i % scale.length];
@@ -48,8 +48,8 @@ class Scale {
    * @param relativePitch {Number|RelativePitch}
    * @returns {PitchClass}
    */
-  pitchClassAt(relativePitch) {
-    return new PitchClass(pitchClassValueAt(this, relativePitch), this.root.pitchesPerOctave);
+  pitchClass(relativePitch) {
+    return new PitchClass(pitchClassValue(this, relativePitch), this.root.pitchesPerOctave);
   }
 
   /**
@@ -58,17 +58,10 @@ class Scale {
    * @param octave {Number}
    * @returns {Pitch}
    */
-  pitchAt(relativePitch, { octave=4 }={}) {
-    const value = pitchClassValueAt(this, relativePitch);
+  pitch(relativePitch, { octave=4 }={}) {
+    const value = pitchClassValue(this, relativePitch);
     const pitchClass = new PitchClass(value, this.root.pitchesPerOctave);
     return new Pitch(pitchClass, octave + Math.floor(value / this.root.pitchesPerOctave));
-  }
-
-  /**
-   * @deprecated
-   */
-  pitch(position, options) {
-    return this.pitchAt(position, options)
   }
 }
 
