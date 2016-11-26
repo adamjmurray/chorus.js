@@ -15,5 +15,6 @@ module.exports = {
       code: 120,
       ignoreComments: true,
     }],
+    "no-throw-literal": ["error"],
   }
 };
