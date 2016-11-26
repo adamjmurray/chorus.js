@@ -7,9 +7,13 @@ class MidiFileSerializer {
     this.midiJSON = midiJSON;
   }
 
+  toBuffer() {
+    return new Buffer(this.toUint8Array());
+  }
+
   toUint8Array() {
     const header = Object.assign({format: 1, division: MIDIFILE.DEFAULT_DIVISION}, this.midiJSON.header);
-    const tracks = this.midiJSON.tracks || this.midiJSON.parts; // TODO: standardize MIDI JSON
+    const tracks = this.midiJSON.tracks;
     this.ticksPerBeat = header.division;
     header.ntracks = tracks.length;
     let bytes = new ByteArray();
