@@ -25,14 +25,11 @@ class Scheduler {
   at(time, callback) {
     if (typeof time !== 'number') throw new TypeError('time must be a number');
     if (typeof callback !== 'function') throw new TypeError('callback must be a function');
-    let timeInMs = time;
-    if (this.bpm) { // time is in beats, not milliseconds (TODO: update docs) - and now we pretty much always use beats though...
-      timeInMs = time * 60000/this.bpm;
-    }
-    let callbacks = this.schedule.get(timeInMs);
+    const timeInBeats = time * 60000/this.bpm;
+    let callbacks = this.schedule.get(timeInBeats);
     if (!callbacks) {
       callbacks = [];
-      this.schedule.set(timeInMs, callbacks);
+      this.schedule.set(timeInBeats, callbacks);
     }
     callbacks.push(callback);
   }
