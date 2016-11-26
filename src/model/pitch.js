@@ -30,7 +30,7 @@ class Pitch {
   constructor(value, octave=4, { pitchesPerOctave=12, pitchValueOffset=0 }={}) {
     let pitchClass;
     if (typeof value === 'number') {
-      pitchClass = new PitchClass(value, pitchesPerOctave);
+      pitchClass = new PitchClass(value, { pitchesPerOctave });
       octave = Math.floor(value / pitchesPerOctave) - 1;
       value += pitchValueOffset;
     }

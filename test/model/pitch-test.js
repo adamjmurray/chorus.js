@@ -71,7 +71,7 @@ describe('PitchClass', () => {
     });
 
     it('supports other than 12 pitches per octave', () => {
-      const pitch = new Pitch(new PitchClass(15, 20), 3);
+      const pitch = new Pitch(new PitchClass(15, { pitchesPerOctave: 20 }), 3);
       assert.equal(pitch.value, 95);
       assert.equal(pitch.name, '95');
     });
@@ -125,7 +125,7 @@ describe('PitchClass', () => {
     });
 
     it('maintains pitchesPerOctave', () => {
-      const pitch = new Pitch(new PitchClass(15, 20), 3).add(-20);
+      const pitch = new Pitch(new PitchClass(15, { pitchesPerOctave: 20 }), 3).add(-20);
       assert.equal(pitch.value, 75);
       assert.equal(pitch.name, '75');
       assert.equal(pitch.pitchClass.pitchesPerOctave, 20);

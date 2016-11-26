@@ -551,7 +551,7 @@ describe('Song', () => {
       const song = new Song({
         bpm: 120,
         sections: [{
-          scale: new Scale([3,2,3,3,2,3,3], new PitchClass(0,19)), // major-ish scale in 19-TET
+          scale: new Scale([3,2,3,3,2,3,3], new PitchClass(0,{pitchesPerOctave:19})), // major-ish scale in 19-TET
           length: 4,
           harmony: {
             chords: [CHORDS.TRIAD_PLUS_8(0), CHORDS.TRIAD_PLUS_8(3)],

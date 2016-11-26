@@ -39,8 +39,12 @@ Documentation
 - Setup a Changelog file
   
 Cleanup
-- MIDIOut.play() should just convert Song objects toJSON() and have a single code path (need more test coverage)  
+- MIDIOut.play() should just convert Song objects toJSON() and have a single code path (need more test coverage) 
+  - I think MIDIOut.play() just needs to operate off the JSON format and not worry about iterators
+  - And Song[Symbol.iterator()] and Song.toJSON() should reuse more code (toJSON can rely on the iterator)
 - Drum constants should probably be Pitch objects
+- TODOs
+  - See Scale test 'supports other than 12 pitches per octave' TODO
 - Maybe Chord constructor should still let you set the scale at construction time.
   - Add a scale() function to change the scale (similar to inv())
   - Make inv() an alias for inversion()?

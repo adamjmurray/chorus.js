@@ -95,7 +95,8 @@ describe('Scale', () => {
     });
 
     it('supports other than 12 pitches per octave', () => {
-      const microtonalScale = new Scale([3,2,3,3,2,3,3], new PitchClass(0,19));
+      // TODO: Should explicitly saying {pitchesPerOctave:19} be necessary? We can figure it out from scale.semitones
+      const microtonalScale = new Scale([3,2,3,3,2,3,3], new PitchClass(0,{pitchesPerOctave:19}));
       assert.equal(microtonalScale.pitchClass(0), 0);
       assert.equal(microtonalScale.pitchClass(1), 3);
       assert.equal(microtonalScale.pitchClass(2), 5);
@@ -166,7 +167,7 @@ describe('Scale', () => {
     });
 
     it('supports other than 12 pitches per octave', () => {
-      const microtonalScale = new Scale([3,2,3,3,2,3,3], new PitchClass(0,19));
+      const microtonalScale = new Scale([3,2,3,3,2,3,3], new PitchClass(0,{pitchesPerOctave:19}));
       assert.equal(microtonalScale.pitch(0, {octave: -1}), 0);
       assert.equal(microtonalScale.pitch(1, {octave: -1}), 3);
       assert.equal(microtonalScale.pitch(2, {octave: -1}), 5);
@@ -178,7 +179,8 @@ describe('Scale', () => {
     });
 
     it("passes the microtonal option pitchValueOffset to constructed Pitches", () => {
-      const microtonalScale = new Scale([3,2,3,3,2,3,3], new PitchClass(0,19), {pitchValueOffset: 10});
+      const microtonalScale = new Scale([3,2,3,3,2,3,3],
+        new PitchClass(0,{pitchesPerOctave:19}), {pitchValueOffset: 10});
       assert.equal(microtonalScale.pitch(0, {octave: -1}), 10);
       assert.equal(microtonalScale.pitch(1, {octave: -1}), 13);
       assert.equal(microtonalScale.pitch(2, {octave: -1}), 15);

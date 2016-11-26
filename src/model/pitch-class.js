@@ -56,7 +56,7 @@ class PitchClass {
   /**
    * @param nameOrValue {number|string} a PitchClass numerical value or string name.
    */
-  constructor(nameOrValue, pitchesPerOctave=12) {
+  constructor(nameOrValue, { pitchesPerOctave=12 }={}) {
     let value;
     if (typeof nameOrValue === 'number') {
       value = nameOrValue;
@@ -99,7 +99,7 @@ class PitchClass {
   }
 
   add(value) {
-    return new PitchClass(this.value + value, this.pitchesPerOctave);
+    return new PitchClass(this.value + value, { pitchesPerOctave: this.pitchesPerOctave });
   }
 }
 

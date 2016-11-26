@@ -50,7 +50,7 @@ class Scale {
    * @returns {PitchClass}
    */
   pitchClass(relativePitch) {
-    return new PitchClass(pitchValue(this, relativePitch), this.root.pitchesPerOctave);
+    return new PitchClass(pitchValue(this, relativePitch), { pitchesPerOctave: this.root.pitchesPerOctave });
   }
 
   /**
@@ -61,7 +61,7 @@ class Scale {
    */
   pitch(relativePitch, { octave=4 }={}) {
     const value = pitchValue(this, relativePitch);
-    const pitchClass = new PitchClass(value, this.root.pitchesPerOctave);
+    const pitchClass = new PitchClass(value, { pitchesPerOctave: this.root.pitchesPerOctave });
     return new Pitch(pitchClass, octave + Math.floor(value / this.root.pitchesPerOctave), {
       pitchValueOffset: this.pitchValueOffset,
     });
