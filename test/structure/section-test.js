@@ -28,7 +28,6 @@ describe('Section', () => {
         value: {
           time: 0,
           note: {pitch:60, intensity:0.7, duration:1, channel: 1},
-          part:0,
         },
         done: false,
       });
@@ -44,7 +43,6 @@ describe('Section', () => {
         value: {
           time: 0,
           note: {pitch:60, intensity:0.7, duration:1, channel: 1},
-          part:0,
         },
         done: false,
       });

@@ -63,7 +63,7 @@ class Section {
   constructor({harmony, scale, parts=[], length} = {}) {
     this.scale = scale;
     this.harmony = harmony instanceof Harmony ? harmony : new Harmony(harmony);
-    this.parts = parts.map(part => part instanceof Part ? part : new Part(part));
+    this.parts = parts.map((p,idx) => p instanceof Part ? p : new Part(Object.assign({channel:idx+1},p)));
     this.length = length || Math.max(...this.parts.map(t => t.length));
   }
 
@@ -79,12 +79,8 @@ class Section {
    */
   *[Symbol.iterator]() {
     const { scale, harmony, parts } = this;
-    let partIdx = -1;
-    for (const part of parts) { // can't use forEach because we're in a generator
-      partIdx++;
-      const octave = part.octave;
-      const channel = part.channel || (partIdx + 1);
-      const partMode = part.mode;
+    for (const part of parts) {
+      const {mode, channel, octave} = part;
       let harmonyIter = harmony[Symbol.iterator]();
       let harmonyCurr = harmonyIter.next();
       let harmonyNext = harmonyIter.next();
@@ -99,11 +95,10 @@ class Section {
           harmonyNext = harmonyIter.next();
         }
         const { value:{chord}={} } = harmonyCurr;
-        const pitches = evaluatePartMode(partMode, pitch, scale, chord, octave).filter(p => p != null);
+        const pitches = evaluatePartMode(mode, pitch, scale, chord, octave).filter(p => p != null);
         const uniquePitchValues = new Set(pitches.map(p => Number(p)));
         for (const p of uniquePitchValues) {
-          // TODO: the MIDI file part should be based on the channel
-          yield {time, part: partIdx, note: {pitch: p, duration, intensity, channel} };
+          yield {time, note: {pitch: p, duration, intensity, channel} };
         }
       }
     }

@@ -99,7 +99,7 @@ class Part extends Sequencer {
    * @arg {Number} [options.delay=0] Delays the start of the part (relative to the start of the containing {@link Section})
    * by the given number of beats.
    */
-  constructor({ channel, mode, pitches=[], rhythm, pulse, octave=4, length, looped=false, delay=0 }={}) {
+  constructor({ channel=1, mode, pitches=[], rhythm, pulse, octave=4, length, looped=false, delay=0 }={}) {
     if (!rhythm) rhythm = pitches.map(() => 1);
     rhythm = rhythm instanceof Rhythm ? rhythm : new Rhythm(
       (typeof rhythm === 'string' || rhythm instanceof Array) ? { pattern: rhythm, pulse } : rhythm

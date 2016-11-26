@@ -41,8 +41,7 @@ class Song {
     let timeOffset = 0;
     for (const section of sections) {
       for (const event of section) {
-        event.time += timeOffset;
-        yield noteJSON(event);
+        yield noteJSON(event, timeOffset);
       }
       timeOffset += section.length;
     }
@@ -56,21 +55,18 @@ class Song {
    */
   toJSON() {
     const {bpm, sections} = this;
-    const partsJSON = [];
+    const tracks = [];
     let timeOffset = 0;
     for (const section of sections) {
       for (const event of section) {
-        const partIdx = event.part; // this will be needed for MIDI file output or toJSON()
-        let partJSON = partsJSON[partIdx];
-        if (!partJSON) partJSON = partsJSON[partIdx] = [];
-        event.time += timeOffset;
-        partJSON.push(noteJSON(event));
+        const trackIdx = ((event.note && event.note.channel) || 1) - 1;
+        let track = tracks[trackIdx];
+        if (!track) track = tracks[trackIdx] = [];
+        track.push(noteJSON(event, timeOffset));
       }
       timeOffset += section.length;
     }
-    // TODO: make this bpm be compatible with serializer (which doesn't even output a tempo event yet...)
-    // TODO: convert parts to tracks based on their channel
-    return { bpm, tracks: partsJSON };
+    return { bpm, tracks };
   }
 }
 

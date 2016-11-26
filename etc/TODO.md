@@ -5,7 +5,6 @@ Improve Test Coverage
 1.0 Features
 - Improve MIDI file support
   - A Part's channel should determine track for MIDI file output
-    - Default the part.channel to it's index within the section, at construction time (instead of deferring this logic to Section @@iterator) 
   - bpm/tempo support
 
 Documentation

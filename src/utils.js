@@ -16,10 +16,10 @@ function clampInt(value, min, max) {
   return Math.round(clamp(value, min, max));
 }
 
-function noteJSON(noteEvent) {
+function noteJSON(noteEvent, timeOffset) {
   const note = noteEvent.note;
   return {
-    time: noteEvent.time,
+    time: noteEvent.time + timeOffset,
     type: 'note',
     pitch: clampInt(note.pitch+0, 0, 127), // + 0 coerces to an int
     velocity: clampInt(note.intensity*127, 0, 127),
