@@ -6,12 +6,18 @@ class ByteArray extends Array {
     this.push((int32 & 0xFF000000) >> 24);
     this.push((int32 & 0x00FF0000) >> 16);
     this.push((int32 & 0x0000FF00) >> 8);
-    this.push(int32 & 0x000000FF);
+    this.push((int32 & 0x000000FF));
+  }
+
+  writeInt24(int24) {
+    this.push((int24 & 0xFF0000) >> 16);
+    this.push((int24 & 0x00FF00) >> 8);
+    this.push((int24 & 0x0000FF));
   }
 
   writeInt16(int16) {
     this.push((int16 & 0xFF00) >> 8);
-    this.push(int16 & 0x00FF);
+    this.push((int16 & 0x00FF));
   }
 
   writeInt8(int8) {

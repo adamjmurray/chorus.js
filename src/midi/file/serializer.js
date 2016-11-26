@@ -13,9 +13,11 @@ class MidiFileSerializer {
 
   toUint8Array() {
     const header = Object.assign({format: 1, division: MIDIFILE.DEFAULT_DIVISION}, this.midiJSON.header);
+    const bpm = this.midiJSON.bpm;
     const tracks = this.midiJSON.tracks;
     this.ticksPerBeat = header.division;
     header.ntracks = tracks.length;
+    if (bpm) header.ntracks++;
     let bytes = new ByteArray();
 
     bytes.writeInt32(MIDIFILE.HEADER_CHUNK_ID);
@@ -24,6 +26,9 @@ class MidiFileSerializer {
     bytes.writeInt16(header.ntracks);
     bytes.writeInt16(header.division);
 
+    if (bpm) {
+      bytes = bytes.concat(this.trackBytes([{ type: MIDIFILE.TEMPO, bpm: bpm }]));
+    }
     for (const track of tracks) {
       bytes = bytes.concat(this.trackBytes(track));
     }
@@ -61,8 +66,14 @@ class MidiFileSerializer {
           bytes.writeInt8(MIDIFILE.TRACK_END_BYTE);
           bytes.writeVariableLengthQuantity(0);
           break;
+        case MIDIFILE.TEMPO:
+          bytes.writeInt8(MIDIFILE.META_EVENT);
+          bytes.writeInt8(MIDIFILE.TEMPO_BYTE);
+          bytes.writeVariableLengthQuantity(3);
+          bytes.writeInt24(Math.round(MIDIFILE.MICROSECONDS_PER_MINUTE / event.bpm));
+          break;
         default:
-          throw `Event type ${event.type} not supported yet`
+          throw new Error(`Event type ${event.type} not supported yet`);
       }
     }
 

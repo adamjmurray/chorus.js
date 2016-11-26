@@ -1,11 +1,17 @@
 Improve Test Coverage
 - multiple notes at once
 - microtonal support (pitchesPerOctave, pitchValueOffset in PitchClass, Pitch, Scale)
+- Test that a Part's channel determines the track for MIDI file output, especially:
+  - Multiple Part's with the same channel
+  - Gaps in the channel (e.g. track 1 is channel 1, track 2 is channel 3)
 
 1.0 Features
 - Improve MIDI file support
-  - A Part's channel should determine track for MIDI file output
   - bpm/tempo support
+    - when reading files (set to the bpm setting in the top-level JSON for consistency with how we write files)
+  - track-end handling:
+    - reading a file should set a length on each track (need track.length and track.events Array?)
+    - writing a file should use the track length to determine where track-end event goes
 
 Documentation
 - Document Chord, Scale, RelativePitch thoroughly

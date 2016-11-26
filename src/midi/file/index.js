@@ -39,7 +39,7 @@ class MidiFile {
       fs.writeFile(this.filepath, new MidiFileSerializer(midiJSON).toBuffer(), error => {
         if (error) reject(error);
         resolve();
-      })
+      });
     });
   }
 }

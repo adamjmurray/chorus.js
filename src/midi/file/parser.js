@@ -1,5 +1,6 @@
 const MIDIFILE = require('./constants');
 const ByteScanner = require('./byte-scanner');
+const { fractRound } = require('../../utils');
 
 class MidiFileParser {
 
@@ -10,7 +11,7 @@ class MidiFileParser {
   toJSON() {
     this.next = new ByteScanner(this.arrayBuffer);
     const header = this.readHeader();
-    if (header.division & 0x8000) throw 'SMPTE time division format not supported';
+    if (header.division & 0x8000) throw new Error('SMPTE time division format not supported');
     this.ticksPerBeat = header.division;
 
     const tracks = [];
@@ -19,6 +20,7 @@ class MidiFileParser {
       tracks.push(this.readTrack());
     }
 
+    // TODO: convert header to bpm
     return {
       header,
       tracks,
@@ -26,9 +28,9 @@ class MidiFileParser {
   }
 
   readHeader() {
-    if (this.next.uInt32() !== MIDIFILE.HEADER_CHUNK_ID) throw 'MIDI format error: Invalid header chuck ID';
+    if (this.next.uInt32() !== MIDIFILE.HEADER_CHUNK_ID) throw new Error('MIDI format error: Invalid header chuck ID');
     const headerSize = this.next.uInt32();
-    if (headerSize < 6) throw 'Invalid MIDI file: header must be at least 6 bytes';
+    if (headerSize < 6) throw new Error('Invalid MIDI file: header must be at least 6 bytes');
 
     const format = this.next.uInt16();
     const ntracks = this.next.uInt16(); // number of tracks
@@ -45,7 +47,7 @@ class MidiFileParser {
   }
 
   readTrack() {
-    if (this.next.uInt32() !== MIDIFILE.TRACK_CHUNK_ID) throw 'MIDI format error: Invalid track chuck ID';
+    if (this.next.uInt32() !== MIDIFILE.TRACK_CHUNK_ID) throw new Error('MIDI format error: Invalid track chuck ID');
 
     const trackSize = this.next.uInt32();
     const track = [];
@@ -86,7 +88,7 @@ class MidiFileParser {
         return this.readMetaEvent();
       case MIDIFILE.SYSEX_EVENT:
       case MIDIFILE.SYSEX_CHUNK:
-        throw 'Sysex not supported yet'; // TODO
+        throw new Error('Sysex not supported yet'); // TODO
       default:
         return this.readMessage(eventType);
     }
@@ -149,7 +151,7 @@ class MidiFileParser {
       case MIDIFILE.TEMPO_BYTE:
         return {
           type: MIDIFILE.TEMPO,
-          bpm: MIDIFILE.MICROSECONDS_PER_MINUTE / this.readMetaValue(),
+          bpm: fractRound(MIDIFILE.MICROSECONDS_PER_MINUTE / this.readMetaValue(), 3),
         };
       case MIDIFILE.SMPTE_OFFSET_BYTE:
         return {
@@ -274,7 +276,7 @@ class MidiFileParser {
         // TODO: handle "system realtime messages", etc
         // TODO: I think the correct thing to do here is to keep
         // reading bytes until we get to the next one where (byte & 0x80) is truthy, then backtrack
-        throw `ERROR: unexpected message ${type}`;
+        throw new Error(`ERROR: unexpected message ${type}`);
     }
     event.channel = channel;
     return event;

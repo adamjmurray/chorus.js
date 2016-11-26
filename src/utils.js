@@ -16,6 +16,11 @@ function clampInt(value, min, max) {
   return Math.round(clamp(value, min, max));
 }
 
+function fractRound(value, decimalPlaces=0) {
+  const factor = Math.pow(10, decimalPlaces);
+  return Math.round(value * factor) / factor;
+}
+
 function noteJSON(noteEvent, timeOffset) {
   const note = noteEvent.note;
   return {
@@ -50,4 +55,4 @@ function take(iterator, n) {
   return values;
 }
 
-module.exports = { mod, clamp, clampInt, noteJSON, sequentialAsync, sleep, take };
+module.exports = { mod, clamp, clampInt, fractRound, noteJSON, sequentialAsync, sleep, take };
