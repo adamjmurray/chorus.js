@@ -3,7 +3,7 @@ const { MidiFile } = require('../src/midi');
 const { Song } = require('../src');
 
 const song = new Song({
-  bpm: 120,
+  bpm: 110,
   sections: [{
     scale: HARMONIC_MINOR(C),
     harmony: {
