@@ -16,7 +16,7 @@ function clampInt(value, min, max) {
   return Math.round(clamp(value, min, max));
 }
 
-function fractRound(value, decimalPlaces=0) {
+function fractRound(value, decimalPlaces) {
   const factor = Math.pow(10, decimalPlaces);
   return Math.round(value * factor) / factor;
 }

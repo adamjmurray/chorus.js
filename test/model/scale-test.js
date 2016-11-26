@@ -47,6 +47,66 @@ describe('Scale', () => {
     });
   });
 
+  describe('pitchClass()', () => {
+    const scale = SCALES.DORIAN(PITCH_CLASSES.D);
+    it("returns the PitchClass at the given index within the scale", () => {
+      assert.deepEqual(scale.pitchClass(0), PITCH_CLASSES.D);
+      assert.deepEqual(scale.pitchClass(1), PITCH_CLASSES.E);
+      assert.deepEqual(scale.pitchClass(2), PITCH_CLASSES.F);
+      assert.deepEqual(scale.pitchClass(3), PITCH_CLASSES.G);
+      assert.deepEqual(scale.pitchClass(4), PITCH_CLASSES.A);
+      assert.deepEqual(scale.pitchClass(5), PITCH_CLASSES.B);
+      assert.deepEqual(scale.pitchClass(6), PITCH_CLASSES.C);
+    });
+
+    it("wraps around in the positive direction, ", () => {
+      assert.deepEqual(scale.pitchClass(7), PITCH_CLASSES.D);
+      assert.deepEqual(scale.pitchClass(8), PITCH_CLASSES.E);
+      assert.deepEqual(scale.pitchClass(9), PITCH_CLASSES.F);
+      assert.deepEqual(scale.pitchClass(10), PITCH_CLASSES.G);
+      assert.deepEqual(scale.pitchClass(11), PITCH_CLASSES.A);
+      assert.deepEqual(scale.pitchClass(12), PITCH_CLASSES.B);
+      assert.deepEqual(scale.pitchClass(13), PITCH_CLASSES.C);
+      assert.deepEqual(scale.pitchClass(14), PITCH_CLASSES.D);
+    });
+
+    it("wraps around in the negative direction, ", () => {
+      assert.deepEqual(scale.pitchClass(-1), PITCH_CLASSES.C);
+      assert.deepEqual(scale.pitchClass(-2), PITCH_CLASSES.B);
+      assert.deepEqual(scale.pitchClass(-3), PITCH_CLASSES.A);
+      assert.deepEqual(scale.pitchClass(-4), PITCH_CLASSES.G);
+      assert.deepEqual(scale.pitchClass(-5), PITCH_CLASSES.F);
+      assert.deepEqual(scale.pitchClass(-6), PITCH_CLASSES.E);
+      assert.deepEqual(scale.pitchClass(-7), PITCH_CLASSES.D);
+      assert.deepEqual(scale.pitchClass(-8), PITCH_CLASSES.C);
+    });
+
+    it('supports relative pitch arguments', () => {
+      assert.deepEqual(scale.pitchClass({ degree:0, shift:0 }), PITCH_CLASSES.D);
+      assert.deepEqual(scale.pitchClass({ degree:0, shift:1 }), PITCH_CLASSES.Eb);
+      assert.deepEqual(scale.pitchClass({ degree:0, shift:-1 }), PITCH_CLASSES.Db);
+      assert.deepEqual(scale.pitchClass({ degree:0, shift:2 }), PITCH_CLASSES.E);
+      assert.deepEqual(scale.pitchClass({ degree:0, shift:-2 }), PITCH_CLASSES.C);
+      assert.deepEqual(scale.pitchClass({ degree:1, shift:1 }), PITCH_CLASSES.F);
+      assert.deepEqual(scale.pitchClass({ degree:1, shift:-1 }), PITCH_CLASSES.Eb);
+      assert.deepEqual(scale.pitchClass({ degree:-1, shift:1 }), PITCH_CLASSES.Db);
+      assert.deepEqual(scale.pitchClass({ degree:-1, shift:-1 }), PITCH_CLASSES.B);
+      assert.deepEqual(scale.pitchClass({ degree:7, shift:1 }), PITCH_CLASSES.Eb);
+    });
+
+    it('supports other than 12 pitches per octave', () => {
+      const microtonalScale = new Scale([3,2,3,3,2,3,3], new PitchClass(0,19));
+      assert.equal(microtonalScale.pitchClass(0), 0);
+      assert.equal(microtonalScale.pitchClass(1), 3);
+      assert.equal(microtonalScale.pitchClass(2), 5);
+      assert.equal(microtonalScale.pitchClass(8), 22%19);
+      assert.equal(microtonalScale.pitchClass(8), 41%19);
+      assert.equal(microtonalScale.pitchClass(-1), 16);
+      assert.equal(microtonalScale.pitchClass(-3), 11);
+      assert.equal(microtonalScale.pitchClass(-3), 30%19);
+    });
+  });
+
   describe('pitch()', () => {
     const scale = SCALES.DORIAN(PITCH_CLASSES.D);
     it("returns a pitch with the scale's pitch class at the given index", () => {
@@ -92,7 +152,7 @@ describe('Scale', () => {
       assert.deepEqual(scale.pitch(6, { octave: 1 }), PITCHES.C2);
     });
 
-    it('supports relative pitch objects', () => {
+    it('supports relative pitch arguments', () => {
       assert.deepEqual(scale.pitch({ degree:0, shift:0 }), PITCHES.D4);
       assert.deepEqual(scale.pitch({ degree:0, shift:1 }), PITCHES.Eb4);
       assert.deepEqual(scale.pitch({ degree:0, shift:-1 }), PITCHES.Db4);

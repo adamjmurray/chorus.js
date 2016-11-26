@@ -21,6 +21,36 @@ describe('Song', () => {
   });
 
   describe('toJSON()', () => {
+
+    it('supports sequencing PitchClasses', () => {
+      const song = new Song({
+        bpm: 120,
+        sections: [{
+          parts: [{
+            pitches: [C, D, C],
+          }]
+        }, {
+          parts: [{
+            octave: 3,
+            pitches: [C, D, C],
+          }]
+        }]
+      });
+      assert.deepEqual(song.toJSON(), {
+        "bpm": 120,
+        "tracks": [
+          [
+            note({ time: 0, pitch: 60 }),
+            note({ time: 1, pitch: 62 }),
+            note({ time: 2, pitch: 60 }),
+            note({ time: 3, pitch: 48 }),
+            note({ time: 4, pitch: 50 }),
+            note({ time: 5, pitch: 48 }),
+          ],
+        ],
+      });
+    });
+
     it('supports scale mode', () => {
       const song = new Song({
         bpm: 120,
@@ -555,6 +585,29 @@ describe('Song', () => {
             note({ time: 3, pitch: 95 }),
             note({ time: 3, pitch: 103 }),
             note({ time: 3, pitch: 108 }),
+          ],
+        ],
+      });
+    });
+
+    it('defaults channels to 1 even when forcibly nulled', () => {
+      const song = new Song({
+        bpm: 120,
+        scale: SCALES.MAJOR(C),
+        sections: [{
+          parts: [{
+            mode: 'scale',
+            channel: null,
+            pitches: [0, 1],
+          }],
+        }]
+      });
+      assert.deepEqual(song.toJSON(), {
+        "bpm": 120,
+        "tracks": [
+          [
+            note({ time: 0, pitch: 60, channel: 1 }),
+            note({ time: 1, pitch: 62, channel: 1 }),
           ],
         ],
       });
