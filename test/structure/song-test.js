@@ -440,7 +440,11 @@ describe('Song', () => {
         sections: [{
           scale: SCALES.HARMONIC_MINOR(C),
           harmony: {
-            chords: [new Chord([{degree:1,shift:-1},3,5], 1), CHORDS.SEVENTH(4).inv(-2), CHORDS.TRIAD_PLUS_8(0)],
+            chords: [
+              new Chord([{degree:1,shift:-1},3,5], {inversion:1}),
+              CHORDS.SEVENTH(4).inv(-2),
+              CHORDS.TRIAD_PLUS_8(0)
+            ],
             durations: [2],
           },
           parts: [{

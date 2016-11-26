@@ -38,10 +38,11 @@ class Chord {
    * @param relativePitches
    * @param inversion
    */
-  constructor(relativePitches, inversion=0) {
+  constructor(relativePitches, { inversion=0, scale }={}) {
     relativePitches = relativePitches.map(rp => rp instanceof RelativePitch ? rp : new RelativePitch(rp));
     this.relativePitches = Object.freeze(relativePitches);
     this.inversion = inversion;
+    this.scale = scale;
     Object.freeze(this);
   }
 
@@ -53,7 +54,7 @@ class Chord {
    * @param offset
    * @returns {Array}
    */
-  pitches({ scale, octave=4, inversion=this.inversion, offset=0, }={}) {
+  pitches({ scale=this.scale, octave=4, inversion=this.inversion, offset=0, }={}) {
     const relativePitches = relativePitchesForInversion(this.relativePitches, inversion, scale.length);
     const pitches = relativePitches.map(relativePitch =>
       // Only add the additional offset if it's non-zero offset, because it causes the relativePitch's shift to be lost
@@ -67,7 +68,7 @@ class Chord {
    * @param inversion
    * @returns {*}
    */
-  pitch(position, { scale, octave=4, inversion=this.inversion, offset=0 }={}) {
+  pitch(position, { scale=this.scale, octave=4, inversion=this.inversion, offset=0 }={}) {
     const shift = position.shift || 0;
     position = position.degree || Number(position);
     const pitches = this.pitches({ scale, octave, inversion, offset });
@@ -78,7 +79,7 @@ class Chord {
 
   inv(inversion) {
     if (!inversion) return this;
-    return new Chord(this.relativePitches, inversion);
+    return new Chord(this.relativePitches, { inversion, scale: this.scale });
   }
 }
 

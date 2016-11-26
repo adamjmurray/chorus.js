@@ -5,22 +5,24 @@ const { C } = PITCH_CLASSES;
 describe('Chord', () => {
 
   describe('constructor()', () => {
-    it('constructs a Chord with the given scale offsets', () => {
+    it('constructs a Chord with the given relative pitches', () => {
       assert.deepEqual(new Chord([0,2,4]).relativePitches.map(Number), [0,2,4]);
     });
 
     it('creates an immutable object', () => {
-      const chord = new Chord([new RelativePitch(0,1), 2, 4], 1);
+      const scale = SCALES.MAJOR(C);
+      const chord = new Chord([new RelativePitch(0,1), 2, 4], { inversion: 1, scale });
       chord.relativePitches = null;
       chord.inversion = null;
+      chord.scale = null;
       assert.deepEqual(
-        { relativePitches: chord.relativePitches.map(Number), inversion: chord.inversion },
-        { relativePitches: [0,2,4], inversion: 1 }
+        { relativePitches: chord.relativePitches.map(Number), inversion: chord.inversion, scale: chord.scale },
+        { relativePitches: [0,2,4], inversion: 1, scale }
       );
       assert.throws(() => { chord.relativePitches.push(1); }, TypeError);
       assert.deepEqual(
-        { relativePitches: chord.relativePitches.map(Number), inversion: chord.inversion },
-        { relativePitches: [0,2,4], inversion: 1 }
+        { relativePitches: chord.relativePitches.map(Number), inversion: chord.inversion, scale: chord.scale },
+        { relativePitches: [0,2,4], inversion: 1, scale }
       );
     });
   });
@@ -47,8 +49,13 @@ describe('Chord', () => {
     });
 
     it('uses the inversion constructed with if none is given', () => {
-      const chord = new Chord([3,5,7], 1);
+      const chord = new Chord([3,5,7], { inversion: 1 });
       assert.deepEqual(chord.pitches({ scale: SCALES.MAJOR(C) }), [PITCHES.A4, PITCHES.C5, PITCHES.F5]);
+    });
+
+    it('uses the scale constructed with if none is given', () => {
+      const chord = new Chord([3,5,7], { scale: SCALES.MAJOR(C) });
+      assert.deepEqual(chord.pitches(), [PITCHES.F4, PITCHES.A4, PITCHES.C5]);
     });
   });
 
@@ -57,13 +64,20 @@ describe('Chord', () => {
       const chord = new Chord([3,5,7]);
       assert.deepEqual(chord.pitch(1, { scale: SCALES.MAJOR(C) }), PITCHES.A4);
     });
+
     it('goes to the next octave when it wraps around', () => {
       const chord = new Chord([3,5,7]);
       assert.deepEqual(chord.pitch(3, { scale: SCALES.MAJOR(C) }), PITCHES.F5);
     });
+
     it('goes downward for negative numbers', () => {
       const chord = new Chord([3,5,7]);
       assert.deepEqual(chord.pitch(-1, { scale: SCALES.MAJOR(C) }), PITCHES.C4);
+    });
+
+    it('uses the scale constructed with if none is given', () => {
+      const chord = new Chord([3,5,7], { scale: SCALES.MAJOR(C) });
+      assert.deepEqual(chord.pitch(1), PITCHES.A4);
     });
 
     it('supports relative pitches with shifts', () => {

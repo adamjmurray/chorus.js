@@ -45,14 +45,10 @@ Cleanup
 - Drum constants should probably be Pitch objects
 - TODOs
   - See Scale test 'supports other than 12 pitches per octave' TODO
-- Maybe Chord constructor should still let you set the scale at construction time.
-  - Add a scale() function to change the scale (similar to inv())
-  - Make inv() an alias for inversion()?
-  - Make inversion part of an option object to the constructor? 
-    I really struggle with consistency between the classes here. I feel like model constructors should be as simple as possible
-    and take plain old argument lists for the most common/required fields. Inversion is sort of a gray area.
 
-Once I do all the above, then we're at v1.0.0?
+
+*** v1.0.0 Release ***
+
 
 Future Features
 - Tempo changes
