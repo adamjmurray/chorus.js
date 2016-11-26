@@ -35,6 +35,12 @@ Documentation
 Cleanup
 - MIDIOut.play() should just convert Song objects toJSON() and have a single code path (need more test coverage)  
 - Drum constants should probably be Pitch objects
+- Maybe Chord constructor should still let you set the scale at construction time.
+  - Add a scale() function to change the scale (similar to inv())
+  - Make inv() an alias for inversion()?
+  - Make inversion part of an option object to the constructor? 
+    I really struggle with consistency between the classes here. I feel like model constructors should be as simple as possible
+    and take plain old argument lists for the most common/required fields. Inversion is sort of a gray area.
 
 Once I do all the above, then we're at v1.0.0?
 
