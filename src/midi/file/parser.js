@@ -95,47 +95,22 @@ class MidiFileParser {
   }
 
   readMetaEvent() {
-    const type = this.next.uInt8();
-    let metaData;
-    switch (type) {
+    const byte = this.next.uInt8();
+    switch (byte) {
       case MIDIFILE.SEQUENCE_NUMBER_BYTE:
         return {
           type: MIDIFILE.SEQUENCE_NUMBER,
           number: this.readMetaValue()
         };
       case MIDIFILE.TEXT_BYTE:
-        return {
-          type: MIDIFILE.TEXT,
-          text: this.readMetaText()
-        };
       case MIDIFILE.COPYRIGHT_BYTE:
-        return {
-          type: MIDIFILE.COPYRIGHT,
-          text: this.readMetaText(),
-        };
       case MIDIFILE.SEQUENCE_NAME_BYTE:
-        return {
-          type: MIDIFILE.SEQUENCE_NAME,
-          text: this.readMetaText(),
-        };
       case MIDIFILE.INSTRUMENT_NAME_BYTE:
-        return {
-          type: MIDIFILE.INSTRUMENT_NAME,
-          text: this.readMetaText(),
-        };
       case MIDIFILE.LYRICS_BYTE:
-        return {
-          type: MIDIFILE.LYRICS,
-          text: this.readMetaText(),
-        };
       case MIDIFILE.MARKER_BYTE:
-        return {
-          type: MIDIFILE.MARKER,
-          text: this.readMetaText(),
-        };
       case MIDIFILE.CUE_POINT_BYTE:
         return {
-          type: MIDIFILE.CUE_POINT,
+          type: MIDIFILE.TYPES_BY_BYTE[byte],
           text: this.readMetaText(),
         };
       case MIDIFILE.CHANNEL_PREFIX_BYTE:
@@ -144,25 +119,19 @@ class MidiFileParser {
           channel: this.readMetaValue(),
         };
       case MIDIFILE.TRACK_END_BYTE:
-        this.readMetaData(); // should be empty
+      case MIDIFILE.SMPTE_OFFSET_BYTE:
+      case MIDIFILE.SEQUENCE_SPECIFIC_BYTE:
         return {
-          type: MIDIFILE.TRACK_END,
+          type: MIDIFILE.TYPES_BY_BYTE[byte],
+          data: this.readMetaData(),
         };
       case MIDIFILE.TEMPO_BYTE:
         return {
           type: MIDIFILE.TEMPO,
           bpm: fractRound(MIDIFILE.MICROSECONDS_PER_MINUTE / this.readMetaValue(), 3),
         };
-      case MIDIFILE.SMPTE_OFFSET_BYTE:
-        return {
-          type: MIDIFILE.SMPTE_OFFSET,
-          data: this.readMetaData(),
-        };
       case MIDIFILE.TIME_SIGNATURE_BYTE: {
-        // const [numerator, denominatorPower] = this.readMetaData();
-        metaData = this.readMetaData();
-        const numerator = metaData[0];
-        const denominatorPower = metaData[1];
+        const [numerator, denominatorPower] = this.readMetaData();
         return {
           type: MIDIFILE.TIME_SIGNATURE,
           numerator: numerator,
@@ -170,10 +139,7 @@ class MidiFileParser {
         };
       }
       case MIDIFILE.KEY_SIGNATURE_BYTE: {
-        // const [keyValue, scaleValue] = this.readMetaData();
-        metaData = this.readMetaData();
-        const keyValue = metaData[0];
-        const scaleValue = metaData[1];
+        const [keyValue, scaleValue] = this.readMetaData();
         const key = MIDIFILE.KEY_NAMES_BY_VALUE[keyValue] || `unknown ${keyValue}`;
         const scale = scaleValue === 0 ? 'major' : scaleValue === 1 ? 'minor' : `unknown ${scaleValue}`;
         return {
@@ -182,14 +148,9 @@ class MidiFileParser {
           scale: scale,
         };
       }
-      case MIDIFILE.SEQUENCE_SPECIFIC_BYTE:
-        return {
-          type: MIDIFILE.SEQUENCE_SPECIFIC,
-          data: this.readMetaData(),
-        };
       default:
         return {
-          type: `unknown meta event 0x${type.toString(16)}`,
+          type: `unknown meta event 0x${byte.toString(16)}`,
           data: this.readMetaData(),
         };
     }

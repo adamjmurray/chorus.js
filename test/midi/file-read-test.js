@@ -69,7 +69,8 @@ describe('MidiFile.read()', () => {
               },
               {
                 "time": 3.5,
-                "type": "track-end"
+                "type": "track-end",
+                data: [],
               }
             ]
           ]

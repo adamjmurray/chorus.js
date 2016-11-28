@@ -113,7 +113,8 @@ describe('MidiFile.write()', () => {
               },
               {
                 "type": "track-end",
-                "time": 3.5
+                "time": 3.5,
+                data: [],
               }
             ]
           ]
