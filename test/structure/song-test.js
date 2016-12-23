@@ -169,6 +169,35 @@ describe('Song', () => {
       });
     });
 
+    it('supports chromatic mode with simultaneous pitches', () => {
+      const song = new Song({
+        bpm: 120,
+        sections: [{
+          scale: SCALES.MAJOR(C),
+          parts: [{
+            mode: 'chromatic',
+            pitches: [0, 1, [2, 3], 4, [5, 6, 7], 8],
+          }]
+        }]
+      });
+      assert.deepEqual(song.toJSON(), {
+        "bpm": 120,
+        "tracks": [
+          [
+            note({ time: 0, pitch: 60 }),
+            note({ time: 1, pitch: 61 }),
+            note({ time: 2, pitch: 62 }),
+            note({ time: 2, pitch: 63 }),
+            note({ time: 3, pitch: 64 }),
+            note({ time: 4, pitch: 65 }),
+            note({ time: 4, pitch: 66 }),
+            note({ time: 4, pitch: 67 }),
+            note({ time: 5, pitch: 68 }),
+          ]
+        ]
+      });
+    });
+
     it('supports chord mode', () => {
       const song = new Song({
         bpm: 120,
@@ -205,6 +234,43 @@ describe('Song', () => {
       });
     });
 
+    it('supports chord mode with simultaneous pitches', () => {
+      const song = new Song({
+        bpm: 120,
+        sections: [{
+          scale: SCALES.MAJOR(C),
+          harmony: {
+            chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(1)],
+            durations: [2],
+          },
+          parts: [{
+            mode: 'chord',
+            pitches: [[0,1], 0, [0,1,3]],
+          }]
+        }]
+      });
+      assert.deepEqual(song.toJSON(), {
+        "bpm": 120,
+        "tracks": [
+          [
+            note({ time: 0, pitch: 60 }),
+            note({ time: 0, pitch: 64 }),
+            note({ time: 0, pitch: 67 }),
+            note({ time: 0, pitch: 72 }),
+            note({ time: 1, pitch: 60 }),
+            note({ time: 1, pitch: 64 }),
+            note({ time: 1, pitch: 67 }),
+            note({ time: 2, pitch: 62 }),
+            note({ time: 2, pitch: 65 }),
+            note({ time: 2, pitch: 69 }),
+            note({ time: 2, pitch: 74 }),
+            note({ time: 2, pitch: 77 }),
+            note({ time: 2, pitch: 81 }),
+          ]
+        ]
+      });
+    });
+
     it('supports arpeggio mode', () => {
       const song = new Song({
         bpm: 120,
@@ -233,6 +299,46 @@ describe('Song', () => {
             note({ time: 4, pitch: 62 }),
             note({ time: 5, pitch: 65 }),
             note({ time: 6, pitch: 69 }),
+            note({ time: 7, pitch: 74 }),
+          ]
+        ]
+      });
+    });
+
+    it('supports arpeggio mode with simultaneous pitches', () => {
+      const song = new Song({
+        bpm: 120,
+        sections: [{
+          scale: SCALES.MAJOR(C),
+          length: 8,
+          harmony: {
+            chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(1)],
+            durations: [4]
+          },
+          parts: [{
+            mode: 'arpeggio',
+            pitches: [0, [0,1], 2, [1,2,3]],
+            looped: true,
+          }]
+        }]
+      });
+      assert.deepEqual(song.toJSON(), {
+        "bpm": 120,
+        "tracks": [
+          [
+            note({ time: 0, pitch: 60 }),
+            note({ time: 1, pitch: 60 }),
+            note({ time: 1, pitch: 64 }),
+            note({ time: 2, pitch: 67 }),
+            note({ time: 3, pitch: 64 }),
+            note({ time: 3, pitch: 67 }),
+            note({ time: 3, pitch: 72 }),
+            note({ time: 4, pitch: 62 }),
+            note({ time: 5, pitch: 62 }),
+            note({ time: 5, pitch: 65 }),
+            note({ time: 6, pitch: 69 }),
+            note({ time: 7, pitch: 65 }),
+            note({ time: 7, pitch: 69 }),
             note({ time: 7, pitch: 74 }),
           ]
         ]
@@ -273,6 +379,44 @@ describe('Song', () => {
       });
     });
 
+    it('supports bass mode with simultaneous pitches', () => {
+      const song = new Song({
+        bpm: 120,
+        sections: [{
+          scale: SCALES.MAJOR(C),
+          length: 8,
+          harmony: {
+            chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(5).inv(-2), CHORDS.TRIAD(3).inv(-1), CHORDS.SEVENTH(4).inv(-2)],
+            durations: [2],
+          },
+          parts: [{
+            mode: 'bass',
+            pitches: [0, [1,2]],
+            looped: true,
+          }]
+        }]
+      });
+      assert.deepEqual(song.toJSON(), {
+        "bpm": 120,
+        "tracks": [
+          [
+            note({ time: 0, pitch: 60 }),
+            note({ time: 1, pitch: 62 }),
+            note({ time: 1, pitch: 64 }),
+            note({ time: 2, pitch: 69 }),
+            note({ time: 3, pitch: 71 }),
+            note({ time: 3, pitch: 72 }),
+            note({ time: 4, pitch: 65 }),
+            note({ time: 5, pitch: 67 }),
+            note({ time: 5, pitch: 69 }),
+            note({ time: 6, pitch: 67 }),
+            note({ time: 7, pitch: 69 }),
+            note({ time: 7, pitch: 71 }),
+          ]
+        ]
+      });
+    });
+
     it('supports lead mode', () => {
       const song = new Song({
         bpm: 120,
@@ -302,6 +446,44 @@ describe('Song', () => {
             note({ time: 5, pitch: 57 }),
             note({ time: 6, pitch: 62 }),
             note({ time: 7, pitch: 64 }),
+          ]
+        ]
+      });
+    });
+
+    it('supports lead mode with simultaneous pitches', () => {
+      const song = new Song({
+        bpm: 120,
+        sections: [{
+          scale: SCALES.MAJOR(C),
+          length: 8,
+          harmony: {
+            chords: [CHORDS.TRIAD(0), CHORDS.TRIAD(0).inv(1), CHORDS.TRIAD(2).inv(-2), CHORDS.SEVENTH(4).inv(-2)],
+            durations: [2],
+          },
+          parts: [{
+            mode: 'lead',
+            pitches: [0, [1,2]],
+            looped: true,
+          }]
+        }]
+      });
+      assert.deepEqual(song.toJSON(), {
+        "bpm": 120,
+        "tracks": [
+          [
+            note({ time: 0, pitch: 60 }),
+            note({ time: 1, pitch: 62 }),
+            note({ time: 1, pitch: 64 }),
+            note({ time: 2, pitch: 64 }),
+            note({ time: 3, pitch: 65 }),
+            note({ time: 3, pitch: 67 }),
+            note({ time: 4, pitch: 55 }),
+            note({ time: 5, pitch: 57 }),
+            note({ time: 5, pitch: 59 }),
+            note({ time: 6, pitch: 62 }),
+            note({ time: 7, pitch: 64 }),
+            note({ time: 7, pitch: 65 }),
           ]
         ]
       });

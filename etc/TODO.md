@@ -1,5 +1,4 @@
 Improve Test Coverage
-- multiple notes at once
 - microtonal support (pitchesPerOctave, pitchValueOffset in PitchClass, Pitch, Scale)
 - Test that a Part's channel determines the track for MIDI file output, especially:
   - Multiple Part's with the same channel
