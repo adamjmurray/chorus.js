@@ -2,7 +2,6 @@ Cleanup
 - MIDIOut.play() should just convert Song objects toJSON() and have a single code path (need more test coverage) 
   - I think MIDIOut.play() just needs to operate off the JSON format and not worry about iterators
   - And Song[Symbol.iterator()] and Song.toJSON() should reuse more code (toJSON can rely on the iterator)
-- Drum constants should probably be Pitch objects
 
 Improve Test Coverage
 - microtonal support (pitchesPerOctave, pitchValueOffset in PitchClass, Pitch, Scale)
@@ -51,7 +50,7 @@ Future Features
   - Ideally support realtime MIDI with the Web MIDI API, but browser support is lacking right now
   - Support MIDI file download as a fallback
   - Direct audio output with the Web Audio API (this could really lower the barrier to microtonal composition)
-- Constrain track range. Since bass mode ignores inversions, it can jump up too much. Sometimes it should go down an octave. See also next idea:
+- Constrain track range. Since bass mode ignores inversions, it can jump up too much. Sometimes it should go down an octave.
 - Robust Midi file parsing (error handling for semi-malformed input files could be improved / see MIDI specs)
   - Not particularly useful until we can parse MIDI files into a Song object, and then do things like transform 
     the scale and chord progression.    

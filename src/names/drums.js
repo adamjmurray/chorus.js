@@ -1,11 +1,11 @@
-// TODO: support overriding these numbers
+const Pitch = require('../model/pitch');
 
 module.exports = Object.freeze({
-  KICK: 36,
-  RIM: 37,
-  SNARE: 38,
-  CLAP: 39,
-  CLOSED_HIHAT: 42,
-  OPEN_HIHAT: 46,
-  CYMBAL: 49,
+  KICK: new Pitch(36),
+  RIM: new Pitch(37),
+  SNARE: new Pitch(38),
+  CLAP: new Pitch(39),
+  CLOSED_HIHAT: new Pitch(42),
+  OPEN_HIHAT: new Pitch(46),
+  CYMBAL: new Pitch(49),
 });
