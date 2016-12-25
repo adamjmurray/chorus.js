@@ -64,7 +64,7 @@ class Section {
     this.scale = scale;
     this.harmony = harmony instanceof Harmony ? harmony : new Harmony(harmony);
     this.parts = parts.map((p,idx) => p instanceof Part ? p : new Part(Object.assign({channel:idx+1},p)));
-    this.length = length || Math.max(...this.parts.map(t => t.length));
+    this.length = length || Math.max(...this.parts.map(p => p.length + p.delay));
   }
 
   /**

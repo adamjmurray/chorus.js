@@ -23,6 +23,7 @@ class Song {
     this.sections = sections.map(s =>
       s instanceof Section ? s : new Section(Object.assign({ scale, length: sectionLength }, s))
     );
+    this.length = this.sections.map(s => s.length).reduce((l1,l2) => l1+l2, 0);
   }
 
   /**
@@ -65,6 +66,9 @@ class Song {
         track.push(noteJSON(event, timeOffset));
       }
       timeOffset += section.length;
+    }
+    for (const track of tracks) {
+      track.push({ type: 'track-end', time: this.length });
     }
     return { bpm, tracks };
   }

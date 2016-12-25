@@ -6,6 +6,10 @@ function note({ time, pitch, velocity = 89, duration = 1, channel = 1}) {
   return { type: 'note', time, pitch, velocity, duration, release: 100, channel };
 }
 
+function end(time) {
+  return { time, type: 'track-end' };
+}
+
 describe('Song', () => {
 
   describe('constructor()', () => {
@@ -46,6 +50,7 @@ describe('Song', () => {
             note({ time: 3, pitch: 48 }),
             note({ time: 4, pitch: 50 }),
             note({ time: 5, pitch: 48 }),
+            end(6),
           ],
         ],
       });
@@ -75,6 +80,7 @@ describe('Song', () => {
             note({ time: 5, pitch: 69 }),
             note({ time: 6, pitch: 71 }),
             note({ time: 7, pitch: 72 }),
+            end(8),
           ]
         ]
       });
@@ -105,6 +111,7 @@ describe('Song', () => {
             note({ time: 4, pitch: 71 }),
             note({ time: 5, pitch: 72 }),
             note({ time: 5, pitch: 74 }),
+            end(8),
           ]
         ]
       });
@@ -135,6 +142,7 @@ describe('Song', () => {
             note({ time: 4, pitch: 71 }),
             note({ time: 5, pitch: 72 }),
             note({ time: 5, pitch: 74 }),
+            end(8),
           ]
         ]
       });
@@ -164,6 +172,7 @@ describe('Song', () => {
             note({ time: 5, pitch: 65 }),
             note({ time: 6, pitch: 66 }),
             note({ time: 7, pitch: 67 }),
+            end(8),
           ]
         ]
       });
@@ -193,6 +202,7 @@ describe('Song', () => {
             note({ time: 4, pitch: 66 }),
             note({ time: 4, pitch: 67 }),
             note({ time: 5, pitch: 68 }),
+            end(6),
           ]
         ]
       });
@@ -229,6 +239,7 @@ describe('Song', () => {
             note({ time: 3, pitch: 65 }),
             note({ time: 3, pitch: 69 }),
             note({ time: 3, pitch: 74 }),
+            end(4),
           ]
         ]
       });
@@ -266,6 +277,7 @@ describe('Song', () => {
             note({ time: 2, pitch: 74 }),
             note({ time: 2, pitch: 77 }),
             note({ time: 2, pitch: 81 }),
+            end(3),
           ]
         ]
       });
@@ -300,6 +312,7 @@ describe('Song', () => {
             note({ time: 5, pitch: 65 }),
             note({ time: 6, pitch: 69 }),
             note({ time: 7, pitch: 74 }),
+            end(8),
           ]
         ]
       });
@@ -340,6 +353,7 @@ describe('Song', () => {
             note({ time: 7, pitch: 65 }),
             note({ time: 7, pitch: 69 }),
             note({ time: 7, pitch: 74 }),
+            end(8),
           ]
         ]
       });
@@ -374,6 +388,7 @@ describe('Song', () => {
             note({ time: 5, pitch: 67 }),
             note({ time: 6, pitch: 67 }),
             note({ time: 7, pitch: 69 }),
+            end(8),
           ]
         ]
       });
@@ -412,6 +427,7 @@ describe('Song', () => {
             note({ time: 6, pitch: 67 }),
             note({ time: 7, pitch: 69 }),
             note({ time: 7, pitch: 71 }),
+            end(8),
           ]
         ]
       });
@@ -446,6 +462,7 @@ describe('Song', () => {
             note({ time: 5, pitch: 57 }),
             note({ time: 6, pitch: 62 }),
             note({ time: 7, pitch: 64 }),
+            end(8),
           ]
         ]
       });
@@ -484,6 +501,7 @@ describe('Song', () => {
             note({ time: 6, pitch: 62 }),
             note({ time: 7, pitch: 64 }),
             note({ time: 7, pitch: 65 }),
+            end(8),
           ]
         ]
       });
@@ -585,6 +603,7 @@ describe('Song', () => {
             note({ time: 30.5, pitch: 62 }),
             note({ time: 31.5, pitch: 55, duration: 0.5 }),
             note({ time: 32, pitch: 60 }),
+            end(33),
           ]
         ]
       });
@@ -611,6 +630,7 @@ describe('Song', () => {
             note({ time: 5, pitch: 62 }),
             note({ time: 6, pitch: 64 }),
             note({ time: 7, pitch: 65 }),
+            end(8),
           ]
         ]
       });
@@ -653,6 +673,7 @@ describe('Song', () => {
             note({ time: 4, pitch: 51, velocity: 127, duration: 4 }),
             note({ time: 4, pitch: 55, velocity: 127, duration: 4 }),
             note({ time: 4, pitch: 60, velocity: 127, duration: 4 }),
+            end(8),
           ]
         ]
       });
@@ -680,6 +701,7 @@ describe('Song', () => {
             note({ time: 9.5, pitch: 42, duration: 0.5 }),
             note({ time: 11.5, pitch: 42, duration: 0.5 }),
             note({ time: 14, pitch: 42, duration: 0.5 }),
+            end(16),
           ],
         ],
       });
@@ -728,6 +750,7 @@ describe('Song', () => {
             note({ time: 4.5, pitch: 64, duration: 0.25 }),
             note({ time: 4.75, pitch: 65, duration: 0.25 }),
             note({ time: 6, pitch: 62, duration: 1 }),
+            end(10),
           ],
         ],
       });
@@ -771,6 +794,7 @@ describe('Song', () => {
             note({ time: 3, pitch: 95 }),
             note({ time: 3, pitch: 103 }),
             note({ time: 3, pitch: 108 }),
+            end(4),
           ],
         ],
       });
@@ -794,6 +818,7 @@ describe('Song', () => {
           [
             note({ time: 0, pitch: 60, channel: 1 }),
             note({ time: 1, pitch: 62, channel: 1 }),
+            end(2),
           ],
         ],
       });
