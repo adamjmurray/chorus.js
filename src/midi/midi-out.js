@@ -206,14 +206,12 @@ class MidiOut {
    * @returns {Scheduler} A Scheduler that has already been started. It's returned so you can stop it early if desired.
    */
   play(songOrJSON) {
+    const { bpm, tracks } = songOrJSON.toJSON ? songOrJSON.toJSON() : songOrJSON;
     const scheduler = new Scheduler();
-    if (songOrJSON[Symbol.iterator]) {
-      // it's a Song, iterate over all its events
-      for (const event of songOrJSON) {
-        if (event.type === 'bpm') {
-          scheduler.bpm = event.value;
-        }
-        else if (event.type === 'note') {
+    if (bpm) scheduler.bpm = bpm;
+    for (const track of tracks) {
+      for (const event of track) {
+        if (event.type === 'note') {
           const { pitch, velocity, time, duration, channel } = event;
           scheduler.at(time, () => {
             this.noteOn(pitch, velocity, channel);
@@ -221,24 +219,6 @@ class MidiOut {
           scheduler.at(time + duration, () => {
             this.noteOff(pitch, velocity, channel);
           });
-        }
-      }
-    }
-    else {
-      // it's midiJSON
-      const { bpm, tracks } = songOrJSON;
-      scheduler.bpm = bpm;
-      for (const track of tracks) {
-        for (const event of track) {
-          if (event.type === 'note') {
-            const { pitch, velocity, time, duration, channel } = event;
-            scheduler.at(time, () => {
-              this.noteOn(pitch, velocity, channel);
-            });
-            scheduler.at(time + duration, () => {
-              this.noteOff(pitch, velocity, channel);
-            });
-          }
         }
       }
     }

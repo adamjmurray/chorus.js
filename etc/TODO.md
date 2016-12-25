@@ -1,8 +1,3 @@
-Cleanup
-- MIDIOut.play() should just convert Song objects toJSON() and have a single code path (need more test coverage) 
-  - I think MIDIOut.play() just needs to operate off the JSON format and not worry about iterators
-  - And Song[Symbol.iterator()] and Song.toJSON() should reuse more code (toJSON can rely on the iterator)
-
 Improve Test Coverage
 - microtonal support (pitchesPerOctave, pitchValueOffset in PitchClass, Pitch, Scale)
 - Test that a Part's channel determines the track for MIDI file output, especially:
@@ -41,6 +36,8 @@ Documentation
 
 Future Features
 - Tempo changes
+  - Can bpm in MIDI JSON (i.e. Song.toJSON()) just be a track event in the first track? Could make tempo changes easier?
+    - I think the first track is supposed to just be a control track, so might want to adjust that too
 - Support custom names for PitchClasses and Pitches when pitchesPerOctave != 12
 - Live-coding mode:
   - Loop a section

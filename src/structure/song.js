@@ -55,17 +55,17 @@ class Song {
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#toJSON()_behavior|MDN: JSON.stringify()'s toJSON() behavior}
    */
   toJSON() {
-    const {bpm, sections} = this;
+    let bpm;
     const tracks = [];
-    let timeOffset = 0;
-    for (const section of sections) {
-      for (const event of section) {
-        const trackIdx = ((event.note && event.note.channel) || 1) - 1;
+    for (const event of this) {
+      if (event.type === 'bpm') {
+        bpm = event.value;
+      } else {
+        const trackIdx = (event.channel || 1) - 1;
         let track = tracks[trackIdx];
         if (!track) track = tracks[trackIdx] = [];
-        track.push(noteJSON(event, timeOffset));
+        track.push(event);
       }
-      timeOffset += section.length;
     }
     for (const track of tracks) {
       track.push({ type: 'track-end', time: this.length });
