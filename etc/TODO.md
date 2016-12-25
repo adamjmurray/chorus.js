@@ -1,14 +1,15 @@
+Cleanup
+- MIDIOut.play() should just convert Song objects toJSON() and have a single code path (need more test coverage) 
+  - I think MIDIOut.play() just needs to operate off the JSON format and not worry about iterators
+  - And Song[Symbol.iterator()] and Song.toJSON() should reuse more code (toJSON can rely on the iterator)
+- Drum constants should probably be Pitch objects
+
 Improve Test Coverage
 - microtonal support (pitchesPerOctave, pitchValueOffset in PitchClass, Pitch, Scale)
 - Test that a Part's channel determines the track for MIDI file output, especially:
   - Multiple Part's with the same channel
   - Gaps in the channel (e.g. track 1 is channel 1, track 2 is channel 3)
 - section length when it's calculated from part length + delay
-
-1.0 Features
-- Improve MIDI file support
-  - bpm/tempo support
-    - when reading files (set to the bpm setting in the top-level JSON for consistency with how we write files)
 
 Documentation
 - Document Chord, Scale, RelativePitch thoroughly
@@ -35,14 +36,6 @@ Documentation
 - Other DAWS? PreSonus Studio One (has a free version), Garage Band, Logic (maybe later) 
 - Setup a Changelog file
   
-Cleanup
-- MIDIOut.play() should just convert Song objects toJSON() and have a single code path (need more test coverage) 
-  - I think MIDIOut.play() just needs to operate off the JSON format and not worry about iterators
-  - And Song[Symbol.iterator()] and Song.toJSON() should reuse more code (toJSON can rely on the iterator)
-- Drum constants should probably be Pitch objects
-- TODOs
-  - See Scale test 'supports other than 12 pitches per octave' TODO
-
 
 *** v1.0.0 Release ***
 
@@ -67,4 +60,7 @@ Future Features
   This simply doesn't work with the way we are calculating the times list in Rhythm & Harmony constructors right now.
 - node-midi has a problem with reusing IO objects: https://github.com/justinlatimer/node-midi/issues/112
   This could be dealt with in the MIDIIn and MIDIOut classes. Doesn't seem urgent.
+- Improve MIDI file support
+  - bpm/tempo support
+    - when reading files (set to the bpm setting in the top-level JSON for consistency with how we write files)
     
