@@ -1,5 +1,5 @@
 const midi = require('midi');
-const { NOTE_ON, NOTE_OFF } = require('./constants');
+const { NOTE_ON_BYTE, NOTE_OFF_BYTE } = require('./constants');
 const { sequentialAsync, sleep } = require('../utils');
 const Scheduler = require('./scheduler');
 
@@ -106,7 +106,7 @@ class MidiOut {
    * @param channel
    */
   noteOn(pitch, velocity=70, channel=1) {
-    this.send(NOTE_ON | (channel-1), Number(pitch), velocity);
+    this.send(NOTE_ON_BYTE | (channel-1), Number(pitch), velocity);
   }
 
   /**
@@ -116,7 +116,7 @@ class MidiOut {
    * @param channel
    */
   noteOff(pitch, velocity=70, channel=1) {
-    this.send(NOTE_OFF | (channel-1), Number(pitch), velocity);
+    this.send(NOTE_OFF_BYTE | (channel-1), Number(pitch), velocity);
   }
 
   /**

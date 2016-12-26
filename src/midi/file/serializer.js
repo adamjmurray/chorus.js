@@ -1,4 +1,4 @@
-const MIDIFILE = require('./constants');
+const MIDIFILE = require('../constants');
 const ByteArray = require('./byte-array');
 
 class MidiFileSerializer {

@@ -1,4 +1,4 @@
-const MIDIFILE = require('./constants');
+const MIDIFILE = require('../constants');
 const ByteScanner = require('./byte-scanner');
 const { fractRound } = require('../../utils');
 
