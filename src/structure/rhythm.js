@@ -103,7 +103,7 @@ class Rhythm extends Sequencer {
    * @see https://en.wikipedia.org/wiki/Euclidean_pattern
    */
   static distribute(pulses, total, options={}) {
-    const pattern = [];
+    let pattern = [];
     let count = 0;
     let nextPulse = Math.floor(++count/pulses * total);
     for (let i=1; i<=total; i++) {
@@ -114,22 +114,21 @@ class Rhythm extends Sequencer {
         nextPulse = Math.floor(++count/pulses * total);
       }
     }
-    let patternString = pattern.reverse().join('');
-    // TODO: I think rotation is better handled by manipulating the Array, not the String
+    pattern = pattern.reverse();
     if (options.rotation) {
       const rotation = options.rotation;
       for (let i =  1; i <= rotation; i++) {
-        const nextX = patternString.indexOf('x', 1);
-        if (nextX > 0) patternString = patternString.slice(nextX) + patternString.slice(0, nextX);
+        const nextX = pattern.indexOf('x', 1);
+        if (nextX > 0) pattern = pattern.slice(nextX).concat(pattern.slice(0, nextX));
         else break;
       }
       for (let i = -1; i >= rotation; i--) {
-        const prevX = patternString.lastIndexOf('x');
-        if (prevX > 0) patternString = patternString.slice(prevX) + patternString.slice(0, prevX);
+        const prevX = pattern.lastIndexOf('x');
+        if (prevX > 0) pattern = pattern.slice(prevX).concat(pattern.slice(0, prevX));
         else break;
       }
     }
-    return patternString;
+    return pattern.join('');
   }
 }
 
