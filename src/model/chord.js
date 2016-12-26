@@ -2,8 +2,6 @@ const RelativePitch = require('./relative-pitch');
 const { mod } = require('../utils');
 
 function findUniqueOctaveOffset(relativePitches, scaleLength, direction) {
-  direction = Math.sign(direction);
-  // TODO: do this once in the calling function?
   if (direction < 0) relativePitches = relativePitches.slice().reverse();
   for (let octave=direction; true; octave += direction) { // eslint-disable-line no-constant-condition
     for (const {degree,shift} of relativePitches) {
