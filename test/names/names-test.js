@@ -15,6 +15,11 @@ describe('Names', () => {
       Names.PITCHES.C4.pitchClass.name = 'D';
       assert.equal(Names.PITCHES.C4.pitchClass.name, 'C');
     });
+
+    it('goes from the lowest to highest MIDI pitch using "scientific pitch notation"', () => {
+      assert.equal(Names.PITCHES.C_1.valueOf(), 0);
+      assert.equal(Names.PITCHES.G9.valueOf(), 127);
+    });
   });
 
   describe('.into()', () => {
