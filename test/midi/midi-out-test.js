@@ -138,16 +138,6 @@ describe('MidiOut', () => {
     });
   });
 
-  describe('select()', () => {
-    it('it interactively selects an output', () => {
-      return MidiOut.select()
-        .then(midiOut => {
-          // the stub selects this port:
-          assert.equal(midiOut.portName, 'output-stub-1');
-        });
-    });
-  });
-
   describe('close()', () => {
     it('closes any open ports', () => {
       const midiOut = new MidiOut();

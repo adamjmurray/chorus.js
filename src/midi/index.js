@@ -1,6 +1,7 @@
 const MidiFile = require('./file');
 const MidiIn = require('./midi-in');
 const MidiOut = require('./midi-out');
+const Output = require('./output');
 const Scheduler = require('./scheduler');
 /**
  * @module midi
@@ -9,6 +10,7 @@ const Scheduler = require('./scheduler');
  * - {@link MidiFile}
  * - {@link MidiIn}
  * - {@link MidiOut}
+ * - {@link Output}
  * - {@link Scheduler}
  */
-module.exports = { MidiFile, MidiIn, MidiOut, Scheduler };
+module.exports = { MidiFile, MidiIn, MidiOut, Output, Scheduler };

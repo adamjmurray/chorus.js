@@ -2,7 +2,6 @@ const midi = require('midi');
 const { NOTE_ON, NOTE_OFF } = require('./constants');
 const { sequentialAsync, sleep } = require('../utils');
 const Scheduler = require('./scheduler');
-const selectOutput = require('./select-output');
 
 /**
  * Realtime MIDI output.
@@ -73,33 +72,6 @@ class MidiOut {
       }
     }
     return false;
-  }
-
-  /**
-   * Select the MIDI output interactively, or via a command line argument or environment variable.
-   * @param constructorOptions options object passed to the [constructor]{@link MidiOut}.
-   * @returns {Promise} a Promise object that resolves to a MidiOut instance
-   * @example
-   * # chorus-script.js
-   * const { Song } = require('chorus');
-   * const { MidiOut } = require('chorus/midi');
-   * const song = new Song(...);
-   * MidiOut.select().then(midiOut => midiOut.play(song));
-   *
-   * ____________________________________________________
-   * # command line usage
-   *
-   * # realtime output with the given port:
-   * node chorus-script.js -p midiPortName
-   *
-   * # or via an environment variable:
-   * CHORUS_OUTPUT_PORT=midiPortName node chorus-script.js
-   *
-   * # file output:
-   * node chorus-script.js -f midiFileName
-   */
-  static select(constructorOptions) {
-    return selectOutput(constructorOptions);
   }
 
   /**

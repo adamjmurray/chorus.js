@@ -1,6 +1,6 @@
-const { MidiOut, Scheduler } = require('../src/midi');
+const { Output, Scheduler } = require('../src/midi');
 
-MidiOut.select({ defaultDuration: 400 })
+Output.select({ defaultDuration: 400 })
   .then(output => {
     const note = output.note.bind(output);
     const scheduler = new Scheduler({ bpm: 120 });

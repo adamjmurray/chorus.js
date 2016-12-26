@@ -1,11 +1,11 @@
 require('../src/names').into(global);
-const { MidiOut, Scheduler } = require('../src/midi');
+const { Output, Scheduler } = require('../src/midi');
 
 const scheduler = new Scheduler({ bpm: 120 });
 const scale = MAJOR(C);
 const chords = [TRIAD(0), TRIAD(5,{inv:-2}), TRIAD(3,{inv:-1}), SEVENTH(4,{inv:-2})];
 
-MidiOut.select({ defaultDuration: 200 }).then(output => {
+Output.select({ defaultDuration: 200 }).then(output => {
   let count;
   chords.forEach((chord, chordIndex) => {
     [0,1,2,3,2,1].forEach((arpPosition, arpIndex, arpPattern) => {

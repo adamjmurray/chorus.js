@@ -1,7 +1,6 @@
 require('../src/names').into(global);
-const { Song, Rhythm } = require('../src');
+const { Song, Rhythm, Output } = require('../src');
 const { distribute } = Rhythm;
-const { MidiOut } = require('../src/midi');
 
 const song = new Song({
   bpm: 120,
@@ -22,4 +21,4 @@ const song = new Song({
   }]
 });
 
-MidiOut.select().then(midiOut => midiOut.play(song));
+Output.select().then(output => output.play(song));
