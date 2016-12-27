@@ -10,43 +10,45 @@
 - Compose music with Node.js
 - Harmony-based sequencing using scales and chord progressions
 - Multitrack [MIDI](http://www.instructables.com/id/What-is-MIDI/) output
-  - **real-time MIDI** &rarr; control MIDI instruments like synthesizers
-  - **MIDI files** &rarr; capture musical ideas for later use
+  - **real-time MIDI** - control MIDI instruments like synthesizers
+  - **MIDI files** - capture musical ideas for later use
 - [Microtonal](https://en.wikipedia.org/wiki/Microtonal_music) support
 
 Browser support is planned for 2017.
 
 
+<a name="requirements"></a>
 ## Requirements
 
 - [Node.js](https://nodejs.org) v6 or higher
 - Optional: compilation tools for native dependencies
-  - If you want **real-time MIDI output**, do [node-gyp's installation instructions](https://github.com/nodejs/node-gyp#installation) 
+  - If you want **real-time MIDI output**, follow [node-gyp's installation instructions](https://github.com/nodejs/node-gyp#installation) 
   - Otherwise, ignore non-fatal errors during installation. You can still use **MIDI file output**
 
 ## Installation
 
       npm install chorus
 
+Note: If you setup the native dependencies for real-time MIDI output *after* installation, 
+you must reinstall chorus.
+
 
 ## Quick Start Guide
 
-chorus.js (currently) does not make any sound on it's own. It produces [MIDI](http://www.instructables.com/id/What-is-MIDI/)
-output, which is a standard format for controlling music-making software. Let's see how this works by playing a scale.
+Chorus.js (currently) does not make any sound on it's own. It outputs [MIDI](http://www.instructables.com/id/What-is-MIDI/),
+a standard format for controlling music software & hardware. Let's see how it works.
 
-Create the file `simple-scale.js` in the folder where you installed chorus:
+Create the file `simple-song.js` in the folder where you installed chorus:
 
 ```
-# simple-scale.js
+# simple-song.js
 const { Song, Output } = require('chorus');
 require('chorus/names').into(global);
 
 const song = new Song({
   sections: [{
-    scale: MAJOR(C),
     parts: [{
-      mode: 'scale',
-      pitches: [0, 1, 2, 3, 4, 5, 6, 7],
+      pitches: [C4, D4, E4, F4, G4, F4, E4, D4, C4],
     }]
   }]
 });
@@ -55,19 +57,19 @@ Output.select().then(output => output.play(song));
 
 ```
 
-Don't worry if most of this doesn't make sense yet. We'll explore everything in detail in the tutorials (see links below).
+Don't worry if this doesn't make sense yet. We'll explore everything in the tutorials below.
 
-*NOTE: `require('chorus/names').into(global)` adds global constants, 
-so we can type things like `MAJOR(C)` instead of `SCALES.MAJOR(PITCH_CLASSES.C)`. 
-This is convenient but potentially dangerous, and not recommended within large projects. 
-The {@tutorial 07-under-the-hood} tutorial will explain how to avoid this. For now, let's continue...*
+NOTE: `require('chorus/names').into(global)` adds global constants, 
+so we can write `C4` instead of `PITCHES.C4`. This is convenient but potentially dangerous, and not recommended in 
+complex projects that combine chorus.js with other libraries. 
+The {@tutorial 07-under-the-hood} tutorial will explain how to avoid this. For now, let's continue...
   
 TODO: Need absolute url to tutorial ^  
 
 `Output.select()` allows us to choose real-time or file output. 
 To see usage instructions, run it:
 
-        node c-major-scale.js
+        node simple-song.js
         
 Let's take a closer look at our output options.       
 
@@ -76,16 +78,20 @@ Let's take a closer look at our output options.
 
 1. Run
 
-        node c-major-scale.js -f c-major-scale.mid
+        node simple-song.js -f simple-song.mid
         
-2. Open (or drag and drop) `c-major-scale.mid` to an app that supports MIDI playback, such as a DAW        
+2. Open (or drag and drop) `simple-song.mid` to an app that supports MIDI playback, such as a DAW        
 
-By default on macOS, you can double click a .mid file to open it in Garage Band and play it.
-
-TODO: Windows?
+<br>
+For example (assuming you have not changed the default file associations on your OS):
+* macOS: Double-click a .mid file (or run `open simple-song.mid` in the Terminal) to open in Garage Band and play it
+* Windows: TODO
 
 
 ### Real-time MIDI Output
+
+NOTE: Real-time output requires an optional native dependency to be installed, as explained in the [requirements](#requirements)
+above. If you have trouble installing that, you can use MIDI file output instead. 
 
 **macOS**
 
@@ -93,20 +99,21 @@ TODO: Windows?
 2. Select `MIDI Source: SimpleSynth virtual input` 
 3. Run the Chorus examples and select `simplesynth` as the port.
 
-        node c-major-scale.js -p simplesynth
+        node simple-song.js -p simplesynth
 
 
 **Windows**
 
 1. Run the Chorus.js examples and select `Microsoft GS Wavetable Synth` as the port.
  
-        node c-major-scale.js -p wavetable
+        node simple-song.js -p wavetable
 
 **Other ways of selecting real-time MIDI output ports**
 
 TODO
 
 
+<a name="tutorials"></a>
 ### Tutorials
 
 TODO: need absolute URLs here

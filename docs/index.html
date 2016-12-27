@@ -50,69 +50,77 @@
 <li>Compose music with Node.js</li>
 <li>Harmony-based sequencing using scales and chord progressions</li>
 <li>Multitrack <a href="http://www.instructables.com/id/What-is-MIDI/">MIDI</a> output<ul>
-<li><strong>real-time MIDI</strong> &rarr; control MIDI instruments like synthesizers</li>
-<li><strong>MIDI files</strong> &rarr; capture musical ideas for later use</li>
+<li><strong>real-time MIDI</strong> - control MIDI instruments like synthesizers</li>
+<li><strong>MIDI files</strong> - capture musical ideas for later use</li>
 </ul>
 </li>
 <li><a href="https://en.wikipedia.org/wiki/Microtonal_music">Microtonal</a> support</li>
 </ul>
 <p>Browser support is planned for 2017.</p>
+<p><a name="requirements"></a></p>
 <h2>Requirements</h2><ul>
 <li><a href="https://nodejs.org">Node.js</a> v6 or higher</li>
 <li>Optional: compilation tools for native dependencies<ul>
-<li>If you want <strong>real-time MIDI output</strong>, do <a href="https://github.com/nodejs/node-gyp#installation">node-gyp's installation instructions</a> </li>
+<li>If you want <strong>real-time MIDI output</strong>, follow <a href="https://github.com/nodejs/node-gyp#installation">node-gyp's installation instructions</a> </li>
 <li>Otherwise, ignore non-fatal errors during installation. You can still use <strong>MIDI file output</strong></li>
 </ul>
 </li>
 </ul>
-<h2>Installation</h2><pre class="prettyprint source"><code>  npm install chorus</code></pre><h2>Quick Start Guide</h2><p>chorus.js (currently) does not make any sound on it's own. It produces <a href="http://www.instructables.com/id/What-is-MIDI/">MIDI</a>
-output, which is a standard format for controlling music-making software. Let's see how this works by playing a scale.</p>
-<p>Create the file <code>simple-scale.js</code> in the folder where you installed chorus:</p>
-<pre class="prettyprint source"><code># simple-scale.js
+<h2>Installation</h2><pre class="prettyprint source"><code>  npm install chorus</code></pre><p>Note: If you setup the native dependencies for real-time MIDI output <em>after</em> installation, 
+you must reinstall chorus.</p>
+<h2>Quick Start Guide</h2><p>Chorus.js (currently) does not make any sound on it's own. It outputs <a href="http://www.instructables.com/id/What-is-MIDI/">MIDI</a>,
+a standard format for controlling music software &amp; hardware. Let's see how it works.</p>
+<p>Create the file <code>simple-song.js</code> in the folder where you installed chorus:</p>
+<pre class="prettyprint source"><code># simple-song.js
 const { Song, Output } = require('chorus');
 require('chorus/names').into(global);
 
 const song = new Song({
   sections: [{
-    scale: MAJOR(C),
     parts: [{
-      mode: 'scale',
-      pitches: [0, 1, 2, 3, 4, 5, 6, 7],
+      pitches: [C4, D4, E4, F4, G4, F4, E4, D4, C4],
     }]
   }]
 });
 
-Output.select().then(output => output.play(song));</code></pre><p>Don't worry if most of this doesn't make sense yet. We'll explore everything in detail in the tutorials (see links below).</p>
-<p><em>NOTE: <code>require('chorus/names').into(global)</code> adds global constants, 
-so we can type things like <code>MAJOR(C)</code> instead of <code>SCALES.MAJOR(PITCH_CLASSES.C)</code>. 
-This is convenient but potentially dangerous, and not recommended within large projects. 
-The <a href="tutorial-07-under-the-hood.html">Under the Hood</a> tutorial will explain how to avoid this. For now, let's continue...</em></p>
+Output.select().then(output => output.play(song));</code></pre><p>Don't worry if this doesn't make sense yet. We'll explore everything in the tutorials below.</p>
+<p>NOTE: <code>require('chorus/names').into(global)</code> adds global constants, 
+so we can write <code>C4</code> instead of <code>PITCHES.C4</code>. This is convenient but potentially dangerous, and not recommended in 
+complex projects that combine chorus.js with other libraries. 
+The <a href="tutorial-07-under-the-hood.html">Under the Hood</a> tutorial will explain how to avoid this. For now, let's continue...</p>
 <p>TODO: Need absolute url to tutorial ^  </p>
 <p><code>Output.select()</code> allows us to choose real-time or file output. 
 To see usage instructions, run it:</p>
-<pre class="prettyprint source"><code>    node c-major-scale.js</code></pre><p>Let's take a closer look at our output options.       </p>
+<pre class="prettyprint source"><code>    node simple-song.js</code></pre><p>Let's take a closer look at our output options.       </p>
 <h3>MIDI File Output</h3><ol>
 <li><p>Run</p>
-<pre class="prettyprint source"><code> node c-major-scale.js -f c-major-scale.mid</code></pre></li>
-<li><p>Open (or drag and drop) <code>c-major-scale.mid</code> to an app that supports MIDI playback, such as a DAW        </p>
+<pre class="prettyprint source"><code> node simple-song.js -f simple-song.mid</code></pre></li>
+<li><p>Open (or drag and drop) <code>simple-song.mid</code> to an app that supports MIDI playback, such as a DAW        </p>
 </li>
 </ol>
-<p>By default on macOS, you can double click a .mid file to open it in Garage Band and play it.</p>
-<p>TODO: Windows?</p>
-<h3>Real-time MIDI Output</h3><p><strong>macOS</strong></p>
+<p><br>
+For example (assuming you have not changed the default file associations on your OS):</p>
+<ul>
+<li>macOS: Double-click a .mid file (or run <code>open simple-song.mid</code> in the Terminal) to open in Garage Band and play it</li>
+<li>Windows: TODO</li>
+</ul>
+<h3>Real-time MIDI Output</h3><p>NOTE: Real-time output requires an optional native dependency to be installed, as explained in the <a href="#requirements">requirements</a>
+above. If you have trouble installing that, you can use MIDI file output instead. </p>
+<p><strong>macOS</strong></p>
 <ol>
 <li>Download <a href="http://notahat.com/simplesynth/">SimpleSynth</a> and launch it</li>
 <li>Select <code>MIDI Source: SimpleSynth virtual input</code> </li>
 <li><p>Run the Chorus examples and select <code>simplesynth</code> as the port.</p>
-<pre class="prettyprint source"><code> node c-major-scale.js -p simplesynth</code></pre></li>
+<pre class="prettyprint source"><code> node simple-song.js -p simplesynth</code></pre></li>
 </ol>
 <p><strong>Windows</strong></p>
 <ol>
 <li><p>Run the Chorus.js examples and select <code>Microsoft GS Wavetable Synth</code> as the port.</p>
-<pre class="prettyprint source"><code> node c-major-scale.js -p wavetable</code></pre></li>
+<pre class="prettyprint source"><code> node simple-song.js -p wavetable</code></pre></li>
 </ol>
 <p><strong>Other ways of selecting real-time MIDI output ports</strong></p>
 <p>TODO</p>
+<p><a name="tutorials"></a></p>
 <h3>Tutorials</h3><p>TODO: need absolute URLs here</p>
 <ol>
 <li><a href="tutorial-01-inter-app-midi.html">Inter-App MIDI</a> - how to connect to DAWs or standalone synthesizer apps</li>

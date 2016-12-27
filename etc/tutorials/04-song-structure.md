@@ -1,3 +1,16 @@
+We've seen how {@tutorial 02-rhythm} and {@tutorial 03-pitch-and-harmony} are handled in the earlier tutorials.
+This tutorial describes how Sections and Parts are used to create complex Songs.
+
+**Overview:**
+- [Elements of a Song](#song-elements)
+- [Multiple parts/channels](#multiple-parts)
+- [Part loops and delay](#part-loops-and-delay)
+- [Multiple sections](#multiple-sections)
+- [Song-level defaults](#defaults)
+- [Next Steps](#next-steps)
+
+<a name="song-elements"></a>
+## Elements of a Song
 The {@link Song} class is used to generate a song. The overall structure looks like this:
  
 <table style="color:#111; font-family:sans-serif; border:3px solid sienna; border-radius:12px; background-color:#EEB; border-collapse:separate; border-spacing:5px; box-shadow: 4px 6px 12px rgba(0,0,0,0.5);">
@@ -140,3 +153,27 @@ which makes it easy to try different scales and chord progressions without chang
 
 This is the basic `Song` structure. Each object mentioned here has various options to further control the song's behavior.
 Consult each class's documentation for more information.
+
+
+<a name="multiple-parts"></a>
+## Multiple Parts
+
+TODO: talk about channels
+
+
+<a name="part-loops-and-delay"></a>
+## Part Loops and Delay
+
+
+<a name="multiple-sections"></a>
+## Multiple Sections
+
+
+<a name="defaults"></a>
+## Song-level Defaults
+
+
+<a name="next-steps"></a>
+## Next Steps
+
+Next is the {@tutorial 05-diversification} tutorial.

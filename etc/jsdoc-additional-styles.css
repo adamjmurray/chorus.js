@@ -11,6 +11,16 @@ h4.name {
 h1+h4.name, h2+h4.name, h3+h4.name {
     margin-top: 0;
 }
+h2, h3 {
+    margin-top: 32px;
+}
+h2:first-child, h3:first-child {
+    margin-top: 0;
+}
+
+header {
+    padding: 0;
+}
 
 #main {
     overflow-x: auto;
@@ -18,4 +28,19 @@ h1+h4.name, h2+h4.name, h3+h4.name {
 }
 nav {
     width: 15%;
+}
+code {
+    background-color: rgba(0,0,0,0.04);
+}
+code:before {
+    content: "\00a0";
+}
+code:after {
+    content: "\00a0";
+}
+pre > code:before {
+    content: "";
+}
+pre > code:before {
+    content: "";
 }

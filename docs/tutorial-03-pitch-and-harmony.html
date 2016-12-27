@@ -28,7 +28,57 @@
 </header>
 
 <article>
-    
+    <h4>How to: Organize Pitch</h4><p>If you haven't already, <a href="./index.html#requirements">install chorus.js and do the Quick Start Guide</a></p>
+<p><strong>Outline</strong></p>
+<ul>
+<li><a href="#pitch-overview">Pitch Overview</a></li>
+<li><a href="#scales">Scales</a></li>
+<li><a href="#harmony">Harmony &amp; Chord Progressions</a></li>
+<li><a href="#arpeggio-mode">Arpeggios</a></li>
+<li><a href="#lead-mode">Melodies</a></li>
+<li><a href="#bass-mode">Basslines &amp; Chord Inversions</a></li>
+<li><a href="#simultaneous">Simultaneous Pitches</a></li>
+<li><a href="#non-scale">Non-Scale Pitches</a></li>
+<li><a href="#next-steps">Next Steps</a></li>
+</ul>
+<p><a name="pitch-overview"></a></p>
+<h2>Pitch Overview</h2><p>TODO: quick song structure overview, link to song-structure tutorial, chorus.js philosophy on pitch organization</p>
+<p><a name="scales"></a></p>
+<h2>Scales</h2><p>To use a scale, set the scale at the Section level, and set the Part mode to <code>'scale'</code>.
+We can play a C-major scale like this: </p>
+<pre class="prettyprint source"><code>const { Song, Output } = require('chorus');
+require('chorus/names').into(global);
+
+const song = new Song({
+  sections: [{
+    scale: MAJOR(C),
+    parts: [{
+      mode: 'scale',
+      pitches: [0, 1, 2, 3, 4, 5, 6, 7],
+    }]
+  }]
+});
+
+Output.select().then(output => output.play(song));</code></pre><p>When a Part is in <code>'scale'</code> mode, a <code>pitches</code> values of 0 is the first note in the scale, 1 is the second note in the scale, and so on.
+The most common scales have 7 distinct pitches, and the 8th pitch (pitches value <code>7</code>) is the same as the first pitch but
+an octave higher. You can use scales with more or less than 7 distinct pitches.</p>
+<p>TODO negative numbers</p>
+<p>TODO Built-in scales</p>
+<p>TODO quick note about custom scales, link to under-the-hood</p>
+<p><a name="harmony"></a></p>
+<h2>Harmony &amp; Chord Progressions</h2><p>TODO</p>
+<p><a name="arpeggio-mode"></a></p>
+<h2>Arpeggios</h2><p>TODO</p>
+<p><a name="lead-mode"></a></p>
+<h2>Melodies</h2><p>TODO</p>
+<p><a name="bass-mode"></a></p>
+<h2>Basslines &amp; Chord Inversions</h2><p>TODO</p>
+<p><a name="simultaneous"></a></p>
+<h2>Simultaneous Pitches</h2><p>TODO</p>
+<p><a name="non-scale"></a></p>
+<h2>Non-Scale Pitches</h2><p>TODO</p>
+<p><a name="next-steps"></a></p>
+<h2>Next Steps</h2><p>Next is the <a href="tutorial-04-song-structure.html">Song Structure</a> tutorial.</p>
 </article>
 
 </section>
