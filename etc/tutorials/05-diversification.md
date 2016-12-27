@@ -1,11 +1,55 @@
+#### How to: Avoid Repetition and Create Variety
+
 This is an advanced, optional tutorial that assumes you are familiar with the [earlier tutorials](./index.html#tutorials).<br>
 You can skip ahead to the {@tutorial 06-microtonality} or {@tutorial 07-under-the-hood} tutorials.
 
-TODO:
-- 
--
+**Overiew:**
+- [Non-Scale Pitches](#non-scale-pitches)
+- [Non-Scale Chords](#non-scale-chords)
+- [Loops of Different Lengths](#loops-of-different-lengths)
+- [Decoupled Pitch, Timing, Intensity, and Duration](#decoupled-params)
+- [Random Pitch, Intensity, and Duration](#random-params)
+- [Random Choices](#random-choices)
+- [Next Steps](#next-steps)
 
 
+<a name="non-scale-pitches"></a>
+## Non-Scale Pitches
+
+TODO
+
+
+<a name="non-scale-chords"></a>
+## Non-Scale Chords
+
+TODO
+
+
+<a name="loops-of-different-lengths"></a>
+## Loops of Different Lengths
+
+TODO
+
+
+<a name="decoupled-params"></a>
+## Decoupled Pitch, Timing, Intensity, and Duration
+
+TODO
+
+
+<a name="random-params"></a>
+## Random Pitch, Intensity, and Duration
+
+TODO
+
+
+<a name="random-choices"></a>
+## Random Choices
+
+TODO
+
+
+<a name="next-steps"></a>
 ## Next Steps
 
 Next is the {@tutorial 06-microtonality} tutorial.

@@ -10,7 +10,6 @@ If you haven't already, [install chorus.js and do the Quick Start Guide](./index
 - [Melodies](#lead-mode)
 - [Basslines & Chord Inversions](#bass-mode)
 - [Simultaneous Pitches](#simultaneous)
-- [Non-Scale Pitches](#non-scale)
 - [Next Steps](#next-steps)
 
 
@@ -80,12 +79,6 @@ TODO
 
 <a name="simultaneous"></a>
 ## Simultaneous Pitches
-
-TODO
-
-
-<a name="non-scale"></a>
-## Non-Scale Pitches
 
 TODO
 

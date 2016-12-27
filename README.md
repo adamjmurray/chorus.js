@@ -121,9 +121,9 @@ TODO: need absolute URLs here
 1. {@tutorial 01-inter-app-midi} - how to connect to DAWs or standalone synthesizer apps
 2. {@tutorial 02-rhythm} - how to organize time
 3. {@tutorial 03-pitch-and-harmony} - how to organize pitch
-4. {@tutorial 04-song-structure} - how to organize higher-level song structures
-5. {@tutorial 05-diversification} - how to avoid repetition
-6. {@tutorial 06-microtonality} - how to have more than 12 pitches per octave
+4. {@tutorial 04-song-structure} - how to organize song structure
+5. {@tutorial 05-diversification} - how to avoid repetition and create variety
+6. {@tutorial 06-microtonality} - how to use more than 12 pitches per octave
 7. {@tutorial 07-under-the-hood} - how to hack on chorus.js
 
 

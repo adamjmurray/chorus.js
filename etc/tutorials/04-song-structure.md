@@ -1,3 +1,5 @@
+#### How to: Organize Song Structure
+
 We've seen how {@tutorial 02-rhythm} and {@tutorial 03-pitch-and-harmony} are handled in the earlier tutorials.
 This tutorial describes how Sections and Parts are used to create complex Songs.
 
