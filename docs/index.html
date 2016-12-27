@@ -94,24 +94,25 @@ To see usage instructions, run it:</p>
 <h3>MIDI File Output</h3><ol>
 <li><p>Run</p>
 <pre class="prettyprint source"><code> node c-major-scale.js -f c-major-scale.mid</code></pre></li>
-<li><p>Open (or drag and drop) <code>c-major-scale.mid</code> to supports MIDI playback, such as a DAW        </p>
+<li><p>Open (or drag and drop) <code>c-major-scale.mid</code> to an app that supports MIDI playback, such as a DAW        </p>
 </li>
 </ol>
-<p>For example, with macOS's default settings, you can double click a .mid file to open in in Garage Band and play it.</p>
-<h3>Real-time MIDI Output</h3><p><strong>OS X</strong></p>
+<p>By default on macOS, you can double click a .mid file to open it in Garage Band and play it.</p>
+<p>TODO: Windows?</p>
+<h3>Real-time MIDI Output</h3><p><strong>macOS</strong></p>
 <ol>
 <li>Download <a href="http://notahat.com/simplesynth/">SimpleSynth</a> and launch it</li>
 <li>Select <code>MIDI Source: SimpleSynth virtual input</code> </li>
 <li><p>Run the Chorus examples and select <code>simplesynth</code> as the port.</p>
-<pre class="prettyprint source"><code> node node_modules/chorus/examples/play-song -p simplesynth</code></pre></li>
+<pre class="prettyprint source"><code> node c-major-scale.js -p simplesynth</code></pre></li>
 </ol>
 <p><strong>Windows</strong></p>
 <ol>
 <li><p>Run the Chorus.js examples and select <code>Microsoft GS Wavetable Synth</code> as the port.</p>
-<pre class="prettyprint source"><code> node node_modules/chorus/examples/play-song -p wavetable</code></pre></li>
+<pre class="prettyprint source"><code> node c-major-scale.js -p wavetable</code></pre></li>
 </ol>
-<h2>Playing a Song in realtime</h2><p>Selecting output</p>
-<pre class="prettyprint source"><code>const { selectOutput } = require('chorus');</code></pre><p>TODO: finish example</p>
+<p><strong>Other ways of selecting real-time MIDI output ports</strong></p>
+<p>TODO</p>
 <h3>Tutorials</h3><p>TODO: need absolute URLs here</p>
 <ol>
 <li><a href="tutorial-01-inter-app-midi.html">Inter-App MIDI</a> - how to connect to DAWs or standalone synthesizer apps</li>

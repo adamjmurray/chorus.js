@@ -75,42 +75,36 @@ Let's take a closer look at our output options.
 ### MIDI File Output
 
 1. Run
+
         node c-major-scale.js -f c-major-scale.mid
         
-2. Open (or drag and drop) `c-major-scale.mid` to supports MIDI playback, such as a DAW        
+2. Open (or drag and drop) `c-major-scale.mid` to an app that supports MIDI playback, such as a DAW        
 
-For example, with macOS's default settings, you can double click a .mid file to open in in Garage Band and play it.
+By default on macOS, you can double click a .mid file to open it in Garage Band and play it.
+
+TODO: Windows?
 
 
 ### Real-time MIDI Output
 
-**OS X**
+**macOS**
 
 1. Download [SimpleSynth](http://notahat.com/simplesynth/) and launch it
 2. Select `MIDI Source: SimpleSynth virtual input` 
 3. Run the Chorus examples and select `simplesynth` as the port.
 
-        node node_modules/chorus/examples/play-song -p simplesynth
+        node c-major-scale.js -p simplesynth
 
 
 **Windows**
 
 1. Run the Chorus.js examples and select `Microsoft GS Wavetable Synth` as the port.
  
-        node node_modules/chorus/examples/play-song -p wavetable
+        node c-major-scale.js -p wavetable
 
+**Other ways of selecting real-time MIDI output ports**
 
-## Playing a Song in realtime
-
-Selecting output
-
-```
-const { selectOutput } = require('chorus');
-
-```
-
-TODO: finish example
-
+TODO
 
 
 ### Tutorials
@@ -130,4 +124,3 @@ TODO: need absolute URLs here
 
 - [Full documentation](https://adamjmurray.github.io/chorus.js/)
 - [Github page](https://github.com/adamjmurray/chorus.js/)
-
