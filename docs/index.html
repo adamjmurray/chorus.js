@@ -43,142 +43,89 @@
 
 
     <section>
-        <article><h2>chorus.js Overview</h2><p>The <a href="Song.html">Song</a> class is used to generate a song. The overall structure looks like this:</p>
-<p><table style="color:#111; font-family:sans-serif; border:3px solid sienna; border-radius:12px; background-color:#EEB; border-collapse:separate; border-spacing:5px; box-shadow: 4px 6px 12px rgba(0,0,0,0.5);">
-  <tr>
-    <td style="border:0; font-size:xx-large; font-weight:bold;">Song</td>
-    <td style="border:0; font-size:large; text-align:center;">&rarr;&nbsp;<em>time</em>&nbsp;&rarr;</td>
-  </tr>
-  <tr style="white-space:nowrap;">
-    <td style="border:3px solid darkred; border-radius:8px; background-color:#eeb9a0; padding:10px; vertical-align:text-top;">
-      <table style="width:100%; border-collapse:separate;">
-        <tr>
-          <td style="border:0; font-size:x-large; text-align:left;">Section&nbsp;1</td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">scale</span></td>
-        </tr>
-      </table>
-      <table style="border:2px solid darkgreen; border-radius:6px; background-color:#BEB; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
-        <tr>
-          <td style="border:0;">Harmony</td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">chords</span></td>
-        </tr>
-      </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
-        <tr>
-          <td style="border:0;">Part&nbsp;1&nbsp;</td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">rhythm</span></td>
-        </tr>
-      </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
-        <tr>
-          <td style="border:0;">Part&nbsp;2&nbsp;</td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">rhythm</span></td>
-        </tr>
-      </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
-        <tr>
-          <td style="border:0;">Part&nbsp;3&nbsp;</td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">rhythm</span></td>
-        </tr>
-      </table>
-      <table style="width:100%; font-size:xx-large;">
-        <tr><td style="border:0; text-align:center; font-weight:bold;">&vellip;</td></tr>
-      </table>
-    </td>
-    <td style="border:3px solid darkred; border-radius:8px; background-color:#eeb9a0; padding:10px; vertical-align:text-top;">
-      <table style="width:100%; border-collapse:separate;">
-        <tr>
-          <td style="border:0; font-size:x-large; text-align:left;">Section&nbsp;2</td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">scale</span></td>
-        </tr>
-      </table>
-      <table style="border:2px solid darkgreen; border-radius:6px; background-color:#BEB; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
-        <tr>
-          <td style="border:0;">Harmony</td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">chords</span></td>
-        </tr>
-      </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
-        <tr>
-          <td style="border:0;">Part&nbsp;1&nbsp;</td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">rhythm</span></td>
-        </tr>
-      </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
-        <tr>
-          <td style="border:0;">Part&nbsp;2&nbsp;</td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">rhythm</span></td>
-        </tr>
-      </table>
-      <table style="width:100%; font-size:xx-large;">
-        <tr><td style="border:0; text-align:center; font-weight:bold;">&vellip;</td></tr>
-      </table>
-    </td>
-    <td style="border:3px solid darkred; border-radius:8px; background-color:#eeb9a0; padding:10px; vertical-align:text-top;">
-      <table style="width:100%; border-collapse:separate;">
-        <tr>
-          <td style="border:0; font-size:x-large; text-align:left;">Section&nbsp;3</td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">scale</span></td>
-        </tr>
-      </table>
-      <table style="border:2px solid darkgreen; border-radius:6px; background-color:#BEB; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
-        <tr>
-          <td style="border:0;">Harmony</td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">chords</span></td>
-        </tr>
-      </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
-        <tr>
-          <td style="border:0;">Part&nbsp;1&nbsp;</td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">rhythm</span></td>
-        </tr>
-      </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
-        <tr>
-          <td style="border:0;">Part&nbsp;2&nbsp;</td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">rhythm</span></td>
-        </tr>
-      </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
-        <tr>
-          <td style="border:0;">Part&nbsp;3&nbsp;</td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">rhythm</span></td>
-        </tr>
-      </table>
-      <table style="border:2px solid darkblue; border-radius:6px; background-color:lightblue; width:100%; border-collapse:separate; border-spacing:5px; margin-top:10px;">
-        <tr>
-          <td style="border:0;">Part&nbsp;4&nbsp;</td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">pitches</span></td>
-          <td style="border:0;"><span style="font-size:small; background-color:white; padding:4px; border-radius:4px;">rhythm</span></td>
-        </tr>
-      </table>
-      <table style="width:100%; font-size:xx-large;">
-        <tr><td style="border:0; text-align:center; font-weight:bold;">&vellip;</td></tr>
-      </table>
-    </td>
-    <td style="border:0; font-size:xx-large; vertical-align:middle;">&hellip;</td>
-  </tr>
-</table>
-<br/></p>
-<p>A <a href="Song.html">Song</a> consists of a list of <code>sections</code> that play one after the other sequentially in time. </p>
-<p>Each <code>Section</code> has a <code>scale</code>, a <code>harmony</code>, and a list of <code>parts</code> which play in parallel within the <code>Section</code>
-(note that any Part may start late or end early within its <code>Section</code>). </p>
-<p>A <code>Harmony</code> has a list of <code>chords</code> that define a chord progression.</p>
-<p>Each <code>Part</code> has a list of <code>pitches</code>, and a <code>rhythm</code> that controls the timing, intensity, and duration of each note generated by the <code>part</code>.</p>
-<p>A <code>Part</code>'s <code>pitches</code> can either be absolute <code>Pitch</code>es, or <code>Number</code>s that represent <em>relative pitch values</em>.
-Relative pitch values produce <code>Pitch</code>es based on the <code>Part</code>'s mode setting, the <code>Harmony</code>'s <code>chords</code>, and the <code>Section</code>'s <code>scale</code>,
-which makes it easy to try different scales and chord progressions without changing the <code>Part</code>.</p>
-<p>This is the basic <code>Song</code> structure. Each object mentioned here has various options to further control the song's behavior.
-Consult each class's documentation for more information.</p>
-<p>TODO: examples!</p></article>
+        <article><h2>Chorus.js: Music Composition in JavaScript</h2><p><a href="https://npmjs.org/package/chorus"><img src="https://badge.fury.io/js/chorus.svg" alt="npm version"></a>&nbsp;&nbsp;&nbsp;
+<a href="https://travis-ci.org/adamjmurray/chorus.js"><img src="https://travis-ci.org/adamjmurray/chorus.js.svg?branch=master" alt="build status"></a>&nbsp;&nbsp;&nbsp;
+<a href="https://coveralls.io/github/adamjmurray/chorus.js?branch=master"><img src="https://coveralls.io/repos/github/adamjmurray/chorus.js/badge.svg?branch=master" alt="test coverage"></a></p>
+<h2>Features</h2><ul>
+<li>Compose music with Node.js</li>
+<li>Harmony-based sequencing using scales and chord progressions</li>
+<li>Multitrack <a href="http://www.instructables.com/id/What-is-MIDI/">MIDI</a> output<ul>
+<li><strong>real-time MIDI</strong> &rarr; control MIDI instruments like synthesizers</li>
+<li><strong>MIDI files</strong> &rarr; capture musical ideas for later use</li>
+</ul>
+</li>
+<li><a href="https://en.wikipedia.org/wiki/Microtonal_music">Microtonal</a> support</li>
+</ul>
+<p>Browser support is planned for 2017.</p>
+<h2>Requirements</h2><ul>
+<li><a href="https://nodejs.org">Node.js</a> v6 or higher</li>
+<li>Optional: compilation tools for native dependencies<ul>
+<li>If you want <strong>real-time MIDI output</strong>, do <a href="https://github.com/nodejs/node-gyp#installation">node-gyp's installation instructions</a> </li>
+<li>Otherwise, ignore non-fatal errors during installation. You can still use <strong>MIDI file output</strong></li>
+</ul>
+</li>
+</ul>
+<h2>Installation</h2><pre class="prettyprint source"><code>  npm install chorus</code></pre><h2>Quick Start Guide</h2><p>chorus.js (currently) does not make any sound on it's own. It produces <a href="http://www.instructables.com/id/What-is-MIDI/">MIDI</a>
+output, which is a standard format for controlling music-making software. Let's see how this works by playing a scale.</p>
+<p>Create the file <code>simple-scale.js</code> in the folder where you installed chorus:</p>
+<pre class="prettyprint source"><code># simple-scale.js
+const { Song, Output } = require('chorus');
+require('chorus/names').into(global);
+
+const song = new Song({
+  sections: [{
+    scale: MAJOR(C),
+    parts: [{
+      mode: 'scale',
+      pitches: [0, 1, 2, 3, 4, 5, 6, 7],
+    }]
+  }]
+});
+
+Output.select().then(output => output.play(song));</code></pre><p>Don't worry if most of this doesn't make sense yet. We'll explore everything in detail in the tutorials (see links below).</p>
+<p><em>NOTE: <code>require('chorus/names').into(global)</code> adds global constants, 
+so we can type things like <code>MAJOR(C)</code> instead of <code>SCALES.MAJOR(PITCH_CLASSES.C)</code>. 
+This is convenient but potentially dangerous, and not recommended within large projects. 
+The <a href="tutorial-07-under-the-hood.html">Under the Hood</a> tutorial will explain how to avoid this. For now, let's continue...</em></p>
+<p>TODO: Need absolute url to tutorial ^  </p>
+<p><code>Output.select()</code> allows us to choose real-time or file output. 
+To see usage instructions, run it:</p>
+<pre class="prettyprint source"><code>    node c-major-scale.js</code></pre><p>Let's take a closer look at our output options.       </p>
+<h3>MIDI File Output</h3><ol>
+<li><p>Run</p>
+<pre class="prettyprint source"><code> node c-major-scale.js -f c-major-scale.mid</code></pre></li>
+<li><p>Open (or drag and drop) <code>c-major-scale.mid</code> to supports MIDI playback, such as a DAW        </p>
+</li>
+</ol>
+<p>For example, with macOS's default settings, you can double click a .mid file to open in in Garage Band and play it.</p>
+<h3>Real-time MIDI Output</h3><p><strong>OS X</strong></p>
+<ol>
+<li>Download <a href="http://notahat.com/simplesynth/">SimpleSynth</a> and launch it</li>
+<li>Select <code>MIDI Source: SimpleSynth virtual input</code> </li>
+<li><p>Run the Chorus examples and select <code>simplesynth</code> as the port.</p>
+<pre class="prettyprint source"><code> node node_modules/chorus/examples/play-song -p simplesynth</code></pre></li>
+</ol>
+<p><strong>Windows</strong></p>
+<ol>
+<li><p>Run the Chorus.js examples and select <code>Microsoft GS Wavetable Synth</code> as the port.</p>
+<pre class="prettyprint source"><code> node node_modules/chorus/examples/play-song -p wavetable</code></pre></li>
+</ol>
+<h2>Playing a Song in realtime</h2><p>Selecting output</p>
+<pre class="prettyprint source"><code>const { selectOutput } = require('chorus');</code></pre><p>TODO: finish example</p>
+<h3>Tutorials</h3><p>TODO: need absolute URLs here</p>
+<ol>
+<li><a href="tutorial-01-inter-app-midi.html">Inter-App MIDI</a> - how to connect to DAWs or standalone synthesizer apps</li>
+<li><a href="tutorial-02-rhythm.html">Rhythm</a> - how to organize time</li>
+<li><a href="tutorial-03-pitch-and-harmony.html">Pitch & Harmony</a> - how to organize pitch</li>
+<li><a href="tutorial-04-song-structure.html">Song Structure</a> - how to organize higher-level song structures</li>
+<li><a href="tutorial-05-diversification.html">Diversification</a> - how to avoid repetition</li>
+<li><a href="tutorial-06-microtonality.html">Microtonality</a> - how to have more than 12 pitches per octave</li>
+<li><a href="tutorial-07-under-the-hood.html">Under the Hood</a> - how to hack on chorus.js</li>
+</ol>
+<h2>Project Info</h2><ul>
+<li><a href="https://adamjmurray.github.io/chorus.js/">Full documentation</a></li>
+<li><a href="https://github.com/adamjmurray/chorus.js/">Github page</a></li>
+</ul></article>
     </section>
 
 
@@ -189,7 +136,7 @@ Consult each class's documentation for more information.</p>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Output.html">Output</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-01-inter-app-midi.html">Inter-App MIDI</a></li><li><a href="tutorial-02-rhythm.html">Rhythm</a></li><li><a href="tutorial-03-pitch-and-harmony.html">Pitch & Harmony</a></li><li><a href="tutorial-04-song-structure.html">Song Structure</a></li><li><a href="tutorial-05-diversification.html">Diversification</a></li><li><a href="tutorial-06-microtonality.html">Microtonality</a></li><li><a href="tutorial-07-under-the-hood.html">Under the Hood</a></li></ul>
 </nav>
 
 <br class="clear">

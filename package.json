@@ -19,8 +19,8 @@
     "cover": "node_modules/.bin/istanbul cover --root src --include-all-sources node_modules/.bin/_mocha -- test/*.js test/**/*.js",
     "coveralls": "npm run cover && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "ci": "npm run lint && npm run coveralls",
-    "docs": "node_modules/.bin/jsdoc src --configure etc/jsdoc.json --recurse --destination docs --readme etc/docs-home.md && cat etc/jsdoc-additional-styles.css >> docs/styles/jsdoc-default.css",
-    "docs-watch": "nodemon -w etc -w src -e js,css,md -x npm run docs"
+    "docs": "node_modules/.bin/jsdoc --configure etc/jsdoc.json && cat etc/jsdoc-additional-styles.css >> docs/styles/jsdoc-default.css",
+    "docs-watch": "nodemon -w README.md -w etc -w src -e js,json,css,md -x npm run docs"
   },
   "optionalDependencies": {
     "midi": "^0.9.5"

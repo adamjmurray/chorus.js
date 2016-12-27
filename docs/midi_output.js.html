@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: midi/output.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: midi/output.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint no-console: off */
+
+const readline = require('readline');
+const { basename } = require('path');
+const MidiFile = require('./file');
+const pkg = require('../../package');
+
+let cli;
+let outputPortArgOrEnvVar;
+let outputFile;
+for (let i=2; i&lt;process.argv.length; i++) {
+  const arg = process.argv[i];
+  if (arg === '-p') outputPortArgOrEnvVar = process.argv[++i] || '';
+  if (arg === '-f') outputFile = process.argv[++i];
+}
+if (outputPortArgOrEnvVar == null) outputPortArgOrEnvVar = process.env.CHORUS_OUTPUT_PORT;
+
+function usage() {
+  console.log(`
+Usage
+
+File output: node node_modules/chorus/examples/${basename(process.argv[1])} -f [outputFile]
+
+Realtime output: node node_modules/chorus/examples/${basename(process.argv[1])} -p [outputPort]
+
+Or set outputPort with the environment variable CHORUS_OUTPUT_PORT
+
+No MIDI output specified.\n`);
+}
+
+function findPortMatches(ports, substrings) {
+  return ports.filter(port => substrings.find(substring => port.toLowerCase().includes(substring)));
+}
+
+function findPort(ports, portSearch) {
+  return new Promise((resolve, reject) => {
+    portSearch = portSearch.toLowerCase();
+    let matches = findPortMatches(ports, [portSearch]);
+    if (!matches.length) {
+      matches = findPortMatches(ports, portSearch.split(/\s+/));
+    }
+    switch (matches.length) {
+      case 0:
+        console.log('No port found:', portSearch);
+        return reject();
+      case 1:
+        return resolve(matches[0]);
+      default:
+        console.log('Found multiple ports:');
+        return reject(matches);
+    }
+  });
+}
+
+function selectPort(ports) {
+  return new Promise((resolve, reject) => {
+    console.log(' ', ports.join('\n  '));
+    cli.question('Which port? ', portSearch => {
+      findPort(ports, portSearch)
+        .then(resolve)
+        .catch(matches => (matches ? resolve(selectPort(matches)) : reject()));
+    });
+  });
+}
+
+function selectAndOpenOutput(midiOut, portSearch) {
+  if (!cli) cli = readline.createInterface({ input: process.stdin, output: process.stdout });
+  const ports = midiOut.ports();
+  if (!portSearch) console.log('MIDI output ports:');
+  return (portSearch ? findPort(ports, portSearch) : selectPort(ports))
+    .then(port => {
+      cli.close();
+      cli = null;
+      midiOut.open(port);
+      return midiOut
+    })
+    .catch(() => selectAndOpenOutput(midiOut));
+}
+
+/**
+ * Provides a MIDI realtime or file output to play/write a Song.
+ */
+class Output {
+
+  /**
+   * Select the MIDI output interactively, or via a command line argument or environment variable.
+   * @param constructorOptions options object passed to the [constructor]{@link MidiOut}.
+   * @returns {Promise} a Promise object that resolves to a MidiOut instance
+   * @example
+   * # chorus-script.js
+   * const { Song } = require('chorus');
+   * const { MidiOut } = require('chorus/midi');
+   * const song = new Song(...);
+   * MidiOut.select().then(midiOut => midiOut.play(song));
+   *
+   * ____________________________________________________
+   * # command line usage
+   *
+   * # realtime output with the given port:
+   * node chorus-script.js -p midiPortName
+   *
+   * # or via an environment variable:
+   * CHORUS_OUTPUT_PORT=midiPortName node chorus-script.js
+   *
+   * # file output:
+   * node chorus-script.js -f midiFileName
+   */
+  static select(midiOutOptions) {
+    if (outputFile) {
+      // Provide the same output.play(song) interface from MidiOut
+      return Promise.resolve({
+        play(song) {
+          return new MidiFile(outputFile)
+            .write(song.toJSON())
+            .then(() => console.log(`Wrote MIDI file ${outputFile}`))
+            .catch(err => console.error(`Failed to write MIDI file ${outputFile}`, err));
+        }
+      });
+    }
+    if (!outputPortArgOrEnvVar) usage();
+    try {
+      const midiOut = new (require('./midi-out'))(midiOutOptions); // using a deferred require because MidOut requires this
+      return selectAndOpenOutput(midiOut, outputPortArgOrEnvVar);
+    } catch (err) {
+      if (err.code === 'MODULE_NOT_FOUND') {
+        console.error('ERROR: Cannot list MIDI ports because the midi npm module is not installed.');
+        console.error('You must `npm install midi` or use the -f option for file output.');
+        console.error(`See the README for more info: ${pkg.repository.url}#installation`);
+        process.exit(1);
+      } else {
+        throw err;
+      }
+    }
+  }
+}
+
+module.exports = Output;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Output.html">Output</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-01-inter-app-midi.html">Inter-App MIDI</a></li><li><a href="tutorial-02-rhythm.html">Rhythm</a></li><li><a href="tutorial-03-pitch-and-harmony.html">Pitch & Harmony</a></li><li><a href="tutorial-04-song-structure.html">Song Structure</a></li><li><a href="tutorial-05-diversification.html">Diversification</a></li><li><a href="tutorial-06-microtonality.html">Microtonality</a></li><li><a href="tutorial-07-under-the-hood.html">Under the Hood</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

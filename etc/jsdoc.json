@@ -1,8 +1,17 @@
 {
-  "plugins": ["plugins/markdown"],
+  "source": {
+    "include": ["src"]
+  },
+  "opts": {
+    "recurse": true,
+    "destination": "docs",
+    "readme": "README.md",
+    "tutorials": "etc/tutorials"
+  },
   "templates": {
     "default": {
       "includeDate": false
     }
-  }
+  },
+  "plugins": ["plugins/markdown"]
 }

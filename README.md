@@ -1,67 +1,88 @@
+## Chorus.js: Music Composition in JavaScript
+
 [![npm version](https://badge.fury.io/js/chorus.svg)](https://npmjs.org/package/chorus)&nbsp;&nbsp;&nbsp;
 [![build status](https://travis-ci.org/adamjmurray/chorus.js.svg?branch=master)](https://travis-ci.org/adamjmurray/chorus.js)&nbsp;&nbsp;&nbsp;
 [![test coverage](https://coveralls.io/repos/github/adamjmurray/chorus.js/badge.svg?branch=master)](https://coveralls.io/github/adamjmurray/chorus.js?branch=master)
 
-# chorus.js
-
-A music composition toolkit for JavaScript
 
 ## Features
 
-- Multi-track music creation via [MIDI](http://www.instructables.com/id/What-is-MIDI/) real-time and file output
-- Harmony-based pitch sequencing using scales and chord progressions
-- Minimalistic API suitable for learning music theory 
-- Microtonal support for experimental music with more than 12 pitches per octave
+- Compose music with Node.js
+- Harmony-based sequencing using scales and chord progressions
+- Multitrack [MIDI](http://www.instructables.com/id/What-is-MIDI/) output
+  - **real-time MIDI** &rarr; control MIDI instruments like synthesizers
+  - **MIDI files** &rarr; capture musical ideas for later use
+- [Microtonal](https://en.wikipedia.org/wiki/Microtonal_music) support
+
+Browser support is planned for 2017.
 
 
-## Status
+## Requirements
 
-Beta version. The API is still in flux, but should be stable soon.
-
-Currently requires Node.js 6+. It will be updated to support web browsers at some point.
-
-
-## Documentation
-
-Work in progress: https://adamjmurray.github.io/chorus.js/
-
-See this README, the examples folder, documentation, and tests for ideas on usage.
-
+- [Node.js](https://nodejs.org) v6 or higher
+- Optional: compilation tools for native dependencies
+  - If you want **real-time MIDI output**, do [node-gyp's installation instructions](https://github.com/nodejs/node-gyp#installation) 
+  - Otherwise, ignore non-fatal errors during installation. You can still use **MIDI file output**
 
 ## Installation
 
       npm install chorus
 
-Realtime MIDI I/O (via the [midi package](https://www.npmjs.com/package/midi)) requires native code to be compiled during installation.
-See [node-gyp](https://www.npmjs.com/package/node-gyp) for details. Here's how I did it:
 
-**OS X**
+## Quick Start Guide
 
-1. Install Xcode from the App Store 
-2. Install Xcode Command Line Tools (in the app's menu: Xcode &rarr; Preferences &rarr; Downloads)
+chorus.js (currently) does not make any sound on it's own. It produces [MIDI](http://www.instructables.com/id/What-is-MIDI/)
+output, which is a standard format for controlling music-making software. Let's see how this works by playing a scale.
 
-**Windows**
+Create the file `simple-scale.js` in the folder where you installed chorus:
 
-1. Install Python 2.7.x
-2. Install Visual Studio 2015 Community Edition 
-   * Customize the install to include the "Visual C++" programming language 
-3. Launch the "Developer Command Prompt for VS2015"
-4. Run npm install -g npm@latest (to avoid [this issue](https://github.com/nodejs/node-gyp/issues/972))  
+```
+# simple-scale.js
+const { Song, Output } = require('chorus');
+require('chorus/names').into(global);
 
-NOTE: Realtime MIDI I/O is optional. If you have problems installing the optional [midi package](https://www.npmjs.com/package/midi)
-you can still work with MIDI file I/O, which is implemented in pure JavaScript. 
+const song = new Song({
+  sections: [{
+    scale: MAJOR(C),
+    parts: [{
+      mode: 'scale',
+      pitches: [0, 1, 2, 3, 4, 5, 6, 7],
+    }]
+  }]
+});
+
+Output.select().then(output => output.play(song));
+
+```
+
+Don't worry if most of this doesn't make sense yet. We'll explore everything in detail in the tutorials (see links below).
+
+*NOTE: `require('chorus/names').into(global)` adds global constants, 
+so we can type things like `MAJOR(C)` instead of `SCALES.MAJOR(PITCH_CLASSES.C)`. 
+This is convenient but potentially dangerous, and not recommended within large projects. 
+The {@tutorial 07-under-the-hood} tutorial will explain how to avoid this. For now, let's continue...*
+  
+TODO: Need absolute url to tutorial ^  
+
+`Output.select()` allows us to choose real-time or file output. 
+To see usage instructions, run it:
+
+        node c-major-scale.js
+        
+Let's take a closer look at our output options.       
 
 
+### MIDI File Output
 
-## Usage
+1. Run
+        node c-major-scale.js -f c-major-scale.mid
+        
+2. Open (or drag and drop) `c-major-scale.mid` to supports MIDI playback, such as a DAW        
 
-Chorus.js uses MIDI to communicate with compatible apps that can produce sound. 
-It can send MIDI messages in realtime to another app, or write to a MIDI file. 
-
-Remember to set your volume to a moderate level.
+For example, with macOS's default settings, you can double click a .mid file to open in in Garage Band and play it.
 
 
-### Realtime MIDI I/O Quick Start
+### Real-time MIDI Output
 
 **OS X**
 
@@ -77,68 +98,36 @@ Remember to set your volume to a moderate level.
 1. Run the Chorus.js examples and select `Microsoft GS Wavetable Synth` as the port.
  
         node node_modules/chorus/examples/play-song -p wavetable
-        
-
-### Realtime MIDI I/O Advanced Setup with a DAW
-
-We'll walk through the setup with [Bitwig Studio](http://bitwig.com) because it's cross-platform and has a free trial. Setup for other DAWs should be similar.  
- 
-**OS X**
-
-1. Create an IAC (Inter-Application Communication) MIDI port:
-   * Open OS X's `Audio MIDI Setup` application
-   * Go to the `MIDI Studio` window (menu: `Window -> Show MIDI Studio`)
-   * Double click `IAC Driver` to open the `IAC Driver Properties` window 
-   * Make sure `Device is online` is checked 
-   * Click `More information` to expand the `IAC Driver Properties` window   
-   * Click `+` to add a port and name it whatever you want.
-2. Launch Bitwig Studio and start a new project
-3. Add a generic MIDI Controller:
-   * Bitwig preferences &rarr; Controllers &rarr; Add Controller Manually &rarr; Generic &rarr; MIDI Keyboard
-   * Choose the IAC port
-4. Add a software instrument track with an instrument (such as Polysynth)
-5. Run the Chorus examples and select the IAC Driver port you setup. For example, if you named it "iac":
-
-        node node_modules/chorus/examples/play-song -p iac
 
 
-**Windows**
+## Playing a Song in realtime
 
-1. Create a virtual MIDI port:
-   * Install [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html)
-   * Run loopMIDI and click `+` to add a virtual MIDI port
-2. Launch Bitwig Studio and start a new project
-3. Add a generic MIDI Controller:
-   * Bitwig preferences &rarr; Controllers &rarr; Add Controller Manually &rarr; Generic &rarr; MIDI Keyboard
-   * Choose the loopMIDI port
-4. Add a software instrument track with an instrument (such as Polysynth)
-5. Run the Chorus examples and select the loopMIDI port you setup:
+Selecting output
 
-        node node_modules/chorus/examples/play-song -p loopmidi
+```
+const { selectOutput } = require('chorus');
 
+```
 
-**Linux**
-
-Similar to above. To setup a virtual / inter-app MIDI port, try the [JACK Audio Connection Kit](http://jackaudio.org/).   
-
-
-### MIDI File I/O
-
-Again, we'll demonstrate the setup with [Bitwig Studio](http://bitwig.com). Other DAWs should be similar.
-
-1. Generate a MIDI file with Chorus:
-
-        node node_modules/chorus/examples/song-to-file.js 
-
-2. Launch Bitwig Studio and start a new project
-3. Add a software instrument track with an instrument (such as Polysynth)
-4. Drag a MIDI file that Chorus generated onto the track
-5. Press Bitwig's play button
+TODO: finish example
 
 
 
-### Troubleshooting
+### Tutorials
 
-One small mistake can prevent MIDI I/O from working. If you can't hear anything, double check every aspect of your setup carefully.
+TODO: need absolute URLs here
 
-If you have a MIDI input device, like a MIDI piano keyboard, test that you can play your software instrument with it.
+1. {@tutorial 01-inter-app-midi} - how to connect to DAWs or standalone synthesizer apps
+2. {@tutorial 02-rhythm} - how to organize time
+3. {@tutorial 03-pitch-and-harmony} - how to organize pitch
+4. {@tutorial 04-song-structure} - how to organize higher-level song structures
+5. {@tutorial 05-diversification} - how to avoid repetition
+6. {@tutorial 06-microtonality} - how to have more than 12 pitches per octave
+7. {@tutorial 07-under-the-hood} - how to hack on chorus.js
+
+
+## Project Info
+
+- [Full documentation](https://adamjmurray.github.io/chorus.js/)
+- [Github page](https://github.com/adamjmurray/chorus.js/)
+

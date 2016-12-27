@@ -27,8 +27,48 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>const Part = require('./part');
+const Pitch = require('../model/pitch');
+const PitchClass = require('../model/pitch-class');
 const Harmony = require('./harmony');
 const { ARPEGGIO, BASS, CHORD, CHROMATIC, LEAD, SCALE } = Part.MODES;
+
+function evaluatePartMode(partMode, relativePitch, scale, chord, octave) {
+  if (relativePitch instanceof Array) {
+    return [].concat(...relativePitch.map(rp => evaluatePartMode(partMode, rp, scale, chord, octave)));
+  }
+  if (relativePitch instanceof Pitch) {
+    return [relativePitch];
+  }
+  if (relativePitch instanceof PitchClass) {
+    return [new Pitch(relativePitch, octave)];
+  }
+  if (!partMode) {
+    return [Number(relativePitch)];
+  }
+  switch (partMode) {
+    case ARPEGGIO:
+      return [chord.pitch(relativePitch, { scale, octave })];
+
+    case BASS:
+      return [chord.pitch(0, { scale, octave, inversion: 0, offset: relativePitch })];
+
+    case LEAD:
+      return [chord.pitch(0, { scale, octave, offset: relativePitch })];
+
+    case CHORD:
+      return chord.pitches({ scale, octave, inversion: chord.inversion + relativePitch });
+
+    case SCALE:
+      return [scale.pitch(relativePitch, {octave})];
+
+    case CHROMATIC:
+      return [scale.pitch(0, { octave }).add(relativePitch)];
+
+    default:
+      console.error(`Unsupported part mode "${partMode}"`); // eslint-disable-line no-console
+      return [];
+  }
+}
 
 /**
  * A section of a {@link Song} with a particular scale and harmony.
@@ -51,8 +91,8 @@ class Section {
   constructor({harmony, scale, parts=[], length} = {}) {
     this.scale = scale;
     this.harmony = harmony instanceof Harmony ? harmony : new Harmony(harmony);
-    this.parts = parts.map(part => part instanceof Part ? part : new Part(part));
-    this.length = length || Math.max(...this.parts.map(t => t.length));
+    this.parts = parts.map((p,idx) => p instanceof Part ? p : new Part(Object.assign({channel:idx+1},p)));
+    this.length = length || Math.max(...this.parts.map(p => p.length + p.delay));
   }
 
   /**
@@ -67,12 +107,8 @@ class Section {
    */
   *[Symbol.iterator]() {
     const { scale, harmony, parts } = this;
-    let partIdx = -1;
-    for (const part of parts) { // can't use forEach because we're in a generator
-      partIdx++;
-      const octave = part.octave;
-      const channel = part.channel || (partIdx + 1);
-      const partMode = part.mode;
+    for (const part of parts) {
+      const {mode, channel, octave} = part;
       let harmonyIter = harmony[Symbol.iterator]();
       let harmonyCurr = harmonyIter.next();
       let harmonyNext = harmonyIter.next();
@@ -86,50 +122,11 @@ class Section {
           harmonyCurr = harmonyNext;
           harmonyNext = harmonyIter.next();
         }
-        let { value:{chord}={} } = harmonyCurr;
-
-        if (partMode &amp;&amp; typeof pitch === 'number') {
-          const number = pitch;
-          // let chord;
-          switch (partMode) {
-            case ARPEGGIO: {
-              pitch = chord.pitch(number, { scale, octave });
-              break;
-            }
-            case BASS: {
-              pitch = chord.pitch(0, { scale, octave, inversion: 0, offset: number });
-              break;
-            }
-            case LEAD: {
-              pitch = chord.pitch(0, { scale, octave, offset: number });
-              break;
-            }
-            case CHORD: {
-              pitch = null;
-              const pitches = chord.pitches({ scale, octave, inversion: chord.inversion + number });
-              for (const p of pitches) {
-                const note = { pitch: p, duration, intensity, channel };
-                yield { time, part: partIdx, note };  // TODO: maybe the MIDI file part should be based on the channel
-              }
-              break;
-            }
-            case SCALE: {
-              pitch = scale.pitch(number, { octave });
-              break;
-            }
-            case CHROMATIC: {
-              pitch = scale.pitch(0, { octave }).add(number);
-              break;
-            }
-            default: {
-              console.error(`Unsupported part mode "${partMode}"`); // eslint-disable-line no-console
-              pitch = null;
-            }
-          }
-        }
-        if (pitch != null) {
-          const note = { pitch, duration, intensity, channel };
-          yield { time, part: partIdx, note }; // TODO: maybe the MIDI file part should be based on the channel
+        const { value:{chord}={} } = harmonyCurr;
+        const pitches = evaluatePartMode(mode, pitch, scale, chord, octave).filter(p => p != null);
+        const uniquePitchValues = new Set(pitches.map(p => Number(p)));
+        for (const p of uniquePitchValues) {
+          yield {time, note: {pitch: p, duration, intensity, channel} };
         }
       }
     }
@@ -147,7 +144,7 @@ module.exports = Section;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Output.html">Output</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-01-inter-app-midi.html">Inter-App MIDI</a></li><li><a href="tutorial-02-rhythm.html">Rhythm</a></li><li><a href="tutorial-03-pitch-and-harmony.html">Pitch & Harmony</a></li><li><a href="tutorial-04-song-structure.html">Song Structure</a></li><li><a href="tutorial-05-diversification.html">Diversification</a></li><li><a href="tutorial-06-microtonality.html">Microtonality</a></li><li><a href="tutorial-07-under-the-hood.html">Under the Hood</a></li></ul>
 </nav>
 
 <br class="clear">

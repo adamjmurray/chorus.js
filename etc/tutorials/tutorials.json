@@ -1,0 +1,23 @@
+{
+  "01-inter-app-midi": {
+    "title": "Inter-App MIDI"
+  },
+  "02-rhythm": {
+    "title": "Rhythm"
+  },
+  "03-pitch-and-harmony": {
+    "title": "Pitch & Harmony"
+  },
+  "04-song-structure": {
+    "title": "Song Structure"
+  },
+  "05-diversification": {
+    "title": "Diversification"
+  },
+  "06-microtonality": {
+    "title": "Microtonality"
+  },
+  "07-under-the-hood": {
+    "title": "Under the Hood"
+  }
+}

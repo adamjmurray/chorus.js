@@ -55,11 +55,12 @@ class Pitch {
    * @param {number|PitchClass|string} value - The numeric pitch value, or a PitchClass, or a string of the pitch class name and optional octave. See examples below.
    * @param {number} [octave=4] - The octave to use when the first argument is a PitchClass or a string without the octave. The octave should be in the range -1 to 9 (inclusive) to avoid invalid pitch values.
    */
-  constructor(value, octave=4, pitchesPerOctave=12) {
+  constructor(value, octave=4, { pitchesPerOctave=12, pitchValueOffset=0 }={}) {
     let pitchClass;
     if (typeof value === 'number') {
-      pitchClass = new PitchClass(value, pitchesPerOctave);
-      octave = Math.floor(value / 12) - 1;
+      pitchClass = new PitchClass(value, { pitchesPerOctave });
+      octave = Math.floor(value / pitchesPerOctave) - 1;
+      value += pitchValueOffset;
     }
     else {
       if (value instanceof PitchClass) {
@@ -76,10 +77,7 @@ class Pitch {
           pitchClass = new PitchClass(string);
         }
       }
-      // TODO: depending on how a microtonal tuning is set up, an offset can be involved
-      // For example in 19-TET, the value of 0 may be significantly higher than a 0 value with 12-TET, so that
-      // middle C on a keybaord produces the same pitch. Need to figure out how to deal with that...
-      value = pitchClass.value + pitchClass.pitchesPerOctave * (octave + 1);
+      value = pitchClass.value + pitchClass.pitchesPerOctave * (octave + 1) + pitchValueOffset;
     }
     /**
      * @member {PitchClass}
@@ -117,7 +115,11 @@ class Pitch {
    * @returns {Pitch}
    */
   add(value) {
-    return value ? new Pitch(this.value + value, null, this.pitchClass.pitchesPerOctave) : this;
+    if (!value) return this;
+    return new Pitch(this.value + value, null, {
+      pitchesPerOctave: this.pitchClass.pitchesPerOctave,
+      pitchValueOffset: this.pitchValueOffset,
+    });
   }
 }
 
@@ -132,7 +134,7 @@ module.exports = Pitch;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Output.html">Output</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-01-inter-app-midi.html">Inter-App MIDI</a></li><li><a href="tutorial-02-rhythm.html">Rhythm</a></li><li><a href="tutorial-03-pitch-and-harmony.html">Pitch & Harmony</a></li><li><a href="tutorial-04-song-structure.html">Song Structure</a></li><li><a href="tutorial-05-diversification.html">Diversification</a></li><li><a href="tutorial-06-microtonality.html">Microtonality</a></li><li><a href="tutorial-07-under-the-hood.html">Under the Hood</a></li></ul>
 </nav>
 
 <br class="clear">

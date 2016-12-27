@@ -30,8 +30,6 @@
 const { mod } = require('../utils');
 
 function findUniqueOctaveOffset(relativePitches, scaleLength, direction) {
-  direction = Math.sign(direction);
-  // TODO: do this once in the calling function?
   if (direction &lt; 0) relativePitches = relativePitches.slice().reverse();
   for (let octave=direction; true; octave += direction) { // eslint-disable-line no-constant-condition
     for (const {degree,shift} of relativePitches) {
@@ -66,10 +64,11 @@ class Chord {
    * @param relativePitches
    * @param inversion
    */
-  constructor(relativePitches, inversion=0) {
+  constructor(relativePitches, { inversion=0, scale }={}) {
     relativePitches = relativePitches.map(rp => rp instanceof RelativePitch ? rp : new RelativePitch(rp));
     this.relativePitches = Object.freeze(relativePitches);
     this.inversion = inversion;
+    this.scale = scale;
     Object.freeze(this);
   }
 
@@ -81,7 +80,7 @@ class Chord {
    * @param offset
    * @returns {Array}
    */
-  pitches({ scale, octave=4, inversion=this.inversion, offset=0, }={}) {
+  pitches({ scale=this.scale, octave=4, inversion=this.inversion, offset=0, }={}) {
     const relativePitches = relativePitchesForInversion(this.relativePitches, inversion, scale.length);
     const pitches = relativePitches.map(relativePitch =>
       // Only add the additional offset if it's non-zero offset, because it causes the relativePitch's shift to be lost
@@ -95,7 +94,7 @@ class Chord {
    * @param inversion
    * @returns {*}
    */
-  pitch(position, { scale, octave=4, inversion=this.inversion, offset=0 }={}) {
+  pitch(position, { scale=this.scale, octave=4, inversion=this.inversion, offset=0 }={}) {
     const shift = position.shift || 0;
     position = position.degree || Number(position);
     const pitches = this.pitches({ scale, octave, inversion, offset });
@@ -106,7 +105,7 @@ class Chord {
 
   inv(inversion) {
     if (!inversion) return this;
-    return new Chord(this.relativePitches, inversion);
+    return new Chord(this.relativePitches, { inversion, scale: this.scale });
   }
 }
 
@@ -121,7 +120,7 @@ module.exports = Chord;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Output.html">Output</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-01-inter-app-midi.html">Inter-App MIDI</a></li><li><a href="tutorial-02-rhythm.html">Rhythm</a></li><li><a href="tutorial-03-pitch-and-harmony.html">Pitch & Harmony</a></li><li><a href="tutorial-04-song-structure.html">Song Structure</a></li><li><a href="tutorial-05-diversification.html">Diversification</a></li><li><a href="tutorial-06-microtonality.html">Microtonality</a></li><li><a href="tutorial-07-under-the-hood.html">Under the Hood</a></li></ul>
 </nav>
 
 <br class="clear">

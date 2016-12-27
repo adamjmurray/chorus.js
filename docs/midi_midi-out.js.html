@@ -27,10 +27,9 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>const midi = require('midi');
-const { NOTE_ON, NOTE_OFF } = require('./constants');
+const { NOTE_ON_BYTE, NOTE_OFF_BYTE } = require('./constants');
 const { sequentialAsync, sleep } = require('../utils');
 const Scheduler = require('./scheduler');
-const selectOutput = require('./select-output');
 
 /**
  * Realtime MIDI output.
@@ -104,33 +103,6 @@ class MidiOut {
   }
 
   /**
-   * Select the MIDI output interactively, or via a command line argument or environment variable.
-   * @param constructorOptions options object passed to the [constructor]{@link MidiOut}.
-   * @returns {Promise} a Promise object that resolves to a MidiOut instance
-   * @example
-   * # chorus-script.js
-   * const { Song } = require('chorus');
-   * const { MidiOut } = require('chorus/midi');
-   * const song = new Song(...);
-   * MidiOut.select().then(midiOut => midiOut.play(song));
-   *
-   * ____________________________________________________
-   * # command line usage
-   *
-   * # realtime output with the given port:
-   * node chorus-script.js -p midiPortName
-   *
-   * # or via an environment variable:
-   * CHORUS_OUTPUT_PORT=midiPortName node chorus-script.js
-   *
-   * # file output:
-   * node chorus-script.js -f midiFileName
-   */
-  static select(constructorOptions) {
-    return selectOutput(constructorOptions);
-  }
-
-  /**
    * Close the MIDI input port
    * @returns {boolean} true if the port was closed
    */
@@ -162,7 +134,7 @@ class MidiOut {
    * @param channel
    */
   noteOn(pitch, velocity=70, channel=1) {
-    this.send(NOTE_ON | (channel-1), Number(pitch), velocity);
+    this.send(NOTE_ON_BYTE | (channel-1), Number(pitch), velocity);
   }
 
   /**
@@ -172,7 +144,7 @@ class MidiOut {
    * @param channel
    */
   noteOff(pitch, velocity=70, channel=1) {
-    this.send(NOTE_OFF | (channel-1), Number(pitch), velocity);
+    this.send(NOTE_OFF_BYTE | (channel-1), Number(pitch), velocity);
   }
 
   /**
@@ -234,14 +206,12 @@ class MidiOut {
    * @returns {Scheduler} A Scheduler that has already been started. It's returned so you can stop it early if desired.
    */
   play(songOrJSON) {
+    const { bpm, tracks } = songOrJSON.toJSON ? songOrJSON.toJSON() : songOrJSON;
     const scheduler = new Scheduler();
-    if (songOrJSON[Symbol.iterator]) {
-      // it's a Song, iterate over all its events
-      for (const event of songOrJSON) {
-        if (event.type === 'bpm') {
-          scheduler.bpm = event.value;
-        }
-        else if (event.type === 'note') {
+    if (bpm) scheduler.bpm = bpm;
+    for (const track of tracks) {
+      for (const event of track) {
+        if (event.type === 'note') {
           const { pitch, velocity, time, duration, channel } = event;
           scheduler.at(time, () => {
             this.noteOn(pitch, velocity, channel);
@@ -249,24 +219,6 @@ class MidiOut {
           scheduler.at(time + duration, () => {
             this.noteOff(pitch, velocity, channel);
           });
-        }
-      }
-    }
-    else {
-      // it's midiJSON
-      const { bpm, tracks } = songOrJSON;
-      scheduler.bpm = bpm;
-      for (const track of tracks) {
-        for (const event of track) {
-          if (event.type === 'note') {
-            const { pitch, velocity, time, duration, channel } = event;
-            scheduler.at(time, () => {
-              this.noteOn(pitch, velocity, channel);
-            });
-            scheduler.at(time + duration, () => {
-              this.noteOff(pitch, velocity, channel);
-            });
-          }
         }
       }
     }
@@ -286,7 +238,7 @@ module.exports = MidiOut;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Output.html">Output</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-01-inter-app-midi.html">Inter-App MIDI</a></li><li><a href="tutorial-02-rhythm.html">Rhythm</a></li><li><a href="tutorial-03-pitch-and-harmony.html">Pitch & Harmony</a></li><li><a href="tutorial-04-song-structure.html">Song Structure</a></li><li><a href="tutorial-05-diversification.html">Diversification</a></li><li><a href="tutorial-06-microtonality.html">Microtonality</a></li><li><a href="tutorial-07-under-the-hood.html">Under the Hood</a></li></ul>
 </nav>
 
 <br class="clear">

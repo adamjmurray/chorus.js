@@ -1,15 +1,11 @@
-require('../src/names').into(global);
-const { Song, Output } = require('../src');
+const { Song, Output, SCALES, PITCH_CLASSES } = require('../src');
 
 const song = new Song({
-  bpm: 120,
   sections: [{
-    scale: MAJOR(C),
+    scale: SCALES.MAJOR(PITCH_CLASSES.C),
     parts: [{
       mode: 'scale',
-      pulse: 1/2,
-      rhythm: 'XxXxXxxXxxXxXxX===',
-      pitches: [0, 1, 2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2, 1, 0],
+      pitches: [0, 1, 2, 3, 4, 5, 6, 7],
     }]
   }]
 });
