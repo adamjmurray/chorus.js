@@ -1,6 +1,6 @@
 #### How to: Organize Pitch
 
-If you haven't already, [install chorus.js and do the Quick Start Guide](./index.html#requirements)
+If you haven't already, [install chorus.js and follow the Quick Start Guide](./index.html#requirements)
 
 **Outline**
 - [Pitch Overview](#pitch-overview)

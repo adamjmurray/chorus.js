@@ -33,6 +33,7 @@ Note: If you setup the native dependencies for real-time MIDI output *after* ins
 you must reinstall chorus.
 
 
+<a name="quick-start"></a>
 ## Quick Start Guide
 
 Chorus.js (currently) does not make any sound on it's own. It outputs [MIDI](http://www.instructables.com/id/What-is-MIDI/),
@@ -54,7 +55,6 @@ const song = new Song({
 });
 
 Output.select().then(output => output.play(song));
-
 ```
 
 Don't worry if this doesn't make sense yet. We'll explore everything in the tutorials below.
@@ -88,6 +88,7 @@ For example (assuming you have not changed the default file associations on your
 * Windows: TODO
 
 
+<a name="real-time"></a>
 ### Real-time MIDI Output
 
 NOTE: Real-time output requires an optional native dependency to be installed, as explained in the [requirements](#requirements)

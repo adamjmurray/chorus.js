@@ -1,3 +1,7 @@
+Features:
+- Rhythm.distribute() needs something like rotation, but that shifts 1 step at a time (not until the next note)
+  Call it the "shift" option?
+
 Improve Test Coverage
 - microtonal support (pitchesPerOctave, pitchValueOffset in PitchClass, Pitch, Scale)
 - Test that a Part's channel determines the track for MIDI file output, especially:
@@ -7,27 +11,8 @@ Improve Test Coverage
 
 Documentation
 - Document Chord, Scale, RelativePitch thoroughly
-- Move structure diagram into a tutorial doc? Organize non-module/class docs into tutorial files. 
-  Each documented DAW setup should go into it's own tutorial
-- Walkthrough Guide:
-  - Songs with no part modes (just use numbers, and then pitch name constants)
-    - selecting an output, playing in realtime vs file output
-  - scales and scale mode
-  - harmony and chord/arpeggio modes
-  - lead and bass modes
-  - multiple parts
-  - multiple sections
-  - simultaneous notes
-  - non-scale pitches (chords and relative pitches with shifts)
-  - microtonal features
-    - Maybe include a .tun file generator?
-  - low-level guide (maybe later?)
-    - interactive playback with MidiOut
-    - scheduling
-- Double check my install/usage notes on Windows
-- Ableton Live instructions
-- Bitwig instructions need to explain per-channel setup via Toms_Bitwig_Scripts
-- Other DAWS? PreSonus Studio One (has a free version), Garage Band, Logic (maybe later) 
+- Tutorials
+  - in rhythm tutorials, maybe introduce drum sounds last (since you can't hear rests)
 - Setup a Changelog file
   
 

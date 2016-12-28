@@ -1,6 +1,6 @@
 #### How to: Connect to DAWs or Standalone Synthesizer Apps
 
-If you haven't already, [install chorus.js and do the Quick Start Guide](./index.html#requirements)
+If you haven't already, [install chorus.js and follow the Quick Start Guide](./index.html#requirements)
 
 This tutorial is optional and intended for DAW/synthesizer app users.<br> 
 If you are ok with the setup from the Quick Start Guide, skip ahead to the {@tutorial 02-rhythm} tutorial.

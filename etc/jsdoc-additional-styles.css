@@ -14,6 +14,9 @@ h1+h4.name, h2+h4.name, h3+h4.name {
 h2, h3 {
     margin-top: 32px;
 }
+h4 {
+    margin-top: 20px;
+}
 h2:first-child, h3:first-child {
     margin-top: 0;
 }
