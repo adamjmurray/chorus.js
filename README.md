@@ -109,23 +109,19 @@ above. If you have trouble installing that, you can use MIDI file output instead
  
         node simple-song.js -p wavetable
 
-**Other ways of selecting real-time MIDI output ports**
-
-TODO
-
 
 <a name="tutorials"></a>
 ### Tutorials
 
-TODO: need absolute URLs here
+Work in progress!
 
-1. {@tutorial 01-inter-app-midi} - how to connect to DAWs or standalone synthesizer apps
-2. {@tutorial 02-rhythm} - how to organize time
-3. {@tutorial 03-pitch-and-harmony} - how to organize pitch
-4. {@tutorial 04-song-structure} - how to organize song structure
-5. {@tutorial 05-advanced-features} - how to avoid repetition and create variety
-6. {@tutorial 06-microtonality} - how to use more than 12 pitches per octave
-7. {@tutorial 07-under-the-hood} - how to hack on chorus.js
+1. [Inter-App MIDI](https://adamjmurray.github.io/chorus.js/tutorial-01-inter-app-midi.html) - how to connect to DAWs or standalone synthesizer apps
+2. [Rhythm](https://adamjmurray.github.io/chorus.js/tutorial-02-rhythm.html) - how to organize time
+3. [Pitch & Harmony](https://adamjmurray.github.io/chorus.js/tutorial-03-pitch-and-harmony.html) - how to organize pitch
+4. [Song Structure](https://adamjmurray.github.io/chorus.js/tutorial-04-song-structure.html) - how to organize song structure
+5. [Advanced Features](https://adamjmurray.github.io/chorus.js/tutorial-05-advanced-features.html) - how to avoid repetition and create variety
+6. [Microtonality](https://adamjmurray.github.io/chorus.js/tutorial-06-microtonality.html) - how to use more than 12 pitches per octave
+7. [Under the Hood](https://adamjmurray.github.io/chorus.js/tutorial-07-under-the-hood.html) - how to hack on chorus.js
 
 
 ## Project Info
