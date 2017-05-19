@@ -43,8 +43,8 @@ a standard format for controlling music software & hardware. Let's see how it wo
 
 Create the file `simple-song.js` in the folder where you installed chorus:
 
-```
-# simple-song.js
+```javascript
+// simple-song.js
 const { Song, Output } = require('chorus');
 require('chorus/names').into(global);
 
