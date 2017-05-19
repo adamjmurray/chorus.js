@@ -1,5 +1,5 @@
-require('../src/names').into(global);
-const { PitchClass, Scale, Song, Output } = require('../src');
+require('chorus/names').into(global);
+const { PitchClass, Scale, Song, Output } = require('chorus');
 
 // This example uses a scale based on 19-TET (https://en.wikipedia.org/wiki/19_equal_temperament)
 // which has 19 pitches per octave. It approximates a minor scale.

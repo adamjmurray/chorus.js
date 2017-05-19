@@ -1,5 +1,5 @@
 const assert = require('assert');
-const MidiFile = require('../../src/midi/file');
+const MidiFile = require('../../midi/file');
 
 describe('MidiFile.read()', () => {
   it('parses MIDI files', () => {

@@ -1,4 +1,4 @@
-const { Output, Scheduler } = require('../src/midi');
+const { Output, Scheduler } = require('chorus/midi');
 
 Output.select({ defaultDuration: 400 })
   .then(output => {

@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Names = require('../../src/names');
+const Names = require('../../names');
 
 describe('Names', () => {
 

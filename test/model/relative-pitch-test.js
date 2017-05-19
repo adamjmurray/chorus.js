@@ -1,5 +1,5 @@
 const assert = require('assert');
-const RelativePitch = require('../../src/model/relative-pitch');
+const RelativePitch = require('../../model/relative-pitch');
 
 describe('PitchClass', () => {
 

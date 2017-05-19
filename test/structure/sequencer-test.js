@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Sequencer = require('../../src/structure/sequencer');
+const Sequencer = require('../../structure/sequencer');
 
 describe('Sequencer', () => {
 

@@ -1,5 +1,5 @@
-require('../src/names').into(global);
-const { Scheduler, Output } = require('../src/midi');
+require('chorus/names').into(global);
+const { Scheduler, Output } = require('chorus/midi');
 const scheduler = new Scheduler({ bpm: 120 });
 const scale = MAJOR(C);
 

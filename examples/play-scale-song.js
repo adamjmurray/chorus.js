@@ -1,4 +1,4 @@
-const { Song, Output, SCALES, PITCH_CLASSES } = require('../src');
+const { Song, Output, SCALES, PITCH_CLASSES } = require('chorus');
 
 const song = new Song({
   sections: [{

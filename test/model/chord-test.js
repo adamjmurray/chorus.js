@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { Chord, RelativePitch, SCALES, PITCHES, PITCH_CLASSES } = require('../../src');
+const { Chord, RelativePitch, SCALES, PITCHES, PITCH_CLASSES } = require('../../index');
 const { C } = PITCH_CLASSES;
 
 describe('Chord', () => {

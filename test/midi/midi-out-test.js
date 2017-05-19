@@ -1,8 +1,8 @@
 const assert = require('assert');
 const proxyquire = require('proxyquire').noPreserveCache();
-const { MidiOut } = proxyquire('../../src/midi', require('./midi-stub'));
-const { Song } = require('../../src');
-const { sleep } = require('../../src/utils');
+const { MidiOut } = proxyquire('../../midi', require('./midi-stub'));
+const { Song } = require('../../index');
+const { sleep } = require('../../utils');
 
 describe('MidiOut', () => {
 

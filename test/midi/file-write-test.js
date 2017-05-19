@@ -1,4 +1,4 @@
-const MidiFile = require('../../src/midi/file');
+const MidiFile = require('../../midi/file');
 const assert = require('assert');
 const fs = require('fs');
 

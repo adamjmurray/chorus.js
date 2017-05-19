@@ -1,7 +1,7 @@
 const assert = require('assert');
-const Pitch = require('../../src/model/pitch');
-const PitchClass = require('../../src/model/pitch-class');
-const { PITCH_CLASSES } = require('../../src/names');
+const Pitch = require('../../model/pitch');
+const PitchClass = require('../../model/pitch-class');
+const { PITCH_CLASSES } = require('../../names');
 
 describe('PitchClass', () => {
 

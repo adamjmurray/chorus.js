@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { Harmony } = require('../../src');
+const { Harmony } = require('../../index');
 
 describe('Harmony', () => {
 

@@ -1,4 +1,4 @@
-const MidiFile = require('./file');
+const MidiFile = require('./file/index');
 const MidiIn = require('./midi-in');
 const MidiOut = require('./midi-out');
 const Output = require('./output');

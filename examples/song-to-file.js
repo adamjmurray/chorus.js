@@ -1,6 +1,6 @@
-require('../src/names').into(global);
-const { MidiFile } = require('../src/midi');
-const { Song } = require('../src');
+require('chorus/names').into(global);
+const { MidiFile } = require('chorus/midi');
+const { Song } = require('chorus');
 
 const song = new Song({
   bpm: 110,

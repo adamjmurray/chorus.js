@@ -1,6 +1,6 @@
 const assert = require('assert');
-const Scheduler = require('../../src/midi/scheduler');
-const { sleep } = require('../../src/utils');
+const Scheduler = require('../../midi/scheduler');
+const { sleep } = require('../../utils');
 
 describe('Scheduler', () => {
 

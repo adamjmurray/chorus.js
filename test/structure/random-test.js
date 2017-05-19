@@ -1,6 +1,6 @@
 const assert = require('assert');
-const { Random } = require('../../src');
-const { take } = require('../../src/utils');
+const { Random } = require('../../index');
+const { take } = require('../../utils');
 
 const nums = (a,b) => a-b; // for sorting numerical values
 

@@ -1,6 +1,6 @@
 const assert = require('assert');
-const { Rhythm, Random } = require('../../src');
-const { take } = require('../../src/utils');
+const { Rhythm, Random } = require('../../index');
+const { take } = require('../../utils');
 
 describe('Rhythm', () => {
 

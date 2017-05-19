@@ -1,5 +1,5 @@
-require('../src/names').into(global);
-const { Song, Random, Output } = require('../src');
+require('chorus/names').into(global);
+const { Song, Random, Output } = require('chorus');
 
 const song = new Song({
   bpm: 120,
