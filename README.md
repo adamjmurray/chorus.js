@@ -64,16 +64,15 @@ Don't worry if this doesn't make sense yet. We'll explore everything in the tuto
 NOTE: `require('chorus/names').into(global)` adds global constants, 
 so we can write `C4` instead of `PITCHES.C4`. This is convenient but potentially dangerous, and not recommended in 
 complex projects that combine chorus.js with other libraries. 
-The {@tutorial 07-under-the-hood} tutorial will explain how to avoid this. For now, let's continue...
+The [Under the Hood](https://adamjmurray.github.io/chorus.js/tutorial-07-under-the-hood.html) tutorial 
+will explain how to avoid this. For now, let's continue...
   
-TODO: Need absolute url to tutorial ^  
-
 `Output.select()` allows us to choose real-time or file output. 
 To see usage instructions, run it:
 
         node simple-song.js
         
-Let's take a closer look at our output options.       
+Let's take a look at our output options.       
 
 
 ### MIDI File Output

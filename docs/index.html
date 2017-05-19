@@ -88,11 +88,11 @@ Output.select().then(output => output.play(song));</code></pre><p>Don't worry if
 <p>NOTE: <code>require('chorus/names').into(global)</code> adds global constants, 
 so we can write <code>C4</code> instead of <code>PITCHES.C4</code>. This is convenient but potentially dangerous, and not recommended in 
 complex projects that combine chorus.js with other libraries. 
-The <a href="tutorial-07-under-the-hood.html">Under the Hood</a> tutorial will explain how to avoid this. For now, let's continue...</p>
-<p>TODO: Need absolute url to tutorial ^  </p>
+The <a href="https://adamjmurray.github.io/chorus.js/tutorial-07-under-the-hood.html">Under the Hood</a> tutorial 
+will explain how to avoid this. For now, let's continue...</p>
 <p><code>Output.select()</code> allows us to choose real-time or file output. 
 To see usage instructions, run it:</p>
-<pre class="prettyprint source"><code>    node simple-song.js</code></pre><p>Let's take a closer look at our output options.       </p>
+<pre class="prettyprint source"><code>    node simple-song.js</code></pre><p>Let's take a look at our output options.       </p>
 <h3>MIDI File Output</h3><ol>
 <li><p>Run</p>
 <pre class="prettyprint source"><code> node simple-song.js -f simple-song.mid</code></pre></li>
