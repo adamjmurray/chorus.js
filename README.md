@@ -18,6 +18,7 @@ Browser support is planned at some point.
 
 
 <a name="requirements"></a>
+
 ## Requirements
 
 - [Node.js](https://nodejs.org) v6 or higher
@@ -34,6 +35,7 @@ you must reinstall chorus.
 
 
 <a name="quick-start"></a>
+
 ## Quick Start Guide
 
 Chorus.js (currently) does not make any sound on it's own. It outputs [MIDI](http://www.instructables.com/id/What-is-MIDI/),
@@ -89,6 +91,7 @@ For example (assuming you have not changed the default file associations on your
 
 
 <a name="real-time"></a>
+
 ### Real-time MIDI Output
 
 NOTE: Real-time output requires an optional native dependency to be installed, as explained in the [requirements](#requirements)
@@ -111,6 +114,7 @@ above. If you have trouble installing that, you can use MIDI file output instead
 
 
 <a name="tutorials"></a>
+
 ### Tutorials
 
 Work in progress!
