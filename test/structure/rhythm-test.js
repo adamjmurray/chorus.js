@@ -94,12 +94,31 @@ describe('Rhythm', () => {
       assert.equal(Rhythm.distribute(5, 13), 'x..x..x.x..x.');
     });
 
+    it('can optionally shift the pattern', () => {
+      assert.equal(Rhythm.distribute(5, 13, { shift: 1 }), '..x..x.x..x.x');
+    });
+
+    it('can shift more than once', () => {
+      assert.equal(Rhythm.distribute(5, 13, { shift: 2 }), '.x..x.x..x.x.');
+      assert.equal(Rhythm.distribute(5, 13, { shift: 15 }), '.x..x.x..x.x.');
+    });
+
+    it('can shift in reverse', () => {
+      assert.equal(Rhythm.distribute(5, 13, { shift: -1 }), '.x..x..x.x..x');
+    });
+
+    it('can shift in reverse more than once', () => {
+      assert.equal(Rhythm.distribute(5, 13, { shift: -2 }), 'x.x..x..x.x..');
+      assert.equal(Rhythm.distribute(5, 13, { shift: -15 }), 'x.x..x..x.x..');
+    });
+
     it('can optionally apply a rotation the resulting rhythm', () => {
       assert.equal(Rhythm.distribute(5, 13, { rotation: 1 }), 'x..x.x..x.x..');
     });
 
     it('can rotate more than once', () => {
       assert.equal(Rhythm.distribute(5, 13, { rotation: 2 }), 'x.x..x.x..x..');
+      assert.equal(Rhythm.distribute(5, 13, { rotation: 7 }), 'x.x..x.x..x..');
     });
 
     it('can rotate in reverse', () => {
@@ -108,6 +127,11 @@ describe('Rhythm', () => {
 
     it('can rotate in reverse more than once', () => {
       assert.equal(Rhythm.distribute(5, 13, { rotation: -2 }), 'x..x.x..x..x.');
+      assert.equal(Rhythm.distribute(5, 13, { rotation: -7 }), 'x..x.x..x..x.');
+    });
+
+    it('can rotate and shift', () => {
+      assert.equal(Rhythm.distribute(5, 13, { rotation: 2, shift: -1 }), '.x.x..x.x..x.');
     });
 
     it('generates continuous pulses when pulses == total', () => {

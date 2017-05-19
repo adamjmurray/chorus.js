@@ -127,10 +127,12 @@ class Rhythm extends Sequencer {
    * @param pulses {number}
    * @param total {number}
    * @param {Object} options
-   * @param {Number} [options.rotation=0] shifts the pattern with wrap-around
+   * @param {Number} [options.shift=0] shifts the pattern (with wrap-around) by the given number of time units
+   * @param {Number} [options.rotation=0] shifts the pattern (with wrap-around) to the given pulse index
    * @see https://en.wikipedia.org/wiki/Euclidean_pattern
    */
   static distribute(pulses, total, options={}) {
+    const { rotation, shift } = options;
     let pattern = [];
     let count = 0;
     let nextPulse = Math.floor(++count/pulses * total);
@@ -143,18 +145,21 @@ class Rhythm extends Sequencer {
       }
     }
     pattern = pattern.reverse();
-    if (options.rotation) {
-      const rotation = options.rotation;
+    if (rotation) {
       for (let i =  1; i &lt;= rotation; i++) {
-        const nextX = pattern.indexOf('x', 1);
-        if (nextX > 0) pattern = pattern.slice(nextX).concat(pattern.slice(0, nextX));
+        const slicePoint = pattern.indexOf('x', 1);
+        if (slicePoint > 0) pattern = pattern.slice(slicePoint).concat(pattern.slice(0, slicePoint));
         else break;
       }
       for (let i = -1; i >= rotation; i--) {
-        const prevX = pattern.lastIndexOf('x');
-        if (prevX > 0) pattern = pattern.slice(prevX).concat(pattern.slice(0, prevX));
+        const slicePoint = pattern.lastIndexOf('x');
+        if (slicePoint > 0) pattern = pattern.slice(slicePoint).concat(pattern.slice(0, slicePoint));
         else break;
       }
+    }
+    if (shift) {
+      const slicePoint = shift % pattern.length;
+      pattern = pattern.slice(slicePoint).concat(pattern.slice(0, slicePoint));
     }
     return pattern.join('');
   }

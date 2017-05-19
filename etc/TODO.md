@@ -1,7 +1,3 @@
-Features:
-- Rhythm.distribute() needs something like rotation, but that shifts 1 step at a time (not until the next note)
-  Call it the "shift" option?
-
 Improve Test Coverage
 - microtonal support (pitchesPerOctave, pitchValueOffset in PitchClass, Pitch, Scale)
 - Test that a Part's channel determines the track for MIDI file output, especially:
@@ -13,11 +9,8 @@ Documentation
 - Document Chord, Scale, RelativePitch thoroughly
 - Tutorials
   - in rhythm tutorials, maybe introduce drum sounds last (since you can't hear rests)
+  - consider introducing pitches first? split pitch & harmony
 - Setup a Changelog file
-  
-
-*** v1.0.0 Release ***
-
 
 Future Features
 - Tempo changes
