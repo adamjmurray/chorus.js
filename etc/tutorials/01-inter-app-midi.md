@@ -70,40 +70,7 @@ The way you do this depends on the DAW/app (so check its documentation). Example
 <a name="ableton-live"></a>
 ### Ableton Live
 
-<a name="bitwig-studio"></a>
-### Bitwig Studio
-
-[Bitwig Studio](http://bitwig.com) is a cross-platform DAW (Linux too!) and has a free trial.  
-
-TODO: Need to install Tom's MIDI scripts for multi-channel MIDI
-
-2. Launch Bitwig Studio and start a new project
-3. Add a generic MIDI Controller:
-   * Bitwig preferences &rarr; Controllers &rarr; Add Controller Manually &rarr; Generic &rarr; MIDI Keyboard
-   * Choose the IAC port
-4. Add a software instrument track with an instrument (such as Polysynth)
-5. Run the Chorus examples and select the IAC Driver port you setup. For example, if you named it "iac":
-
-        node node_modules/chorus/examples/play-song -p iac
-
-
-<a name="garage-band"></a>
-### Garage Band
-
 TODO
-
-
-<a name="logic"></a>
-### Logic
-
-TODO
-
-
-<a name="studio-one"></a>
-### Studio One
-
-TODO
-
 
 <a name="next-steps"></a>
 ## Next Steps

@@ -178,4 +178,4 @@ TODO: talk about channels
 <a name="next-steps"></a>
 ## Next Steps
 
-Next is the {@tutorial 05-diversification} tutorial.
+Next is the {@tutorial 05-advanced-features} tutorial.
