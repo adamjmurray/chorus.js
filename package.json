@@ -16,7 +16,7 @@
     "lint": "node_modules/.bin/eslint --config etc/.eslintrc.js src test",
     "mocha": "node_modules/.bin/mocha test/*.js test/**/*.js",
     "test": "npm run lint && npm run mocha",
-    "cover": "node_modules/.bin/istanbul cover --root src --include-all-sources node_modules/.bin/_mocha -- test/*.js test/**/*.js",
+    "cover": "node_modules/.bin/nyc --reporter=html --reporter=lcov npm run mocha",
     "coveralls": "npm run cover && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "ci": "npm run lint && npm run coveralls",
     "docs": "node_modules/.bin/jsdoc --configure etc/jsdoc.json && cat etc/jsdoc-additional-styles.css >> docs/styles/jsdoc-default.css",
@@ -29,9 +29,9 @@
     "coveralls": "^2.13.1",
     "eslint": "^3.19.0",
     "eslint-plugin-mocha-no-only": "^0.0.5",
-    "istanbul": "^1.1.0-alpha.1",
     "jsdoc": "^3.4.2",
     "mocha": "^3.4.1",
+    "nyc": "^10.3.2",
     "proxyquire": "^1.8.0"
   },
   "keywords": [
