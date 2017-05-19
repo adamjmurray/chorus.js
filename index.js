@@ -1,6 +1,6 @@
-const { Chord, Pitch, PitchClass, RelativePitch, Scale } = require('./model/index');
-const { CHORDS, PITCH_CLASSES, PITCHES, SCALES } = require('./names/index');
-const { Harmony, Random, Rhythm, Section, Song, Part } = require('./structure/index');
+const { Chord, Pitch, PitchClass, RelativePitch, Scale } = require('./model');
+const { CHORDS, PITCH_CLASSES, PITCHES, SCALES } = require('./names');
+const { Harmony, Random, Rhythm, Section, Song, Part } = require('./structure');
 const Output = require('./midi/output');
 // other submodules are optional
 

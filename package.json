@@ -13,7 +13,7 @@
   },
   "main": "./src/index.js",
   "scripts": {
-    "lint": "node_modules/.bin/eslint --config etc/.eslintrc.js src test",
+    "lint": "node_modules/.bin/eslint --config etc/.eslintrc.js index.js utils.js midi model names structure test",
     "mocha": "node_modules/.bin/mocha test/*.js test/**/*.js",
     "test": "npm run lint && npm run mocha",
     "cover": "node_modules/.bin/nyc --reporter=html --reporter=lcov npm run mocha",

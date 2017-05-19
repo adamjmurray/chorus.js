@@ -30,8 +30,8 @@
 
 const readline = require('readline');
 const { basename } = require('path');
-const MidiFile = require('./file');
-const pkg = require('../../package');
+const MidiFile = require('./file/index');
+const pkg = require('../package');
 
 let cli;
 let outputPortArgOrEnvVar;

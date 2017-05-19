@@ -1,6 +1,6 @@
 {
   "source": {
-    "include": ["src"]
+    "include": ["index.js", "utils.js", "midi", "model", "names", "structure"]
   },
   "opts": {
     "recurse": true,

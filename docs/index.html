@@ -72,7 +72,7 @@ you must reinstall chorus.</p>
 <h2>Quick Start Guide</h2><p>Chorus.js (currently) does not make any sound on it's own. It outputs <a href="http://www.instructables.com/id/What-is-MIDI/">MIDI</a>,
 a standard format for controlling music software &amp; hardware. Let's see how it works.</p>
 <p>Create the file <code>simple-song.js</code> in the folder where you installed chorus:</p>
-<pre class="prettyprint source"><code># simple-song.js
+<pre class="prettyprint source lang-javascript"><code>// simple-song.js
 const { Song, Output } = require('chorus');
 require('chorus/names').into(global);
 
