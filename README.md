@@ -14,7 +14,7 @@
   - **MIDI files** - capture musical ideas for later use
 - [Microtonal](https://en.wikipedia.org/wiki/Microtonal_music) support
 
-Browser support is planned for 2017.
+Browser support is planned at some point.
 
 
 <a name="requirements"></a>
