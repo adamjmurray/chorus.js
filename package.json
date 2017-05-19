@@ -1,6 +1,6 @@
 {
   "name": "chorus",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "A harmony-based music composition toolkit with MIDI I/O",
   "author": "Adam Murray <adam@compusition.com>",
   "license": "MIT",
