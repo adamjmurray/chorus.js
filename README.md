@@ -7,111 +7,74 @@
 
 ## Features
 
-- Compose music with Node.js
 - Harmony-based sequencing using scales and chord progressions
 - Multitrack [MIDI](http://www.instructables.com/id/What-is-MIDI/) output
-  - **real-time MIDI** - control MIDI instruments like synthesizers
-  - **MIDI files** - capture musical ideas for later use
+  - **real-time MIDI** - control synthesizers, samplers, and other MIDI instruments
+  - **MIDI files** - save musical ideas to use in your [DAW](https://en.wikipedia.org/wiki/Digital_audio_workstation) later
 - [Microtonal](https://en.wikipedia.org/wiki/Microtonal_music) support
-
-Browser support is planned at some point.
 
 
 <a name="requirements"></a>
 
 ## Requirements
 
-- [Node.js](https://nodejs.org) v6 or higher
+- [Node.js](https://nodejs.org) v6 or higher (browser support is planned for later)
 - Optional: compilation tools for native dependencies
-  - If you want **real-time MIDI output**, follow [node-gyp's installation instructions](https://github.com/nodejs/node-gyp#installation) 
-  - Otherwise, ignore non-fatal errors during installation. You can still use **MIDI file output**
-
-## Installation
-
-      npm install chorus
-
-Note: If you setup the native dependencies for real-time MIDI output *after* installation, 
-you must reinstall chorus.
-
+  - If you want **real-time MIDI output**, follow [node-gyp's installation instructions](https://github.com/nodejs/node-gyp#installation) to setup the compilation tools
+  - Otherwise, ignore non-fatal errors during install. You can still use **MIDI file output**
 
 <a name="quick-start"></a>
+<a name="real-time"></a>
 
 ## Quick Start Guide
 
-Chorus.js (currently) does not make any sound on it's own. It outputs [MIDI](http://www.instructables.com/id/What-is-MIDI/),
-a standard format for controlling music software & hardware. Let's see how it works.
+1. Install
 
-Create the file `simple-song.js` in the folder where you installed chorus:
+        npm install chorus
 
-```javascript
-// simple-song.js
-const { Song, Output } = require('chorus');
-require('chorus/names').into(global);
+2. Create a script `simple-song.js` (in the folder where you installed chorus)
 
-const song = new Song({
-  sections: [{
-    parts: [{
-      pitches: [C4, D4, E4, F4, G4, F4, E4, D4, C4],
-    }]
-  }]
-});
-
-Output.select().then(output => output.play(song));
-```
-
-Don't worry if this doesn't make sense yet. We'll explore everything in the tutorials below.
-
-NOTE: `require('chorus/names').into(global)` adds global constants, 
-so we can write `C4` instead of `PITCHES.C4`. This is convenient but potentially dangerous, and not recommended in 
-complex projects that combine chorus.js with other libraries. 
-The [Under the Hood](https://adamjmurray.github.io/chorus.js/tutorial-07-under-the-hood.html) tutorial 
-will explain how to avoid this. For now, let's continue...
+  ```javascript
+  // simple-song.js
   
-`Output.select()` allows us to choose real-time or file output. 
-To see usage instructions, run it:
+  const { Song, Output } = require('chorus');
+  require('chorus/names').into(global);
+  
+  const song = new Song({
+    sections: [{
+      parts: [{
+        pitches: [C4, D4, E4, F4, G4, F4, E4, D4, C4],
+      }]
+    }]
+  });
 
-        node simple-song.js
-        
-Let's take a look at our output options.       
+  Output.select().then(output => output.play(song));
+ ```
 
+3. Run the script
+  * Option A: **Real-time MIDI output**   
+    * On **macOS**
+      * Download [SimpleSynth](http://notahat.com/simplesynth/) and launch it      
+      * Select `MIDI Source: SimpleSynth virtual input` in SimpleSynth       
+      * Run:
 
-### MIDI File Output
+              node simple-song.js -p simplesynth
 
-1. Run
+     * On **Windows**
 
-        node simple-song.js -f simple-song.mid
-        
-2. Open (or drag and drop) `simple-song.mid` to an app that supports MIDI playback, such as a DAW        
-
-<br>
-For example (assuming you have not changed the default file associations on your OS):
-* macOS: Double-click a .mid file (or run `open simple-song.mid` in the Terminal) to open in Garage Band and play it
-* Windows: TODO
-
-
-<a name="real-time"></a>
-
-### Real-time MIDI Output
-
-NOTE: Real-time output requires an optional native dependency to be installed, as explained in the [requirements](#requirements)
-above. If you have trouble installing that, you can use MIDI file output instead. 
-
-**macOS**
-
-1. Download [SimpleSynth](http://notahat.com/simplesynth/) and launch it
-2. Select `MIDI Source: SimpleSynth virtual input` 
-3. Run the Chorus examples and select `simplesynth` as the port.
-
-        node simple-song.js -p simplesynth
-
-
-**Windows**
-
-1. Run the Chorus.js examples and select `Microsoft GS Wavetable Synth` as the port.
+       Use Window's built-in wavetable synth by running:
  
-        node simple-song.js -p wavetable
+            node simple-song.js -p wavetable
+  
+  * Option B: MIDI file output
+  
+    Run:
+    
+          node simple-song.js -f simple-song.mid
+        
+    then open `simple-song.mid` in an app that supports MIDI files
 
-
+  
 <a name="tutorials"></a>
 
 ### Tutorials
