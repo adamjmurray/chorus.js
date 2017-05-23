@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Tutorial: Intro / Setup</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Tutorial: Intro / Setup</h1>
+
+    <section>
+
+<header>
+    
+
+    <h2>Intro / Setup</h2>
+</header>
+
+<article>
+    <p>If you haven't already, <a href="./index.html#requirements">install chorus.js and follow the Quick Start Guide</a></p>
+<p><strong>Tutorial Outline:</strong></p>
+<ul>
+<li><a href="#defining-songs">Defining Songs</a></li>
+<li><a href="#selecting-outputs">Selecting Outputs</a></li>
+<li><a href="#virtual-midi-ports">Creating Virtual MIDI Ports</a> <ul>
+<li><a href="#macos">macOS</a></li>
+<li><a href="#windows">Windows</a></li>
+<li><a href="#linux">Linux</a></li>
+</ul>
+</li>
+<li><a href="#daw-setup">DAW Setup</a></li>
+<li><a href="#next-steps">Next Steps</a>  </li>
+</ul>
+<p><a name="defining-songs"></a>  </p>
+<h2>Defining Songs</h2><p>chorus.js makes music by writing JavaScript code that defines a Song, selects an Output, and plays the Song with that Output. </p>
+<p>Let's see look at how this works using the Quick Start example:</p>
+<pre class="prettyprint source"><code>// quick-start.js
+
+const { Song, Output } = require('chorus');
+require('chorus/names').into(global);
+
+const song = new Song({
+ sections: [{
+   parts: [{
+     pitches: [C4, D4, E4, F4, G4, F4, E4, D4, C4],
+   }]
+ }]
+});
+
+Output.select().then(output => output.play(song));</code></pre><p>After loading chorus, we can use its Song object to define our song. </p>
+<p>A Song is a list of Sections that are played sequentially. 
+Each Section is a list of Parts that are played simultaneously.
+This structure will be explored in detail in the <a href="tutorial-05-song-structure.html">Song Structure</a> tutorial.</p>
+<p>For the next few tutorials, we'll focus on making single-section, single-part songs, by filling in the <code>// ...</code> in this
+basic structure:</p>
+<pre class="prettyprint source"><code>const song = new Song({
+ sections: [{
+   parts: [{
+     // ...
+   }]
+ }]
+});</code></pre><p>The simplest Part is just a list of pitches:</p>
+<pre class="prettyprint source"><code>{
+  pitches: [C4, D4, E4, F4, G4, F4, E4, D4, C4],
+}</code></pre><p>In this case, each pitch plays for 1 beat. 
+We'll learn a lot more about <a href="tutorial-02-pitch.html">Pitch</a> and <a href="tutorial-03-rhythm.html">Rhythm</a> in the next few tutorials.</p>
+<p><a name="selecting-outputs"></a> </p>
+<h2>Selecting Outputs</h2><p>Chorus.js (currently) does not make any sound on it's own. It outputs <a href="http://www.instructables.com/id/What-is-MIDI/">MIDI</a>,
+a standard format for controlling music software &amp; hardware. It can either output a MIDI file for later playback, or
+output MIDI in real-time over a given MIDI port.</p>
+<p>When <code>Output.select()</code> is called, several things can happen depending on how
+you ran the script. Here are the ways we can run a chorus.js script:</p>
+<ul>
+<li><p>Output a MIDI file named file.mid:</p>
+<pre class="prettyprint source"><code> node quick-start.js -f file.mid</code></pre></li>
+<li><p>Output real-time MIDI to the virtual MIDI port named &quot;virtual1&quot;: </p>
+<pre class="prettyprint source"><code> node quick-start.js -p virtual1</code></pre></li>
+<li><p>Same as above (output realtime MIDI to virtual port &quot;virtual1&quot;), but specify the port with an environment variable:</p>
+<pre class="prettyprint source"><code> CHORUS_OUTPUT_PORT=virtual1 node quick-start.js </code></pre><p><em>NOTE: the -p command line argument overrides this environment variable</em></p>
+</li>
+<li><p>List all real-time MIDI ports and select one interactively (or type ctrl+C to exit):</p>
+<pre class="prettyprint source"><code> node quick-start.js</code></pre></li>
+</ul>
+<p>When specifying the real-time MIDI output port (either interactively, via the command line arg or via environment variable),
+a case-insensitive substring match is used. So <code>-p virt</code> and <code>-p tual1</code> would both match &quot;virtual1&quot;. If a single port matches, 
+it is used to play the song. Otherwise, you'll be prompted to interactively select a port.</p>
+<p><a name="inter-app-midi"></a></p>
+<h2>Virtual MIDI Ports</h2><p><em>NOTE: The rest of this tutorial is optional and intended for DAW / synthesizer app users. Feel free to skip ahead to the <a href="tutorial-02-pitch.html">Pitch</a> tutorial.</em></p>
+<p>To connect chorus.js to another application, 
+first we need to create a &quot;virtual MIDI port&quot; that can be used to send MIDI messages between applications.</p>
+<p><a name="macos"></a></p>
+<h3>macOS</h3><ol>
+<li>Open the built-in <code>Audio MIDI Setup</code> application (under <code>/Applications/Utilities</code>)</li>
+<li>Go to the <code>MIDI Studio</code> window (menu: <code>Window -&gt; Show MIDI Studio</code>)</li>
+<li>Double click <code>IAC Driver</code> to open the <code>IAC Driver Properties</code> window </li>
+<li>Make sure <code>Device is online</code> is checked </li>
+<li>Click <code>More information</code> to expand the <code>IAC Driver Properties</code> window   </li>
+<li>Click <code>+</code> to add a port and name it whatever you want.</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/adamjmurray/chorus.js/master/etc/img/virtual-midi-macos.png?1" alt="screen shot of inter-App MIDI ports on macOS"></p>
+<p>In this screen shot, I named my MIDI port <code>virtual1</code>. Now I can send chorus.js MIDI over this port by running:</p>
+<pre class="prettyprint source"><code>node my-chorus-script.js -p virtual1</code></pre><p><a name="windows"></a></p>
+<h3>Windows</h3><ol>
+<li>Install <a href="http://www.tobias-erichsen.de/software/loopmidi.html">loopMIDI</a></li>
+<li>Run loopMIDI and click <code>+</code> to add a virtual MIDI port</li>
+<li><p>When you run chorus, use the loopMIDI port:</p>
+<pre class="prettyprint source"><code> node node_modules/chorus/examples/play-song -p loopmidi</code></pre></li>
+</ol>
+<p><a name="linux"></a></p>
+<h3>Linux</h3><p>Not sure... I don't have a music-capable Linux machine to test with. In can work, in theory.</p>
+<p>Try the <a href="http://jackaudio.org/">JACK Audio Connection Kit</a>   </p>
+<p>Know how to improve these instructions? Send a <a href="https://github.com/adamjmurray/chorus.js/pulls">pull request on github</a>.</p>
+<p><a name="daw-setup"></a></p>
+<h2>DAW Setup</h2><p>Most DAWs listen to all MIDI inputs by default, so chorus.js should work with your DAW without any special setup.</p>
+<p>You might want to use a more advanced setup, so let's take a look at some options:</p>
+<p><img src="https://raw.githubusercontent.com/adamjmurray/chorus.js/master/etc/img/daw-midi-input.png" alt="screen shot of DAW MIDI input settings"></p>
+<p>This screen shot shows 3 ways of setting MIDI input in Ableton Live.</p>
+<ul>
+<li><p>All MIDI Inputs / All Channels (left track)</p>
+<p>Use the track defaults and the track will receive any MIDI input, including chorus.js</p>
+</li>
+<li><p>Specific MIDI Inputs / All Channels (middle track)</p>
+<p>If you want to chorus.js along side another MIDI input, you'll need to set each track to use the desired MIDI input.
+For example, you'd do this if you want to jam along with chorus.js using a MIDI keyboard.
+Whichever tracks should receive chorus.js input, and only chorus.js input, are set to receive MIDI on the virtual MIDI port
+we created above (I named mine &quot;virtual1&quot;).</p>
+</li>
+<li><p>Specific MIDI Inputs / specific port (right track)</p>
+<p>If you want to make multi-track music with multiple instruments (each Part in a chorus.js Song can control a different instrument)
+then you need to route specific chorus.js MIDI channels to specific tracks. Most DAWs let you choose the MIDI port on the track input.
+If you are using Bitwig studio, you'll need to install something like <a href="https://github.com/ThomasHelzle/Toms_Bitwig_Scripts">Tom's Bitwig Scripts</a>.</p>
+</li>
+</ul>
+<p><a name="next-steps"></a></p>
+<h2>Next Steps</h2><p>Next is the <a href="tutorial-02-pitch.html">Pitch</a> tutorial.</p>
+</article>
+
+</section>
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Output.html">Output</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-01-intro.html">Intro / Setup</a></li><li><a href="tutorial-02-pitch.html">Pitch</a></li><li><a href="tutorial-03-rhythm.html">Rhythm</a></li><li><a href="tutorial-04-harmony.html">Harmony</a></li><li><a href="tutorial-05-song-structure.html">Song Structure</a></li><li><a href="tutorial-06-advanced-features.html">Advanced Features</a></li><li><a href="tutorial-07-microtonality.html">Microtonality</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

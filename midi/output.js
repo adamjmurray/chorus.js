@@ -119,7 +119,7 @@ class Output {
     }
     if (!outputPortArgOrEnvVar) usage();
     try {
-      const midiOut = new (require('./midi-out'))(midiOutOptions); // using a deferred require because MidOut requires this
+      const midiOut = new (require('./midi-out'))(midiOutOptions); // using a deferred require because MidOut requires the midi module
       return selectAndOpenOutput(midiOut, outputPortArgOrEnvVar);
     } catch (err) {
       if (err.code === 'MODULE_NOT_FOUND') {

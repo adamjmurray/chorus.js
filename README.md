@@ -32,10 +32,10 @@
 
         npm install chorus
 
-2. Create a script `simple-song.js` (in the folder where you installed chorus)
+2. Create a file `quick-start.js` (in the folder where you installed chorus)
 
   ```javascript
-  // simple-song.js
+  // quick-start.js
   
   const { Song, Output } = require('chorus');
   require('chorus/names').into(global);
@@ -58,21 +58,21 @@
       * Select `MIDI Source: SimpleSynth virtual input` in SimpleSynth       
       * Run:
 
-              node simple-song.js -p simplesynth
+              node quick-start.js -p simplesynth
 
      * On **Windows**
 
-       Use Window's built-in wavetable synth by running:
+       Use Windows' built-in wavetable synth by running:
  
-            node simple-song.js -p wavetable
+            node quick-start.js -p wavetable
   
-  * Option B: MIDI file output
+  * Option B: **MIDI file output**
   
     Run:
     
-          node simple-song.js -f simple-song.mid
+          node quick-start.js -f quick-start.mid
         
-    then open `simple-song.mid` in an app that supports MIDI files
+    then open `quick-start.mid` in an app that supports MIDI files
 
   
 <a name="tutorials"></a>
@@ -81,13 +81,13 @@
 
 Work in progress!
 
-1. [Inter-App MIDI](https://adamjmurray.github.io/chorus.js/tutorial-01-inter-app-midi.html) - how to connect to DAWs or standalone synthesizer apps
-2. [Rhythm](https://adamjmurray.github.io/chorus.js/tutorial-02-rhythm.html) - how to organize time
-3. [Pitch & Harmony](https://adamjmurray.github.io/chorus.js/tutorial-03-pitch-and-harmony.html) - how to organize pitch
-4. [Song Structure](https://adamjmurray.github.io/chorus.js/tutorial-04-song-structure.html) - how to organize song structure
-5. [Advanced Features](https://adamjmurray.github.io/chorus.js/tutorial-05-advanced-features.html) - how to avoid repetition and create variety
-6. [Microtonality](https://adamjmurray.github.io/chorus.js/tutorial-06-microtonality.html) - how to use more than 12 pitches per octave
-7. [Under the Hood](https://adamjmurray.github.io/chorus.js/tutorial-07-under-the-hood.html) - how to hack on chorus.js
+1. [Intro / Setup](https://adamjmurray.github.io/chorus.js/tutorial-01-intro.html) - The basics of chorus.js and how to setup with a DAW
+2. [Pitch](https://adamjmurray.github.io/chorus.js/tutorial-02-pitch.html) - how to organize pitch
+3. [Rhythm](https://adamjmurray.github.io/chorus.js/tutorial-03-rhythm.html) - how to organize time
+4. [Pitch & Harmony](https://adamjmurray.github.io/chorus.js/tutorial-04-harmony.html) - chords
+5. [Song Structure](https://adamjmurray.github.io/chorus.js/tutorial-05-song-structure.html) - how to organize song structure
+6. [Advanced Features](https://adamjmurray.github.io/chorus.js/tutorial-06-advanced-features.html) - how to avoid repetition and create variety
+7. [Microtonality](https://adamjmurray.github.io/chorus.js/tutorial-07-microtonality.html) - how to use more than 12 pitches per octave
 
 
 ## Project Info

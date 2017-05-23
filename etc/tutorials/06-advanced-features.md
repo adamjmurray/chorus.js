@@ -52,4 +52,4 @@ TODO
 <a name="next-steps"></a>
 ## Next Steps
 
-Next is the {@tutorial 06-microtonality} tutorial.
+Next is the {@tutorial 07-microtonality} tutorial.

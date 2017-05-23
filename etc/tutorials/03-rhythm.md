@@ -1,5 +1,3 @@
-#### How to: Organize Time
-
 If you haven't already, [install chorus.js and follow the Quick Start Guide](./index.html#requirements)
 
 **Outline**
@@ -60,7 +58,7 @@ of the Quick Start Guide), do this to use drums:
 
 #### Option 2: Windows Quick Start - Built-in Drums 
 
-TODO: Use channel 10 of GS synth?
+TODO: Use channel 10 of GS synth? Doesn't work! Rewrite this section
 
 
 #### Option 3: Drums in a DAW or Standalone App
@@ -206,4 +204,4 @@ TODO
 <a name="next-steps"></a>
 ## Next Steps
 
-Next is the {@tutorial 03-pitch-and-harmony} tutorial.
+Next is the {@tutorial 04-harmony} tutorial.

@@ -69,8 +69,8 @@
 <h2>Quick Start Guide</h2><ol>
 <li><p>Install</p>
 <pre class="prettyprint source"><code> npm install chorus</code></pre></li>
-<li><p>Create a script <code>simple-song.js</code> (in the folder where you installed chorus)</p>
-<pre class="prettyprint source lang-javascript"><code>// simple-song.js
+<li><p>Create a file <code>quick-start.js</code> (in the folder where you installed chorus)</p>
+<pre class="prettyprint source lang-javascript"><code>// quick-start.js
 
 const { Song, Output } = require('chorus');
 require('chorus/names').into(global);
@@ -93,17 +93,17 @@ Output.select().then(output => output.play(song));</code></pre></li>
 <li>Download <a href="http://notahat.com/simplesynth/">SimpleSynth</a> and launch it      </li>
 <li>Select <code>MIDI Source: SimpleSynth virtual input</code> in SimpleSynth       </li>
 <li><p>Run:</p>
-<pre class="prettyprint source"><code> node simple-song.js -p simplesynth</code></pre></li>
+<pre class="prettyprint source"><code> node quick-start.js -p simplesynth</code></pre></li>
 </ul>
 </li>
 <li><p>On <strong>Windows</strong></p>
-<p>Use Window's built-in wavetable synth by running:</p>
-<pre class="prettyprint source"><code> node simple-song.js -p wavetable</code></pre></li>
+<p>Use Windows' built-in wavetable synth by running:</p>
+<pre class="prettyprint source"><code> node quick-start.js -p wavetable</code></pre></li>
 </ul>
 </li>
-<li><p>Option B: MIDI file output</p>
+<li><p>Option B: <strong>MIDI file output</strong></p>
 <p>Run:</p>
-<pre class="prettyprint source"><code> node simple-song.js -f simple-song.mid</code></pre><p>then open <code>simple-song.mid</code> in an app that supports MIDI files</p>
+<pre class="prettyprint source"><code> node quick-start.js -f quick-start.mid</code></pre><p>then open <code>quick-start.mid</code> in an app that supports MIDI files</p>
 </li>
 </ul>
 </li>
@@ -111,13 +111,13 @@ Output.select().then(output => output.play(song));</code></pre></li>
 <p><a name="tutorials"></a></p>
 <h3>Tutorials</h3><p>Work in progress!</p>
 <ol>
-<li><a href="https://adamjmurray.github.io/chorus.js/tutorial-01-inter-app-midi.html">Inter-App MIDI</a> - how to connect to DAWs or standalone synthesizer apps</li>
-<li><a href="https://adamjmurray.github.io/chorus.js/tutorial-02-rhythm.html">Rhythm</a> - how to organize time</li>
-<li><a href="https://adamjmurray.github.io/chorus.js/tutorial-03-pitch-and-harmony.html">Pitch &amp; Harmony</a> - how to organize pitch</li>
-<li><a href="https://adamjmurray.github.io/chorus.js/tutorial-04-song-structure.html">Song Structure</a> - how to organize song structure</li>
-<li><a href="https://adamjmurray.github.io/chorus.js/tutorial-05-advanced-features.html">Advanced Features</a> - how to avoid repetition and create variety</li>
-<li><a href="https://adamjmurray.github.io/chorus.js/tutorial-06-microtonality.html">Microtonality</a> - how to use more than 12 pitches per octave</li>
-<li><a href="https://adamjmurray.github.io/chorus.js/tutorial-07-under-the-hood.html">Under the Hood</a> - how to hack on chorus.js</li>
+<li><a href="https://adamjmurray.github.io/chorus.js/tutorial-01-intro.html">Intro / Setup</a> - The basics of chorus.js and how to setup with a DAW</li>
+<li><a href="https://adamjmurray.github.io/chorus.js/tutorial-02-pitch.html">Pitch</a> - how to organize pitch</li>
+<li><a href="https://adamjmurray.github.io/chorus.js/tutorial-03-rhythm.html">Rhythm</a> - how to organize time</li>
+<li><a href="https://adamjmurray.github.io/chorus.js/tutorial-04-harmony.html">Pitch &amp; Harmony</a> - chords</li>
+<li><a href="https://adamjmurray.github.io/chorus.js/tutorial-05-song-structure.html">Song Structure</a> - how to organize song structure</li>
+<li><a href="https://adamjmurray.github.io/chorus.js/tutorial-06-advanced-features.html">Advanced Features</a> - how to avoid repetition and create variety</li>
+<li><a href="https://adamjmurray.github.io/chorus.js/tutorial-07-microtonality.html">Microtonality</a> - how to use more than 12 pitches per octave</li>
 </ol>
 <h2>Project Info</h2><ul>
 <li><a href="https://adamjmurray.github.io/chorus.js/">Full documentation</a></li>
@@ -133,7 +133,7 @@ Output.select().then(output => output.play(song));</code></pre></li>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Output.html">Output</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-01-inter-app-midi.html">Inter-App MIDI</a></li><li><a href="tutorial-02-rhythm.html">Rhythm</a></li><li><a href="tutorial-03-pitch-and-harmony.html">Pitch & Harmony</a></li><li><a href="tutorial-04-song-structure.html">Song Structure</a></li><li><a href="tutorial-05-advanced-features.html">Advanced Features</a></li><li><a href="tutorial-06-microtonality.html">Microtonality</a></li><li><a href="tutorial-07-under-the-hood.html">Under the Hood</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Output.html">Output</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-01-intro.html">Intro / Setup</a></li><li><a href="tutorial-02-pitch.html">Pitch</a></li><li><a href="tutorial-03-rhythm.html">Rhythm</a></li><li><a href="tutorial-04-harmony.html">Harmony</a></li><li><a href="tutorial-05-song-structure.html">Song Structure</a></li><li><a href="tutorial-06-advanced-features.html">Advanced Features</a></li><li><a href="tutorial-07-microtonality.html">Microtonality</a></li></ul>
 </nav>
 
 <br class="clear">

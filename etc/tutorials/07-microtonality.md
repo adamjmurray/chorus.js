@@ -33,9 +33,3 @@ TODO
 ## Microtonal Scales
 
 TODO
-
-
-<a name="next-steps"></a>
-## Next Steps
-
-Next is the {@tutorial 07-under-the-hood} tutorial.
