@@ -1,5 +1,3 @@
-// chorus/examples/00-quick-start.js
-
 const { Song, Output } = require('chorus');
 require('chorus/names').into(global);
 

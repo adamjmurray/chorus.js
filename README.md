@@ -23,8 +23,7 @@
   - If you want **real-time MIDI output**, follow [node-gyp's installation instructions](https://github.com/nodejs/node-gyp#installation) to setup compilation tools
   - Otherwise, ignore non-fatal errors during install. You can still use **MIDI file output**
 
-<a name="quick-start"></a>
-<a name="real-time"></a>
+<a name="quick-start-guide"></a>
 
 ## Quick Start Guide
 

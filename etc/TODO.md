@@ -8,8 +8,10 @@ Improve Test Coverage
 Documentation
 - Document Chord, Scale, RelativePitch thoroughly
 - Tutorials
-  - in rhythm tutorials, maybe introduce drum sounds last (since you can't hear rests)
-  - consider introducing pitches first? split pitch & harmony
+  - Harmony
+  - Structure
+  - Advanced Features
+  - Microtonality
 - Setup a Changelog file
 
 Future Features

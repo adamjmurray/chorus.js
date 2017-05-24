@@ -30,18 +30,19 @@
 <article>
     <ul>
 <li><a href="#tempo">Changing the Tempo</a></li>
-<li><a href="#using-drums">Using Drums</a></li>
 <li><a href="#time-lists">Time Lists</a></li>
 <li><a href="#rests">Rests</a></li>
-<li><a href="#euclidean-rhythms">Euclidean Rhythms</a></li>
+<li><a href="#durations">Durations</a></li>
+<li><a href="#intensities">Intensities</a></li>
 <li><a href="#rhythm-strings">Rhythm Strings</a></li>
-<li><a href="#instensities-and-durations">Intensities &amp; Durations</a></li>
+<li><a href="#euclidean-rhythms">Euclidean Rhythms</a></li>
+<li><a href="#using-drums">Using Drums</a></li>
 <li><a href="#next-steps">Next Steps</a></li>
 </ul>
 <p><a name="tempo"></a></p>
 <h2>Changing the Tempo</h2><p>When we don't specify a rhythm, each note is a single beat. How fast is a beat?</p>
 <p>The song's tempo determines how fast or slow a song plays. It is specified in terms of <strong>beats per minute</strong>, or <code>bpm</code> for short.
-The default bpm is 120, which is 2 beats every second. Taking the example from the <a href="./index.html#quick-start">Quick Start Guide</a>, let's make it play
+The default bpm is 120, which is 2 beats every second. Taking the example from the <a href="./index.html#quick-start-guide">Quick Start Guide</a>, let's make it play
 faster by increasing the bpm:</p>
 <pre class="prettyprint source"><code>const { Song, Output } = require('chorus');
 require('chorus/names').into(global);
@@ -58,20 +59,191 @@ const song = new Song({
 Output.select().then(output => output.play(song));</code></pre><p>Currently a single tempo/bpm is used for the entire song 
 (support for tempo changes within a Song may be added in a future version).</p>
 <p>Try changing the bpm in this example and see how it affects playback.</p>
+<p><a name="time-lists"></a></p>
+<h2>Time Lists</h2><p>As we've seen, a song part plays notes by specifying <code>pitches</code> to play.</p>
+<p>Every song part has a <code>rhythm</code> to control the timing of the notes. The default <code>rhythm</code> plays a note on every beat.</p>
+<p>One way of specifying <code>rhythm</code> is with a &quot;time list&quot;, which is the list of durations for each note. As soon
+as one note is done, the next note will immediately play. For example:</p>
+<pre class="prettyprint source"><code>const { Song, Output } = require('chorus');
+require('chorus/names').into(global);
+
+const song = new Song({
+  bpm: 132,
+  sections: [{
+    parts: [{
+      pitches: [C4, D4,  E4,  F4, C4, D4,  E4,  G4,  B3,  C4],
+      rhythm:  [1,  0.5, 0.5, 2,  1,  0.5, 0.5, 1.5, 0.5, 4],
+    }]
+  }]
+});
+
+Output.select().then(output => output.play(song));</code></pre><p>This plays the pitch C4 for 1 beat, D4 for half a beat, E4 for half a beat, F4 for 2 beats, and so on.</p>
+<p><a name="rests"></a></p>
+<h2>Rests</h2><p>When using time lists, the next note plays as soon as the previous note ends.
+Sometimes, especially with sustained sounds, we don't want the notes to bump up against each other.</p>
+<p>Rests allow us to create space between the notes. A rest is specified by a negative numbers in a time list.
+The duration of the rest is its absolute value, so <code>-2</code> is a rest for 2 beats.</p>
+<p>This example plays a note on every beat, but the duration changes each time. Rests are used to keep the
+notes paying on each beat.</p>
+<p>NOTE: To hear this example properly, use a sustained sound like strings, organs, or pads.</p>
+<pre class="prettyprint source"><code>const { Song, Output } = require('chorus');
+require('chorus/names').into(global);
+
+const song = new Song({
+  bpm: 132,
+  sections: [{
+    parts: [{
+      pitches: [C4, C4,        C4,          C4,          C4],
+      rhythm:  [1,  0.5, -0.5, 0.25, -0.75, 0.05, -0.95, 4],
+    }]
+  }]
+});
+
+Output.select().then(output => output.play(song));</code></pre><p>The spacing in the pitches list is there just to show how the notes line up with the rhythm.</p>
+<p><a name="durations"></a></p>
+<h2>Durations</h2><p>Note durations can be given directly instead of using negative time values for rests. Duration values are in
+beats just like with time lists.</p>
+<p>To do this, we need to give a rhythm object with multiple properties instead of just a time list. 
+When we set a time list using <code>rhythm: [...]</code> that's shorthand for <code>rhythm: { pattern: [...] }</code>.
+The rhythm object supports several other properties including <code>durations</code>, which we use like this:</p>
+<pre class="prettyprint source"><code>const { Song, Output } = require('chorus');
+require('chorus/names').into(global);
+
+const song = new Song({
+  bpm: 132,
+  sections: [{
+    parts: [{
+      pitches: [C4, C4, C4, C4, E4, G4, Bb4, C5],
+      rhythm: {
+        pattern: [1, 1, 1, 1, 1, 1, 1, 1],
+        durations: [0.5, 0.25, 0.05, 6, 5, 4, 3, 2],
+      },
+    }]
+  }]
+});
+
+Output.select().then(output => output.play(song));</code></pre><p>This plays a note every beat (because the <code>rhythm.pattern</code> is <code>[1, 1, 1, ...]</code>), but the durations of the notes
+are different. The first few notes are 1/2 of a beat, 1/4 of a beat, and 0.05 of a beat. This is similar to the previous
+example on rests. But durations can also go longer than the rhythm.pattern timing. The last few notes of this example
+stack up a chord of simultaneous notes that start at different times. </p>
+<p><a name="intensities"></a></p>
+<h2>Intensities</h2><p>Along with durations, we can set intensities in the rhythm object to control the loudness (AKA MIDI velocity) of the
+notes being played. Intensities go from 0.0 to 1.0:</p>
+<pre class="prettyprint source"><code>const { Song, Output } = require('chorus');
+require('chorus/names').into(global);
+
+const song = new Song({
+  sections: [{
+    parts: [{
+      pitches: [C4, D4, E4, F4, G4, A4, B4, C5],
+      rhythm: {
+        pattern: [1, 1, 1, 1, 1, 1, 1, 1],
+        intensities: [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+      },
+    }]
+  }]
+});
+
+Output.select().then(output => output.play(song));</code></pre><p>This plays a series of notes where every note is louder than the one before. The last note is at maximum loudness.</p>
+<p>NOTE: Whatever is receiving the MIDI output from chorus.js must be velocity-sensitive for intensities
+to have any effect. If you don't hear a difference in loudness, check your synthesizer/sampler settings or use
+a different instrument.</p>
+<p><a name="rhythm-strings"></a></p>
+<h2>Rhythm Strings</h2><p>We can combine timing and intensities into a convenient &quot;rhythm string&quot; format.
+When a part's rhythm is a string, it can contain the following characters:</p>
+<p><code>&quot;X&quot;</code> → accented (louder) note <br>
+<code>&quot;x&quot;</code> → normal loudness note <br>
+<code>&quot;=&quot;</code> → tie (continue holding previous note) <br>
+<code>&quot;.&quot;</code> → rest (stop previous note) <br></p>
+<p>Other characters are ignored and can be used to improve readability, for example <code>&quot;X.x.x==...x=x=X=&quot;</code> 
+can be written as <code>&quot;X.x.|x==.|..x=|x=X=&quot;</code> to visually organize the rhythm into groups of 4 beats. For example:</p>
+<pre class="prettyprint source"><code>const { Song, Output } = require('chorus');
+require('chorus/names').into(global);
+
+const song = new Song({
+  sections: [{
+    parts: [{
+      pitches: [C4, D4, E4, D4, E4, F4, E4, C4, D4, B3, C4],
+      rhythm: &quot;Xxx.|Xxx=|x.x.|x.x=|X===&quot;,
+    }]
+  }]
+});
+
+Output.select().then(output => output.play(song));</code></pre><p>This plays a louder C4 for one beat, a D4 for one beat, an E4 for one beat, a rest for one beat, a louder D4
+for one beat, and so on.</p>
+<p>If you want to use rhythm strings with faster rhythms, we can increase the rhythm's <code>pulse</code> setting. The pulse is
+the duration of each character in a rhythm string, and defaults to 1. We can double the speed of the previous example 
+by setting the pulse to 0.5. To do that, we also have to set the rhythm string as the rhythm.pattern like we did for
+durations and intensities.</p>
+<pre class="prettyprint source"><code>const { Song, Output } = require('chorus');
+require('chorus/names').into(global);
+
+const song = new Song({
+  sections: [{
+    parts: [{
+      pitches: [C4, D4, E4, D4, E4, F4, E4, C4, D4, B3, C4],      
+      rhythm: {
+        pattern: &quot;Xxx.|Xxx=|x.x.|x.x=|X===&quot;,
+        pulse: 0.5,
+      }
+    }]
+  }]
+});
+
+Output.select().then(output => output.play(song));</code></pre><p><a name="euclidean-rhythms"></a></p>
+<h2>Euclidean Rhythms</h2><p>Euclidean rhythms evenly distribute a given number of pulses over a given time frame.</p>
+<p>chorus.js's Rhythm class has a function to generate Euclidean rhythms: <code>Rhythm.distribute(pulses, total)</code></p>
+<p>This <code>distribute()</code> function returns a rhythm string, so we can use it anywhere we can use a rhythm string (as the <code>rhythm</code> or <code>rhythm.pattern</code>): </p>
+<pre class="prettyprint source"><code>const { Song, Rhythm, Output } = require('chorus');
+const { distribute } = Rhythm;
+require('chorus/names').into(global);
+
+const song = new Song({
+  sections: [{
+    parts: [{
+      pulse: 1/2,
+      rhythm: distribute(6, 8),
+      pitches: [C4],
+    }]
+  }]
+});
+
+Output.select().then(output => output.play(song));</code></pre><p>To understand what's happening, let's see what rhythm strings <code>distribute()</code> generates:</p>
+<pre class="prettyprint source"><code>const { Rhythm } = require('chorus');
+
+Rhythm.distribute(6, 8);
+// => 'x.xxx.xx'
+Rhythm.distribute(3, 8);
+// => 'x..x..x.'
+Rhythm.distribute(7, 16);
+// => 'x..x.x.x..x.x.x.'</code></pre><p>The first parameter controls the number of x's, and the second parameter controls the number of characters in the
+rhythm string.</p>
+<p>By default, <code>distribute()</code> rhythm strings start with an 'x' in the first position. If you want to change this, you
+can use the <code>shift</code> option:</p>
+<pre class="prettyprint source"><code>Rhythm.distribute(3, 8);
+// => 'x..x..x.'
+Rhythm.distribute(3, 8, { shift: 1 })
+// => '..x..x.x'
+Rhythm.distribute(3, 8, { shift: 2 })
+// => '.x..x.x.'
+Rhythm.distribute(3, 8, { shift: -1 })
+// => '.x..x..x'</code></pre><p>Each positive shift value takes the first character of the rhythm string and moves it to the end of the string.
+Negative shift values work in reverse.</p>
+<p>If you want to shift the pattern such that an 'x' is still in the first position, you can use the <code>rotation</code> option:</p>
+<pre class="prettyprint source"><code>Rhythm.distribute(3, 8);
+// => 'x..x..x.'
+Rhythm.distribute(3, 8, { rotation: 1 });
+// => 'x..x.x..'
+Rhythm.distribute(3, 8, { rotation: -1 });
+// => 'x.x..x..'
+></code></pre><p>Basically, a rotation shifts repeatedly until the next 'x'. 
+This is good for creating variations and keeping the note on the first beat.</p>
+<p>You can also combine the <code>rotation</code> and <code>shift</code> options. The rotation will be applied first.</p>
 <p><a name="using-drums"></a></p>
-<h2>Using Drums</h2><p>Since we are talking about rhythm, let's use drum sounds . </p>
-<p>The setup depends on your OS and DAW/music software. Here's 3 options:</p>
-<h4>Option 1: macOS Quick Start - Drums with SimpleSynth</h4><p>If you are using SimpleSynth on macOS (see the <a href="./index.html#real-time">&quot;Real-time MIDI Output&quot;</a> section 
-of the Quick Start Guide), do this to use drums:</p>
-<ol>
-<li>Select MIDI channel 1 in the main window</li>
-<li>Go the the <code>Instruments</code> pane (if you can't see it, use <code>Window -&gt; Show Instruments</code> in the menu)</li>
-<li>Scroll down and select <code>TR-808</code>. This is a &quot;drum kit&quot; with several different drum sounds</li>
-</ol>
-<h4>Option 2: Windows Quick Start - Built-in Drums</h4><p>TODO: Use channel 10 of GS synth? Doesn't work! Rewrite this section</p>
-<h4>Option 3: Drums in a DAW or Standalone App</h4><p>DAWs have various &quot;drum kit&quot; (AKA &quot;drum rack&quot;) instruments built-in, and there are lots of plug-ins/apps for drums.</p>
-<p>Setup the drum instrument of your choice to receive MIDI on channel 1. We'll be using that channel throughout this tutorial.</p>
-<h3>Playing Drum Sounds</h3><p>Depending on your setup, each pitch typically pays a different drum sounds. 
+<h2>Using Drums</h2><p>Since we are talking about rhythm, let's try using drum sounds. </p>
+<p>Setup a drum instrument of your choice in your music software.
+DAWs have various &quot;drum kit&quot; (AKA &quot;drum rack&quot;) instruments built-in, and there are lots of plug-ins/apps for drums.</p>
+<p>Different pitches will play different drum sounds. 
 Chorus.js defines some pitch constants for common drum sounds:</p>
 <ul>
 <li><code>KICK</code> - kick drum (AKA bass drum)</li>
@@ -95,68 +267,15 @@ const song = new Song({
   }]
 });
 
-Output.select().then(output => output.play(song));</code></pre><p>Drum software usually allows sounds be freely re-assigned, so these drum constants may not work as expected. 
+Output.select().then(output => output.play(song));</code></pre><p>If you don't want to pollute the global namespace with <code>require('chorus/names').into(global);</code>
+the drum constants are available under <code>require('chorus/names').DRUMS.KICK</code>, etc.</p>
+<p>Drum software usually allows sounds be freely re-assigned, so these drum constants may not work as expected. 
 If not, check your drum software and experiment with Chorus.js's pitch constants, like this:</p>
 <pre class="prettyprint source"><code>    ...
     parts: [{     
       pitches: [C2, Db2, D2, Eb2, E2, F2, C3, Db3, C4],
     }]
     ...</code></pre><p>Note that some pitches may not play any sound. Once you figure out which pitches to use, consider defining your own constants.</p>
-<p>The rest of this tutorial will use Chorus.js's built-in drum constants. Adjust as needed for your setup.</p>
-<p><a name="time-lists"></a></p>
-<h2>Time Lists</h2><p>As we've seen, a Song <code>Part</code> plays notes by specifying <code>pitches</code> to play.</p>
-<p>Every <code>Part</code> has a <code>rhythm</code> to control the timing of the notes. The default <code>rhythm</code> plays a note on every beat.</p>
-<p>One way of specifying <code>rhythm</code> is with a &quot;time list&quot;, which is the list of durations for each note. As soon
-as one note is done, the next note will immediately play. For example:</p>
-<pre class="prettyprint source"><code>const { Song, Output } = require('chorus');
-require('chorus/names').into(global);
-
-const song = new Song({
-  bpm: 132,
-  sections: [{
-    parts: [{
-      pitches: [KICK, SNARE, CLAP, KICK, KICK, CLAP, SNARE, KICK, RIM, CYMBAL],
-      rhythm:  [1,    0.5,   0.5,  2,    1,    0.5,  0.5,   1.5,  0.5, 4],
-    }]
-  }]
-});
-
-Output.select().then(output => output.play(song));</code></pre><p>This plays a kick drum for 1 beat, then a snare for half a beat, then a clap for half a beat, then a kick for 2 beats, and so on.</p>
-<p><a name="rests"></a></p>
-<h2>Rests</h2><p>As mentioned in the previous section, when using time lists, the next note plays as soon as the previous note ends.
-Sometimes, especially with sustained non-drum sounds like strings, we don't want the notes to bump up against each other like that.</p>
-<p>Rests allow us to create space between the notes. A rest is specified by a negative numbers in a time list.
-The duration of the rest is its absolute value, so <code>-2</code> is a rest for 2 beats.</p>
-<p>This example plays a note on every beat, but the duration changes each time. Rests are used to keep the
-notes paying on each beat.</p>
-<p>NOTE: To hear this example properly, you probably need to switch back to non-drum sounds.</p>
-<pre class="prettyprint source"><code>const { Song, Output } = require('chorus');
-require('chorus/names').into(global);
-
-const song = new Song({
-  bpm: 132,
-  sections: [{
-    parts: [{
-      pitches: [C4, C4,        C4,          C4,          C4],
-      rhythm:  [1,  0.5, -0.5, 0.25, -0.75, 0.05, -0.95, 4],
-    }]
-  }]
-});
-
-Output.select().then(output => output.play(song));</code></pre><p>The spacing in the pitches list is there just to show how the notes line up with the rhythm.</p>
-<p><a name="euclidean-rhythms"></a></p>
-<h2>Euclidean Rhythms</h2><p>TODO</p>
-<p><a name="rhythm-strings"></a></p>
-<h2>Rhythm Strings</h2><p>TODO</p>
-<p>When a String, it can contain the following characters:</p>
-<p>&quot;X&quot; → accented note
-&quot;x&quot; → normal note
-&quot;=&quot; → tie
-&quot;.&quot; → rest
-Each characters' duration is determined by the pulse option. NOTE: Other characters are ignored and can be used to improve readability, for example &quot;X.x.|x==.|..x=|x=X=&quot;</p>
-<p>pulse - The duration in beats of each character in a String pattern. Only relevant if the pattern option is a String.</p>
-<p><a name="instensities-and-durations"></a></p>
-<h2>Intensities &amp; Durations</h2><p>TODO</p>
 <p><a name="next-steps"></a></p>
 <h2>Next Steps</h2><p>Next is the <a href="tutorial-04-harmony.html">Harmony</a> tutorial.</p>
 </article>

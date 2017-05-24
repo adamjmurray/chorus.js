@@ -1,7 +1,7 @@
 - [Pitch Overview](#pitch-overview)
 - [Absolute Pitch](#absolute-pitch)
 - [Simultaneous Pitches](#simultaneous-pitches)
-- [Relative Pitch with Scales](#scale-relative-pitch)
+- [Scale-Relative Pitch](#scale-relative-pitch)
 - [Built-in Scales](#builtin-scales)
 - [Custom Scales](#custom-scales)
 - [Next Steps](#next-steps)
@@ -12,12 +12,14 @@
 
 Pitch is the perception of frequency in sound, in other words, how "high" or "low" does a note sound? 
 
-Pitches in chorus.js can be represented in absolute terms or in relative terms. 
-Using absolute pitches is equivalent to saying exactly which piano key should be pressed on a piano.
-Relative pitches are relative to a scale or a harmony (chord progression).
-Using relative pitches makes it easy to experiment with different scales or harmonies without changing pitches.
+Pitches in chorus.js can be absolute or relative.
 
-This tutorial discusses absolute pitches and pitches relative to scales. Harmony will be discussed in a later tutorial.
+Absolute pitches indicate exactly which piano key to play on a piano.
+
+Relative pitches reference the pitches in scales and chords using integers. We'll call these scale-relative and chord-relative pitches. 
+Relative pitches makes it easier to work with scales and chords. For example, you can easily avoid playing a "wrong" note.
+
+This tutorial explores absolute pitches and scale-relative pitches. Chord-relative pitches will be covered in the {@tutorial 04-harmony} tutorial.
 
 
 <a name="absolute-pitch"></a>
@@ -26,7 +28,7 @@ This tutorial discusses absolute pitches and pitches relative to scales. Harmony
 In chorus.js, constants are provided for every possible pitch value that MIDI supports. 
 These constants are named using [Scientific Pitch Notation](https://en.wikipedia.org/wiki/Scientific_pitch_notation), 
 which means the lowest note is C-1 and the highest note/constant is G7.
-We have constants for flatted notes, like Eb4, but not the equivalant pitch D#4, because # is not allowed in variable names.
+We have constants for flatted notes, like `Eb4`, but not the equivalent pitch name `D#4`, because # is not allowed in JavaScript names.
 Similarly, `C-1` is not a valid name, so we use `C_1` to indicate the lowest C.
 
 These constants can be imported into the global namespace for convenience like this:
@@ -98,7 +100,17 @@ const song = new Song({
     scale: MAJOR(C),
     parts: [{
       mode: 'scale',
-      pitches: [[C4, E4], [D4, F4], [E4, G4], [F4, A4], [G4, B4], [F4, A4], [D4, F4], [B3, D4], [C4, G3, C3]],
+      pitches: [
+        C4, 
+        [D4, F4], 
+        [E4, G4], 
+        [F4, A4], 
+        [G4, B4], 
+        [F4, A4], 
+        [D4, F4], 
+        [B3, D4], 
+        [C4, G3, C3]
+      ],
     }]
   }]
 });
@@ -106,9 +118,11 @@ const song = new Song({
 Output.select().then(output => output.play(song));
 ```
 
+In this example, each row of pitches plays simultaneously.
+
 
 <a name="scale-relative-pitch"></a>
-## Relative Pitch with Scales
+## Scale-Relative Pitch
 
 To use a scale, set the scale at the Section level, and set the Part mode to `'scale'`.
 We can play a C-major scale like this: 
@@ -132,7 +146,7 @@ Output.select().then(output => output.play(song));
 When a Part is in `'scale'` mode, a `pitches` values of 0 is the first note in the scale, 
 1 is the second note in the scale, and so on.
 The octave is determined by the part's octave, which defaults to 4. 
-So in this case, a pitches value of 0 produces the absolute pitch C4. 
+So in this case, a pitches value of 0 produces the absolute pitch `C4`. 
 
 If you wanted to play that C-major scale an octave lower, you could do it like this:
 ```
@@ -153,10 +167,10 @@ const song = new Song({
 Output.select().then(output => output.play(song));
 ```
 
-Now relative pitch 0 is C3 instead of C4.
+Now the relative pitch 0 is `C3` instead of `C4`.
 
 When the pitches value runs out of scale notes and "wraps around", we go up an octave. 
-The MAJOR scale has 7 pitches, so the pitch value `7` (the 8th note of the scale) is a C5, one octave higher than when we started.
+The MAJOR scale has 7 pitches, so the pitch value `7` (the 8th note of the scale) is a `C5`, one octave higher than when we started.
 
 You can use scales with any number of pitches in chorus.js.
 
@@ -185,9 +199,11 @@ chorus.js ships with a lot of built-in scales:
 ```
 console.log(require('chorus').SCALES);
 ```
-Note each of these scale constants is a function. Each scale is defined as relative intervals that can start on any pitch class (a pitch class is just a pitch without an octave, ecause scales are not tied to any specific octave). So we can call `MAJOR(D)` to make a D-major scale, `MAJOR(Eb)` to make an Eb-major scale, etc.
+Note each of these scale constants is a function. Each scale is defined as relative intervals that can start on any pitch class 
+(a pitch class is just a pitch without an octave, because scales are not tied to any specific octave). 
+So we can call `MAJOR(D)` to make a D-major scale, `MAJOR(Eb)` to make an Eb-major scale, and so on.
 
-More info on the built-in scales can be found [here](https://en.wikipedia.org/wiki/List_of_musical_scales_and_modes)
+More info on some of the built-in scales can be found [here](https://en.wikipedia.org/wiki/List_of_musical_scales_and_modes)
 
 If you don't want to pollute the global namespace, here's how to use built-in scales:
 

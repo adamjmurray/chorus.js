@@ -122,14 +122,13 @@ class Rhythm extends Sequencer {
   }
 
   /**
-   * Generates a Rhythm pattern String by evenly distributes the given number of pulses into the given total number of
-   * time units. Very similar to a "Euclidean pattern". Use the return value for the constructor's pattern option.
+   * Generates a Rhythm pattern string by evenly distributes the given number of pulses into the given total number of
+   * time units. Also known as a "Euclidean rhythm". Use the return value for the constructor's pattern option.
    * @param pulses {number}
    * @param total {number}
    * @param {Object} options
    * @param {Number} [options.shift=0] shifts the pattern (with wrap-around) by the given number of time units
    * @param {Number} [options.rotation=0] shifts the pattern (with wrap-around) to the given pulse index
-   * @see https://en.wikipedia.org/wiki/Euclidean_pattern
    */
   static distribute(pulses, total, options={}) {
     const { rotation, shift } = options;
