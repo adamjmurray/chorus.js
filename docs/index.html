@@ -47,19 +47,19 @@
 <a href="https://travis-ci.org/adamjmurray/chorus.js"><img src="https://travis-ci.org/adamjmurray/chorus.js.svg?branch=master" alt="build status"></a>&nbsp;&nbsp;&nbsp;
 <a href="https://coveralls.io/github/adamjmurray/chorus.js?branch=master"><img src="https://coveralls.io/repos/github/adamjmurray/chorus.js/badge.svg?branch=master" alt="test coverage"></a></p>
 <h2>Features</h2><ul>
-<li>Harmony-based sequencing using scales and chord progressions</li>
-<li>Multitrack <a href="http://www.instructables.com/id/What-is-MIDI/">MIDI</a> output<ul>
-<li><strong>real-time MIDI</strong> - control synthesizers, samplers, and other MIDI instruments</li>
-<li><strong>MIDI files</strong> - save musical ideas to use in your <a href="https://en.wikipedia.org/wiki/Digital_audio_workstation">DAW</a> later</li>
+<li>Compose music with code via multi-track <a href="http://www.instructables.com/id/What-is-MIDI/">MIDI</a><ul>
+<li>output <strong>real-time MIDI</strong> to control synthesizers, samplers, and other MIDI instruments</li>
+<li>output <strong>MIDI files</strong> to save your musical ideas with perfect timing</li>
 </ul>
 </li>
-<li><a href="https://en.wikipedia.org/wiki/Microtonal_music">Microtonal</a> support</li>
+<li>Explore harmony using scales and chord progressions</li>
+<li>Explore <a href="https://en.wikipedia.org/wiki/Microtonal_music">microtonal</a> tunings</li>
 </ul>
 <p><a name="requirements"></a></p>
 <h2>Requirements</h2><ul>
-<li><a href="https://nodejs.org">Node.js</a> v6 or higher (browser support is planned for later)</li>
+<li><a href="https://nodejs.org">Node.js</a> v6+ (browser support is planned)</li>
 <li>Optional: compilation tools for native dependencies<ul>
-<li>If you want <strong>real-time MIDI output</strong>, follow <a href="https://github.com/nodejs/node-gyp#installation">node-gyp's installation instructions</a> to setup the compilation tools</li>
+<li>If you want <strong>real-time MIDI output</strong>, follow <a href="https://github.com/nodejs/node-gyp#installation">node-gyp's installation instructions</a> to setup compilation tools</li>
 <li>Otherwise, ignore non-fatal errors during install. You can still use <strong>MIDI file output</strong></li>
 </ul>
 </li>
@@ -69,9 +69,8 @@
 <h2>Quick Start Guide</h2><ol>
 <li><p>Install</p>
 <pre class="prettyprint source"><code> npm install chorus</code></pre></li>
-<li><p>Create a file <code>quick-start.js</code> (in the folder where you installed chorus)</p>
-<pre class="prettyprint source lang-javascript"><code>// quick-start.js
-
+<li><p>Create the file <code>quick-start.js</code></p>
+<pre class="prettyprint source lang-javascript"><code>// quick-start.js 
 const { Song, Output } = require('chorus');
 require('chorus/names').into(global);
 
@@ -84,27 +83,29 @@ const song = new Song({
 });
 
 Output.select().then(output => output.play(song));</code></pre></li>
-<li><p>Run the script</p>
+<li><p>Output a MIDI file</p>
 <ul>
-<li><p>Option A: <strong>Real-time MIDI output</strong>   </p>
+<li><p>Run:</p>
+<pre class="prettyprint source"><code> node quick-start.js -f quick-start.mid</code></pre></li>
+<li><p>Open <code>quick-start.mid</code> in any app that supports MIDI files</p>
+</li>
+</ul>
+</li>
+<li><p>Output real-time MIDI (<a href="#requirements">requires native depedencies</a>)</p>
 <ul>
 <li><p>On <strong>macOS</strong></p>
 <ul>
-<li>Download <a href="http://notahat.com/simplesynth/">SimpleSynth</a> and launch it      </li>
-<li>Select <code>MIDI Source: SimpleSynth virtual input</code> in SimpleSynth       </li>
+<li><p>Download <a href="http://notahat.com/simplesynth/">SimpleSynth</a> and launch it</p>
+</li>
+<li><p>Select <code>MIDI Source: SimpleSynth virtual input</code> in SimpleSynth</p>
+</li>
 <li><p>Run:</p>
 <pre class="prettyprint source"><code> node quick-start.js -p simplesynth</code></pre></li>
 </ul>
 </li>
 <li><p>On <strong>Windows</strong></p>
-<p>Use Windows' built-in wavetable synth by running:</p>
-<pre class="prettyprint source"><code> node quick-start.js -p wavetable</code></pre></li>
-</ul>
-</li>
-<li><p>Option B: <strong>MIDI file output</strong></p>
-<p>Run:</p>
-<pre class="prettyprint source"><code> node quick-start.js -f quick-start.mid</code></pre><p>then open <code>quick-start.mid</code> in an app that supports MIDI files</p>
-</li>
+<p>Use the built-in wavetable synth:</p>
+<pre class="prettyprint source"><code> node quick-start.js -p wavetable  </code></pre></li>
 </ul>
 </li>
 </ol>

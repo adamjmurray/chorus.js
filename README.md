@@ -7,20 +7,20 @@
 
 ## Features
 
-- Harmony-based sequencing using scales and chord progressions
-- Multitrack [MIDI](http://www.instructables.com/id/What-is-MIDI/) output
-  - **real-time MIDI** - control synthesizers, samplers, and other MIDI instruments
-  - **MIDI files** - save musical ideas to use in your [DAW](https://en.wikipedia.org/wiki/Digital_audio_workstation) later
-- [Microtonal](https://en.wikipedia.org/wiki/Microtonal_music) support
+- Compose music with code via multi-track [MIDI](http://www.instructables.com/id/What-is-MIDI/)
+  - output **real-time MIDI** to control synthesizers, samplers, and other MIDI instruments
+  - output **MIDI files** to save your musical ideas with perfect timing
+- Explore harmony using scales and chord progressions
+- Explore [microtonal](https://en.wikipedia.org/wiki/Microtonal_music) tunings
 
 
 <a name="requirements"></a>
 
 ## Requirements
 
-- [Node.js](https://nodejs.org) v6 or higher (browser support is planned for later)
+- [Node.js](https://nodejs.org) v6+ (browser support is planned)
 - Optional: compilation tools for native dependencies
-  - If you want **real-time MIDI output**, follow [node-gyp's installation instructions](https://github.com/nodejs/node-gyp#installation) to setup the compilation tools
+  - If you want **real-time MIDI output**, follow [node-gyp's installation instructions](https://github.com/nodejs/node-gyp#installation) to setup compilation tools
   - Otherwise, ignore non-fatal errors during install. You can still use **MIDI file output**
 
 <a name="quick-start"></a>
@@ -32,11 +32,10 @@
 
         npm install chorus
 
-2. Create a file `quick-start.js` (in the folder where you installed chorus)
+2. Create the file `quick-start.js`
 
   ```javascript
-  // quick-start.js
-  
+  // quick-start.js 
   const { Song, Output } = require('chorus');
   require('chorus/names').into(global);
   
@@ -51,28 +50,31 @@
   Output.select().then(output => output.play(song));
  ```
 
-3. Run the script
-  * Option A: **Real-time MIDI output**   
-    * On **macOS**
-      * Download [SimpleSynth](http://notahat.com/simplesynth/) and launch it      
-      * Select `MIDI Source: SimpleSynth virtual input` in SimpleSynth       
-      * Run:
+3. Output a MIDI file
 
-              node quick-start.js -p simplesynth
-
-     * On **Windows**
-
-       Use Windows' built-in wavetable synth by running:
- 
-            node quick-start.js -p wavetable
-  
-  * Option B: **MIDI file output**
-  
-    Run:
-    
-          node quick-start.js -f quick-start.mid
+  * Run:
         
-    then open `quick-start.mid` in an app that supports MIDI files
+          node quick-start.js -f quick-start.mid
+            
+  * Open `quick-start.mid` in any app that supports MIDI files
+     
+4. Output real-time MIDI ([requires native depedencies](#requirements))
+
+  * On **macOS**
+  
+    * Download [SimpleSynth](http://notahat.com/simplesynth/) and launch it
+      
+    * Select `MIDI Source: SimpleSynth virtual input` in SimpleSynth
+           
+    * Run:
+
+            node quick-start.js -p simplesynth
+
+   * On **Windows**
+
+     Use the built-in wavetable synth:
+ 
+          node quick-start.js -p wavetable  
 
   
 <a name="tutorials"></a>

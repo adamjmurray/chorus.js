@@ -28,12 +28,11 @@
 </header>
 
 <article>
-    <p>If you haven't already, <a href="./index.html#requirements">install chorus.js and follow the Quick Start Guide</a></p>
-<p><strong>Tutorial Outline:</strong></p>
-<ul>
+    <ul>
+<li><a href="#intro">Intro</a></li>
 <li><a href="#defining-songs">Defining Songs</a></li>
 <li><a href="#selecting-outputs">Selecting Outputs</a></li>
-<li><a href="#virtual-midi-ports">Creating Virtual MIDI Ports</a> <ul>
+<li><a href="#virtual-midi-ports">Virtual MIDI Ports</a> <ul>
 <li><a href="#macos">macOS</a></li>
 <li><a href="#windows">Windows</a></li>
 <li><a href="#linux">Linux</a></li>
@@ -42,11 +41,26 @@
 <li><a href="#daw-setup">DAW Setup</a></li>
 <li><a href="#next-steps">Next Steps</a>  </li>
 </ul>
+<p><a name="intro"></a></p>
+<h2>Intro</h2><p>Welcome to the chorus.js tutorials! </p>
+<p>This is intended for people familiar with computer music production and basic computer programming, but you can
+get by knowing just one if you are determined.</p>
+<p>If you haven't already, <a href="./index.html#requirements">install chorus.js and follow the Quick Start Guide</a>.</p>
+<p>Chorus.js doesn't generate music directly (yet). Instead, you'll write JavaScript code that outputs 
+<a href="http://www.instructables.com/id/What-is-MIDI/">MIDI</a>, a standard format for music.
+The MIDI output can be converted to actual music by a huge variety of MIDI-compatible software and hardware.
+The Quick Start Guide showed a simple way to produce actual music, which admittedly was poor quality. 
+The second half of this tutorial explains how to connect to professional-grade music production software
+(optional).</p>
+<p>A Chorus.js program needs to do two things: </p>
+<ol>
+<li>Define a song </li>
+<li>Play that song with an output</li>
+</ol>
 <p><a name="defining-songs"></a>  </p>
-<h2>Defining Songs</h2><p>chorus.js makes music by writing JavaScript code that defines a Song, selects an Output, and plays the Song with that Output. </p>
-<p>Let's see look at how this works using the Quick Start example:</p>
-<pre class="prettyprint source"><code>// quick-start.js
-
+<h2>Defining Songs</h2><p>Let's break down the Quick Start example.</p>
+<p>After loading the chorus module (line 2), we use its Song class to construct a song instance (lines 5-11):                            </p>
+<pre class="prettyprint source linenums"><code>// quick-start.js
 const { Song, Output } = require('chorus');
 require('chorus/names').into(global);
 
@@ -58,45 +72,40 @@ const song = new Song({
  }]
 });
 
-Output.select().then(output => output.play(song));</code></pre><p>After loading chorus, we can use its Song object to define our song. </p>
-<p>A Song is a list of Sections that are played sequentially. 
-Each Section is a list of Parts that are played simultaneously.
-This structure will be explored in detail in the <a href="tutorial-05-song-structure.html">Song Structure</a> tutorial.</p>
-<p>For the next few tutorials, we'll focus on making single-section, single-part songs, by filling in the <code>// ...</code> in this
-basic structure:</p>
-<pre class="prettyprint source"><code>const song = new Song({
- sections: [{
-   parts: [{
-     // ...
-   }]
- }]
-});</code></pre><p>The simplest Part is just a list of pitches:</p>
-<pre class="prettyprint source"><code>{
-  pitches: [C4, D4, E4, F4, G4, F4, E4, D4, C4],
-}</code></pre><p>In this case, each pitch plays for 1 beat. 
-We'll learn a lot more about <a href="tutorial-02-pitch.html">Pitch</a> and <a href="tutorial-03-rhythm.html">Rhythm</a> in the next few tutorials.</p>
+Output.select().then(output => output.play(song));
+</code></pre>
+
+<p>A song is a list of sections that are played sequentially. 
+Each section is a list of parts that are played simultaneously.
+For example, a verse can be represented by a section, and each instrument by a part.
+This will be explored in detail in the <a href="tutorial-05-song-structure.html">Song Structure</a> tutorial. </p>
+<p>The simplest Part is just a list of pitches (line 8). 
+The names <code>C4</code>, <code>D4</code>, <code>E4</code>, <code>F4</code>, <code>G4</code>, are pitch constants that were loading on line 3.</p>
+<p>Because no rhythm was given, each pitch plays for 1 beat by default.</p>
+<p>We'll learn a lot more about <a href="tutorial-02-pitch.html">Pitch</a> and <a href="tutorial-03-rhythm.html">Rhythm</a> in the next few tutorials.</p>
 <p><a name="selecting-outputs"></a> </p>
-<h2>Selecting Outputs</h2><p>Chorus.js (currently) does not make any sound on it's own. It outputs <a href="http://www.instructables.com/id/What-is-MIDI/">MIDI</a>,
-a standard format for controlling music software &amp; hardware. It can either output a MIDI file for later playback, or
-output MIDI in real-time over a given MIDI port.</p>
+<h2>Selecting Outputs</h2><p>After defining a song, the Quick Start example chooses an Output and plays the song on line 13.</p>
 <p>When <code>Output.select()</code> is called, several things can happen depending on how
-you ran the script. Here are the ways we can run a chorus.js script:</p>
+you ran the code:</p>
 <ul>
-<li><p>Output a MIDI file named file.mid:</p>
+<li><p>Output a MIDI file named <code>file.mid</code>:</p>
 <pre class="prettyprint source"><code> node quick-start.js -f file.mid</code></pre></li>
-<li><p>Output real-time MIDI to the virtual MIDI port named &quot;virtual1&quot;: </p>
+<li><p>Output real-time MIDI to the virtual MIDI port named <code>virtual1</code>: </p>
 <pre class="prettyprint source"><code> node quick-start.js -p virtual1</code></pre></li>
-<li><p>Same as above (output realtime MIDI to virtual port &quot;virtual1&quot;), but specify the port with an environment variable:</p>
+<li><p>Same as above (output real-time MIDI to virtual port <code>virtual1</code>), but specify the port with an environment variable:</p>
 <pre class="prettyprint source"><code> CHORUS_OUTPUT_PORT=virtual1 node quick-start.js </code></pre><p><em>NOTE: the -p command line argument overrides this environment variable</em></p>
 </li>
 <li><p>List all real-time MIDI ports and select one interactively (or type ctrl+C to exit):</p>
 <pre class="prettyprint source"><code> node quick-start.js</code></pre></li>
 </ul>
-<p>When specifying the real-time MIDI output port (either interactively, via the command line arg or via environment variable),
-a case-insensitive substring match is used. So <code>-p virt</code> and <code>-p tual1</code> would both match &quot;virtual1&quot;. If a single port matches, 
-it is used to play the song. Otherwise, you'll be prompted to interactively select a port.</p>
-<p><a name="inter-app-midi"></a></p>
-<h2>Virtual MIDI Ports</h2><p><em>NOTE: The rest of this tutorial is optional and intended for DAW / synthesizer app users. Feel free to skip ahead to the <a href="tutorial-02-pitch.html">Pitch</a> tutorial.</em></p>
+<p>When specifying the real-time MIDI output port via any of these options,
+a case-insensitive substring match is used. So <code>-p virt</code> and <code>-p tual1</code> would both match the port <code>virtual1</code>. If a single port matches, 
+<code>Output.select()</code> resolves a promise with an output instance for that port. 
+Otherwise, you'll be prompted to interactively select a port.</p>
+<p>When Output.select's promise resolves with an output instance, simply call <code>output.play(song)</code> and chorus.js handles the rest.</p>
+<p><a name="virtual-midi-ports"></a></p>
+<h2>Virtual MIDI Ports</h2><p><em>NOTE: The rest of this tutorial is optional and intended for <a href="https://en.wikipedia.org/wiki/Digital_audio_workstation">DAW</a>
+ / synthesizer app users. Feel free to skip ahead to the <a href="tutorial-02-pitch.html">Pitch</a> tutorial.</em></p>
 <p>To connect chorus.js to another application, 
 first we need to create a &quot;virtual MIDI port&quot; that can be used to send MIDI messages between applications.</p>
 <p><a name="macos"></a></p>

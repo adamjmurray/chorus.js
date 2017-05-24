@@ -1,24 +1,43 @@
-If you haven't already, [install chorus.js and follow the Quick Start Guide](./index.html#requirements)
-
-**Tutorial Outline:**
+- [Intro](#intro)
 - [Defining Songs](#defining-songs)
 - [Selecting Outputs](#selecting-outputs)
-- [Creating Virtual MIDI Ports](#virtual-midi-ports) 
+- [Virtual MIDI Ports](#virtual-midi-ports) 
   - [macOS](#macos)
   - [Windows](#windows)
   - [Linux](#linux)
 - [DAW Setup](#daw-setup)
 - [Next Steps](#next-steps)  
 
+<a name="intro"></a>
+## Intro
+
+Welcome to the chorus.js tutorials! 
+
+This is intended for people familiar with computer music production and basic computer programming, but you can
+get by knowing just one if you are determined.
+
+If you haven't already, [install chorus.js and follow the Quick Start Guide](./index.html#requirements).
+
+Chorus.js doesn't generate music directly (yet). Instead, you'll write JavaScript code that outputs 
+[MIDI](http://www.instructables.com/id/What-is-MIDI/), a standard format for music.
+The MIDI output can be converted to actual music by a huge variety of MIDI-compatible software and hardware.
+The Quick Start Guide showed a simple way to produce actual music, which admittedly was poor quality. 
+The second half of this tutorial explains how to connect to professional-grade music production software
+(optional).
+
+A Chorus.js program needs to do two things: 
+1. Define a song 
+2. Play that song with an output
+
+
 <a name="defining-songs"></a>  
 ## Defining Songs
 
-chorus.js makes music by writing JavaScript code that defines a Song, selects an Output, and plays the Song with that Output. 
+Let's break down the Quick Start example.
  
-Let's see look at how this works using the Quick Start example:
-```
-// quick-start.js
+After loading the chorus module (line 2), we use its Song class to construct a song instance (lines 5-11):                            
 
+<pre class="prettyprint source linenums"><code>// quick-start.js
 const { Song, Output } = require('chorus');
 require('chorus/names').into(global);
 
@@ -31,56 +50,38 @@ const song = new Song({
 });
 
 Output.select().then(output => output.play(song));
-```
+</code></pre>
 
+A song is a list of sections that are played sequentially. 
+Each section is a list of parts that are played simultaneously.
+For example, a verse can be represented by a section, and each instrument by a part.
+This will be explored in detail in the {@tutorial 05-song-structure} tutorial. 
 
-After loading chorus, we can use its Song object to define our song. 
+The simplest Part is just a list of pitches (line 8). 
+The names `C4`, `D4`, `E4`, `F4`, `G4`, are pitch constants that were loading on line 3.
 
-A Song is a list of Sections that are played sequentially. 
-Each Section is a list of Parts that are played simultaneously.
-This structure will be explored in detail in the {@tutorial 05-song-structure} tutorial.
+Because no rhythm was given, each pitch plays for 1 beat by default.
 
-For the next few tutorials, we'll focus on making single-section, single-part songs, by filling in the `// ...` in this
-basic structure:
-```
-const song = new Song({
- sections: [{
-   parts: [{
-     // ...
-   }]
- }]
-});
-```
-
-The simplest Part is just a list of pitches:
-```
-{
-  pitches: [C4, D4, E4, F4, G4, F4, E4, D4, C4],
-}
-```
-
-In this case, each pitch plays for 1 beat. 
 We'll learn a lot more about {@tutorial 02-pitch} and {@tutorial 03-rhythm} in the next few tutorials.
+
 
 <a name="selecting-outputs"></a> 
 ## Selecting Outputs
 
-Chorus.js (currently) does not make any sound on it's own. It outputs [MIDI](http://www.instructables.com/id/What-is-MIDI/),
-a standard format for controlling music software & hardware. It can either output a MIDI file for later playback, or
-output MIDI in real-time over a given MIDI port.
+After defining a song, the Quick Start example chooses an Output and plays the song on line 13.
 
 When `Output.select()` is called, several things can happen depending on how
-you ran the script. Here are the ways we can run a chorus.js script:
+you ran the code:
 
-* Output a MIDI file named file.mid:
+* Output a MIDI file named `file.mid`:
 
        node quick-start.js -f file.mid
          
-* Output real-time MIDI to the virtual MIDI port named "virtual1": 
+* Output real-time MIDI to the virtual MIDI port named `virtual1`: 
        
        node quick-start.js -p virtual1
         
-* Same as above (output realtime MIDI to virtual port "virtual1"), but specify the port with an environment variable:
+* Same as above (output real-time MIDI to virtual port `virtual1`), but specify the port with an environment variable:
 
        CHORUS_OUTPUT_PORT=virtual1 node quick-start.js 
 
@@ -90,14 +91,19 @@ you ran the script. Here are the ways we can run a chorus.js script:
 
        node quick-start.js
 
-When specifying the real-time MIDI output port (either interactively, via the command line arg or via environment variable),
-a case-insensitive substring match is used. So `-p virt` and `-p tual1` would both match "virtual1". If a single port matches, 
-it is used to play the song. Otherwise, you'll be prompted to interactively select a port.
+When specifying the real-time MIDI output port via any of these options,
+a case-insensitive substring match is used. So `-p virt` and `-p tual1` would both match the port `virtual1`. If a single port matches, 
+`Output.select()` resolves a promise with an output instance for that port. 
+Otherwise, you'll be prompted to interactively select a port.
 
-<a name="inter-app-midi"></a>
+When Output.select's promise resolves with an output instance, simply call `output.play(song)` and chorus.js handles the rest.
+
+
+<a name="virtual-midi-ports"></a>
 ## Virtual MIDI Ports 
 
-*NOTE: The rest of this tutorial is optional and intended for DAW / synthesizer app users. Feel free to skip ahead to the {@tutorial 02-pitch} tutorial.*
+*NOTE: The rest of this tutorial is optional and intended for [DAW](https://en.wikipedia.org/wiki/Digital_audio_workstation)
+ / synthesizer app users. Feel free to skip ahead to the {@tutorial 02-pitch} tutorial.*
 
 To connect chorus.js to another application, 
 first we need to create a "virtual MIDI port" that can be used to send MIDI messages between applications.
