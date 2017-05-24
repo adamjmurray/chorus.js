@@ -1,6 +1,3 @@
-If you haven't already, [install chorus.js and follow the Quick Start Guide](./index.html#requirements)
-
-**Outline**
 - [Changing the Tempo](#tempo)
 - [Using Drums](#using-drums)
 - [Time Lists](#time-lists)

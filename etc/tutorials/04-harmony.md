@@ -1,6 +1,3 @@
-If you haven't already, [install chorus.js and follow the Quick Start Guide](./index.html#requirements)
-
-**Outline**
 - [Harmony & Chord Progressions](#harmony)
 - [Arpeggios](#arpeggio-mode)
 - [Melodies](#lead-mode)

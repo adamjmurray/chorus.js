@@ -32,6 +32,7 @@
 <li><a href="#intro">Intro</a></li>
 <li><a href="#defining-songs">Defining Songs</a></li>
 <li><a href="#selecting-outputs">Selecting Outputs</a></li>
+<li><a href="#timing-accuracy">Timing Accuracy</a></li>
 <li><a href="#virtual-midi-ports">Virtual MIDI Ports</a> <ul>
 <li><a href="#macos">macOS</a></li>
 <li><a href="#windows">Windows</a></li>
@@ -103,6 +104,14 @@ a case-insensitive substring match is used. So <code>-p virt</code> and <code>-p
 <code>Output.select()</code> resolves a promise with an output instance for that port. 
 Otherwise, you'll be prompted to interactively select a port.</p>
 <p>When Output.select's promise resolves with an output instance, simply call <code>output.play(song)</code> and chorus.js handles the rest.</p>
+<p><a name="timing-accuracy"></a> </p>
+<h2>Timing Accuracy</h2><p>It is currently not possible to get rock-solid timing accuracy in JavaScript. This means the real-time
+MIDI output is subject to timing jitter (notes may randomly play late by several milliseconds). 
+I have found it to be &quot;good enough&quot; for preview purposes while designing a song in chorus.js. </p>
+<p>Once you are happy with your song, output as a MIDI file for perfect timing accuracy. Then drag and drop the MIDI
+file into your music production app.</p>
+<p>Alternately, clean up a real-time MIDI recording with quantization, the standard &quot;timing snap&quot; function found in most
+music production software.</p>
 <p><a name="virtual-midi-ports"></a></p>
 <h2>Virtual MIDI Ports</h2><p><em>NOTE: The rest of this tutorial is optional and intended for <a href="https://en.wikipedia.org/wiki/Digital_audio_workstation">DAW</a>
  / synthesizer app users. Feel free to skip ahead to the <a href="tutorial-02-pitch.html">Pitch</a> tutorial.</em></p>
@@ -110,47 +119,56 @@ Otherwise, you'll be prompted to interactively select a port.</p>
 first we need to create a &quot;virtual MIDI port&quot; that can be used to send MIDI messages between applications.</p>
 <p><a name="macos"></a></p>
 <h3>macOS</h3><ol>
-<li>Open the built-in <code>Audio MIDI Setup</code> application (under <code>/Applications/Utilities</code>)</li>
-<li>Go to the <code>MIDI Studio</code> window (menu: <code>Window -&gt; Show MIDI Studio</code>)</li>
-<li>Double click <code>IAC Driver</code> to open the <code>IAC Driver Properties</code> window </li>
-<li>Make sure <code>Device is online</code> is checked </li>
-<li>Click <code>More information</code> to expand the <code>IAC Driver Properties</code> window   </li>
-<li>Click <code>+</code> to add a port and name it whatever you want.</li>
+<li><p>Open the built-in <code>Audio MIDI Setup</code> application (under <code>/Applications/Utilities</code>)</p>
+</li>
+<li><p>Go to the <code>MIDI Studio</code> window (menu: <code>Window -&gt; Show MIDI Studio</code>)</p>
+</li>
+<li><p>Double click <code>IAC Driver</code> to open the <code>IAC Driver Properties</code> window </p>
+</li>
+<li><p>Make sure <code>Device is online</code> is checked </p>
+</li>
+<li><p>Click <code>More information</code> to expand the <code>IAC Driver Properties</code> window   </p>
+</li>
+<li><p>Click <code>+</code> to add a port and name it whatever you want.</p>
+</li>
 </ol>
-<p><img src="https://raw.githubusercontent.com/adamjmurray/chorus.js/master/etc/img/virtual-midi-macos.png?1" alt="screen shot of inter-App MIDI ports on macOS"></p>
+<p><img src="https://raw.githubusercontent.com/adamjmurray/chorus.js/master/etc/img/virtual-midi-macos.png" alt="screen shot of inter-App MIDI ports on macOS"></p>
 <p>In this screen shot, I named my MIDI port <code>virtual1</code>. Now I can send chorus.js MIDI over this port by running:</p>
-<pre class="prettyprint source"><code>node my-chorus-script.js -p virtual1</code></pre><p><a name="windows"></a></p>
+<pre class="prettyprint source"><code>node quick-start.js -p virtual1</code></pre><p><a name="windows"></a></p>
 <h3>Windows</h3><ol>
-<li>Install <a href="http://www.tobias-erichsen.de/software/loopmidi.html">loopMIDI</a></li>
-<li>Run loopMIDI and click <code>+</code> to add a virtual MIDI port</li>
-<li><p>When you run chorus, use the loopMIDI port:</p>
-<pre class="prettyprint source"><code> node node_modules/chorus/examples/play-song -p loopmidi</code></pre></li>
+<li><p>Install <a href="http://www.tobias-erichsen.de/software/loopmidi.html">loopMIDI</a></p>
+</li>
+<li><p>Run loopMIDI and click <code>+</code> to add a virtual MIDI port</p>
+</li>
 </ol>
-<p><a name="linux"></a></p>
-<h3>Linux</h3><p>Not sure... I don't have a music-capable Linux machine to test with. In can work, in theory.</p>
+<p><img src="https://raw.githubusercontent.com/adamjmurray/chorus.js/master/etc/img/virtual-midi-windows.png" alt="screen shot of inter-App MIDI ports on Windows"></p>
+<p>In this screen shot, I named my MIDI port <code>loopMIDI</code>. Now I can send chorus.js MIDI over this port by running:</p>
+<pre class="prettyprint source"><code>node quick-start.js -p loopmidi</code></pre><p><a name="linux"></a></p>
+<h3>Linux</h3><p>I'm not sure because I don't have a music-capable Linux machine to test with. It can work, in theory.</p>
 <p>Try the <a href="http://jackaudio.org/">JACK Audio Connection Kit</a>   </p>
 <p>Know how to improve these instructions? Send a <a href="https://github.com/adamjmurray/chorus.js/pulls">pull request on github</a>.</p>
 <p><a name="daw-setup"></a></p>
-<h2>DAW Setup</h2><p>Most DAWs listen to all MIDI inputs by default, so chorus.js should work with your DAW without any special setup.</p>
-<p>You might want to use a more advanced setup, so let's take a look at some options:</p>
-<p><img src="https://raw.githubusercontent.com/adamjmurray/chorus.js/master/etc/img/daw-midi-input.png" alt="screen shot of DAW MIDI input settings"></p>
-<p>This screen shot shows 3 ways of setting MIDI input in Ableton Live.</p>
+<h2>DAW Setup</h2><p>Now that we have a virtual MIDI port, we can receive chorus.js MIDI in a <a href="https://en.wikipedia.org/wiki/Digital_audio_workstation">DAW</a>,
+such as Ableton Live.</p>
+<p>Most DAWs listen to all MIDI inputs by default, so chorus.js should work without any additional setup.
+For example, here's the default MIDI track settings in Ableton Live:</p>
+<p><img src="https://raw.githubusercontent.com/adamjmurray/chorus.js/master/etc/img/daw-midi-input-all.png" alt="screen shot of DAW MIDI default input settings"></p>
+<p>If we hit record on this track and run chorus.js using our virtual MIDI port, we'll receive and record the MIDI in our DAW.</p>
+<p>This default setup may not work for you if:</p>
 <ul>
-<li><p>All MIDI Inputs / All Channels (left track)</p>
-<p>Use the track defaults and the track will receive any MIDI input, including chorus.js</p>
-</li>
-<li><p>Specific MIDI Inputs / All Channels (middle track)</p>
-<p>If you want to chorus.js along side another MIDI input, you'll need to set each track to use the desired MIDI input.
-For example, you'd do this if you want to jam along with chorus.js using a MIDI keyboard.
-Whichever tracks should receive chorus.js input, and only chorus.js input, are set to receive MIDI on the virtual MIDI port
-we created above (I named mine &quot;virtual1&quot;).</p>
-</li>
-<li><p>Specific MIDI Inputs / specific port (right track)</p>
-<p>If you want to make multi-track music with multiple instruments (each Part in a chorus.js Song can control a different instrument)
-then you need to route specific chorus.js MIDI channels to specific tracks. Most DAWs let you choose the MIDI port on the track input.
-If you are using Bitwig studio, you'll need to install something like <a href="https://github.com/ThomasHelzle/Toms_Bitwig_Scripts">Tom's Bitwig Scripts</a>.</p>
-</li>
+<li>You want to use multi-track MIDI output from chorus.js to control multiple tracks / instruments simultaneously</li>
+<li>You want to jam along with chorus.js using a physical instrument like a MIDI keyboard or MIDI guitar</li>
 </ul>
+<p>In those cases, you'll need to route the MIDI to different tracks by setting specific input ports and channels.</p>
+<p>For example, here I've setup three tracks Ableton Live to listen to chorus.js over the <code>virtual1</code> MIDI port using channels
+1, 2, and 3:</p>
+<p><img src="https://raw.githubusercontent.com/adamjmurray/chorus.js/master/etc/img/daw-midi-input-filtered.png" alt="screen shot of DAW MIDI input settings"></p>
+<p>By default, each part in a chorus.js song section outputs on consecutive MIDI channels. So the first part outputs on
+channel 1, the second on channel 2, and so on (more on this in <a href="tutorial-05-song-structure.html">Song Structure</a> tutorial).</p>
+<p>If you are working with multi-track MIDI, don't forget to arm all your tracks for recording.</p>
+<p>Each DAW is different, so consult your DAW's manual if you aren't sure how to setup your MIDI tracks. 
+NOTE: Bitwig Studio is unusual and requires <a href="https://github.com/ThomasHelzle/Toms_Bitwig_Scripts">Tom's Bitwig Scripts</a>
+to be installed to do multi-track MIDI recording. Most other DAWs should be straightforward to setup.</p>
 <p><a name="next-steps"></a></p>
 <h2>Next Steps</h2><p>Next is the <a href="tutorial-02-pitch.html">Pitch</a> tutorial.</p>
 </article>

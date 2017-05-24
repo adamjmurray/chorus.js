@@ -1,9 +1,3 @@
-#### How to: Organize Song Structure
-
-We've seen how {@tutorial 02-rhythm} and {@tutorial 03-pitch-and-harmony} are handled in the earlier tutorials.
-This tutorial describes how Sections and Parts are used to create complex Songs.
-
-**Overview:**
 - [Elements of a Song](#song-elements)
 - [Multiple parts/channels](#multiple-parts)
 - [Part loops and delay](#part-loops-and-delay)
@@ -13,6 +7,9 @@ This tutorial describes how Sections and Parts are used to create complex Songs.
 
 <a name="song-elements"></a>
 ## Elements of a Song
+
+This tutorial describes how Sections and Parts are used to create complex Songs.
+
 The {@link Song} class is used to generate a song. The overall structure looks like this:
  
 <table style="color:#111; font-family:sans-serif; border:3px solid sienna; border-radius:12px; background-color:#EEB; border-collapse:separate; border-spacing:5px; box-shadow: 4px 6px 12px rgba(0,0,0,0.5);">

@@ -1,9 +1,3 @@
-#### How to: Avoid Repetition and Create Variety
-
-This is an advanced, optional tutorial that assumes you are familiar with the [earlier tutorials](./index.html#tutorials).<br>
-You can skip ahead to the {@tutorial 06-microtonality} or {@tutorial 07-under-the-hood} tutorials.
-
-**Overiew:**
 - [Non-Scale Pitches](#non-scale-pitches)
 - [Non-Scale Chords](#non-scale-chords)
 - [Loops of Different Lengths](#loops-of-different-lengths)

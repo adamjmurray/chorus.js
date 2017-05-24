@@ -1,6 +1,3 @@
-If you haven't already, [install chorus.js and follow the Quick Start Guide](./index.html#requirements)
-
-**Outline**
 - [Pitch Overview](#pitch-overview)
 - [Absolute Pitch](#absolute-pitch)
 - [Simultaneous Pitches](#simultaneous-pitches)
