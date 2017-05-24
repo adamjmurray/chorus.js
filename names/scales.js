@@ -59,6 +59,9 @@ const SCALE_TYPES = {
 SCALE_TYPES.MAJOR = SCALE_TYPES.IONIAN;
 SCALE_TYPES.MINOR = SCALE_TYPES.NATURAL_MINOR = SCALE_TYPES.AEOLIAN;
 
+/**
+ * Built-in scales
+ */
 const SCALES = {};
 Object.keys(SCALE_TYPES).forEach(type => {
   SCALES[type] = (root) => new Scale(SCALE_TYPES[type], root);

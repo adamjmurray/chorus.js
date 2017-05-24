@@ -19,8 +19,8 @@
     "cover": "node_modules/.bin/nyc --reporter=html --reporter=lcov npm run mocha",
     "coveralls": "npm run cover && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "ci": "npm run lint && npm run coveralls",
-    "docs": "node_modules/.bin/jsdoc --configure etc/jsdoc.json && cat etc/jsdoc-additional-styles.css >> docs/styles/jsdoc-default.css",
-    "docs-watch": "nodemon -w README.md -w etc -w src -e js,json,css,md -x npm run docs"
+    "docs": "node etc/preprocess-tutorials && node_modules/.bin/jsdoc --configure etc/jsdoc.json && cat etc/jsdoc-additional-styles.css >> docs/styles/jsdoc-default.css",
+    "docs-watch": "nodemon -w README.md -w etc -w examples -w midi -w model -w names -w structure -w index.js -w utils.js -e js,json,css,md -x npm run docs"
   },
   "optionalDependencies": {
     "midi": "^0.9.5"

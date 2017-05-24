@@ -38,20 +38,7 @@ Let's break down the Quick Start example.
  
 After loading the chorus module (line 2), we use its Song class to construct a song instance (lines 5-11):                            
 
-<pre class="prettyprint source linenums"><code>// quick-start.js
-const { Song, Output } = require('chorus');
-require('chorus/names').into(global);
-
-const song = new Song({
- sections: [{
-   parts: [{
-     pitches: [C4, D4, E4, F4, G4, F4, E4, D4, C4],
-   }]
- }]
-});
-
-Output.select().then(output => output.play(song));
-</code></pre>
+{@example linenums 01-quick-start}
 
 A song is a list of sections that are played sequentially. 
 Each section is a list of parts that are played simultaneously.
@@ -59,7 +46,7 @@ For example, a verse can be represented by a section, and each instrument by a p
 This will be explored in detail in the {@tutorial 05-song-structure} tutorial. 
 
 The simplest Part is just a list of pitches (line 8). 
-The names `C4`, `D4`, `E4`, `F4`, `G4`, are pitch constants that were loading on line 3.
+The names `C4`, `D4`, `E4`, `F4`, `G4`, are pitch constants that were loaded on line 3.
 
 Because no rhythm was given, each pitch plays for 1 beat by default.
 

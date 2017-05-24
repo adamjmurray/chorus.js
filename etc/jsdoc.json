@@ -6,7 +6,7 @@
     "recurse": true,
     "destination": "docs",
     "readme": "README.md",
-    "tutorials": "etc/tutorials"
+    "tutorials": "tmp/tutorials"
   },
   "templates": {
     "default": {

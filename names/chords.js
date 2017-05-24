@@ -12,6 +12,9 @@ const CHORD_TYPES = {
   NINTH: [0,2,4,6,8],
 };
 
+/**
+ * Built-in chords
+ */
 const CHORDS = {};
 Object.keys(CHORD_TYPES).forEach(type =>
   CHORDS[type] = (root, inversion) =>

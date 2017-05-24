@@ -12,40 +12,34 @@ const DRUMS = require('./drums');
  * // Inject all names into the global namespace.
  * // WARNING: This is not safe to do in large/serious projects, however,
  * // it is very convenient when experimenting with this library.
- * require('midikit/names').into(global);
+ * require('chorus/names').into(global);
  */
 module.exports = {
 
   /**
-   * Common {@link Chord} types defined in terms of scale degree offsets (the third argument to the Chord constructor)
-   * - `TRIAD`
-   * - `QUARTAL`
-   * - `QUINTAL`
-   * - `SEVENTH`
+   * Built-in {@link Chord} types.
+   *
+   * <a href="./names_chords.js.html">The available CHORDS types are defined here</a>
    *
    * Note: whether a chord such as a triad is major, minor, diminished, or augmented depends on the scale and the root
-   * of the chord. This is because chords in midikit are defined in terms of scale degrees, so you don't have to worry
+   * of the chord. This is because chords in chorus.js are defined in terms of scale degrees, so you don't have to worry
    * about accidentally using notes that aren't part of the scale. If you don't know music theory, don't worry about it!
-   * When using scales and chords in midikit, things will tend to sound good by default.
+   * When using scales and chords in chorus.js, things will tend to sound good by default.
    *
    * @example
-   * const { PITCH_CLASSES, SCALE_TYPES, CHORD_TYPES } = require('chorus');
-   * const { C } = PITCH_CLASSES;
-   * const { MAJOR } = SCALE_TYPES;
-   * const { TRIAD, SEVENTH } = CHORD_TYPES;
-   * const { Scale } = require('chorus');
-   * const cMajorScale = new Scale(C, MAJOR);
-   * const I_CHORD  = new Chord(TRIAD, 0, cMajorScale); // C major triad
-   * const IV_CHORD = new Chord(TRIAD, 3, cMajorScale); // F major triad
-   * const V7_CHORD = new Chord(SEVENTH, 4, cMajorScale); // G major dominant 7th chord
-   * const vi_CHORD = new Chord(TRIAD, 5, cMajorScale); // a minor triad
+   * const { CHORDS } = require('chorus');
+   * const { TRIAD, SEVENTH } = CHORDS;
+   * const I_CHORD  = TRIAD(0);
+   * const IV_CHORD = TRIAD(3);
+   * const V7_CHORD = SEVENTH(4);
+   * const vi_inv1_CHORD = TRIAD(5, 1); // first inversion
    * @see https://en.wikipedia.org/wiki/Triad_(music)
    * @see https://en.wikipedia.org/wiki/Suspended_chord
    * @see https://en.wikipedia.org/wiki/Quartal_and_quintal_harmony
    * @see https://en.wikipedia.org/wiki/Seventh_chord
    * @see https://en.wikipedia.org/wiki/Inversion_(music)#Chords
    */
-  CHORDS, // TODO: document properly, this is out of date!
+  CHORDS,
 
   /**
    * The 12 {@link PitchClass PitchClasses}:
@@ -66,31 +60,21 @@ module.exports = {
   PITCHES,
 
   /**
-   * Common {@link Scale Scale} types defined in terms of intervals (the second argument to the Scale constructor):
-   * - `IONIAN`, also known as:
-   *   - `MAJOR`
-   * - `DORIAN`
-   * - `PHRYGIAN`
-   * - `LYDIAN`
-   * - `MIXOLYDIAN`
-   * - `AEOLIAN`, also known as:
-   *   - `MINOR`
-   *   - `NATURAL_MINOR`
-   * - `LOCRIAN`
-   * - `HARMONIC_MINOR`
+   * Built-in {@link Scale Scale} types.
+   *
+   * <a href="./names_scales.js.html">The available SCALES types are defined here</a>.
    *
    * @example
-   * const { PITCH_CLASSES, SCALE_TYPES } = require('midikit/names');
+   * const { PITCH_CLASSES, SCALES } = require('chorus');
    * const { C } = PITCH_CLASSES;
-   * const { MAJOR } = SCALE_TYPES;
-   * const { Scale } = require('chorus');
-   * const cMajorScale = new Scale(C, MAJOR);
+   * const { MAJOR } = SCALES;
+   * const cMajorScale = MAJOR(C);
    *
    * @see https://en.wikipedia.org/wiki/Scale_(music)
    * @see https://en.wikipedia.org/wiki/Mode_(music)#Modern
    * @see https://en.wikipedia.org/wiki/List_of_musical_scales_and_modes
    */
-  SCALES, // TODO: document properly
+  SCALES,
 
   DRUMS,
 

@@ -29,7 +29,7 @@
 
 <article>
     <ul>
-<li><a href="#tempo">Changing the Tempo</a></li>
+<li><a href="#tempo">Tempo</a></li>
 <li><a href="#time-lists">Time Lists</a></li>
 <li><a href="#rests">Rests</a></li>
 <li><a href="#durations">Durations</a></li>
@@ -40,10 +40,10 @@
 <li><a href="#next-steps">Next Steps</a></li>
 </ul>
 <p><a name="tempo"></a></p>
-<h2>Changing the Tempo</h2><p>When we don't specify a rhythm, each note is a single beat. How fast is a beat?</p>
-<p>The song's tempo determines how fast or slow a song plays. It is specified in terms of <strong>beats per minute</strong>, or <code>bpm</code> for short.
-The default bpm is 120, which is 2 beats every second. Taking the example from the <a href="./index.html#quick-start-guide">Quick Start Guide</a>, let's make it play
-faster by increasing the bpm:</p>
+<h2>Tempo</h2><p>When we don't specify a rhythm, each note is a single beat. How fast is a beat?</p>
+<p>The song's tempo determines how fast or slow a song plays. It is specified in terms of <strong>beats per minute</strong>, or <code>bpm</code> 
+for short. The default bpm is 120, which is 2 beats every second. Taking the example from the 
+<a href="./index.html#quick-start-guide">Quick Start Guide</a>, let's make it play faster by increasing the bpm:</p>
 <pre class="prettyprint source"><code>const { Song, Output } = require('chorus');
 require('chorus/names').into(global);
 
@@ -56,9 +56,8 @@ const song = new Song({
   }]
 });
 
-Output.select().then(output => output.play(song));</code></pre><p>Currently a single tempo/bpm is used for the entire song 
-(support for tempo changes within a Song may be added in a future version).</p>
-<p>Try changing the bpm in this example and see how it affects playback.</p>
+Output.select().then(output => output.play(song));</code></pre><p>Currently a single bpm is used for the entire song (support for tempo changes within a Song may be added in the future).</p>
+<p>Try changing the bpm to be faster and slower.</p>
 <p><a name="time-lists"></a></p>
 <h2>Time Lists</h2><p>As we've seen, a song part plays notes by specifying <code>pitches</code> to play.</p>
 <p>Every song part has a <code>rhythm</code> to control the timing of the notes. The default <code>rhythm</code> plays a note on every beat.</p>
@@ -181,7 +180,7 @@ require('chorus/names').into(global);
 const song = new Song({
   sections: [{
     parts: [{
-      pitches: [C4, D4, E4, D4, E4, F4, E4, C4, D4, B3, C4],      
+      pitches: [C4, D4, E4, D4, E4, F4, E4, C4, D4, B3, C4],
       rhythm: {
         pattern: &quot;Xxx.|Xxx=|x.x.|x.x=|X===&quot;,
         pulse: 0.5,
@@ -191,7 +190,7 @@ const song = new Song({
 });
 
 Output.select().then(output => output.play(song));</code></pre><p><a name="euclidean-rhythms"></a></p>
-<h2>Euclidean Rhythms</h2><p>Euclidean rhythms evenly distribute a given number of pulses over a given time frame.</p>
+<h2>Euclidean Rhythms</h2><p>Euclidean rhythms evenly distribute a given number of pulses along a time grid. </p>
 <p>chorus.js's Rhythm class has a function to generate Euclidean rhythms: <code>Rhythm.distribute(pulses, total)</code></p>
 <p>This <code>distribute()</code> function returns a rhythm string, so we can use it anywhere we can use a rhythm string (as the <code>rhythm</code> or <code>rhythm.pattern</code>): </p>
 <pre class="prettyprint source"><code>const { Song, Rhythm, Output } = require('chorus');
@@ -211,33 +210,22 @@ const song = new Song({
 Output.select().then(output => output.play(song));</code></pre><p>To understand what's happening, let's see what rhythm strings <code>distribute()</code> generates:</p>
 <pre class="prettyprint source"><code>const { Rhythm } = require('chorus');
 
-Rhythm.distribute(6, 8);
-// => 'x.xxx.xx'
-Rhythm.distribute(3, 8);
-// => 'x..x..x.'
-Rhythm.distribute(7, 16);
-// => 'x..x.x.x..x.x.x.'</code></pre><p>The first parameter controls the number of x's, and the second parameter controls the number of characters in the
+Rhythm.distribute(6, 8);  // => 'x.xxx.xx'
+Rhythm.distribute(3, 8);  // => 'x..x..x.'
+Rhythm.distribute(3, 16); // => 'x.....x....x....'
+Rhythm.distribute(7, 16); // => 'x..x.x.x..x.x.x.'</code></pre><p>The first parameter controls the number of x's, and the second parameter controls the number of characters in the
 rhythm string.</p>
 <p>By default, <code>distribute()</code> rhythm strings start with an 'x' in the first position. If you want to change this, you
 can use the <code>shift</code> option:</p>
-<pre class="prettyprint source"><code>Rhythm.distribute(3, 8);
-// => 'x..x..x.'
-Rhythm.distribute(3, 8, { shift: 1 })
-// => '..x..x.x'
-Rhythm.distribute(3, 8, { shift: 2 })
-// => '.x..x.x.'
-Rhythm.distribute(3, 8, { shift: -1 })
-// => '.x..x..x'</code></pre><p>Each positive shift value takes the first character of the rhythm string and moves it to the end of the string.
+<pre class="prettyprint source"><code>Rhythm.distribute(3, 8);               // => 'x..x..x.'
+Rhythm.distribute(3, 8, { shift: 1 })  // => '..x..x.x'
+Rhythm.distribute(3, 8, { shift: 2 })  // => '.x..x.x.'
+Rhythm.distribute(3, 8, { shift: -1 }) // => '.x..x..x'</code></pre><p>Each positive shift value takes the first character of the rhythm string and moves it to the end of the string.
 Negative shift values work in reverse.</p>
-<p>If you want to shift the pattern such that an 'x' is still in the first position, you can use the <code>rotation</code> option:</p>
-<pre class="prettyprint source"><code>Rhythm.distribute(3, 8);
-// => 'x..x..x.'
-Rhythm.distribute(3, 8, { rotation: 1 });
-// => 'x..x.x..'
-Rhythm.distribute(3, 8, { rotation: -1 });
-// => 'x.x..x..'
-></code></pre><p>Basically, a rotation shifts repeatedly until the next 'x'. 
-This is good for creating variations and keeping the note on the first beat.</p>
+<p>If you want to shift the pattern repeatedly so that an 'x' is still in the first position, you can use the <code>rotation</code> option:</p>
+<pre class="prettyprint source"><code>Rhythm.distribute(3, 8);                   // => 'x..x..x.'
+Rhythm.distribute(3, 8, { rotation: 1 });  // => 'x..x.x..'
+Rhythm.distribute(3, 8, { rotation: -1 }); // => 'x.x..x..'</code></pre><p>This is good for creating variations while keeping the note on the first beat.</p>
 <p>You can also combine the <code>rotation</code> and <code>shift</code> options. The rotation will be applied first.</p>
 <p><a name="using-drums"></a></p>
 <h2>Using Drums</h2><p>Since we are talking about rhythm, let's try using drum sounds. </p>
@@ -267,15 +255,13 @@ const song = new Song({
   }]
 });
 
-Output.select().then(output => output.play(song));</code></pre><p>If you don't want to pollute the global namespace with <code>require('chorus/names').into(global);</code>
-the drum constants are available under <code>require('chorus/names').DRUMS.KICK</code>, etc.</p>
+Output.select().then(output => output.play(song));</code></pre><p>If you don't want to pollute the global namespace, the drum constants are available under 
+<code>require('chorus/names').DRUMS.KICK</code>, etc (NOTE: that's under the module 'chorus/names' not 'chorus').</p>
 <p>Drum software usually allows sounds be freely re-assigned, so these drum constants may not work as expected. 
 If not, check your drum software and experiment with Chorus.js's pitch constants, like this:</p>
-<pre class="prettyprint source"><code>    ...
-    parts: [{     
+<pre class="prettyprint source"><code>    parts: [{     
       pitches: [C2, Db2, D2, Eb2, E2, F2, C3, Db3, C4],
-    }]
-    ...</code></pre><p>Note that some pitches may not play any sound. Once you figure out which pitches to use, consider defining your own constants.</p>
+    }]</code></pre><p>Note that some pitches may not play any sound. Once you figure out which pitches to use, consider defining your own constants.</p>
 <p><a name="next-steps"></a></p>
 <h2>Next Steps</h2><p>Next is the <a href="tutorial-04-harmony.html">Harmony</a> tutorial.</p>
 </article>
@@ -285,7 +271,7 @@ If not, check your drum software and experiment with Chorus.js's pitch constants
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Output.html">Output</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-01-intro.html">Intro / Setup</a></li><li><a href="tutorial-02-pitch.html">Pitch</a></li><li><a href="tutorial-03-rhythm.html">Rhythm</a></li><li><a href="tutorial-04-harmony.html">Harmony</a></li><li><a href="tutorial-05-song-structure.html">Song Structure</a></li><li><a href="tutorial-06-advanced-features.html">Advanced Features</a></li><li><a href="tutorial-07-microtonality.html">Microtonality</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Output.html">Output</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-01-intro.html">Intro / Setup</a></li><li><a href="tutorial-02-pitch.html">Pitch</a></li><li><a href="tutorial-03-rhythm.html">Rhythm</a></li><li><a href="tutorial-04-harmony.html">Harmony</a></li><li><a href="tutorial-05-song-structure.html">Song Structure</a></li><li><a href="tutorial-06-advanced-features.html">Advanced Features</a></li><li><a href="tutorial-07-microtonality.html">Microtonality</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CHORDS">CHORDS</a></li><li><a href="global.html#PITCH_CLASSES">PITCH_CLASSES</a></li><li><a href="global.html#PITCHES">PITCHES</a></li><li><a href="global.html#SCALES">SCALES</a></li></ul>
 </nav>
 
 <br class="clear">

@@ -66,11 +66,11 @@ const { Song, Output } = require('chorus');
 require('chorus/names').into(global);
 
 const song = new Song({
- sections: [{
-   parts: [{
-     pitches: [C4, D4, E4, F4, G4, F4, E4, D4, C4],
-   }]
- }]
+  sections: [{
+    parts: [{
+      pitches: [C4, D4, E4, F4, G4, F4, E4, D4, C4],
+    }]
+  }]
 });
 
 Output.select().then(output => output.play(song));
@@ -81,7 +81,7 @@ Each section is a list of parts that are played simultaneously.
 For example, a verse can be represented by a section, and each instrument by a part.
 This will be explored in detail in the <a href="tutorial-05-song-structure.html">Song Structure</a> tutorial. </p>
 <p>The simplest Part is just a list of pitches (line 8). 
-The names <code>C4</code>, <code>D4</code>, <code>E4</code>, <code>F4</code>, <code>G4</code>, are pitch constants that were loading on line 3.</p>
+The names <code>C4</code>, <code>D4</code>, <code>E4</code>, <code>F4</code>, <code>G4</code>, are pitch constants that were loaded on line 3.</p>
 <p>Because no rhythm was given, each pitch plays for 1 beat by default.</p>
 <p>We'll learn a lot more about <a href="tutorial-02-pitch.html">Pitch</a> and <a href="tutorial-03-rhythm.html">Rhythm</a> in the next few tutorials.</p>
 <p><a name="selecting-outputs"></a> </p>
@@ -178,7 +178,7 @@ to be installed to do multi-track MIDI recording. Most other DAWs should be stra
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Output.html">Output</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-01-intro.html">Intro / Setup</a></li><li><a href="tutorial-02-pitch.html">Pitch</a></li><li><a href="tutorial-03-rhythm.html">Rhythm</a></li><li><a href="tutorial-04-harmony.html">Harmony</a></li><li><a href="tutorial-05-song-structure.html">Song Structure</a></li><li><a href="tutorial-06-advanced-features.html">Advanced Features</a></li><li><a href="tutorial-07-microtonality.html">Microtonality</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Output.html">Output</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-01-intro.html">Intro / Setup</a></li><li><a href="tutorial-02-pitch.html">Pitch</a></li><li><a href="tutorial-03-rhythm.html">Rhythm</a></li><li><a href="tutorial-04-harmony.html">Harmony</a></li><li><a href="tutorial-05-song-structure.html">Song Structure</a></li><li><a href="tutorial-06-advanced-features.html">Advanced Features</a></li><li><a href="tutorial-07-microtonality.html">Microtonality</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CHORDS">CHORDS</a></li><li><a href="global.html#PITCH_CLASSES">PITCH_CLASSES</a></li><li><a href="global.html#PITCHES">PITCHES</a></li><li><a href="global.html#SCALES">SCALES</a></li></ul>
 </nav>
 
 <br class="clear">

@@ -117,7 +117,7 @@
     <pre class="prettyprint"><code>// Inject all names into the global namespace.
 // WARNING: This is not safe to do in large/serious projects, however,
 // it is very convenient when experimenting with this library.
-require('midikit/names').into(global);</code></pre>
+require('chorus/names').into(global);</code></pre>
 
 
 
@@ -146,17 +146,12 @@ require('midikit/names').into(global);</code></pre>
 
 
 <div class="description">
-    <p>Common <a href="Chord.html">Chord</a> types defined in terms of scale degree offsets (the third argument to the Chord constructor)</p>
-<ul>
-<li><code>TRIAD</code></li>
-<li><code>QUARTAL</code></li>
-<li><code>QUINTAL</code></li>
-<li><code>SEVENTH</code></li>
-</ul>
+    <p>Built-in <a href="Chord.html">Chord</a> types.</p>
+<p><a href="./names_chords.js.html">The available CHORDS types are defined here</a></p>
 <p>Note: whether a chord such as a triad is major, minor, diminished, or augmented depends on the scale and the root
-of the chord. This is because chords in midikit are defined in terms of scale degrees, so you don't have to worry
+of the chord. This is because chords in chorus.js are defined in terms of scale degrees, so you don't have to worry
 about accidentally using notes that aren't part of the scale. If you don't know music theory, don't worry about it!
-When using scales and chords in midikit, things will tend to sound good by default.</p>
+When using scales and chords in chorus.js, things will tend to sound good by default.</p>
 </div>
 
 
@@ -194,7 +189,7 @@ When using scales and chords in midikit, things will tend to sound good by defau
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="names_index.js.html">names/index.js</a>, <a href="names_index.js.html#line48">line 48</a>
+        <a href="names_index.js.html">names/index.js</a>, <a href="names_index.js.html#line42">line 42</a>
     </li></ul></dd>
     
 
@@ -226,16 +221,12 @@ When using scales and chords in midikit, things will tend to sound good by defau
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>const { PITCH_CLASSES, SCALE_TYPES, CHORD_TYPES } = require('chorus');
-const { C } = PITCH_CLASSES;
-const { MAJOR } = SCALE_TYPES;
-const { TRIAD, SEVENTH } = CHORD_TYPES;
-const { Scale } = require('chorus');
-const cMajorScale = new Scale(C, MAJOR);
-const I_CHORD  = new Chord(TRIAD, 0, cMajorScale); // C major triad
-const IV_CHORD = new Chord(TRIAD, 3, cMajorScale); // F major triad
-const V7_CHORD = new Chord(SEVENTH, 4, cMajorScale); // G major dominant 7th chord
-const vi_CHORD = new Chord(TRIAD, 5, cMajorScale); // a minor triad</code></pre>
+    <pre class="prettyprint"><code>const { CHORDS } = require('chorus');
+const { TRIAD, SEVENTH } = CHORDS;
+const I_CHORD  = TRIAD(0);
+const IV_CHORD = TRIAD(3);
+const V7_CHORD = SEVENTH(4);
+const vi_inv1_CHORD = TRIAD(5, 1); // first inversion</code></pre>
 
 
 
@@ -286,7 +277,7 @@ const vi_CHORD = new Chord(TRIAD, 5, cMajorScale); // a minor triad</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="names_index.js.html">names/index.js</a>, <a href="names_index.js.html#line55">line 55</a>
+        <a href="names_index.js.html">names/index.js</a>, <a href="names_index.js.html#line49">line 49</a>
     </li></ul></dd>
     
 
@@ -351,7 +342,7 @@ const vi_CHORD = new Chord(TRIAD, 5, cMajorScale); // a minor triad</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="names_index.js.html">names/index.js</a>, <a href="names_index.js.html#line66">line 66</a>
+        <a href="names_index.js.html">names/index.js</a>, <a href="names_index.js.html#line60">line 60</a>
     </li></ul></dd>
     
 
@@ -375,24 +366,8 @@ const vi_CHORD = new Chord(TRIAD, 5, cMajorScale); // a minor triad</code></pre>
 
 
 <div class="description">
-    <p>Common <a href="Scale.html">Scale</a> types defined in terms of intervals (the second argument to the Scale constructor):</p>
-<ul>
-<li><code>IONIAN</code>, also known as:<ul>
-<li><code>MAJOR</code></li>
-</ul>
-</li>
-<li><code>DORIAN</code></li>
-<li><code>PHRYGIAN</code></li>
-<li><code>LYDIAN</code></li>
-<li><code>MIXOLYDIAN</code></li>
-<li><code>AEOLIAN</code>, also known as:<ul>
-<li><code>MINOR</code></li>
-<li><code>NATURAL_MINOR</code></li>
-</ul>
-</li>
-<li><code>LOCRIAN</code></li>
-<li><code>HARMONIC_MINOR</code></li>
-</ul>
+    <p>Built-in <a href="Scale.html">Scale</a> types.</p>
+<p><a href="./names_scales.js.html">The available SCALES types are defined here</a>.</p>
 </div>
 
 
@@ -430,7 +405,7 @@ const vi_CHORD = new Chord(TRIAD, 5, cMajorScale); // a minor triad</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="names_index.js.html">names/index.js</a>, <a href="names_index.js.html#line93">line 93</a>
+        <a href="names_index.js.html">names/index.js</a>, <a href="names_index.js.html#line77">line 77</a>
     </li></ul></dd>
     
 
@@ -458,11 +433,10 @@ const vi_CHORD = new Chord(TRIAD, 5, cMajorScale); // a minor triad</code></pre>
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>const { PITCH_CLASSES, SCALE_TYPES } = require('midikit/names');
+    <pre class="prettyprint"><code>const { PITCH_CLASSES, SCALES } = require('chorus');
 const { C } = PITCH_CLASSES;
-const { MAJOR } = SCALE_TYPES;
-const { Scale } = require('chorus');
-const cMajorScale = new Scale(C, MAJOR);</code></pre>
+const { MAJOR } = SCALES;
+const cMajorScale = MAJOR(C);</code></pre>
 
 
 
@@ -577,7 +551,7 @@ const cMajorScale = new Scale(C, MAJOR);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="names_index.js.html">names/index.js</a>, <a href="names_index.js.html#line101">line 101</a>
+        <a href="names_index.js.html">names/index.js</a>, <a href="names_index.js.html#line85">line 85</a>
     </li></ul></dd>
     
 
@@ -619,7 +593,7 @@ const cMajorScale = new Scale(C, MAJOR);</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Output.html">Output</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-01-intro.html">Intro / Setup</a></li><li><a href="tutorial-02-pitch.html">Pitch</a></li><li><a href="tutorial-03-rhythm.html">Rhythm</a></li><li><a href="tutorial-04-harmony.html">Harmony</a></li><li><a href="tutorial-05-song-structure.html">Song Structure</a></li><li><a href="tutorial-06-advanced-features.html">Advanced Features</a></li><li><a href="tutorial-07-microtonality.html">Microtonality</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-chorus.html">chorus</a></li><li><a href="module-midi.html">midi</a></li><li><a href="module-model.html">model</a></li><li><a href="module-names.html">names</a></li><li><a href="module-structure.html">structure</a></li></ul><h3>Classes</h3><ul><li><a href="Chord.html">Chord</a></li><li><a href="Harmony.html">Harmony</a></li><li><a href="MidiFile.html">MidiFile</a></li><li><a href="MidiIn.html">MidiIn</a></li><li><a href="MidiOut.html">MidiOut</a></li><li><a href="Output.html">Output</a></li><li><a href="Part.html">Part</a></li><li><a href="Pitch.html">Pitch</a></li><li><a href="PitchClass.html">PitchClass</a></li><li><a href="Random.html">Random</a></li><li><a href="RelativePitch.html">RelativePitch</a></li><li><a href="Rhythm.html">Rhythm</a></li><li><a href="Scale.html">Scale</a></li><li><a href="Scheduler.html">Scheduler</a></li><li><a href="Section.html">Section</a></li><li><a href="Sequencer.html">Sequencer</a></li><li><a href="Song.html">Song</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-01-intro.html">Intro / Setup</a></li><li><a href="tutorial-02-pitch.html">Pitch</a></li><li><a href="tutorial-03-rhythm.html">Rhythm</a></li><li><a href="tutorial-04-harmony.html">Harmony</a></li><li><a href="tutorial-05-song-structure.html">Song Structure</a></li><li><a href="tutorial-06-advanced-features.html">Advanced Features</a></li><li><a href="tutorial-07-microtonality.html">Microtonality</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CHORDS">CHORDS</a></li><li><a href="global.html#PITCH_CLASSES">PITCH_CLASSES</a></li><li><a href="global.html#PITCHES">PITCHES</a></li><li><a href="global.html#SCALES">SCALES</a></li></ul>
 </nav>
 
 <br class="clear">

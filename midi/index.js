@@ -6,7 +6,7 @@ const Scheduler = require('./scheduler');
 /**
  * @module midi
  * @description
- * #### Classes for MIDI input and output, in realtime and via files.
+ * #### Classes for MIDI input and output, in real-time and via files.
  * - {@link MidiFile}
  * - {@link MidiIn}
  * - {@link MidiOut}

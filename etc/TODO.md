@@ -6,7 +6,6 @@ Improve Test Coverage
 - section length when it's calculated from part length + delay
 
 Documentation
-- Document Chord, Scale, RelativePitch thoroughly
 - Tutorials
   - Harmony
   - Structure
