@@ -1,5 +1,5 @@
 const assert = require('assert');
-const proxyquire = require('proxyquire').noPreserveCache();
+const proxyquire = require('proxyquire');
 const { Output } = proxyquire('../../midi', require('./midi-stub'));
 
 describe('MidiOut', () => {

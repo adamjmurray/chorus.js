@@ -1,0 +1,65 @@
+{
+  "bpm": 120,
+  "tracks": [
+    [
+      {
+        "time": 0,
+        "type": "note",
+        "pitch": 60,
+        "velocity": 89,
+        "duration": 0.5,
+        "release": 100,
+        "channel": 1
+      },
+      {
+        "time": 1,
+        "type": "note",
+        "pitch": 60,
+        "velocity": 89,
+        "duration": 0.5,
+        "release": 100,
+        "channel": 1
+      },
+      {
+        "time": 1.5,
+        "type": "note",
+        "pitch": 60,
+        "velocity": 89,
+        "duration": 0.5,
+        "release": 100,
+        "channel": 1
+      },
+      {
+        "time": 2,
+        "type": "note",
+        "pitch": 60,
+        "velocity": 89,
+        "duration": 0.5,
+        "release": 100,
+        "channel": 1
+      },
+      {
+        "time": 3,
+        "type": "note",
+        "pitch": 60,
+        "velocity": 89,
+        "duration": 0.5,
+        "release": 100,
+        "channel": 1
+      },
+      {
+        "time": 3.5,
+        "type": "note",
+        "pitch": 60,
+        "velocity": 89,
+        "duration": 0.5,
+        "release": 100,
+        "channel": 1
+      },
+      {
+        "type": "track-end",
+        "time": 4
+      }
+    ]
+  ]
+}
