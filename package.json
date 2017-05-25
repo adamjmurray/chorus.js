@@ -13,14 +13,15 @@
   },
   "main": "./src/index.js",
   "scripts": {
-    "lint": "node_modules/.bin/eslint --config etc/.eslintrc.js index.js utils.js midi model names structure test",
+    "lint": "node_modules/.bin/eslint --config etc/.eslintrc.js index.js utils.js midi model names structure test web --ignore-pattern web/index.js",
     "mocha": "node_modules/.bin/mocha test/*.js test/**/*.js",
     "test": "npm run lint && npm run mocha",
     "cover": "node_modules/.bin/nyc --reporter=html --reporter=lcov npm run mocha",
     "coveralls": "npm run cover && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "ci": "npm run lint && npm run coveralls",
     "docs": "node etc/preprocess-tutorials && node_modules/.bin/jsdoc --configure etc/jsdoc.json && cat etc/jsdoc-additional-styles.css >> docs/styles/jsdoc-default.css",
-    "docs-watch": "nodemon -w README.md -w etc -w examples -w midi -w model -w names -w structure -w index.js -w utils.js -e js,json,css,md -x npm run docs"
+    "docs-watch": "nodemon -w README.md -w etc -w examples -w midi -w model -w names -w structure -w index.js -w utils.js -e js,json,css,md -x npm run docs",
+    "web": "node_modules/.bin/rollup -c web/rollup.config.js "
   },
   "optionalDependencies": {
     "midi": "^0.9.5"
@@ -32,7 +33,9 @@
     "jsdoc": "^3.4.2",
     "mocha": "^3.4.1",
     "nyc": "^10.3.2",
-    "proxyquire": "^1.8.0"
+    "proxyquire": "^1.8.0",
+    "rollup": "^0.41.6",
+    "rollup-plugin-commonjs": "^8.0.2"
   },
   "keywords": [
     "music",

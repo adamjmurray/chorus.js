@@ -1,0 +1,21 @@
+<html>
+<body></body>
+<script src="./index.js"></script>
+<script>
+const { Song, MidiFileSerializer, WebUtils, PITCHES } = chorus;
+const { appendBytesToPage, createDownloader } = WebUtils;
+const {C4,D4,E4,F4,G4} = PITCHES;
+
+const song = new Song({
+  sections: [{
+    parts: [{
+      pitches: [C4, D4, E4, F4, G4, F4, E4, D4, C4],
+    }]
+  }]
+});
+
+const midiBytes = new MidiFileSerializer(song.toJSON()).toUint8Array();
+appendBytesToPage(midiBytes);
+createDownloader().download(midiBytes, 'web-chorus.mid')
+</script>
+</html>
