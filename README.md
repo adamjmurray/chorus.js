@@ -57,7 +57,7 @@
             
   * Open `quick-start.mid` in any app that supports MIDI files
      
-4. Output real-time MIDI ([requires native depedencies](#requirements))
+4. Output real-time MIDI ([requires native dependencies](#requirements))
 
   * On **macOS**
   
