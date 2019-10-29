@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "coveralls": "^2.13.1",
-    "eslint": "^3.19.0",
+    "eslint": "^6.6.0",
     "eslint-plugin-mocha-no-only": "^0.0.5",
     "jsdoc": "^3.4.2",
     "mocha": "^3.4.1",
