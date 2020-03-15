@@ -4,7 +4,7 @@
  */
 class Scheduler {
 
-  constructor({ bpm=120 } = {}) {
+  constructor({ bpm = 120 } = {}) {
     this.schedule = new Map();
     this.bpm = bpm;
   }
@@ -25,7 +25,7 @@ class Scheduler {
   at(time, callback) {
     if (typeof time !== 'number') throw new TypeError('time must be a number');
     if (typeof callback !== 'function') throw new TypeError('callback must be a function');
-    const timeInBeats = time * 60000/this.bpm;
+    const timeInBeats = time * 60000 / this.bpm;
     let callbacks = this.schedule.get(timeInBeats);
     if (!callbacks) {
       callbacks = [];
@@ -38,7 +38,7 @@ class Scheduler {
    * Run the scheduler and execute the callbacks as scheduled.
    */
   start() {
-    this.times = [...this.schedule.keys()].sort((a,b) => a-b);
+    this.times = [...this.schedule.keys()].sort((a, b) => a - b);
     this.startTime = new Date().getTime();
     this.tick();
   }
@@ -55,15 +55,16 @@ class Scheduler {
    */
   tick() {
     if (!this.nextTime) {
-      this.nextSchedule = this.times.shift();
-      if (this.nextSchedule == null) return;
-      this.nextTime = this.startTime + this.nextSchedule;
+      this.nextRelativeTime = this.times.shift();
+      if (this.nextRelativeTime == null) return;
+      this.nextTime = this.startTime + this.nextRelativeTime;
     }
     if (this.nextTime <= new Date().getTime()) {
-      const callbacks = this.schedule.get(this.nextSchedule) || [];
-      this.nextSchedule = null;
+      const relativeTime = this.nextRelativeTime;
+      const callbacks = this.schedule.get(relativeTime) || [];
+      this.nextRelativeTime = null;
       this.nextTime = null;
-      callbacks.forEach(callback => callback.call(this.nextSchedule));
+      callbacks.forEach(callback => callback(relativeTime));
     }
     this.timeout = setTimeout(() => this.tick(), 1);
   }

@@ -35,7 +35,7 @@ describe('Scheduler', () => {
       scheduler.at(2, () => events.push(2));
       scheduler.at(1, () => events.push(1));
       scheduler.start();
-      return sleep(10).then(() => {
+      return sleep(50).then(() => {
         assert.deepEqual(events, [1,2,3]);
       })
     });
@@ -51,7 +51,7 @@ describe('Scheduler', () => {
       scheduler.at(1, () => events.push(1));
       scheduler.clear();
       scheduler.start();
-      return sleep(10).then(() => {
+      return sleep(50).then(() => {
         assert.deepEqual(events, []);
       })
     });
@@ -67,7 +67,7 @@ describe('Scheduler', () => {
       scheduler.at(1, () => events.push(1));
       scheduler.start();
       scheduler.stop();
-      return sleep(20).then(() => {
+      return sleep(50).then(() => {
         assert.deepEqual(events, []);
       })
     });

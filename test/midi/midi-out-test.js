@@ -9,6 +9,7 @@ describe('MidiOut', () => {
   let processCallbacks = {};
 
   beforeEach(() => {
+    processCallbacks = {};
     process.on = (event, callback) => {
       processCallbacks[event] = callback
     };
@@ -60,7 +61,7 @@ describe('MidiOut', () => {
           expectedBytes.push([0x80|(channel-1), pitch, 0])
         }
       }
-      setTimeout(() => { assert.deepEqual(midiOut.output.sentBytes, expectedBytes); done(); }, 100);
+      setTimeout(() => { assert.deepEqual(midiOut.output.sentBytes, expectedBytes); done(); }, 250);
     })
   });
 
@@ -198,7 +199,7 @@ describe('MidiOut', () => {
       setTimeout(() => {
         assert.deepEqual(midiOut.output.sentBytes, [[0x90|3, 70, 120], [0x80|3, 70, 120]]);
         done();
-      }, 1);
+      }, 10);
     });
 
     it('uses the defaultDuration, velocity 70, and channel 1 if not specified', done => {
@@ -208,7 +209,7 @@ describe('MidiOut', () => {
       setTimeout(() => {
         assert.deepEqual(midiOut.output.sentBytes, [[0x90, 72, 70], [0x80, 72, 70]]);
         done();
-      }, 1);
+      }, 10);
     });
   });
 
@@ -277,7 +278,7 @@ describe('MidiOut', () => {
         ];
         const midiOut = new MidiOut();
         midiOut.play(song);
-        return sleep(50).then(() => {
+        return sleep(250).then(() => {
           assert.deepEqual(midiOut.output.sentBytes, expectedBytes);
         });
       });
@@ -291,23 +292,23 @@ describe('MidiOut', () => {
           sections: [{
             parts: [{
               rhythm: 'X'.repeat(8),
-              pitches: [60, 60, 60, 60],
+              pitches: [60, 70, 80, 90],
             }]
           }]
         });
         const expectedBytes = [
           [0x90, 60, 127], [0x80, 60, 127],
+          [0x90, 70, 127], [0x80, 70, 127],
+          [0x90, 80, 127], [0x80, 80, 127],
+          [0x90, 90, 127], [0x80, 90, 127],
           [0x90, 60, 127], [0x80, 60, 127],
-          [0x90, 60, 127], [0x80, 60, 127],
-          [0x90, 60, 127], [0x80, 60, 127],
-          [0x90, 60, 127], [0x80, 60, 127],
-          [0x90, 60, 127], [0x80, 60, 127],
-          [0x90, 60, 127], [0x80, 60, 127],
-          [0x90, 60, 127], [0x80, 60, 127],
+          [0x90, 70, 127], [0x80, 70, 127],
+          [0x90, 80, 127], [0x80, 80, 127],
+          [0x90, 90, 127], [0x80, 90, 127],
         ];
         const midiOut = new MidiOut();
         midiOut.play(song.toJSON());
-        return sleep(75).then(() => {
+        return sleep(250).then(() => {
           assert.deepEqual(midiOut.output.sentBytes, expectedBytes);
         });
       });

@@ -12,7 +12,7 @@ class MidiOut {
    *
    * @param options TODO
    */
-  constructor({ defaultDuration=500 }={}) {
+  constructor({ defaultDuration = 500 } = {}) {
     this.output = new midi.output();
     this.isOpen = false;
     this.defaultDuration = defaultDuration;
@@ -27,7 +27,7 @@ class MidiOut {
   ports() {
     const count = this.output.getPortCount();
     const names = [];
-    for (let i=0; i < count; i++) {
+    for (let i = 0; i < count; i++) {
       names.push(this.output.getPortName(i));
     }
     return names;
@@ -105,8 +105,8 @@ class MidiOut {
    * @param velocity
    * @param channel
    */
-  noteOn(pitch, velocity=70, channel=1) {
-    this.send(NOTE_ON_BYTE | (channel-1), Number(pitch), velocity);
+  noteOn(pitch, velocity = 70, channel = 1) {
+    this.send(NOTE_ON_BYTE | (channel - 1), Number(pitch), velocity);
   }
 
   /**
@@ -115,8 +115,8 @@ class MidiOut {
    * @param velocity
    * @param channel
    */
-  noteOff(pitch, velocity=70, channel=1) {
-    this.send(NOTE_OFF_BYTE | (channel-1), Number(pitch), velocity);
+  noteOff(pitch, velocity = 70, channel = 1) {
+    this.send(NOTE_OFF_BYTE | (channel - 1), Number(pitch), velocity);
   }
 
   /**
@@ -129,7 +129,7 @@ class MidiOut {
    * @param duration
    * @param channel
    */
-  note(pitch, velocity=70, duration=this.defaultDuration, channel=1) {
+  note(pitch, velocity = 70, duration = this.defaultDuration, channel = 1) {
     // TODO: validation
     const pitchValue = Number(pitch); // coerce to a Number if needed (using Pitch.valueOf())
     this.noteOn(pitchValue, velocity, channel);
@@ -143,7 +143,7 @@ class MidiOut {
    */
   allNotesOff(channel) {
     if (!this.isOpen || !channel) return;
-    for (let pitch=0; pitch < 128; pitch++) {
+    for (let pitch = 0; pitch < 128; pitch++) {
       this.noteOff(pitch, 0, channel);
     }
   }
@@ -162,7 +162,7 @@ class MidiOut {
     // Calls all notes off channel-by-channel sequentially, with a delay in between
     // to avoid dropping note-off events due to MIDI rate-limiting.
     return sequentialAsync(
-      new Array(16).fill(0).map((_,idx) =>
+      new Array(16).fill(0).map((_, idx) =>
         () => {
           const channel = idx + 1;
           this.allNotesOff(channel);
