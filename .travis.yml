@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - 6.10.3
-  - 7.10.0
+  - 12
+  - 13
 install: npm install --no-optional
 script: npm run ci
